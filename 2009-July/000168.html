@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Btg-devel] suggestion about using SASL for user authentication
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/btg-devel/2009-July/index.html" >
+   <LINK REL="made" HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20suggestion%20about%20using%20SASL%20for%20user%20authentication&In-Reply-To=%3Ce4f7b1caeb7f738ff5c90889bb8bb749.squirrel%40webmail.netimage.dk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000167.html">
+   <LINK REL="Next"  HREF="000169.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Btg-devel] suggestion about using SASL for user authentication</H1>
+    <B>Michael Wojciechowski</B> 
+    <A HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20suggestion%20about%20using%20SASL%20for%20user%20authentication&In-Reply-To=%3Ce4f7b1caeb7f738ff5c90889bb8bb749.squirrel%40webmail.netimage.dk%3E"
+       TITLE="[Btg-devel] suggestion about using SASL for user authentication">wojci at wojci.dk
+       </A><BR>
+    <I>Thu Jul  9 15:33:03 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000167.html">[Btg-devel] suggestion about using SASL for user authentication
+</A></li>
+        <LI>Next message: <A HREF="000169.html">[Btg-devel] suggestion about using SASL for user authentication
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#168">[ date ]</a>
+              <a href="thread.html#168">[ thread ]</a>
+              <a href="subject.html#168">[ subject ]</a>
+              <a href="author.html#168">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> The first is about using Cyrus SASL (<A HREF="http://asg.web.cmu.edu/sasl/">http://asg.web.cmu.edu/sasl/</A>) to
+</I>&gt;<i> authenticate users.
+</I>&gt;<i> Cyrus SASL is specifically designed as a glue layer for adding
+</I>&gt;<i> authentication support to connection-based protocols. It supports a
+</I>&gt;<i> lot of authentication methods. So IMHO it fits great between BTG daemon
+</I>&gt;<i> and clients and surely allows more flexibility than plain passwd-like
+</I>&gt;<i> file.
+</I>&gt;<i> I'm going to use BTG in a multiuser network on a standalone server
+</I>&gt;<i> (well, virtual server in fact :) ). Clients are authorized using
+</I>&gt;<i> Kerberos+LDAP. So if BTG starts using SASL then it'll integrate
+</I>&gt;<i> seamlessly. So this is my motivation.
+</I>
+Adding SASL support sounds like a good idea.
+
+&gt;<i> Do you want to see it in the main development branch?
+</I>
+I would not mind including it, if you do the implementation. A few points:
+
+- Add a bug about this.
+- Use SVN trunk.
+- Make sure that the SASL lib used is detected by the configure script.
+- Make sure that using SASL can be disabled at compile time, as with most
+other features in BTG.
+- A plain password file has to work as well, if you configure it at
+compile time. For backwards compatibility. Making changes to the auth
+interface used might be required.
+- Send a patch that we can review.
+
+&gt;<i> Well, I'll try to implement it myself unless somebody is already
+</I>&gt;<i> working on this.
+</I>
+I have not heard about anyone working on this. SASL support is not
+something that I need myself, but I can help you if you have questions
+about the parts of BTG that you need to modify.
+
+-- 
+
+Best regards
+
+Michael Wojciechowski
+
+&quot;When they ask how I died, I said, tell them: still angry.&quot;
+(Altered Carbon by Richard Morgan)
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000167.html">[Btg-devel] suggestion about using SASL for user authentication
+</A></li>
+	<LI>Next message: <A HREF="000169.html">[Btg-devel] suggestion about using SASL for user authentication
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#168">[ date ]</a>
+              <a href="thread.html#168">[ thread ]</a>
+              <a href="subject.html#168">[ subject ]</a>
+              <a href="author.html#168">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/btg-devel">More information about the Btg-devel
+mailing list</a><br>
+</body></html>

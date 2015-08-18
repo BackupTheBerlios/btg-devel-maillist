@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Btg-devel] btgdaemon is running but not downloading
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/btg-devel/2008-December/index.html" >
+   <LINK REL="made" HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20btgdaemon%20is%20running%20but%20not%20downloading&In-Reply-To=%3C20081231133934.747c51e6%40netpc4.home.wojci.dk.home.wojci.dk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000098.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Btg-devel] btgdaemon is running but not downloading</H1>
+    <B>Michael Wojciechowski</B> 
+    <A HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20btgdaemon%20is%20running%20but%20not%20downloading&In-Reply-To=%3C20081231133934.747c51e6%40netpc4.home.wojci.dk.home.wojci.dk%3E"
+       TITLE="[Btg-devel] btgdaemon is running but not downloading">wojci at wojci.dk
+       </A><BR>
+    <I>Wed Dec 31 13:39:34 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000098.html">[Btg-devel] btgdaemon is running but not downloading
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#99">[ date ]</a>
+              <a href="thread.html#99">[ thread ]</a>
+              <a href="subject.html#99">[ subject ]</a>
+              <a href="author.html#99">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Tue, 30 Dec 2008 04:35:43 +0100 &quot;Xavier Lamien&quot;
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">laxathom at fedoraproject.org</A>&gt; wrote:
+
+&gt;<i> I'm currently having problem to get btgdaemon working properly.
+</I>&gt;<i> Once launched, through the web interface after logged in, all my
+</I>&gt;<i> downloads are freezing to 0% (after 2 hours of waiting and still
+</I>&gt;<i> continue) from any tracker i can test.
+</I>
+Are your torrents in fact started? If libtorrent cannot write to the
+files in your work directory, it will throw an exception, caught and
+logged by BTG. This will stop the torrents.
+
+Did you remember to configure &quot;torrent-ip&quot; and &quot;torrent-range&quot; in
+your .btg/daemon.ini?
+
+&gt;<i> btgdaemon is not enough verbose to tell me what is going on.
+</I>
+The application will not tell you if you use incorrect daemon.ini
+entries, like &quot;torrent-ip&quot;.
+
+There is a debug option, which can be enabled at compile
+time and using the &quot;-D&quot; argument to the daemon. You could also use
+wireshark to log the BT protocol and see if you can figure out what is
+going on.
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+&quot;When they ask how I died, I said, tell them: still angry.&quot; 
+(Altered Carbon by Richard Morgan)
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000098.html">[Btg-devel] btgdaemon is running but not downloading
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#99">[ date ]</a>
+              <a href="thread.html#99">[ thread ]</a>
+              <a href="subject.html#99">[ subject ]</a>
+              <a href="author.html#99">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/btg-devel">More information about the Btg-devel
+mailing list</a><br>
+</body></html>

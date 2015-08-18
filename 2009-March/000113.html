@@ -1,0 +1,207 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Btg-devel] Configure problems with btg 0.99,	libtorrent-rasterbar-0.14.2,	boost_1_38_0 during attempted building from 	source on FreeBSD 7.1
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/btg-devel/2009-March/index.html" >
+   <LINK REL="made" HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20Configure%20problems%20with%20btg%200.99%2C%0A%09libtorrent-rasterbar-0.14.2%2C%0A%09boost_1_38_0%20during%20attempted%20building%20from%20%09source%20on%20FreeBSD%207.1&In-Reply-To=%3C205ad7060903051509j177e8531i2e8eb3f8c937fe80%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000110.html">
+   <LINK REL="Next"  HREF="000118.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Btg-devel] Configure problems with btg 0.99,	libtorrent-rasterbar-0.14.2,	boost_1_38_0 during attempted building from 	source on FreeBSD 7.1</H1>
+    <B>christophe taranotte</B> 
+    <A HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20Configure%20problems%20with%20btg%200.99%2C%0A%09libtorrent-rasterbar-0.14.2%2C%0A%09boost_1_38_0%20during%20attempted%20building%20from%20%09source%20on%20FreeBSD%207.1&In-Reply-To=%3C205ad7060903051509j177e8531i2e8eb3f8c937fe80%40mail.gmail.com%3E"
+       TITLE="[Btg-devel] Configure problems with btg 0.99,	libtorrent-rasterbar-0.14.2,	boost_1_38_0 during attempted building from 	source on FreeBSD 7.1">christophe.taranotte at gmail.com
+       </A><BR>
+    <I>Fri Mar  6 00:09:08 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000110.html">[Btg-devel] Configure problems with btg 0.99, libtorrent-rasterbar-0.14.2, boost_1_38_0 during attempted building from source on FreeBSD 7.1
+</A></li>
+        <LI>Next message: <A HREF="000118.html">[Btg-devel] Configure problems with btg 0.99, libtorrent-rasterbar-0.14.2, boost_1_38_0 during attempted building from  source on FreeBSD 7.1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#113">[ date ]</a>
+              <a href="thread.html#113">[ thread ]</a>
+              <a href="subject.html#113">[ subject ]</a>
+              <a href="author.html#113">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Now the configure script stops at the libtorrent part.
+I got the following errors:
+.../...
+configure:26780: Searching for libtorrent in /usr/local/opt (by pkgconfig)
+...
+configure:26786: checking for LIBTORRENT
+configure:26861: result: yes
+configure:26879: checking whether Rasterbar Libtorrent headers can be used
+configure:26909: g++ -c -I/usr/local/opt/include -I/usr/local/opt/include
+-I/usr/local/opt/include/libtorrent -D_THREAD_SAFE -pthread
+ -I/usr/local/include -
+configure:26916: $? = 0
+configure:26922: result: yes
+configure:26940: checking whether Rasterbar Libtorrent library can be used
+configure:26968: g++ -o conftest -I/usr/local/opt/include
+-I/usr/local/opt/include -I/usr/local/opt/include/libtorrent -D_THREAD_SAFE
+-pthread  -I/usr/local/
+/usr/bin/ld: warning: libboost_system-gcc42-mt-1_38.so.1.38.0, needed by
+/usr/local/opt/lib/libtorrent-rasterbar.so, not found (try using -rpath or
+-rpath-li
+/usr/bin/ld: warning: libboost_filesystem-gcc42-mt-1_38.so.1.38.0, needed by
+/usr/local/opt/lib/libtorrent-rasterbar.so, not found (try using -rpath or
+-rpat
+/usr/bin/ld: warning: libboost_thread-gcc42-mt-1_38.so.1.38.0, needed by
+/usr/local/opt/lib/libtorrent-rasterbar.so, not found (try using -rpath or
+-rpath-li
+/var/tmp//cc9cOqyt.o(.text+0x27e): In function
+`__static_initialization_and_destruction_0(int, int)':
+:<i> undefined reference to `boost::system::get_system_category()'
+</I>/var/tmp//cc9cOqyt.o(.text+0x288): In function
+`__static_initialization_and_destruction_0(int, int)':
+:<i> undefined reference to `boost::system::get_generic_category()'
+</I>/var/tmp//cc9cOqyt.o(.text+0x292): In function
+`__static_initialization_and_destruction_0(int, int)':
+:<i> undefined reference to `boost::system::get_generic_category()'
+</I>/var/tmp//cc9cOqyt.o(.text+0x29c): In function
+`__static_initialization_and_destruction_0(int, int)':
+:<i> undefined reference to `boost::system::get_generic_category()'
+</I>/var/tmp//cc9cOqyt.o(.text+0x2a6): In function
+`__static_initialization_and_destruction_0(int, int)':
+:<i> undefined reference to `boost::system::get_system_category()'
+</I>/var/tmp//cc9cOqyt.o(.gnu.linkonce.t._ZN5boost4asio5error19get_system_categoryEv+0x7):
+In function `boost::asio::error::get_system_category()':
+:<i> undefined reference to `boost::system::get_system_category()'
+</I>/usr/local/opt/lib/libtorrent-rasterbar.so: undefined reference to
+`boost::filesystem::detail::remove_api(std::string const&amp;)'
+/usr/local/opt/lib/libtorrent-rasterbar.so: undefined reference to
+`boost::detail::get_current_thread_data()'
+/usr/local/opt/lib/libtorrent-rasterbar.so: undefined reference to
+`boost::filesystem::detail::symlink_status_api(std::string const&amp;,
+boost::system::error_co
+/usr/local/opt/lib/libtorrent-rasterbar.so: undefined reference to
+`boost::thread_resource_error::~thread_resource_error()'
+/usr/local/opt/lib/libtorrent-rasterbar.so: undefined reference to
+`boost::thread::~thread()'
+/usr/local/opt/lib/libtorrent-rasterbar.so: undefined reference to `typeinfo
+for boost::detail::thread_data_base'
+/usr/local/opt/lib/libtorrent-rasterbar.so: undefined reference to `typeinfo
+for boost::lock_error'
+/usr/local/opt/lib/libtorrent-rasterbar.so: undefined reference to
+`boost::thread::start_thread()'
+/usr/local/opt/lib/libtorrent-rasterbar.so: undefined reference to
+`boost::filesystem::detail::dir_itr_close(void*&amp;, void*&amp;)'
+/usr/local/opt/lib/libtorrent-rasterbar.so: undefined reference to
+`boost::filesystem::detail::get_current_path_api(std::string&amp;)'
+/usr/local/opt/lib/libtorrent-rasterbar.so: undefined reference to
+`boost::filesystem::detail::dir_itr_increment(void*&amp;, void*&amp;, std::string&amp;,
+boost::filesys
+/usr/local/opt/lib/libtorrent-rasterbar.so: undefined reference to
+`boost::thread::join()'
+/usr/local/opt/lib/libtorrent-rasterbar.so: undefined reference to
+`boost::filesystem::detail::not_found_error()'
+/usr/local/opt/lib/libtorrent-rasterbar.so: undefined reference to
+`boost::filesystem::detail::rename_api(std::string const&amp;, std::string
+const&amp;)'
+/usr/local/opt/lib/libtorrent-rasterbar.so: undefined reference to
+`boost::filesystem::detail::last_write_time_api(std::string const&amp;)'
+/usr/local/opt/lib/libtorrent-rasterbar.so: undefined reference to `vtable
+for boost::detail::thread_data_base'
+/usr/local/opt/lib/libtorrent-rasterbar.so: undefined reference to
+`boost::filesystem::detail::file_size_api(std::string const&amp;)'
+/usr/local/opt/lib/libtorrent-rasterbar.so: undefined reference to
+`boost::filesystem::detail::create_directory_api(std::string const&amp;)'
+/usr/local/opt/lib/libtorrent-rasterbar.so: undefined reference to
+`boost::filesystem::detail::copy_file_api(std::string const&amp;, std::string
+const&amp;)'
+/usr/local/opt/lib/libtorrent-rasterbar.so: undefined reference to
+`boost::filesystem::detail::status_api(std::string const&amp;,
+boost::system::error_code&amp;)'
+/usr/local/opt/lib/libtorrent-rasterbar.so: undefined reference to
+`boost::lock_error::lock_error()'
+/usr/local/opt/lib/libtorrent-rasterbar.so: undefined reference to `typeinfo
+for boost::thread_resource_error'
+/usr/local/opt/lib/libtorrent-rasterbar.so: undefined reference to
+`boost::filesystem::detail::dir_itr_first(void*&amp;, void*&amp;, std::string
+const&amp;, std::string&amp;
+/usr/local/opt/lib/libtorrent-rasterbar.so: undefined reference to
+`boost::detail::thread_data_base::~thread_data_base()'
+/usr/local/opt/lib/libtorrent-rasterbar.so: undefined reference to
+`boost::lock_error::~lock_error()'
+/usr/local/opt/lib/libtorrent-rasterbar.so: undefined reference to
+`boost::thread_resource_error::thread_resource_error()'
+configure:26975: $? = 1
+.../...
+
+Same symptoms, same cure I guess.
+
+I attached the config.log.
+
+Best regards,
+
+Christophe
+
+On Thu, Mar 5, 2009 at 5:07 PM, Michael Wojciechowski &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">wojci at wojci.dk</A>&gt;wrote:
+
+&gt;<i> On Thu, 5 Mar 2009 01:24:19 +0100 christophe taranotte
+</I>&gt;<i> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">christophe.taranotte at gmail.com</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;<i> &gt; I have attached config.logs of btg-current and
+</I>&gt;<i> &gt; libtorrent-rasterbar-0.14.2. As you will see,
+</I>&gt;<i> &gt; libtorrent-rasterbar-0.14.2 configure finds/tests successfully
+</I>&gt;<i> &gt; Boost::Filesystem.
+</I>&gt;<i>
+</I>&gt;<i> I compared the m4 script used to detect boost filesystem in BTG with
+</I>&gt;<i> the one used in libtorrent 0.14.2. They are different.
+</I>&gt;<i>
+</I>&gt;<i> I merged the changes from libtorrent into trunk, r547. You might want
+</I>&gt;<i> to check it out and see if it solves this problem for you.
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Best regards
+</I>&gt;<i>
+</I>&gt;<i> Michael Wojciechowski
+</I>&gt;<i>
+</I>&gt;<i> &quot;When they ask how I died, I said, tell them: still angry.&quot;
+</I>&gt;<i> (Altered Carbon by Richard Morgan)
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/btg-devel/attachments/20090306/241f0938/attachment.html">https://lists.berlios.de/pipermail/btg-devel/attachments/20090306/241f0938/attachment.html</A>&gt;
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: BT-CURRENT-config-2009.3.6.log
+Type: application/octet-stream
+Size: 82914 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/btg-devel/attachments/20090306/241f0938/attachment.obj">https://lists.berlios.de/pipermail/btg-devel/attachments/20090306/241f0938/attachment.obj</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000110.html">[Btg-devel] Configure problems with btg 0.99, libtorrent-rasterbar-0.14.2, boost_1_38_0 during attempted building from source on FreeBSD 7.1
+</A></li>
+	<LI>Next message: <A HREF="000118.html">[Btg-devel] Configure problems with btg 0.99, libtorrent-rasterbar-0.14.2, boost_1_38_0 during attempted building from  source on FreeBSD 7.1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#113">[ date ]</a>
+              <a href="thread.html#113">[ thread ]</a>
+              <a href="subject.html#113">[ subject ]</a>
+              <a href="author.html#113">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/btg-devel">More information about the Btg-devel
+mailing list</a><br>
+</body></html>

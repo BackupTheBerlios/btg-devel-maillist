@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Btg-devel] compile error
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/btg-devel/2008-September/index.html" >
+   <LINK REL="made" HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20compile%20error&In-Reply-To=%3C48C921CD.3060501%40romanr.info%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000058.html">
+   <LINK REL="Next"  HREF="000060.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Btg-devel] compile error</H1>
+    <B>Roman Rybalko</B> 
+    <A HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20compile%20error&In-Reply-To=%3C48C921CD.3060501%40romanr.info%3E"
+       TITLE="[Btg-devel] compile error">btg at romanr.info
+       </A><BR>
+    <I>Thu Sep 11 15:49:01 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000058.html">[Btg-devel] compile error
+</A></li>
+        <LI>Next message: <A HREF="000060.html">[Btg-devel] compile error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#59">[ date ]</a>
+              <a href="thread.html#59">[ thread ]</a>
+              <a href="subject.html#59">[ subject ]</a>
+              <a href="author.html#59">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Daniel Svensson wrote:
+&gt;<i> make[3]: Entering directory `/home/daniel/src/btg-svn/daemon/auth'
+</I>&gt;<i> /bin/sh ../../libtool --tag=CXX --mode=link g++  -g -O2  -L/usr/lib -o
+</I>&gt;<i> btgpasswd  btgpasswd-arg.o btgpasswd-btgpasswd.o btgpasswd-dconfig.o
+</I>&gt;<i> ../../bcore/libbtgcore.la &lt;<A HREF="http://libbtgcore.la">http://libbtgcore.la</A>&gt; libauth.la
+</I>&gt;<i> &lt;<A HREF="http://libauth.la">http://libauth.la</A>&gt; ../../external/ini/libini.la &lt;<A HREF="http://libini.la">http://libini.la</A>&gt;
+</I>&gt;<i> -lboost_date_time-mt-s
+</I>&gt;<i> libtool: link: g++ -g -O2 -o .libs/btgpasswd btgpasswd-arg.o
+</I>&gt;<i> btgpasswd-btgpasswd.o btgpasswd-dconfig.o  -L/usr/lib
+</I>&gt;<i> ../../bcore/.libs/libbtgcore.so -L/usr/i686-pc-linux-gnu/bin
+</I>&gt;<i> -L/usr/i686-pc-linux-gnu/lib
+</I>&gt;<i> -L/usr/lib/gcc/i686-pc-linux-gnu/../../../i686-pc-linux-gnu/lib
+</I>&gt;<i> -lboost_iostreams-mt-s /usr/lib/libgnutls.so /usr/lib/libtasn1.so
+</I>&gt;<i> /usr/lib/libgcrypt.so /usr/lib/libgpg-error.so
+</I>&gt;<i> -lboost_program_options-mt-s -lboost_thread-mt-s
+</I>&gt;<i> -lboost_filesystem-mt-s -lboost_system-mt-s ./.libs/libauth.a
+</I>&gt;<i> ../../external/ini/.libs/libini.a
+</I>&gt;<i> /usr/lib/gcc/i686-pc-linux-gnu/3.4.6/libstdc++.so -lm -lgcc_s -lc
+</I>&gt;<i> -lboost_date_time-mt-s -pthread -Wl,-rpath -Wl,/usr/local/lib/btg
+</I>&gt;<i> ../../bcore/.libs/libbtgcore.so: undefined reference to `inflateReset'
+</I>&gt;<i> ../../bcore/.libs/libbtgcore.so: undefined reference to `inflateEnd'
+</I>&gt;<i> ../../bcore/.libs/libbtgcore.so: undefined reference to `deflate'
+</I>&gt;<i> ../../bcore/.libs/libbtgcore.so: undefined reference to `inflateInit2_'
+</I>&gt;<i> ../../bcore/.libs/libbtgcore.so: undefined reference to `inflate'
+</I>&gt;<i> ../../bcore/.libs/libbtgcore.so: undefined reference to `crc32'
+</I>&gt;<i> ../../bcore/.libs/libbtgcore.so: undefined reference to `deflateEnd'
+</I>&gt;<i> ../../bcore/.libs/libbtgcore.so: undefined reference to `deflateReset'
+</I>&gt;<i> ../../bcore/.libs/libbtgcore.so: undefined reference to `deflateInit2_'
+</I>&gt;<i> collect2: ld returned 1 exit status
+</I>&gt;<i> make[3]: *** [btgpasswd] Error 1
+</I>Can you send us
+ldd /usr/local/lib/libboost_iostreams-mt-s.so
+or
+ldd /usr/lib/libboost_iostreams-mt-s.so
+
+it should be like this:
+ldd /usr/local/lib/libboost_iostreams.so
+/usr/local/lib/libboost_iostreams.so:
+        libbz2.so.3 =&gt; /usr/lib/libbz2.so.3 (0x2818f000)
+        libz.so.4 =&gt; /lib/libz.so.4 (0x2819f000)
+        libstdc++.so.6 =&gt; /usr/lib/libstdc++.so.6 (0x28300000)
+        libm.so.5 =&gt; /lib/libm.so.5 (0x281b1000)
+        libgcc_s.so.1 =&gt; /lib/libgcc_s.so.1 (0x281c6000)
+        libthr.so.3 =&gt; /lib/libthr.so.3 (0x281d1000)
+        libc.so.7 =&gt; /lib/libc.so.7 (0x28080000)
+i.e. it should use libz.so
+If it doesn't - probably you compiled your boost without zlib-streams
+support.
+I'm attaching a patch to (supposedly) fix this.
+Please, let us know whether it works.
+
+-- 
+WBR,
+Roman Rybalko
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/btg-devel/attachments/20080911/e851c654/attachment.html">https://lists.berlios.de/pipermail/btg-devel/attachments/20080911/e851c654/attachment.html</A>&gt;
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: bcore-libz-fix.patch
+Type: text/x-patch
+Size: 554 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/btg-devel/attachments/20080911/e851c654/attachment.bin">https://lists.berlios.de/pipermail/btg-devel/attachments/20080911/e851c654/attachment.bin</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000058.html">[Btg-devel] compile error
+</A></li>
+	<LI>Next message: <A HREF="000060.html">[Btg-devel] compile error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#59">[ date ]</a>
+              <a href="thread.html#59">[ thread ]</a>
+              <a href="subject.html#59">[ subject ]</a>
+              <a href="author.html#59">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/btg-devel">More information about the Btg-devel
+mailing list</a><br>
+</body></html>

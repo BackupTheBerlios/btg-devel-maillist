@@ -1,0 +1,141 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Btg-devel] BTG &amp; FreeBSD
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/btg-devel/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20BTG%20%26%20FreeBSD&In-Reply-To=%3Cop.uji0yyprhdf5ma%40sunny%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000065.html">
+   <LINK REL="Next"  HREF="000067.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Btg-devel] BTG &amp; FreeBSD</H1>
+    <B>Jurriaan Nijkamp</B> 
+    <A HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20BTG%20%26%20FreeBSD&In-Reply-To=%3Cop.uji0yyprhdf5ma%40sunny%3E"
+       TITLE="[Btg-devel] BTG &amp; FreeBSD">alias at jurrie.net
+       </A><BR>
+    <I>Fri Oct 24 13:31:36 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000065.html">[Btg-devel] BTG &amp; FreeBSD
+</A></li>
+        <LI>Next message: <A HREF="000067.html">[Btg-devel] Garry Williams
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#66">[ date ]</a>
+              <a href="thread.html#66">[ thread ]</a>
+              <a href="subject.html#66">[ subject ]</a>
+              <a href="author.html#66">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I hate replying to myself, but I guess this time it's a good thing.
+
+It was a wild guess of mine, but I made a minor change to the configure  
+line. I replaced
+
+LIBTORRENT_LIBS=&quot;-L/usr/local/lib -ltorrent-rasterbar&quot;
+
+with
+
+LIBTORRENT_LIBS=&quot;-L/usr/local/lib -ltorrent&quot;
+
+and the configure stage completed. Afterwards a make install completed the  
+job.
+
+This time around I used apache 2.0 (2.2 previously) since it did not  
+require loading the kernel module accf_http. I don't have any proof, but  
+my previous freezes may have had something to do with that module. Pure  
+speculation though.
+
+Anway, I launched my btgdaemon a few minutes ago and it is happily  
+downloading a torrent at a nice speed, whereas previously the server just  
+froze after a few seconds.
+
+This case is closed now. I hope it will be of use to anyone out there ;-)
+
+On Fri, 24 Oct 2008 11:30:12 +0200, Jurriaan Nijkamp &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">alias at jurrie.net</A>&gt;  
+wrote:
+
+&gt;<i> Hello again,
+</I>&gt;<i>
+</I>&gt;<i> I'm giving the installation another shot and this time I am adding the
+</I>&gt;<i> FreeBSD specific configuration flags which were mentioned in the HOWTO
+</I>&gt;<i> (current) on the website. The configure step gives me an error, though. I
+</I>&gt;<i> am applying them to 0.9.8 at this moment, but 0.9.9-RC1 gave me the same
+</I>&gt;<i> error.
+</I>&gt;<i>
+</I>&gt;<i> Short version -- configure: error: Unable to link with required  
+</I>&gt;<i> libraries.
+</I>&gt;<i>
+</I>&gt;<i> I have uploaded my config.log to <A HREF="http://jurrie.net/misc/config.log.bz2">http://jurrie.net/misc/config.log.bz2</A>
+</I>&gt;<i> hoping you are willing to check it out and see if you can find what's
+</I>&gt;<i> wrong. Though I have some experience compiling, I'm not adept enough to
+</I>&gt;<i> figure out these kinds of errors.
+</I>&gt;<i>
+</I>&gt;<i> The BSD installation is very fresh (new install this morning) and I only
+</I>&gt;<i> added some neccesary packages required for BTG. I added all of them using
+</I>&gt;<i> pkg_add, not by compiling them from ports.
+</I>&gt;<i>
+</I>&gt;<i> Noteable:
+</I>&gt;<i> - rblibtorrent 0.13
+</I>&gt;<i> - boost 1.34.1
+</I>&gt;<i> - gnutls 2.4.1_1
+</I>&gt;<i> - autotools 20080819
+</I>&gt;<i> - curl 7.18.0
+</I>&gt;<i>
+</I>&gt;<i> FreeBSD 7.0-p5, amd64
+</I>&gt;<i>
+</I>&gt;<i> I ran autogen.sh and am configuring like this:
+</I>&gt;<i>
+</I>&gt;<i> ./configure --enable-www --enable-cli --enable-url
+</I>&gt;<i> LIBTORRENT_LIBS=&quot;-L/usr/local/lib -ltorrent-rasterbar&quot;
+</I>&gt;<i> LIBTORRENT_CFLAGS=&quot;-DTORRENT_USE_OPENSSL -D_THREAD_SAFE -pthread
+</I>&gt;<i> -I/usr/local/include -I/usr/local/include/libtorrent&quot; LIBS=&quot;-lpthread&quot;
+</I>&gt;<i>
+</I>&gt;<i> (the quotes were needed or configure wouldn't accept it)
+</I>&gt;<i>
+</I>&gt;<i> If you need any other information from me, I'd be happy to oblige.
+</I>&gt;<i> Thank you very much in advance.
+</I>&gt;<i>
+</I>&gt;<i> Regards,
+</I>&gt;<i> Jurriaan Nijkamp
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Btg-devel mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">Btg-devel at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">https://lists.berlios.de/mailman/listinfo/btg-devel</A>
+</I>
+
+
+-- 
+Using Opera's revolutionary e-mail client: <A HREF="http://www.opera.com/mail/">http://www.opera.com/mail/</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000065.html">[Btg-devel] BTG &amp; FreeBSD
+</A></li>
+	<LI>Next message: <A HREF="000067.html">[Btg-devel] Garry Williams
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#66">[ date ]</a>
+              <a href="thread.html#66">[ thread ]</a>
+              <a href="subject.html#66">[ subject ]</a>
+              <a href="author.html#66">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/btg-devel">More information about the Btg-devel
+mailing list</a><br>
+</body></html>

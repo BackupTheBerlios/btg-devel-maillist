@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Btg-devel] contextUrlStatusResponseCommand, use of floats
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/btg-devel/2008-May/index.html" >
+   <LINK REL="made" HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20contextUrlStatusResponseCommand%2C%20use%20of%20floats&In-Reply-To=%3C481DA46D.2090401%40romanr.info%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000020.html">
+   <LINK REL="Next"  HREF="000024.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Btg-devel] contextUrlStatusResponseCommand, use of floats</H1>
+    <B>Roman Rybalko</B> 
+    <A HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20contextUrlStatusResponseCommand%2C%20use%20of%20floats&In-Reply-To=%3C481DA46D.2090401%40romanr.info%3E"
+       TITLE="[Btg-devel] contextUrlStatusResponseCommand, use of floats">romanr at romanr.info
+       </A><BR>
+    <I>Sun May  4 13:56:29 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000020.html">[Btg-devel] contextUrlStatusResponseCommand, use of floats
+</A></li>
+        <LI>Next message: <A HREF="000024.html">[Btg-devel] configure: error: Could not link against
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21">[ date ]</a>
+              <a href="thread.html#21">[ thread ]</a>
+              <a href="subject.html#21">[ subject ]</a>
+              <a href="author.html#21">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Michael Wojciechowski wrote:
+&gt;<i> What about hw where you have to emulate floating point in software?
+</I>&gt;<i>
+</I>&gt;<i> I just wanted you to think about a way of avoiding using floats, if
+</I>&gt;<i> possible. If not, then leave it as it is
+</I>I see your point, but libcurl itself uses doubles and we depend on it.
+Generally we can disable all this part of functionality when building
+for the embedded.
+
+Btw, FP emulation code works only when there is an ALU operation to do.
+On the daemon side there is only conversion from double to float,
+which can be omitted by introducing t_double our type, which consumes
+twice more memory.
+If we use integer, there will be conversion from double to integer,
+which a bit more complicated than between floats.
+
+XML converts floats rather fast (just serializing it's internal
+representation, I think,
+since internal representation of float-like types is standardized by
+IEEE and should be equal on all systems).
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000020.html">[Btg-devel] contextUrlStatusResponseCommand, use of floats
+</A></li>
+	<LI>Next message: <A HREF="000024.html">[Btg-devel] configure: error: Could not link against
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21">[ date ]</a>
+              <a href="thread.html#21">[ thread ]</a>
+              <a href="subject.html#21">[ subject ]</a>
+              <a href="author.html#21">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/btg-devel">More information about the Btg-devel
+mailing list</a><br>
+</body></html>

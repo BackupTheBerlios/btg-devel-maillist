@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Btg-devel] [PATCH] fix btg for gcc-4.3
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/btg-devel/2008-March/index.html" >
+   <LINK REL="made" HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20%5BPATCH%5D%20fix%20btg%20for%20gcc-4.3&In-Reply-To=%3C20080318102055.GS2414%40genesis.frugalware.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000003.html">
+   <LINK REL="Next"  HREF="000005.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Btg-devel] [PATCH] fix btg for gcc-4.3</H1>
+    <B>Miklos Vajna</B> 
+    <A HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20%5BPATCH%5D%20fix%20btg%20for%20gcc-4.3&In-Reply-To=%3C20080318102055.GS2414%40genesis.frugalware.org%3E"
+       TITLE="[Btg-devel] [PATCH] fix btg for gcc-4.3">vmiklos at frugalware.org
+       </A><BR>
+    <I>Tue Mar 18 11:20:55 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000003.html">[Btg-devel] BTG 0.9.7 released
+</A></li>
+        <LI>Next message: <A HREF="000005.html">[Btg-devel] [PATCH] fix btg for gcc-4.3
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4">[ date ]</a>
+              <a href="thread.html#4">[ thread ]</a>
+              <a href="subject.html#4">[ subject ]</a>
+              <a href="author.html#4">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>hi,
+
+i'm attaching a patch, i needed it to compile btg-4.3 with gcc-4.3.
+
+thanks for btg!
+-------------- next part --------------
+--- ./bcore/auth/hash.cpp.orig	2008-03-17 16:16:47.000000000 +0100
++++ ./bcore/auth/hash.cpp	2008-03-17 16:17:11.000000000 +0100
+@@ -23,6 +23,7 @@
+ #include &quot;hash.h&quot;
+ 
+ #include &lt;sstream&gt;
++#include &lt;cstring&gt;
+ #include &lt;iomanip&gt;
+ 
+ #include &lt;bcore/helpermacro.h&gt;
+--- ./bcore/os/socket.h.orig	2008-03-17 16:19:29.000000000 +0100
++++ ./bcore/os/socket.h	2008-03-17 16:19:37.000000000 +0100
+@@ -35,6 +35,7 @@
+ #include &lt;string&gt;
+ #include &lt;map&gt;
+ #include &lt;vector&gt;
++#include &lt;cstring&gt;
+ 
+ extern &quot;C&quot;
+ {
+--- ./bcore/os/stdin.h.orig	2008-03-17 16:20:53.000000000 +0100
++++ ./bcore/os/stdin.h	2008-03-17 16:21:01.000000000 +0100
+@@ -24,6 +24,7 @@
+ #define BTG_STDIN_H
+ 
+ #include &lt;string&gt;
++#include &lt;cstring&gt;
+ 
+ namespace btg
+ {
+--- ./external/ini/cdatafile.cpp.orig	2008-03-17 15:53:07.000000000 +0100
++++ ./external/ini/cdatafile.cpp	2008-03-17 16:31:07.000000000 +0100
+@@ -37,6 +37,9 @@
+ 
+ #include &lt;vector&gt;
+ #include &lt;string&gt;
++#include &lt;cstring&gt;
++#include &lt;cstdlib&gt;
++#include &lt;climits&gt;
+ #include &lt;ctype.h&gt;
+ #include &lt;stdio.h&gt;
+ #include &lt;stdarg.h&gt;
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: not available
+Type: application/pgp-signature
+Size: 189 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/btg-devel/attachments/20080318/147e45d3/attachment.pgp">https://lists.berlios.de/pipermail/btg-devel/attachments/20080318/147e45d3/attachment.pgp</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000003.html">[Btg-devel] BTG 0.9.7 released
+</A></li>
+	<LI>Next message: <A HREF="000005.html">[Btg-devel] [PATCH] fix btg for gcc-4.3
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4">[ date ]</a>
+              <a href="thread.html#4">[ thread ]</a>
+              <a href="subject.html#4">[ subject ]</a>
+              <a href="author.html#4">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/btg-devel">More information about the Btg-devel
+mailing list</a><br>
+</body></html>

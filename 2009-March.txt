@@ -1,0 +1,1603 @@
+From christophe.taranotte at gmail.com  Mon Mar  2 12:06:53 2009
+From: christophe.taranotte at gmail.com (christophe taranotte)
+Date: Mon, 2 Mar 2009 12:06:53 +0100
+Subject: [Btg-devel] Configure problems with btg 0.99,
+	libtorrent-rasterbar-0.14.2,
+	boost_1_38_0 during attempted building from source on FreeBSD 7.1
+Message-ID: <205ad7060903020306u15b8cfdfua9d824b453c981b7@mail.gmail.com>
+
+Greetings,
+I am trying to build from source btg 0.99 with libtorrent-rasterbar-0.14.2
+and boost_1_38_0 on FreeBSD 7.1.
+
+libtorrent-rasterbar-0.14.2 and boost_1_38_0 have already been built from
+source.
+
+My configure arguments (under bash) are as follows:
+
+#./configure --enable-www --enable-cli --enable-url --enable-command-list
+--enable-session-saving --prefix='/usr/local/opt' \
+LIBTORRENT_LIBS="-L/usr/local/opt/lib -ltorrent-rasterbar"
+LIBTORRENT_CFLAGS="-DTORRENT_USE_OPENSSL -D_THREAD_SAFE -pthread
+-I/usr/local/opt/include -I/usr/local/opt/include/libtorrent" \
+LIBS="-lpthread" BOOST_LDFLAGS="-L/usr/local/opt/lib"
+BOOST_CPPFLAGS="-I/usr/local/opt/include" \
+--with-rblibtorrent=/usr/local/opt/lib
+--with-boost-system=boost_system-gcc42-mt-1_38 \
+--with-boost-iostreams=boost_iostreams-gcc42-mt-1_38
+--with-boost-filesystem=boost_filesystem-gcc42-mt-1_38 \
+--with-boost-date-time=boost_date_time-gcc42-mt-1_38
+--with-boost-thread=boost_thread-gcc42-mt-1_38
+--with-boost-program-options=boost_program_options-gcc42-mt-1_38
+
+The configure script stops and returns the following error:
+..../....
+configure: Using BOOST_LDFLAGS = -L/usr/local/opt/lib configure: Using
+BOOST_CPPFLAGS = -I/usr/local/opt/include checking whether the Boost::System
+library is available... yes checking for exit in
+-lboost_system-gcc42-mt-1_38... yes checking whether the Boost::IOStreams
+library is available... yes checking for main in
+-lboost_iostreams-gcc42-mt-1_38... yes checking whether the
+Boost::Filesystem library is available... yes checking for exit in
+-lboost_filesystem-gcc42-mt-1_38... no checking for exit in
+-lboost_filesystem-boost_filesystem-gcc42-mt-1_38... no configure: error:
+Could not link against boost_filesystem-boost_filesystem-gcc42-mt-1_38 ! #
+
+In the attached config.log, I have:
+.../...
+configure:25245: checking whether the Boost::Filesystem library is available
+configure:25279: g++ -c -g -O2 -D_THREAD_SAFE -I/usr/local/include
+-I/usr/local/opt/include -I/usr/local/opt/include conftest.cpp >&5
+configure:25286: $? = 0 configure:25308: result: yes configure:25479:
+checking for exit in -lboost_filesystem-gcc42-mt-1_38 configure:25514: g++
+-o conftest -g -O2 -D_THREAD_SAFE -I/usr/local/include
+-I/usr/local/opt/include -I/usr/local/opt/include -L/usr/local/lib
+-L/usr/loca /usr/bin/ld: warning: libboost_system-gcc42-mt-1_38.so.1.38.0,
+needed by /usr/local/opt/lib/libboost_filesystem-gcc42-mt-1_38.so, not found
+(try using -rpath /usr/local/opt/lib/libboost_filesystem-gcc42-mt-1_38.so:
+undefined reference to `boost::system::get_system_category()'
+/usr/local/opt/lib/libboost_filesystem-gcc42-mt-1_38.so: undefined reference
+to `boost::system::get_generic_category()' .../...
+
+I am at a loss here: the script finds/tests
+libboost_system-gcc42-mt-1_38.so.1.38.0
+and libboost_iostreams-gcc42-mt-1_38.so.1.38.0 but not
+libboost_filesystem-gcc42-mt-1_38.so.1.38.0
+
+libtorrent-rasterbar was successfully built with
+libboost_filesystem-gcc42-mt-1_38.so.1.38.0
+
+Is it a problem with boost 1.38.0?
+
+Regards,
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20090302/c126e67b/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: config.log
+Type: application/octet-stream
+Size: 65538 bytes
+Desc: not available
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20090302/c126e67b/attachment.obj>
+
+From wojci at wojci.dk  Tue Mar  3 19:12:42 2009
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Tue, 3 Mar 2009 19:12:42 +0100
+Subject: [Btg-devel] Configure problems with btg 0.99,
+ libtorrent-rasterbar-0.14.2,
+ boost_1_38_0 during attempted building from source on FreeBSD 7.1
+In-Reply-To: <205ad7060903020306u15b8cfdfua9d824b453c981b7@mail.gmail.com>
+References: <205ad7060903020306u15b8cfdfua9d824b453c981b7@mail.gmail.com>
+Message-ID: <20090303191242.04aec0bd@netpc4.home.wojci.dk.home.wojci.dk>
+
+On Mon, 2 Mar 2009 12:06:53 +0100 christophe taranotte
+<christophe.taranotte at gmail.com> wrote:
+
+> I am trying to build from source btg 0.99 with
+> libtorrent-rasterbar-0.14.2 and boost_1_38_0 on FreeBSD 7.1.
+
+I configured BTG trunk a few minutes ago - using boost 1.38 and
+libtorrent 0.14.2 on Debian. No issues there. I commited the setup.sh
+script I am using, revision 546. I am also using boost/libtorrent build
+from source, because the debian package maintainers are not very fast.
+
+> --with-rblibtorrent=/usr/local/opt/lib
+> --with-boost-system=boost_system-gcc42-mt-1_38 \
+> --with-boost-iostreams=boost_iostreams-gcc42-mt-1_38
+> --with-boost-filesystem=boost_filesystem-gcc42-mt-1_38 \
+> --with-boost-date-time=boost_date_time-gcc42-mt-1_38
+> --with-boost-thread=boost_thread-gcc42-mt-1_38
+> --with-boost-program-options=boost_program_options-gcc42-mt-1_38
+
+I think you should look at setup.sh, see how boost/libtorrent variables
+are set, after line 111.
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+"When they ask how I died, I said, tell them: still angry." 
+(Altered Carbon by Richard Morgan)
+
+
+From christophe.taranotte at gmail.com  Thu Mar  5 01:24:19 2009
+From: christophe.taranotte at gmail.com (christophe taranotte)
+Date: Thu, 5 Mar 2009 01:24:19 +0100
+Subject: [Btg-devel]  Configure problems with btg 0.99,
+	libtorrent-rasterbar-0.14.2,
+	boost_1_38_0 during attempted building from source on FreeBSD 7.1
+In-Reply-To: <205ad7060903041622h4429433ate18a63d869c997bb@mail.gmail.com>
+References: <205ad7060903020306u15b8cfdfua9d824b453c981b7@mail.gmail.com>
+	<20090303191242.04aec0bd@netpc4.home.wojci.dk.home.wojci.dk>
+	<205ad7060903041622h4429433ate18a63d869c997bb@mail.gmail.com>
+Message-ID: <205ad7060903041624r215648e1mab67b8c5034743ad@mail.gmail.com>
+
+Hi there,
+
+I followed your advice and tried to configure/build btg-current.
+
+Here is the output of your setup.sh script:
+_______________________________________________________________________________________________________________
++ ROOT=/usr/local/opt
++ BOOST_SUFFIX=gcc42-mt-1_38
++ CONFIGURE_BOOST=--with-boost-system=gcc42-mt-1_38
+--with-boost-date-time=gcc42-mt-1_38 --with-boost-filesystem=gcc42-mt-1_38
+--with-boost-thread=gcc42-mt-1_38 --with-boost-regex=gcc42-mt-1_38
+--with-boost-program_options=gcc42-mt-1_38
+--with-boost-iostreams=gcc42-mt-1_38
++ CONFIGURE=./configure --enable-btg-config --enable-cli --enable-unittest
+--enable-session-saving --enable-command-list --enable-event-callback
+--enable-www --enable-url --enable-upnp --prefix=/usr/local/opt
+--with-boost-system=gcc42-mt-1_38 --with-boost-date-time=gcc42-mt-1_38
+--with-boost-filesystem=gcc42-mt-1_38 --with-boost-thread=gcc42-mt-1_38
+--with-boost-regex=gcc42-mt-1_38 --with-boost-program_options=gcc42-mt-1_38
+--with-boost-iostreams=gcc42-mt-1_38
++ export BOOST_ROOT=/usr/local/opt/include
++ export CXXFLAGS=-I/usr/local/opt/include
++ export LDFLAGS=-L/usr/local/opt/lib
++ export BOOST_LDFLAGS=-L/usr/local/opt/lib
++ export BOOST_CPPFLAGS=-I/usr/local/opt/include
++ export LIBRARY_PATH=/usr/local/opt/lib
++ export LIBTORRENT_CFLAGS=-I/usr/local/opt/include
+-I/usr/local/opt/include/libtorrent
++ export LIBTORRENT_LIBS=-L/usr/local/opt/lib -ltorrent-rasterbar
++ echo Using ./configure --enable-btg-config --enable-cli --enable-unittest
+--enable-session-saving --enable-command-list --enable-event-callback
+--enable-www --enable-url --enable-upnp --prefix=/usr/local/opt
+--with-boost-system=gcc42-mt-1_38 --with-boost-date-time=gcc42-mt-1_38
+--with-boost-filesystem=gcc42-mt-1_38 --with-boost-thread=gcc42-mt-1_38
+--with-boost-regex=gcc42-mt-1_38 --with-boost-program_options=gcc42-mt-1_38
+--with-boost-iostreams=gcc42-mt-1_38
+Using ./configure --enable-btg-config --enable-cli --enable-unittest
+--enable-session-saving --enable-command-list --enable-event-callback
+--enable-www --enable-url --enable-upnp --prefix=/usr/local/opt
+--with-boost-system=gcc42-mt-1_38 --with-boost-date-time=gcc42-mt-1_38
+--with-boost-filesystem=gcc42-mt-1_38 --with-boost-thread=gcc42-mt-1_38
+--with-boost-regex=gcc42-mt-1_38 --with-boost-program_options=gcc42-mt-1_38
+--with-boost-iostreams=gcc42-mt-1_38
++ ./configure --enable-btg-config --enable-cli --enable-unittest
+--enable-session-saving --enable-command-list --enable-event-callback
+--enable-www --enable-url --enable-upnp --prefix=/usr/local/opt
+--with-boost-system=gcc42-mt-1_38 --with-boost-date-time=gcc42-mt-1_38
+--with-boost-filesystem=gcc42-mt-1_38 --with-boost-thread=gcc42-mt-1_38
+--with-boost-regex=gcc42-mt-1_38 --with-boost-program_options=gcc42-mt-1_38
+--with-boost-iostreams=gcc42-mt-1_38 --with-rblibtorrent=/usr/local/opt
+_______________________________________________________________________________________________________________
+
+
+The configure script finds/tests successfully Boost::System and
+Boost::IOStreams but fails at Boost::Filesystem like in my previous attempt.
+Here is the relevant part of the config.log:
+_______________________________________________________________________________________________________________
+configure:25246: checking whether the Boost::Filesystem library is available
+configure:25280: g++ -c -I/usr/local/opt/include -D_THREAD_SAFE -pthread
+-I/usr/local/include -I/usr/local/opt/include -I/usr/local/opt/include
+conftest.cpp
+configure:25287: $? = 0
+configure:25309: result: yes
+configure:25480: checking for exit in -lgcc42-mt-1_38
+configure:25545: result: no
+configure:25480: checking for exit in -lboost_filesystem-gcc42-mt-1_38
+configure:25515: g++ -o conftest -I/usr/local/opt/include -D_THREAD_SAFE
+-pthread  -I/usr/local/include -I/usr/local/opt/include
+-I/usr/local/opt/include -L/
+/usr/bin/ld: warning: libboost_system-gcc42-mt-1_38.so.1.38.0, needed by
+/usr/local/opt/lib/libboost_filesystem-gcc42-mt-1_38.so, not found (try
+using -rpath
+/usr/local/opt/lib/libboost_filesystem-gcc42-mt-1_38.so: undefined reference
+to `boost::system::get_system_category()'
+/usr/local/opt/lib/libboost_filesystem-gcc42-mt-1_38.so: undefined reference
+to `boost::system::get_generic_category()'
+configure:25522: $? = 1
+_______________________________________________________________________________________________________________
+
+I have attached config.logs of btg-current and libtorrent-rasterbar-0.14.2.
+As you will see, libtorrent-rasterbar-0.14.2 configure finds/tests
+successfully Boost::Filesystem.
+
+That being said, I have another problem. Btg-0.9.9 against Boost 1.35 and
+libtorrent-rasterbar-0.13 with the cli and the www clients enabled failed to
+build because of some ncurse errors. Btg-0.9.9 against Boost 1.35 and
+libtorrent-rasterbar-0.13 with the www client alone was successfully built.
+I will start a new thread tomorrow with the config.log and stderr files.
+
+Regards,
+
+Christophe
+
+
+On Tue, Mar 3, 2009 at 7:12 PM, Michael Wojciechowski <wojci at wojci.dk>wrote:
+
+> On Mon, 2 Mar 2009 12:06:53 +0100 christophe taranotte
+> <christophe.taranotte at gmail.com> wrote:
+>
+> > I am trying to build from source btg 0.99 with
+> > libtorrent-rasterbar-0.14.2 and boost_1_38_0 on FreeBSD 7.1.
+>
+> I configured BTG trunk a few minutes ago - using boost 1.38 and
+> libtorrent 0.14.2 on Debian. No issues there. I commited the setup.sh
+> script I am using, revision 546. I am also using boost/libtorrent build
+> from source, because the debian package maintainers are not very fast.
+>
+> > --with-rblibtorrent=/usr/local/opt/lib
+> > --with-boost-system=boost_system-gcc42-mt-1_38 \
+> > --with-boost-iostreams=boost_iostreams-gcc42-mt-1_38
+> > --with-boost-filesystem=boost_filesystem-gcc42-mt-1_38 \
+> > --with-boost-date-time=boost_date_time-gcc42-mt-1_38
+> > --with-boost-thread=boost_thread-gcc42-mt-1_38
+> > --with-boost-program-options=boost_program_options-gcc42-mt-1_38
+>
+> I think you should look at setup.sh, see how boost/libtorrent variables
+> are set, after line 111.
+>
+> --
+> Best regards
+>
+> Michael Wojciechowski
+>
+> "When they ask how I died, I said, tell them: still angry."
+> (Altered Carbon by Richard Morgan)
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20090305/93901da9/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: btg-current-config.log
+Type: application/octet-stream
+Size: 74352 bytes
+Desc: not available
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20090305/93901da9/attachment.obj>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: libtorrent-rasterbar-0.14.2-config.log
+Type: application/octet-stream
+Size: 39565 bytes
+Desc: not available
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20090305/93901da9/attachment-0001.obj>
+
+From wojci at wojci.dk  Thu Mar  5 17:07:32 2009
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Thu, 5 Mar 2009 17:07:32 +0100
+Subject: [Btg-devel] Configure problems with btg 0.99,
+ libtorrent-rasterbar-0.14.2,
+ boost_1_38_0 during attempted building from source on FreeBSD 7.1
+In-Reply-To: <205ad7060903041624r215648e1mab67b8c5034743ad@mail.gmail.com>
+References: <205ad7060903020306u15b8cfdfua9d824b453c981b7@mail.gmail.com>
+	<20090303191242.04aec0bd@netpc4.home.wojci.dk.home.wojci.dk>
+	<205ad7060903041622h4429433ate18a63d869c997bb@mail.gmail.com>
+	<205ad7060903041624r215648e1mab67b8c5034743ad@mail.gmail.com>
+Message-ID: <20090305170732.79680c4e@netpc4.home.wojci.dk.home.wojci.dk>
+
+On Thu, 5 Mar 2009 01:24:19 +0100 christophe taranotte
+<christophe.taranotte at gmail.com> wrote:
+
+> I have attached config.logs of btg-current and
+> libtorrent-rasterbar-0.14.2. As you will see,
+> libtorrent-rasterbar-0.14.2 configure finds/tests successfully
+> Boost::Filesystem.
+
+I compared the m4 script used to detect boost filesystem in BTG with
+the one used in libtorrent 0.14.2. They are different.
+
+I merged the changes from libtorrent into trunk, r547. You might want
+to check it out and see if it solves this problem for you.
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+"When they ask how I died, I said, tell them: still angry." 
+(Altered Carbon by Richard Morgan)
+
+
+From christophe.taranotte at gmail.com  Thu Mar  5 22:43:51 2009
+From: christophe.taranotte at gmail.com (christophe taranotte)
+Date: Thu, 5 Mar 2009 22:43:51 +0100
+Subject: [Btg-devel] btg-current cli client failing to build against boost
+	1.35 and libtorrent-rasterbar 1.3 on FreeBSD 7.1 and showing
+	ncurses-related errors
+Message-ID: <205ad7060903051343j1549a076v38e43a861ce20a6a@mail.gmail.com>
+
+Greetings,
+My configure arguments were:
+
+--enable-btg-config
+--enable-www
+--enable-cli
+--enable-url
+--enable-session-saving
+--enable-command-list
+--enable-event-callback
+--with-ncurses
+
+I successfully built btg-current with the cli flag disabled.
+
+I did no try to build with the gui and viewer flags enabled.
+
+The ncurses version in FreeBSD base is 5.6 (20080503). I also tried with 5.7
+installed from ports to no avail.
+
+I saved the stderr and stdout output in the two files attached along with
+the config file.
+
+I have a last question: do I still need bash as all your scripts are
+shell sh scripts?
+
+Best regards,
+
+Christophe
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20090305/a4c34ee0/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: BT-CURRENT-GMAKE-STDERR
+Type: application/octet-stream
+Size: 26556 bytes
+Desc: not available
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20090305/a4c34ee0/attachment.obj>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: BT-CURRENT-GMAKE-STDOUT
+Type: application/octet-stream
+Size: 7530 bytes
+Desc: not available
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20090305/a4c34ee0/attachment-0001.obj>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: BTG-current-GMAKE-config.log
+Type: application/octet-stream
+Size: 70636 bytes
+Desc: not available
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20090305/a4c34ee0/attachment-0002.obj>
+
+From wojci at wojci.dk  Thu Mar  5 20:56:56 2009
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Thu, 5 Mar 2009 20:56:56 +0100
+Subject: [Btg-devel] btg-current cli client failing to build against
+ boost 1.35 and libtorrent-rasterbar 1.3 on FreeBSD 7.1 and showing
+ ncurses-related errors
+In-Reply-To: <205ad7060903051343j1549a076v38e43a861ce20a6a@mail.gmail.com>
+References: <205ad7060903051343j1549a076v38e43a861ce20a6a@mail.gmail.com>
+Message-ID: <20090305205656.72a2b117@netpc4.home.wojci.dk.home.wojci.dk>
+
+On Thu, 5 Mar 2009 22:43:51 +0100 christophe taranotte
+<christophe.taranotte at gmail.com> wrote:
+
+> My configure arguments were:
+> 
+> --enable-btg-config
+> --enable-www
+> --enable-cli
+> --enable-url
+> --enable-session-saving
+> --enable-command-list
+> --enable-event-callback
+> --with-ncurses
+> 
+> I successfully built btg-current with the cli flag disabled.
+> I did no try to build with the gui and viewer flags enabled.
+> The ncurses version in FreeBSD base is 5.6 (20080503). I also tried
+> with 5.7 installed from ports to no avail.
+> I saved the stderr and stdout output in the two files attached along
+> with the config file.
+
+"
+btgncli-colors.o(.text+0x110): In function
+`btg::UI::cli::Colors::setDefaults()': /usr/include/c++/4.2/bits/stl_construct.h:81:
+undefined reference to `init_pair' btgncli-colors.o(.text+0x138): In
+function
+`btg::UI::cli::Colors::setDefaults()': /usr/include/c++/4.2/bits/stl_uninitialized.h:86:
+undefined reference to `init_pair'
+btgncli-colors.o(.text+0x15a):/usr/include/c++/4.2/bits/stl_uninitialized.h:86:
+undefined reference to `init_pair' btgncli-colors.o(.text+0x17c): In
+function
+`btg::UI::cli::Colors::setDefaults()': /usr/include/c++/4.2/bits/stl_construct.h:81:
+undefined reference to `init_pair' btgncli-colors.o(.text+0x1a8): In
+function
+`btg::UI::cli::Colors::setDefaults()': /usr/include/c++/4.2/bits/stl_vector.h:133:
+undefined reference to `init_pair'
+btgncli-colors.o(.text+0x1cd):/usr/include/c++/4.2/ext/new_allocator.h:89:
+more undefined references to `init_pair' follow
+btgncli-colors.o(.text+0x56a): In function
+`btg::UI::cli::Colors::init()': /usr/home/donkey/BTG_repository/btg-devel2/trunk/UI/cli/ncurses/colors.cpp:51:
+undefined reference to `has_colors'
+btgncli-colors.o(.text+0x581):/usr/home/donkey/BTG_repository/btg-devel2/trunk/UI/cli/ncurses/colors.cpp:56:
+undefined reference to `start_color'
+"
+
+I don't see "-lcurses" on the cmd line used to link btgncli. This could
+be the problem .. or it could also be that init_pair() is not
+implemented. But that would mean that ncurses color support does not
+work on FreeBSD.
+
+Why do you specify "--with-ncurses" instead of
+"--with-ncurses=/path/to/your/ncurses"?
+
+> I have a last question: do I still need bash as all your scripts are
+> shell sh scripts?
+
+There was some problem with the default shell, it is mentioned in the
+howto. I think it was mainly in connection with running unittests.
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+"When they ask how I died, I said, tell them: still angry." 
+(Altered Carbon by Richard Morgan)
+
+
+From christophe.taranotte at gmail.com  Fri Mar  6 00:09:08 2009
+From: christophe.taranotte at gmail.com (christophe taranotte)
+Date: Fri, 6 Mar 2009 00:09:08 +0100
+Subject: [Btg-devel] Configure problems with btg 0.99,
+	libtorrent-rasterbar-0.14.2,
+	boost_1_38_0 during attempted building from 	source on FreeBSD 7.1
+In-Reply-To: <20090305170732.79680c4e@netpc4.home.wojci.dk.home.wojci.dk>
+References: <205ad7060903020306u15b8cfdfua9d824b453c981b7@mail.gmail.com>
+	<20090303191242.04aec0bd@netpc4.home.wojci.dk.home.wojci.dk>
+	<205ad7060903041622h4429433ate18a63d869c997bb@mail.gmail.com>
+	<205ad7060903041624r215648e1mab67b8c5034743ad@mail.gmail.com>
+	<20090305170732.79680c4e@netpc4.home.wojci.dk.home.wojci.dk>
+Message-ID: <205ad7060903051509j177e8531i2e8eb3f8c937fe80@mail.gmail.com>
+
+Now the configure script stops at the libtorrent part.
+I got the following errors:
+.../...
+configure:26780: Searching for libtorrent in /usr/local/opt (by pkgconfig)
+...
+configure:26786: checking for LIBTORRENT
+configure:26861: result: yes
+configure:26879: checking whether Rasterbar Libtorrent headers can be used
+configure:26909: g++ -c -I/usr/local/opt/include -I/usr/local/opt/include
+-I/usr/local/opt/include/libtorrent -D_THREAD_SAFE -pthread
+ -I/usr/local/include -
+configure:26916: $? = 0
+configure:26922: result: yes
+configure:26940: checking whether Rasterbar Libtorrent library can be used
+configure:26968: g++ -o conftest -I/usr/local/opt/include
+-I/usr/local/opt/include -I/usr/local/opt/include/libtorrent -D_THREAD_SAFE
+-pthread  -I/usr/local/
+/usr/bin/ld: warning: libboost_system-gcc42-mt-1_38.so.1.38.0, needed by
+/usr/local/opt/lib/libtorrent-rasterbar.so, not found (try using -rpath or
+-rpath-li
+/usr/bin/ld: warning: libboost_filesystem-gcc42-mt-1_38.so.1.38.0, needed by
+/usr/local/opt/lib/libtorrent-rasterbar.so, not found (try using -rpath or
+-rpat
+/usr/bin/ld: warning: libboost_thread-gcc42-mt-1_38.so.1.38.0, needed by
+/usr/local/opt/lib/libtorrent-rasterbar.so, not found (try using -rpath or
+-rpath-li
+/var/tmp//cc9cOqyt.o(.text+0x27e): In function
+`__static_initialization_and_destruction_0(int, int)':
+: undefined reference to `boost::system::get_system_category()'
+/var/tmp//cc9cOqyt.o(.text+0x288): In function
+`__static_initialization_and_destruction_0(int, int)':
+: undefined reference to `boost::system::get_generic_category()'
+/var/tmp//cc9cOqyt.o(.text+0x292): In function
+`__static_initialization_and_destruction_0(int, int)':
+: undefined reference to `boost::system::get_generic_category()'
+/var/tmp//cc9cOqyt.o(.text+0x29c): In function
+`__static_initialization_and_destruction_0(int, int)':
+: undefined reference to `boost::system::get_generic_category()'
+/var/tmp//cc9cOqyt.o(.text+0x2a6): In function
+`__static_initialization_and_destruction_0(int, int)':
+: undefined reference to `boost::system::get_system_category()'
+/var/tmp//cc9cOqyt.o(.gnu.linkonce.t._ZN5boost4asio5error19get_system_categoryEv+0x7):
+In function `boost::asio::error::get_system_category()':
+: undefined reference to `boost::system::get_system_category()'
+/usr/local/opt/lib/libtorrent-rasterbar.so: undefined reference to
+`boost::filesystem::detail::remove_api(std::string const&)'
+/usr/local/opt/lib/libtorrent-rasterbar.so: undefined reference to
+`boost::detail::get_current_thread_data()'
+/usr/local/opt/lib/libtorrent-rasterbar.so: undefined reference to
+`boost::filesystem::detail::symlink_status_api(std::string const&,
+boost::system::error_co
+/usr/local/opt/lib/libtorrent-rasterbar.so: undefined reference to
+`boost::thread_resource_error::~thread_resource_error()'
+/usr/local/opt/lib/libtorrent-rasterbar.so: undefined reference to
+`boost::thread::~thread()'
+/usr/local/opt/lib/libtorrent-rasterbar.so: undefined reference to `typeinfo
+for boost::detail::thread_data_base'
+/usr/local/opt/lib/libtorrent-rasterbar.so: undefined reference to `typeinfo
+for boost::lock_error'
+/usr/local/opt/lib/libtorrent-rasterbar.so: undefined reference to
+`boost::thread::start_thread()'
+/usr/local/opt/lib/libtorrent-rasterbar.so: undefined reference to
+`boost::filesystem::detail::dir_itr_close(void*&, void*&)'
+/usr/local/opt/lib/libtorrent-rasterbar.so: undefined reference to
+`boost::filesystem::detail::get_current_path_api(std::string&)'
+/usr/local/opt/lib/libtorrent-rasterbar.so: undefined reference to
+`boost::filesystem::detail::dir_itr_increment(void*&, void*&, std::string&,
+boost::filesys
+/usr/local/opt/lib/libtorrent-rasterbar.so: undefined reference to
+`boost::thread::join()'
+/usr/local/opt/lib/libtorrent-rasterbar.so: undefined reference to
+`boost::filesystem::detail::not_found_error()'
+/usr/local/opt/lib/libtorrent-rasterbar.so: undefined reference to
+`boost::filesystem::detail::rename_api(std::string const&, std::string
+const&)'
+/usr/local/opt/lib/libtorrent-rasterbar.so: undefined reference to
+`boost::filesystem::detail::last_write_time_api(std::string const&)'
+/usr/local/opt/lib/libtorrent-rasterbar.so: undefined reference to `vtable
+for boost::detail::thread_data_base'
+/usr/local/opt/lib/libtorrent-rasterbar.so: undefined reference to
+`boost::filesystem::detail::file_size_api(std::string const&)'
+/usr/local/opt/lib/libtorrent-rasterbar.so: undefined reference to
+`boost::filesystem::detail::create_directory_api(std::string const&)'
+/usr/local/opt/lib/libtorrent-rasterbar.so: undefined reference to
+`boost::filesystem::detail::copy_file_api(std::string const&, std::string
+const&)'
+/usr/local/opt/lib/libtorrent-rasterbar.so: undefined reference to
+`boost::filesystem::detail::status_api(std::string const&,
+boost::system::error_code&)'
+/usr/local/opt/lib/libtorrent-rasterbar.so: undefined reference to
+`boost::lock_error::lock_error()'
+/usr/local/opt/lib/libtorrent-rasterbar.so: undefined reference to `typeinfo
+for boost::thread_resource_error'
+/usr/local/opt/lib/libtorrent-rasterbar.so: undefined reference to
+`boost::filesystem::detail::dir_itr_first(void*&, void*&, std::string
+const&, std::string&
+/usr/local/opt/lib/libtorrent-rasterbar.so: undefined reference to
+`boost::detail::thread_data_base::~thread_data_base()'
+/usr/local/opt/lib/libtorrent-rasterbar.so: undefined reference to
+`boost::lock_error::~lock_error()'
+/usr/local/opt/lib/libtorrent-rasterbar.so: undefined reference to
+`boost::thread_resource_error::thread_resource_error()'
+configure:26975: $? = 1
+.../...
+
+Same symptoms, same cure I guess.
+
+I attached the config.log.
+
+Best regards,
+
+Christophe
+
+On Thu, Mar 5, 2009 at 5:07 PM, Michael Wojciechowski <wojci at wojci.dk>wrote:
+
+> On Thu, 5 Mar 2009 01:24:19 +0100 christophe taranotte
+> <christophe.taranotte at gmail.com> wrote:
+>
+> > I have attached config.logs of btg-current and
+> > libtorrent-rasterbar-0.14.2. As you will see,
+> > libtorrent-rasterbar-0.14.2 configure finds/tests successfully
+> > Boost::Filesystem.
+>
+> I compared the m4 script used to detect boost filesystem in BTG with
+> the one used in libtorrent 0.14.2. They are different.
+>
+> I merged the changes from libtorrent into trunk, r547. You might want
+> to check it out and see if it solves this problem for you.
+>
+> --
+> Best regards
+>
+> Michael Wojciechowski
+>
+> "When they ask how I died, I said, tell them: still angry."
+> (Altered Carbon by Richard Morgan)
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20090306/241f0938/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: BT-CURRENT-config-2009.3.6.log
+Type: application/octet-stream
+Size: 82914 bytes
+Desc: not available
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20090306/241f0938/attachment.obj>
+
+From christophe.taranotte at gmail.com  Fri Mar  6 08:59:51 2009
+From: christophe.taranotte at gmail.com (christophe taranotte)
+Date: Fri, 6 Mar 2009 08:59:51 +0100
+Subject: [Btg-devel] btg-current cli client failing to build against boost
+	1.35 and libtorrent-rasterbar 1.3 on FreeBSD 7.1 and showing
+	ncurses-related errors
+In-Reply-To: <205ad7060903051457r3a26ba3ch4c83e5ca2162f795@mail.gmail.com>
+References: <205ad7060903051343j1549a076v38e43a861ce20a6a@mail.gmail.com>
+	<20090305205656.72a2b117@netpc4.home.wojci.dk.home.wojci.dk>
+	<205ad7060903051457r3a26ba3ch4c83e5ca2162f795@mail.gmail.com>
+Message-ID: <205ad7060903052359o57e07853yb28a896fe53d5a90@mail.gmail.com>
+
+On Thu, Mar 5, 2009 at 8:56 PM, Michael Wojciechowski <wojci at wojci.dk>wrote:
+
+>
+> I don't see "-lcurses" on the cmd line used to link btgncli. This could
+> be the problem
+
+
+Maybe.
+
+Curses has been replaced by ncurses in the FreeBSD base (FreeBSD base
+distribution if you will) since 5.4 I think.
+
+On my server, ncurses 5.6 is in /lib and 5.7 (installed from ports) in
+/usr/local/lib.
+
+
+> .. or it could also be that init_pair() is not
+> implemented. But that would mean that ncurses color support does not
+> work on FreeBSD.
+
+
+According to the FreeBSD ncurses man
+page<http://www.freebsd.org/cgi/man.cgi?query=ncurses&apropos=0&sektion=0&manpath=FreeBSD+7.1-RELEASE&format=html>,
+init_pair() and init_color are implemented.
+
+>
+> Why do you specify "--with-ncurses" instead of
+> "--with-ncurses=/path/to/your/ncurses"?
+>
+
+Because in ./configure -h, I read " --with-ncurses          Force the use of
+ncurses over curses".
+
+I got the same errors without the "--with-ncurses" option anyway.
+
+
+
+> > I have a last question: do I still need bash as all your scripts are
+> > shell sh scripts?
+>
+> There was some problem with the default shell, it is mentioned in the
+> howto. I think it was mainly in connection with running unittests.
+>
+
+Good to know.
+
+Best regards,
+
+Christophe
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20090306/1c624561/attachment.html>
+
+From christophe.taranotte at gmail.com  Fri Mar  6 09:48:13 2009
+From: christophe.taranotte at gmail.com (christophe taranotte)
+Date: Fri, 6 Mar 2009 09:48:13 +0100
+Subject: [Btg-devel] btg-current cli client failing to build against
+	boost 1.35 and libtorrent-rasterbar 1.3 on FreeBSD 7.1 and
+	showing ncurses-related errors
+In-Reply-To: <205ad7060903052359o57e07853yb28a896fe53d5a90@mail.gmail.com>
+References: <205ad7060903051343j1549a076v38e43a861ce20a6a@mail.gmail.com>
+	<20090305205656.72a2b117@netpc4.home.wojci.dk.home.wojci.dk>
+	<205ad7060903051457r3a26ba3ch4c83e5ca2162f795@mail.gmail.com>
+	<205ad7060903052359o57e07853yb28a896fe53d5a90@mail.gmail.com>
+Message-ID: <205ad7060903060048h76062789me29e409d2f71d33f@mail.gmail.com>
+
+Hi,
+I get the same errors with the option --with-ncurses=/usr/local.
+
+I am attaching config.log and the stderr file.
+
+Best regards,
+
+Christophe
+
+
+On Fri, Mar 6, 2009 at 8:59 AM, christophe taranotte <
+christophe.taranotte at gmail.com> wrote:
+
+> On Thu, Mar 5, 2009 at 8:56 PM, Michael Wojciechowski <wojci at wojci.dk>wrote:
+>
+>>
+>> I don't see "-lcurses" on the cmd line used to link btgncli. This could
+>> be the problem
+>
+>
+> Maybe.
+>
+> Curses has been replaced by ncurses in the FreeBSD base (FreeBSD base
+> distribution if you will) since 5.4 I think.
+>
+> On my server, ncurses 5.6 is in /lib and 5.7 (installed from ports) in
+> /usr/local/lib.
+>
+>
+>> .. or it could also be that init_pair() is not
+>> implemented. But that would mean that ncurses color support does not
+>> work on FreeBSD.
+>
+>
+> According to the FreeBSD ncurses man page<http://www.freebsd.org/cgi/man.cgi?query=ncurses&apropos=0&sektion=0&manpath=FreeBSD+7.1-RELEASE&format=html>,
+> init_pair() and init_color are implemented.
+>
+>>
+>> Why do you specify "--with-ncurses" instead of
+>> "--with-ncurses=/path/to/your/ncurses"?
+>>
+>
+> Because in ./configure -h, I read " --with-ncurses          Force the use
+> of ncurses over curses".
+>
+> I got the same errors without the "--with-ncurses" option anyway.
+>
+>
+>
+>> > I have a last question: do I still need bash as all your scripts are
+>> > shell sh scripts?
+>>
+>> There was some problem with the default shell, it is mentioned in the
+>> howto. I think it was mainly in connection with running unittests.
+>>
+>
+> Good to know.
+>
+> Best regards,
+>
+> Christophe
+>
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20090306/b85745cc/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: BT-CURRENT-config-2009.3.6bis.log
+Type: application/octet-stream
+Size: 70808 bytes
+Desc: not available
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20090306/b85745cc/attachment.obj>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: BT-CURRENT-STDERR-2009-03-06
+Type: application/octet-stream
+Size: 26645 bytes
+Desc: not available
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20090306/b85745cc/attachment-0001.obj>
+
+From wojci at wojci.dk  Sat Mar  7 10:15:15 2009
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Sat, 7 Mar 2009 10:15:15 +0100
+Subject: [Btg-devel] btg-current cli client failing to build against
+ boost 1.35 and libtorrent-rasterbar 1.3 on FreeBSD 7.1 and showing
+ ncurses-related errors
+In-Reply-To: <205ad7060903060048h76062789me29e409d2f71d33f@mail.gmail.com>
+References: <205ad7060903051343j1549a076v38e43a861ce20a6a@mail.gmail.com>
+	<20090305205656.72a2b117@netpc4.home.wojci.dk.home.wojci.dk>
+	<205ad7060903051457r3a26ba3ch4c83e5ca2162f795@mail.gmail.com>
+	<205ad7060903052359o57e07853yb28a896fe53d5a90@mail.gmail.com>
+	<205ad7060903060048h76062789me29e409d2f71d33f@mail.gmail.com>
+Message-ID: <20090307101515.430b9170@netpc4.home.wojci.dk.home.wojci.dk>
+
+On Fri, 6 Mar 2009 09:48:13 +0100 christophe taranotte
+<christophe.taranotte at gmail.com> wrote:
+
+> Hi,
+> I get the same errors with the option --with-ncurses=/usr/local.
+> 
+> I am attaching config.log and the stderr file.
+
+I still don't see "-l$CURSESLIB" in the cmd line used to build
+btgncli. Whatever $CURSESLIB should be set to on your system.
+
+from configure.in 
+"
+with_ncurses=yes
+MP_WITH_CURSES()
+"
+
+Somebody, I suspect Roman, added the first line. I think that this
+means that ncurses will be selected and not checked for. So I guess you
+should add "-lncurses -L/path/to/ncurses/lib" to your LDFLAGS before
+running configure and you will be fine.
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+"When they ask how I died, I said, tell them: still angry." 
+(Altered Carbon by Richard Morgan)
+
+
+From christophe.taranotte at gmail.com  Sat Mar  7 23:16:55 2009
+From: christophe.taranotte at gmail.com (christophe taranotte)
+Date: Sat, 7 Mar 2009 22:16:55 +0000
+Subject: [Btg-devel] btg-current cli client failing to build against
+	boost 1.35 and libtorrent-rasterbar 1.3 on FreeBSD 7.1 and
+	showing ncurses-related errors
+In-Reply-To: <20090307101515.430b9170@netpc4.home.wojci.dk.home.wojci.dk>
+References: <205ad7060903051343j1549a076v38e43a861ce20a6a@mail.gmail.com>
+	<20090305205656.72a2b117@netpc4.home.wojci.dk.home.wojci.dk>
+	<205ad7060903051457r3a26ba3ch4c83e5ca2162f795@mail.gmail.com>
+	<205ad7060903052359o57e07853yb28a896fe53d5a90@mail.gmail.com>
+	<205ad7060903060048h76062789me29e409d2f71d33f@mail.gmail.com>
+	<20090307101515.430b9170@netpc4.home.wojci.dk.home.wojci.dk>
+Message-ID: <205ad7060903071416g3cad879cv8737a8cae4f78b2d@mail.gmail.com>
+
+Hi,
+
+Somebody, I suspect Roman, added the first line. I think that this
+> means that ncurses will be selected and not checked for. So I guess you
+> should add "-lncurses -L/path/to/ncurses/lib" to your LDFLAGS before
+> running configure and you will be fine.
+>
+>
+It seems to work with the following arguments (for btg-current, boost 1.35
+and libtorrent-rasterbar 1.13):
+
+./configure --enable-btg-config --enable-www --enable-cli --enable-url
+--enable-session-saving --enable-command-list --enable-event-callback
+--with-ncurses LIBTORRENT_LIBS="-L/usr/local/lib -ltorrent"
+LIBTORRENT_CFLAGS="-DTORRENT_USE_OPENSSL -D_THREAD_SAFE -pthread
+-I/usr/local/include -I/usr/local/include/libtorrent" LIBS="-lpthread
+-lncurses -L/lib" --with-boost-iostreams=boost_iostreams
+--with-boost-filesystem=boost_filesystem
+--with-boost-date-time=boost_date_time --with-boost-thread=boost_thread
+--with-boost-program-options=boost_program_options --prefix=/usr/local/opt
+
+I suggest you update the FreeBSD notes in the BTG-CURRENT HOWTO by adding
+the --with-ncurses option and changing the LIBS variable from:
+
+...LIBS=-lpthread...
+
+to
+
+...LIBS="-lpthread -lncurses -L/lib"...
+
+the "-L/lib" flag should not be necessary but who knows.
+
+Still pending is the config problem with libtorrent-rasterbar .14.2 (see my
+other post).
+
+Best regards,
+
+Christophe
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20090307/03bcf507/attachment.html>
+
+From wojci at wojci.dk  Sun Mar  8 19:14:28 2009
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Sun, 8 Mar 2009 19:14:28 +0100
+Subject: [Btg-devel] Configure problems with btg 0.99,
+ libtorrent-rasterbar-0.14.2,
+ boost_1_38_0 during attempted building from  source on FreeBSD 7.1
+In-Reply-To: <205ad7060903051509j177e8531i2e8eb3f8c937fe80@mail.gmail.com>
+References: <205ad7060903020306u15b8cfdfua9d824b453c981b7@mail.gmail.com>
+	<20090303191242.04aec0bd@netpc4.home.wojci.dk.home.wojci.dk>
+	<205ad7060903041622h4429433ate18a63d869c997bb@mail.gmail.com>
+	<205ad7060903041624r215648e1mab67b8c5034743ad@mail.gmail.com>
+	<20090305170732.79680c4e@netpc4.home.wojci.dk.home.wojci.dk>
+	<205ad7060903051509j177e8531i2e8eb3f8c937fe80@mail.gmail.com>
+Message-ID: <20090308191428.182b0a9a@netpc4.home.wojci.dk.home.wojci.dk>
+
+On Fri, 6 Mar 2009 00:09:08 +0100 christophe taranotte
+<christophe.taranotte at gmail.com> wrote:
+
+> Now the configure script stops at the libtorrent part.
+> I got the following errors:
+> .../...
+> configure:26780: Searching for libtorrent in /usr/local/opt (by
+
+I built boost 1.38, lt 0.14.2 and BTG trunk from source. The last one
+was configured by running "setup.sh 0.14.2 -debug". All this was done
+on FreeBSD 7.1, from bash. I have installed the packages BTG depens on
+using ports.
+
+So it seems you have problems which are not BTG related.
+
+BTW, there is no need to add any extra flags to LDFLAGS, as ncurses is
+detected.
+
+setup.sh outputs:
+"
+Using ./configure  --disable-static  --enable-debug --enable-btg-config
+--enable-cli   --enable-unittest --enable-session-saving
+--enable-command-list --enable-event-callback --enable-www --enable-url
+--enable-upnp --prefix=/pack/btg-cvs --with-boost-system=gcc42-mt
+--with-boost-date-time=gcc42-mt --with-boost-filesystem=gcc42-mt
+--with-boost-thread=gcc42-mt --with-boost-regex=gcc42-mt
+--with-boost-program_options=gcc42-mt --with-boost-iostreams=gcc42-mt
+"
+
+I also get the following output from configure:
+
+"
+config.status: executing depfiles commands
+configure: Status:
+configure: btg-daemon    : enabled
+configure: btg-config    : enabled
+configure: debug         : enabled
+configure: CLI           : enabled
+configure: GUI           : disabled
+configure: Viewer        : disabled
+configure: WWW UI        : enabled
+configure: sessionsaving : enabled
+configure: event callback: enabled
+configure: UPNP          : enabled
+configure: URL           : enabled
+configure: unittest      : enabled
+configure: command list  : enabled
+"
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+"When they ask how I died, I said, tell them: still angry." 
+(Altered Carbon by Richard Morgan)
+
+
+From wojci at wojci.dk  Mon Mar  9 10:35:20 2009
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Mon, 9 Mar 2009 10:35:20 +0100 (CET)
+Subject: [Btg-devel] Configure problems with btg 0.99,
+ libtorrent-rasterbar-0.14.2,
+ boost_1_38_0 during attempted building from  source on FreeBSD 7.1
+In-Reply-To: <205ad7060903090229t7c4ebecdr7b7c130af56ba775@mail.gmail.com>
+References: <205ad7060903020306u15b8cfdfua9d824b453c981b7@mail.gmail.com>
+	<20090303191242.04aec0bd@netpc4.home.wojci.dk.home.wojci.dk>
+	<205ad7060903041622h4429433ate18a63d869c997bb@mail.gmail.com>
+	<205ad7060903041624r215648e1mab67b8c5034743ad@mail.gmail.com>
+	<20090305170732.79680c4e@netpc4.home.wojci.dk.home.wojci.dk>
+	<205ad7060903051509j177e8531i2e8eb3f8c937fe80@mail.gmail.com>
+	<20090308191428.182b0a9a@netpc4.home.wojci.dk.home.wojci.dk>
+	<205ad7060903090229t7c4ebecdr7b7c130af56ba775@mail.gmail.com>
+Message-ID: <a3ca7b569df424d64ba6942095708ed2.squirrel@webmail.netimage.dk>
+
+christophe taranotte wrote:
+> You have installed boost 1.38, lt 0.14.2 in /usr/local
+
+No. I use the following:
+
+Boost, prefix /pack/libboost-1.38.
+Libtorrent, prefix /pack/libtorrent/0.14.2.
+
+This is what the setup.sh script I use expects.
+
+> I am getting all this options disabled and yet built.
+
+I found some issues with using the "==" operator instead of "=" in
+configure.in. I fixed this in SVN. When I ran configure on FreeBSD without
+the modifications it printed a lot of warnings about the "==" operator.
+
+-- 
+
+Best regards
+
+Michael Wojciechowski
+
+"When they ask how I died, I said, tell them: still angry."
+(Altered Carbon by Richard Morgan)
+
+09F911029D74E35BD84156C5635688C0
+
+
+
+From christophe.taranotte at gmail.com  Tue Mar 10 00:53:09 2009
+From: christophe.taranotte at gmail.com (christophe taranotte)
+Date: Tue, 10 Mar 2009 00:53:09 +0100
+Subject: [Btg-devel] Configure problems with btg 0.99,
+	libtorrent-rasterbar-0.14.2,
+	boost_1_38_0 during attempted building from 	source on FreeBSD 7.1
+In-Reply-To: <a3ca7b569df424d64ba6942095708ed2.squirrel@webmail.netimage.dk>
+References: <205ad7060903020306u15b8cfdfua9d824b453c981b7@mail.gmail.com>
+	<20090303191242.04aec0bd@netpc4.home.wojci.dk.home.wojci.dk>
+	<205ad7060903041622h4429433ate18a63d869c997bb@mail.gmail.com>
+	<205ad7060903041624r215648e1mab67b8c5034743ad@mail.gmail.com>
+	<20090305170732.79680c4e@netpc4.home.wojci.dk.home.wojci.dk>
+	<205ad7060903051509j177e8531i2e8eb3f8c937fe80@mail.gmail.com>
+	<20090308191428.182b0a9a@netpc4.home.wojci.dk.home.wojci.dk>
+	<205ad7060903090229t7c4ebecdr7b7c130af56ba775@mail.gmail.com>
+	<a3ca7b569df424d64ba6942095708ed2.squirrel@webmail.netimage.dk>
+Message-ID: <205ad7060903091653n3308f446p823e2582861979d3@mail.gmail.com>
+
+Good evening,
+
+I see configure.in and setup.sh have been changed in svn.
+
+I have built and installed boost 1.8 and rblt 0.14.2 in /pack.
+
+I ran a modified setup.sh successfully. However, I cannot completely make
+and get now quite a few compile errors. I am attaching config.log as well as
+the stderr and stdout output.
+
+Finally, I am getting my enabled options enabled at the end of configure.
+
+Best regards,
+
+Christophe
+
+
+On Mon, Mar 9, 2009 at 10:35 AM, Michael Wojciechowski <wojci at wojci.dk>wrote:
+
+> christophe taranotte wrote:
+> > You have installed boost 1.38, lt 0.14.2 in /usr/local
+>
+> No. I use the following:
+>
+> Boost, prefix /pack/libboost-1.38.
+> Libtorrent, prefix /pack/libtorrent/0.14.2.
+>
+> This is what the setup.sh script I use expects.
+>
+> > I am getting all this options disabled and yet built.
+>
+> I found some issues with using the "==" operator instead of "=" in
+> configure.in. I fixed this in SVN. When I ran configure on FreeBSD without
+> the modifications it printed a lot of warnings about the "==" operator.
+>
+> --
+>
+> Best regards
+>
+> Michael Wojciechowski
+>
+> "When they ask how I died, I said, tell them: still angry."
+> (Altered Carbon by Richard Morgan)
+>
+> 09F911029D74E35BD84156C5635688C0
+>
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20090310/681cb71d/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: btg-current-stderr.20090310
+Type: application/octet-stream
+Size: 18072 bytes
+Desc: not available
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20090310/681cb71d/attachment.obj>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: btg-current-stdout.20090310
+Type: application/octet-stream
+Size: 1630 bytes
+Desc: not available
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20090310/681cb71d/attachment-0001.obj>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: config.log.20090310
+Type: application/octet-stream
+Size: 87284 bytes
+Desc: not available
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20090310/681cb71d/attachment-0002.obj>
+
+From wojci at wojci.dk  Wed Mar 11 18:04:44 2009
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Wed, 11 Mar 2009 18:04:44 +0100
+Subject: [Btg-devel] Configure problems with btg 0.99,
+ libtorrent-rasterbar-0.14.2,
+ boost_1_38_0 during attempted building from  source on FreeBSD 7.1
+In-Reply-To: <205ad7060903091653n3308f446p823e2582861979d3@mail.gmail.com>
+References: <205ad7060903020306u15b8cfdfua9d824b453c981b7@mail.gmail.com>
+	<20090303191242.04aec0bd@netpc4.home.wojci.dk.home.wojci.dk>
+	<205ad7060903041622h4429433ate18a63d869c997bb@mail.gmail.com>
+	<205ad7060903041624r215648e1mab67b8c5034743ad@mail.gmail.com>
+	<20090305170732.79680c4e@netpc4.home.wojci.dk.home.wojci.dk>
+	<205ad7060903051509j177e8531i2e8eb3f8c937fe80@mail.gmail.com>
+	<20090308191428.182b0a9a@netpc4.home.wojci.dk.home.wojci.dk>
+	<205ad7060903090229t7c4ebecdr7b7c130af56ba775@mail.gmail.com>
+	<a3ca7b569df424d64ba6942095708ed2.squirrel@webmail.netimage.dk>
+	<205ad7060903091653n3308f446p823e2582861979d3@mail.gmail.com>
+Message-ID: <20090311180444.5369d2fb@netpc4.home.wojci.dk.home.wojci.dk>
+
+On Tue, 10 Mar 2009 00:53:09 +0100 christophe taranotte
+<christophe.taranotte at gmail.com> wrote:
+
+> I ran a modified setup.sh successfully. However, I cannot completely
+> make and get now quite a few compile errors. I am attaching
+> config.log as well as the stderr and stdout output.
+
+I added http://code.rasterbar.com/libtorrent/ticket/489, which is a
+libtorrent issue, not something in BTG. After running
+"make install" for libtorrent, there was no "lib/pkgconfig" directory
+present. This is why you get the errors you get - the setup script
+assumes that pkg-config can find a .pc file for libtorrent.
+
+> Finally, I am getting my enabled options enabled at the end of
+> configure.
+
+Good, that was the point of the changes I made.
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+"When they ask how I died, I said, tell them: still angry." 
+(Altered Carbon by Richard Morgan)
+
+
+From christophe.taranotte at gmail.com  Thu Mar 12 19:15:29 2009
+From: christophe.taranotte at gmail.com (christophe taranotte)
+Date: Thu, 12 Mar 2009 19:15:29 +0100
+Subject: [Btg-devel] Fwd:  Configure problems with btg 0.99,
+	libtorrent-rasterbar-0.14.2,
+	boost_1_38_0 during attempted building from 	source on FreeBSD 7.1
+In-Reply-To: <205ad7060903111554t1058cfe2na4e83a0098f2b9ce@mail.gmail.com>
+References: <205ad7060903020306u15b8cfdfua9d824b453c981b7@mail.gmail.com>
+	<205ad7060903041624r215648e1mab67b8c5034743ad@mail.gmail.com>
+	<20090305170732.79680c4e@netpc4.home.wojci.dk.home.wojci.dk>
+	<205ad7060903051509j177e8531i2e8eb3f8c937fe80@mail.gmail.com>
+	<20090308191428.182b0a9a@netpc4.home.wojci.dk.home.wojci.dk>
+	<205ad7060903090229t7c4ebecdr7b7c130af56ba775@mail.gmail.com>
+	<a3ca7b569df424d64ba6942095708ed2.squirrel@webmail.netimage.dk>
+	<205ad7060903091653n3308f446p823e2582861979d3@mail.gmail.com>
+	<20090311180444.5369d2fb@netpc4.home.wojci.dk.home.wojci.dk>
+	<205ad7060903111554t1058cfe2na4e83a0098f2b9ce@mail.gmail.com>
+Message-ID: <205ad7060903121115g7dd93271te30e44aacfd50dd7@mail.gmail.com>
+
+Good evening
+
+On Wed, Mar 11, 2009 at 6:04 PM, Michael Wojciechowski <wojci at wojci.dk>wrote:
+
+> On Tue, 10 Mar 2009 00:53:09 +0100 christophe taranotte
+> <christophe.taranotte at gmail.com> wrote:
+>
+> > I ran a modified setup.sh successfully. However, I cannot completely
+> > make and get now quite a few compile errors. I am attaching
+> > config.log as well as the stderr and stdout output.
+>
+> I added http://code.rasterbar.com/libtorrent/ticket/489, which is a
+> libtorrent issue, not something in BTG. After running
+> "make install" for libtorrent, there was no "lib/pkgconfig" directory
+> present. This is why you get the errors you get - the setup script
+> assumes that pkg-config can find a .pc file for libtorrent.
+>
+
+There is a canonical libtorrent-rasterbar.pc in prefix/lib/pkgconfig
+
+I tried to link libtorrent-rasterbar.pc into prefix/libdata /pkgconfig and
+into /usr/local/libdata/pkgconfig (where the FreeBSD flavor of pkg-config is
+looking by default) but I got the same errors in the ipfilter module.
+
+I also tried to set the cflags to libtorrent-rasterbar instead
+of  libtorrent in in setup.sh (CXXFLAGS_pkgconfig) and likewise but I got
+the same errors in the ipfilter module.
+
+Best regards,
+
+Christophe
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20090312/3692df1f/attachment.html>
+
+From wojci at wojci.dk  Fri Mar 13 22:35:19 2009
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Fri, 13 Mar 2009 22:35:19 +0100
+Subject: [Btg-devel] Configure problems with btg 0.99,
+ libtorrent-rasterbar-0.14.2,
+ boost_1_38_0 during attempted building from  source on FreeBSD 7.1
+In-Reply-To: <205ad7060903111554t1058cfe2na4e83a0098f2b9ce@mail.gmail.com>
+References: <205ad7060903020306u15b8cfdfua9d824b453c981b7@mail.gmail.com>
+	<205ad7060903041622h4429433ate18a63d869c997bb@mail.gmail.com>
+	<205ad7060903041624r215648e1mab67b8c5034743ad@mail.gmail.com>
+	<20090305170732.79680c4e@netpc4.home.wojci.dk.home.wojci.dk>
+	<205ad7060903051509j177e8531i2e8eb3f8c937fe80@mail.gmail.com>
+	<20090308191428.182b0a9a@netpc4.home.wojci.dk.home.wojci.dk>
+	<205ad7060903090229t7c4ebecdr7b7c130af56ba775@mail.gmail.com>
+	<a3ca7b569df424d64ba6942095708ed2.squirrel@webmail.netimage.dk>
+	<205ad7060903091653n3308f446p823e2582861979d3@mail.gmail.com>
+	<20090311180444.5369d2fb@netpc4.home.wojci.dk.home.wojci.dk>
+	<205ad7060903111554t1058cfe2na4e83a0098f2b9ce@mail.gmail.com>
+Message-ID: <20090313223519.38eebfe5@netpc5.home.wojci.dk>
+
+On Wed, 11 Mar 2009 23:54:29 +0100 christophe taranotte
+<christophe.taranotte at gmail.com> wrote:
+
+> There is a canonical libtorrent-rasterbar.pc in prefix/lib/pkgconfig
+
+I think that I ran "make install" in libtorrent, which does not copy all
+the files instead of running "make && make install" which does. :/
+
+> I also tried to set the cflags to libtorrent-rasterbar instead
+> of  libtorrent in in setup.sh (CXXFLAGS_pkgconfig) and likewise but I
+> got the same errors in the ipfilter module.
+
+I changed the setup.sh script to use "libtorrent-rasterbar" instead of
+"libtorrent".
+
+Take a look at my config.log: http://pastebin.ca/1359864.Maybe there
+is something which is different from your setup.
+
+I don't think that there is more I can do for you.
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+"When they ask how I died, I said, tell them: still angry." 
+(Altered Carbon by Richard Morgan)
+
+
+From christophe.taranotte at gmail.com  Sun Mar 15 18:46:01 2009
+From: christophe.taranotte at gmail.com (christophe taranotte)
+Date: Sun, 15 Mar 2009 18:46:01 +0100
+Subject: [Btg-devel] Configure problems with btg 0.99,
+	libtorrent-rasterbar-0.14.2,
+	boost_1_38_0 during attempted building from 	source on FreeBSD 7.1
+In-Reply-To: <20090313223519.38eebfe5@netpc5.home.wojci.dk>
+References: <205ad7060903020306u15b8cfdfua9d824b453c981b7@mail.gmail.com>
+	<20090305170732.79680c4e@netpc4.home.wojci.dk.home.wojci.dk>
+	<205ad7060903051509j177e8531i2e8eb3f8c937fe80@mail.gmail.com>
+	<20090308191428.182b0a9a@netpc4.home.wojci.dk.home.wojci.dk>
+	<205ad7060903090229t7c4ebecdr7b7c130af56ba775@mail.gmail.com>
+	<a3ca7b569df424d64ba6942095708ed2.squirrel@webmail.netimage.dk>
+	<205ad7060903091653n3308f446p823e2582861979d3@mail.gmail.com>
+	<20090311180444.5369d2fb@netpc4.home.wojci.dk.home.wojci.dk>
+	<205ad7060903111554t1058cfe2na4e83a0098f2b9ce@mail.gmail.com>
+	<20090313223519.38eebfe5@netpc5.home.wojci.dk>
+Message-ID: <205ad7060903151046i2e706333ya419d615ed99b22b@mail.gmail.com>
+
+Good Evening,
+
+I don't know why BOOST_VERSION is read by socket.hpp but any way, I hacked
+and now the build stops at:
+
+.../...
+Making all in auth
+/bin/sh ../../libtool --tag=CXX    --mode=link ccache g++
+-I/pack/include/boost-1_38 -DNDEBUG -I/usr/local/include
+-I/usr/local/include  -DBTG_DEBUG=0 -DBTG_OPTION_SAVESESSIONS=1
+-DBTG_OPTION_EVENTCALLBACK=1  -DBTG_OPTION_UPNP=0
+-DBTG_OPTION_USECYBERLINK=0   -DBTG_REV="SVN rev. 559"
+-DBTG_INTERNAL_XMLRPC="1"  -I/pack/include/boost-1_38  -L/pack/lib
+-L/usr/local/lib -L/pack/lib -o btgpasswd btgpasswd-arg.o
+btgpasswd-btgpasswd.o btgpasswd-dconfig.o ../../bcore/libbtgcore.la
+libauth.la  ../../external/ini/libini.la  -lboost_date_time-gcc42-mt
+-lboost_program_options-gcc42-mt -lboost_system-gcc42-mt
+-lboost_iostreams-gcc42-mt -lboost_filesystem-gcc42-mt -lexecinfo
+ccache g++ -I/pack/include/boost-1_38 -DNDEBUG -I/usr/local/include
+-I/usr/local/include -DBTG_DEBUG=0 -DBTG_OPTION_SAVESESSIONS=1
+-DBTG_OPTION_EVENTCALLBACK=1 -DBTG_OPTION_UPNP=0 -DBTG_OPTION_USECYBERLINK=0
+"-DBTG_REV=SVN rev. 559" -DBTG_INTERNAL_XMLRPC=1 -I/pack/include/boost-1_38
+-o .libs/btgpasswd btgpasswd-arg.o btgpasswd-btgpasswd.o
+btgpasswd-dconfig.o  -L/pack/lib -L/usr/local/lib
+../../bcore/.libs/libbtgcore.so /usr/local/lib/libgnutls.so -lz
+/usr/local/lib/libgcrypt.so /usr/local/lib/libgpg-error.so
+/usr/local/lib/libintl.so -lboost_thread-gcc42-mt /usr/local/lib/libiconv.so
+-pthread ./.libs/libauth.a ../../external/ini/.libs/libini.a
+-lboost_date_time-gcc42-mt -lboost_program_options-gcc42-mt
+-lboost_system-gcc42-mt -lboost_iostreams-gcc42-mt
+-lboost_filesystem-gcc42-mt -lexecinfo  -Wl,--rpath -Wl,/pack/lib/btg
+-Wl,--rpath -Wl,/usr/local/lib
+*** Error code 1
+
+and stderr is as follows:
+
+btgpasswd-arg.o(.gnu.linkonce.t._ZN5boost15program_options25basic_command_line_parserIcE12extra_parserENS_9function1ISt4pairISsSsERKSsSaINS_13function_baseEEEE+0x27):
+In function
+`boost::program_options::basic_command_line_parser<char>::extra_parser(boost::function1<std::pair<std::string,
+std::string>, std::string const&, std::allocator<boost::function_base> >)':
+: undefined reference to
+`boost::program_options::detail::cmdline::set_additional_parser(boost::function1<std::pair<std::string,
+std::string>, std::string const&, std::allocator<boost::function_base> >)'
+../../bcore/.libs/libbtgcore.so: undefined reference to
+`boost::filesystem::detail::status_api(std::string const&, int&)'
+../../bcore/.libs/libbtgcore.so: undefined reference to
+`boost::xtime_get(boost::xtime*, int)'
+
+Any idea?
+
+Best regards,
+
+Christophe
+
+
+On Fri, Mar 13, 2009 at 10:35 PM, Michael Wojciechowski <wojci at wojci.dk>wrote:
+
+> On Wed, 11 Mar 2009 23:54:29 +0100 christophe taranotte
+> <christophe.taranotte at gmail.com> wrote:
+>
+> > There is a canonical libtorrent-rasterbar.pc in prefix/lib/pkgconfig
+>
+> I think that I ran "make install" in libtorrent, which does not copy all
+> the files instead of running "make && make install" which does. :/
+>
+> > I also tried to set the cflags to libtorrent-rasterbar instead
+> > of  libtorrent in in setup.sh (CXXFLAGS_pkgconfig) and likewise but I
+> > got the same errors in the ipfilter module.
+>
+> I changed the setup.sh script to use "libtorrent-rasterbar" instead of
+> "libtorrent".
+>
+> Take a look at my config.log: http://pastebin.ca/1359864.Maybe there
+> is something which is different from your setup.
+>
+> I don't think that there is more I can do for you.
+>
+> --
+> Best regards
+>
+> Michael Wojciechowski
+>
+> "When they ask how I died, I said, tell them: still angry."
+> (Altered Carbon by Richard Morgan)
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20090315/9c397246/attachment.html>
+
+From christophe.taranotte at gmail.com  Wed Mar 18 22:05:37 2009
+From: christophe.taranotte at gmail.com (christophe taranotte)
+Date: Wed, 18 Mar 2009 22:05:37 +0100
+Subject: [Btg-devel] Configure problems with btg 0.99,
+	libtorrent-rasterbar-0.14.2,
+	boost_1_38_0 during attempted building from 	source on FreeBSD 7.1
+In-Reply-To: <205ad7060903151046i2e706333ya419d615ed99b22b@mail.gmail.com>
+References: <205ad7060903020306u15b8cfdfua9d824b453c981b7@mail.gmail.com>
+	<205ad7060903051509j177e8531i2e8eb3f8c937fe80@mail.gmail.com>
+	<20090308191428.182b0a9a@netpc4.home.wojci.dk.home.wojci.dk>
+	<205ad7060903090229t7c4ebecdr7b7c130af56ba775@mail.gmail.com>
+	<a3ca7b569df424d64ba6942095708ed2.squirrel@webmail.netimage.dk>
+	<205ad7060903091653n3308f446p823e2582861979d3@mail.gmail.com>
+	<20090311180444.5369d2fb@netpc4.home.wojci.dk.home.wojci.dk>
+	<205ad7060903111554t1058cfe2na4e83a0098f2b9ce@mail.gmail.com>
+	<20090313223519.38eebfe5@netpc5.home.wojci.dk>
+	<205ad7060903151046i2e706333ya419d615ed99b22b@mail.gmail.com>
+Message-ID: <205ad7060903181405p1bd1961co65edbd0e65dfc425@mail.gmail.com>
+
+Good evening,
+I worked my way around and I finally built btg-current. Your FreeBSD port
+tree was not up-to-date and there were some conflicts with more recent libs.
+
+I am going to run some tests in the coming weeks.
+
+If I have some time, I will write a patch against btg-stable.
+
+Thx for your support and best regards,
+
+Christophe
+
+On Sun, Mar 15, 2009 at 6:46 PM, christophe taranotte <
+christophe.taranotte at gmail.com> wrote:
+
+> Good Evening,
+>
+> I don't know why BOOST_VERSION is read by socket.hpp but any way, I hacked
+> and now the build stops at:
+>
+> .../...
+> Making all in auth
+> /bin/sh ../../libtool --tag=CXX    --mode=link ccache g++
+> -I/pack/include/boost-1_38 -DNDEBUG -I/usr/local/include
+> -I/usr/local/include  -DBTG_DEBUG=0 -DBTG_OPTION_SAVESESSIONS=1
+> -DBTG_OPTION_EVENTCALLBACK=1  -DBTG_OPTION_UPNP=0
+> -DBTG_OPTION_USECYBERLINK=0   -DBTG_REV="SVN rev. 559"
+> -DBTG_INTERNAL_XMLRPC="1"  -I/pack/include/boost-1_38  -L/pack/lib
+> -L/usr/local/lib -L/pack/lib -o btgpasswd btgpasswd-arg.o
+> btgpasswd-btgpasswd.o btgpasswd-dconfig.o ../../bcore/libbtgcore.la
+> libauth.la  ../../external/ini/libini.la  -lboost_date_time-gcc42-mt
+> -lboost_program_options-gcc42-mt -lboost_system-gcc42-mt
+> -lboost_iostreams-gcc42-mt -lboost_filesystem-gcc42-mt -lexecinfo
+> ccache g++ -I/pack/include/boost-1_38 -DNDEBUG -I/usr/local/include
+> -I/usr/local/include -DBTG_DEBUG=0 -DBTG_OPTION_SAVESESSIONS=1
+> -DBTG_OPTION_EVENTCALLBACK=1 -DBTG_OPTION_UPNP=0 -DBTG_OPTION_USECYBERLINK=0
+> "-DBTG_REV=SVN rev. 559" -DBTG_INTERNAL_XMLRPC=1 -I/pack/include/boost-1_38
+> -o .libs/btgpasswd btgpasswd-arg.o btgpasswd-btgpasswd.o
+> btgpasswd-dconfig.o  -L/pack/lib -L/usr/local/lib
+> ../../bcore/.libs/libbtgcore.so /usr/local/lib/libgnutls.so -lz
+> /usr/local/lib/libgcrypt.so /usr/local/lib/libgpg-error.so
+> /usr/local/lib/libintl.so -lboost_thread-gcc42-mt /usr/local/lib/libiconv.so
+> -pthread ./.libs/libauth.a ../../external/ini/.libs/libini.a
+> -lboost_date_time-gcc42-mt -lboost_program_options-gcc42-mt
+> -lboost_system-gcc42-mt -lboost_iostreams-gcc42-mt
+> -lboost_filesystem-gcc42-mt -lexecinfo  -Wl,--rpath -Wl,/pack/lib/btg
+> -Wl,--rpath -Wl,/usr/local/lib
+> *** Error code 1
+>
+> and stderr is as follows:
+>
+> btgpasswd-arg.o(.gnu.linkonce.t._ZN5boost15program_options25basic_command_line_parserIcE12extra_parserENS_9function1ISt4pairISsSsERKSsSaINS_13function_baseEEEE+0x27):
+> In function
+> `boost::program_options::basic_command_line_parser<char>::extra_parser(boost::function1<std::pair<std::string,
+> std::string>, std::string const&, std::allocator<boost::function_base> >)':
+> : undefined reference to
+> `boost::program_options::detail::cmdline::set_additional_parser(boost::function1<std::pair<std::string,
+> std::string>, std::string const&, std::allocator<boost::function_base> >)'
+> ../../bcore/.libs/libbtgcore.so: undefined reference to
+> `boost::filesystem::detail::status_api(std::string const&, int&)'
+> ../../bcore/.libs/libbtgcore.so: undefined reference to
+> `boost::xtime_get(boost::xtime*, int)'
+>
+> Any idea?
+>
+> Best regards,
+>
+> Christophe
+>
+>
+> On Fri, Mar 13, 2009 at 10:35 PM, Michael Wojciechowski <wojci at wojci.dk>wrote:
+>
+>> On Wed, 11 Mar 2009 23:54:29 +0100 christophe taranotte
+>> <christophe.taranotte at gmail.com> wrote:
+>>
+>> > There is a canonical libtorrent-rasterbar.pc in prefix/lib/pkgconfig
+>>
+>> I think that I ran "make install" in libtorrent, which does not copy all
+>> the files instead of running "make && make install" which does. :/
+>>
+>> > I also tried to set the cflags to libtorrent-rasterbar instead
+>> > of  libtorrent in in setup.sh (CXXFLAGS_pkgconfig) and likewise but I
+>> > got the same errors in the ipfilter module.
+>>
+>> I changed the setup.sh script to use "libtorrent-rasterbar" instead of
+>> "libtorrent".
+>>
+>> Take a look at my config.log: http://pastebin.ca/1359864.Maybe there
+>> is something which is different from your setup.
+>>
+>> I don't think that there is more I can do for you.
+>>
+>> --
+>> Best regards
+>>
+>> Michael Wojciechowski
+>>
+>> "When they ask how I died, I said, tell them: still angry."
+>> (Altered Carbon by Richard Morgan)
+>>
+>
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20090318/71b716c5/attachment.html>
+
+From wojci at wojci.dk  Thu Mar 19 09:26:23 2009
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Thu, 19 Mar 2009 09:26:23 +0100 (CET)
+Subject: [Btg-devel] Configure problems with btg 0.99,
+ libtorrent-rasterbar-0.14.2,
+ boost_1_38_0 during attempted building from  source on FreeBSD 7.1
+In-Reply-To: <205ad7060903181405p1bd1961co65edbd0e65dfc425@mail.gmail.com>
+References: <205ad7060903020306u15b8cfdfua9d824b453c981b7@mail.gmail.com>
+	<205ad7060903051509j177e8531i2e8eb3f8c937fe80@mail.gmail.com>
+	<20090308191428.182b0a9a@netpc4.home.wojci.dk.home.wojci.dk>
+	<205ad7060903090229t7c4ebecdr7b7c130af56ba775@mail.gmail.com>
+	<a3ca7b569df424d64ba6942095708ed2.squirrel@webmail.netimage.dk>
+	<205ad7060903091653n3308f446p823e2582861979d3@mail.gmail.com>
+	<20090311180444.5369d2fb@netpc4.home.wojci.dk.home.wojci.dk>
+	<205ad7060903111554t1058cfe2na4e83a0098f2b9ce@mail.gmail.com>
+	<20090313223519.38eebfe5@netpc5.home.wojci.dk>
+	<205ad7060903151046i2e706333ya419d615ed99b22b@mail.gmail.com>
+	<205ad7060903181405p1bd1961co65edbd0e65dfc425@mail.gmail.com>
+Message-ID: <6dd9f6c0b87775c692bfd957a16143fb.squirrel@webmail.netimage.dk>
+
+christophe taranotte wrote:
+
+> Your FreeBSD port tree was not up-to-date and there were
+> some conflicts with more recent libs.
+
+I don't have anything in the ports. I don't support any packages, so if
+something is outdated, you should talk to the person maintaining the
+package in question.
+
+> If I have some time, I will write a patch against btg-stable.
+
+Thank you.
+
+-- 
+
+Best regards
+
+Michael Wojciechowski
+
+"When they ask how I died, I said, tell them: still angry."
+(Altered Carbon by Richard Morgan)
+
+09F911029D74E35BD84156C5635688C0
+
+
+
+From christophe.taranotte at gmail.com  Thu Mar 19 10:33:47 2009
+From: christophe.taranotte at gmail.com (christophe taranotte)
+Date: Thu, 19 Mar 2009 10:33:47 +0100
+Subject: [Btg-devel] Fwd:  Configure problems with btg 0.99,
+	libtorrent-rasterbar-0.14.2,
+	boost_1_38_0 during attempted building from 	source on FreeBSD 7.1
+In-Reply-To: <205ad7060903190233u4924cca8gda6026ddcb6055bc@mail.gmail.com>
+References: <205ad7060903020306u15b8cfdfua9d824b453c981b7@mail.gmail.com>
+	<a3ca7b569df424d64ba6942095708ed2.squirrel@webmail.netimage.dk>
+	<205ad7060903091653n3308f446p823e2582861979d3@mail.gmail.com>
+	<20090311180444.5369d2fb@netpc4.home.wojci.dk.home.wojci.dk>
+	<205ad7060903111554t1058cfe2na4e83a0098f2b9ce@mail.gmail.com>
+	<20090313223519.38eebfe5@netpc5.home.wojci.dk>
+	<205ad7060903151046i2e706333ya419d615ed99b22b@mail.gmail.com>
+	<205ad7060903181405p1bd1961co65edbd0e65dfc425@mail.gmail.com>
+	<6dd9f6c0b87775c692bfd957a16143fb.squirrel@webmail.netimage.dk>
+	<205ad7060903190233u4924cca8gda6026ddcb6055bc@mail.gmail.com>
+Message-ID: <205ad7060903190233k16086794jb854214c0ffb6f0c@mail.gmail.com>
+
+Good morning,
+
+Michael Wojciechowski wrote:
+
+>
+> I don't have anything in the ports. I don't support any packages, so if
+> something is outdated, you should talk to the person maintaining the
+> package in question.
+>
+
+Your curl is 7.18.0, mine is 7.19.4
+
+Your gnutls is 2.4, mine is 2.6.
+
+How did you install autotools, curl, gnutls and pkg-config and dependencies?
+
+Best regards,
+
+Christophe
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20090319/3460ced8/attachment.html>
+
+From wojci at wojci.dk  Thu Mar 19 15:25:33 2009
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Thu, 19 Mar 2009 15:25:33 +0100 (CET)
+Subject: [Btg-devel] Fwd:  Configure problems with btg 0.99,
+ libtorrent-rasterbar-0.14.2,
+ boost_1_38_0 during attempted building from  source on FreeBSD 7.1
+In-Reply-To: <205ad7060903190233k16086794jb854214c0ffb6f0c@mail.gmail.com>
+References: <205ad7060903020306u15b8cfdfua9d824b453c981b7@mail.gmail.com>
+	<a3ca7b569df424d64ba6942095708ed2.squirrel@webmail.netimage.dk>
+	<205ad7060903091653n3308f446p823e2582861979d3@mail.gmail.com>
+	<20090311180444.5369d2fb@netpc4.home.wojci.dk.home.wojci.dk>
+	<205ad7060903111554t1058cfe2na4e83a0098f2b9ce@mail.gmail.com>
+	<20090313223519.38eebfe5@netpc5.home.wojci.dk>
+	<205ad7060903151046i2e706333ya419d615ed99b22b@mail.gmail.com>
+	<205ad7060903181405p1bd1961co65edbd0e65dfc425@mail.gmail.com>
+	<6dd9f6c0b87775c692bfd957a16143fb.squirrel@webmail.netimage.dk>
+	<205ad7060903190233u4924cca8gda6026ddcb6055bc@mail.gmail.com>
+	<205ad7060903190233k16086794jb854214c0ffb6f0c@mail.gmail.com>
+Message-ID: <e12ea11ef079832a32cef94ece705bce.squirrel@webmail.netimage.dk>
+
+christophe taranotte wrote:
+
+> How did you install autotools, curl, gnutls and pkg-config and
+> dependencies?
+
+I don't use FreeBSD regularly, so I just re-installed FreeBSD 7.x from a
+DVD on an old box I was using for FreeBSD 6.x before. I had no time to
+upgrade ports, so I never did.
+I just installed the ports that are required for BTG.
+
+This must be why the versions used by me are different from the ones you
+are using.
+
+-- 
+
+Best regards
+
+Michael Wojciechowski
+
+"When they ask how I died, I said, tell them: still angry."
+(Altered Carbon by Richard Morgan)
+
+09F911029D74E35BD84156C5635688C0
+
+
+

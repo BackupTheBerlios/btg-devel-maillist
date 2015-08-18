@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Btg-devel] configure: error: Could not link against
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/btg-devel/2008-May/index.html" >
+   <LINK REL="made" HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20configure%3A%20error%3A%20Could%20not%20link%20against&In-Reply-To=%3C4829DD76.5010509%40romanr.info%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000028.html">
+   <LINK REL="Next"  HREF="000030.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Btg-devel] configure: error: Could not link against</H1>
+    <B>Roman Rybalko (BTG Project)</B> 
+    <A HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20configure%3A%20error%3A%20Could%20not%20link%20against&In-Reply-To=%3C4829DD76.5010509%40romanr.info%3E"
+       TITLE="[Btg-devel] configure: error: Could not link against">btg at romanr.info
+       </A><BR>
+    <I>Tue May 13 20:27:02 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000028.html">[Btg-devel] configure: error: Could not link against
+</A></li>
+        <LI>Next message: <A HREF="000030.html">[Btg-devel] configure: error: Could not link against
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#29">[ date ]</a>
+              <a href="thread.html#29">[ thread ]</a>
+              <a href="subject.html#29">[ subject ]</a>
+              <a href="author.html#29">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Actually we're thinking how to solve it. It's temporarily problem.
+
+For now the BOOST detection scripts expects BOOST_LDFLAGS environment
+variable set,
+and searches for the libraries there (e.g.
+BOOST_LDFLAGS=-L/usr/local/boost-1.34.1/lib,
+or BOOST_LDFLAGS=&quot;-L/usr/local/lib -L/usr/lib&quot;).
+I think we can set this variable in configure itself, if it wasn't set
+from the outside.
+
+--with-boost-* configure params is just another way
+
+Mounir Lamouri &#1087;&#1080;&#1096;&#1077;&#1090;:
+&gt;<i> It works with all --with-boost-* options but why is it necessary now ?
+</I>&gt;<i>
+</I>&gt;<i> Daniel Svensson a &#233;crit :
+</I>&gt;<i>   
+</I>&gt;&gt;<i> Tried with 1.34-1-r2 before and got the same error but it worked fined
+</I>&gt;&gt;<i> with the --with-boost-* options added. Had problem with that before
+</I>&gt;&gt;<i> but always clueless on where to start looking.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Thanks anyways.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Mon, May 12, 2008 at 7:29 PM, Roman Rybalko (BTG Project)
+</I>&gt;&gt;<i> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">btg at romanr.info</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">btg at romanr.info</A>&gt;&gt; wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     --with-boost-iostreams=mt --with-boost-filesystem=mt
+</I>&gt;&gt;<i>     --with-boost-date-time=mt --with-boost-thread=mt
+</I>&gt;&gt;<i>     --with-boost-program-options=mt --with-boost-system=mt
+</I>&gt;&gt;<i>     where &quot;mt&quot; is a library suffix. it also can be 1.35.1-r1 or you
+</I>&gt;&gt;<i>     can try
+</I>&gt;&gt;<i>     just &quot;r2&quot; or &quot;gcc43-mt&quot; ...
+</I>&gt;&gt;<i>     see config.log for details
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     Mounir Lamouri &#1087;&#1080;&#1096;&#1077;&#1090;:
+</I>&gt;&gt;<i>     &gt; I see boost 1.35 is masked on Gentoo. Why using a masked version
+</I>&gt;&gt;<i>     ? May
+</I>&gt;&gt;<i>     &gt; be you try with boost-1.34.1-r2
+</I>&gt;&gt;<i>     &gt;
+</I>&gt;&gt;<i>     &gt;
+</I>&gt;&gt;<i>     &gt; Daniel Svensson a &#233;crit :
+</I>&gt;&gt;<i>     &gt;
+</I>&gt;&gt;<i>     &gt;&gt; getting this with revision 342:
+</I>&gt;&gt;<i>     &gt;&gt;
+</I>&gt;&gt;<i>     &gt;&gt; checking whether the Boost::System library is available... yes
+</I>&gt;&gt;<i>     &gt;&gt; configure: &quot;unable to find Boost.System library, this is not
+</I>&gt;&gt;<i>     required
+</I>&gt;&gt;<i>     &gt;&gt; unless boost 1.3.5 or better is used.&quot;
+</I>&gt;&gt;<i>     &gt;&gt; checking whether the Boost::IOStreams library is available... yes
+</I>&gt;&gt;<i>     &gt;&gt; configure: error: Could not link against !
+</I>&gt;&gt;<i>     &gt;&gt;
+</I>&gt;&gt;<i>     &gt;&gt; i am using gentoo with boost 1.3.5 and have no idea what could be
+</I>&gt;&gt;<i>     &gt;&gt; broken..
+</I>&gt;&gt;<i>     &gt;&gt;
+</I>&gt;&gt;<i>     ------------------------------------------------------------------------
+</I>&gt;&gt;<i>     &gt;&gt;
+</I>&gt;&gt;<i>     
+</I>-- 
+WBR,
+Roman Rybalko
+
+BTG Project
+<A HREF="http://btg.berlios.de/">http://btg.berlios.de/</A>
+<A HREF="ftp://ftp.berlios.de/pub/btg/">ftp://ftp.berlios.de/pub/btg/</A>
+
+
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: signature.asc
+Type: application/pgp-signature
+Size: 890 bytes
+Desc: OpenPGP digital signature
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/btg-devel/attachments/20080513/064e0ef9/attachment.pgp">https://lists.berlios.de/pipermail/btg-devel/attachments/20080513/064e0ef9/attachment.pgp</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000028.html">[Btg-devel] configure: error: Could not link against
+</A></li>
+	<LI>Next message: <A HREF="000030.html">[Btg-devel] configure: error: Could not link against
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#29">[ date ]</a>
+              <a href="thread.html#29">[ thread ]</a>
+              <a href="subject.html#29">[ subject ]</a>
+              <a href="author.html#29">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/btg-devel">More information about the Btg-devel
+mailing list</a><br>
+</body></html>

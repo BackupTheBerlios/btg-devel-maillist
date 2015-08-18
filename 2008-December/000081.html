@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Btg-devel] cross-compilation: ARM
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/btg-devel/2008-December/index.html" >
+   <LINK REL="made" HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20cross-compilation%3A%20ARM&In-Reply-To=%3C813da73a294df1091174ab7b54d0f87b%40flupp.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000084.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Btg-devel] cross-compilation: ARM</H1>
+    <B>koppor</B> 
+    <A HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20cross-compilation%3A%20ARM&In-Reply-To=%3C813da73a294df1091174ab7b54d0f87b%40flupp.de%3E"
+       TITLE="[Btg-devel] cross-compilation: ARM">olly at flupp.de
+       </A><BR>
+    <I>Mon Dec  1 00:15:10 CET 2008</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000084.html">[Btg-devel] cross-compilation: ARM
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#81">[ date ]</a>
+              <a href="thread.html#81">[ thread ]</a>
+              <a href="subject.html#81">[ subject ]</a>
+              <a href="author.html#81">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+Hi,
+
+I own a Buffalo Linkstation with an ARM-processor. I installed Debian on it
+and want to have BTG running there :)
+
+Since the ARM-processor doesn't have that much CPU-power, I'm trying to
+cross-compile BTG on an AMD64.
+
+./autogen.sh worked.
+
+Now I'm trying
+./configure --host=arm-linux-gnu
+
+It works fine, until it comes to BOOST:
+
+--cut--
+checking BOOST includes in /usr/include... found
+configure: Using BOOST_CPPFLAGS = -I/usr/include
+checking whether the Boost::System library is available... no
+configure: unable to find Boost.System library, this is not required unless
+boost 1.3.5 or better is used.
+checking whether the Boost::IOStreams library is available... no
+configure: error: unable to find Boost.IOStreams library, currently this is
+required.
+--end--
+
+I wonder, why I need an ARM-Boost.IOStreams library on my AMD64, if I want
+to run it on ARM. :)
+Or did I get something wrong?
+
+Does anyone know how to cross-compile for ARM?
+
+I would directly install the .deb-packages, but
+<A HREF="ftp://ftp.berlios.de/pub/btg/debian/dists/main/">ftp://ftp.berlios.de/pub/btg/debian/dists/main/</A>
+only offers i386 packages.
+
+Thank you in advance!
+
+koppor
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000084.html">[Btg-devel] cross-compilation: ARM
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#81">[ date ]</a>
+              <a href="thread.html#81">[ thread ]</a>
+              <a href="subject.html#81">[ subject ]</a>
+              <a href="author.html#81">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/btg-devel">More information about the Btg-devel
+mailing list</a><br>
+</body></html>

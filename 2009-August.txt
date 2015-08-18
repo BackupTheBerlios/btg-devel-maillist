@@ -1,0 +1,870 @@
+From wojci at wojci.dk  Sun Aug 16 23:55:04 2009
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Sun, 16 Aug 2009 23:55:04 +0200
+Subject: [Btg-devel] Fast resume data
+Message-ID: <20090816235504.5630b1a8@netpc5.home.wojci.dk>
+
+Roman,
+
+To continue our conversation from IRC.
+
+21:03 < wojci> roma_: I am looking at the issue with saving fast
+resume. The only fix I see is moving the alert handling to its own
+thread. 21:03 < wojci> roma_: And using a semaphore to decide when the
+required alert has been generated.
+21:04 < wojci> roma_: I began looking at this, since you have done
+nothing to fix it.
+#libtorrent 21:11 < roma_> wojci: but actually this is done already
+21:12 < roma_> wojci: have you understood why resume data is rejected?
+21:14 < roma_> wojci: current approach _should_work or we have to stop
+the torrent before resume alert is received, which is
+inefficient
+
+I don't know why data is rejected - and I will not know, since the
+alert about resume not being written is not received by the alert
+handler in context_alert.cpp.
+
+I want for a context to wait to the fast data to be saved - this does
+not happen AFAIK.
+
+So I think that when the daemon is being shut down (only when using
+lt 0.14.x), it starts to write fast resume data, but does not wait for
+the write to complete before removing the context. This is probably the
+source of the problem that I experience -> missing fast resume data. It
+probably works fine when fast resume data is written together with
+saved sessions.
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+
+
+
+
+From btg-devel at romanr.name  Mon Aug 17 10:38:23 2009
+From: btg-devel at romanr.name (Roman Rybalko)
+Date: Mon, 17 Aug 2009 12:38:23 +0400
+Subject: [Btg-devel] Fast resume data
+In-Reply-To: <20090816235504.5630b1a8@netpc5.home.wojci.dk>
+References: <20090816235504.5630b1a8@netpc5.home.wojci.dk>
+Message-ID: <4A8916FF.4010800@romanr.name>
+
+Michael Wojciechowski wrote:
+> I don't know why data is rejected - and I will not know, since the
+> alert about resume not being written is not received by the alert
+> handler in context_alert.cpp.
+>   
+So, writing an additional alert handler is not a problem, right?
+Just write some log message when this resume_data_rejected alert is
+received.
+> I want for a context to wait to the fast data to be saved - this does
+> not happen AFAIK.
+>
+>   
+That's right, is it necessary?
+> So I think that when the daemon is being shut down (only when using
+> lt 0.14.x), it starts to write fast resume data, but does not wait for
+> the write to complete before removing the context. This is probably the
+> source of the problem that I experience -> missing fast resume data. It
+> probably works fine when fast resume data is written together with
+> saved sessions.
+>   
+Well, resume data is saved regularly but asynchronously. When the daemon
+exits,
+there is resume data for downloading torrents but it's a bit stale (1
+minute stale, actually).
+According to LT code I dug, it should correctly handle such conditions
+unless compact allocation mode (which we don't use).
+
+-- 
+WBR,
+Roman Rybalko
+
+
+
+From wojci at wojci.dk  Mon Aug 17 12:57:39 2009
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Mon, 17 Aug 2009 12:57:39 +0200 (CEST)
+Subject: [Btg-devel] Fast resume data]
+Message-ID: <0214f0965908f75a5509f6b40e7f4b46.squirrel@webmail.netimage.dk>
+
+Roman Rybalko wrote:
+> Michael Wojciechowski wrote:
+> So, writing an additional alert handler is not a problem, right?
+
+I was not able to find any way of _not_ polling for alerts. Do you know a
+way? In the current architecture, a thread polls alerts in each context
+each 10 second or so.
+
+I was thinking about adding a thread which only checks for alerts and
+nothing else. But it would need to check for alerts for each session with
+X contexts each. Maybe it does not matter, but I suspect that getting the
+confirmation that you saved fast resume data could be delayed.
+
+> Well, resume data is saved regularly but asynchronously. When the daemon
+> exits,
+> there is resume data for downloading torrents but it's a bit stale (1
+> minute stale, actually).
+
+That could be enough to trigger a re-check of the torrent's data. I would
+like to avoid that..
+
+> According to LT code I dug, it should correctly handle such conditions
+> unless compact allocation mode (which we don't use).
+
+I thought that compact allocation mode was the default (in BTG), and you
+could use full allocation if you wanted to.
+
+-- 
+
+Best regards
+
+Michael Wojciechowski
+
+
+
+From btg-devel at romanr.name  Mon Aug 17 16:58:39 2009
+From: btg-devel at romanr.name (Roman Rybalko)
+Date: Mon, 17 Aug 2009 18:58:39 +0400
+Subject: [Btg-devel] Fast resume data
+In-Reply-To: <87d5cd49f3f8c81420aaa883c3a7435a.squirrel@webmail.netimage.dk>
+References: <20090816235504.5630b1a8@netpc5.home.wojci.dk>
+	<4A8916FF.4010800@romanr.name>
+	<87d5cd49f3f8c81420aaa883c3a7435a.squirrel@webmail.netimage.dk>
+Message-ID: <4A89701F.6020201@romanr.name>
+
+Michael Wojciechowski wrote:
+> I was not able to find any way of _not_ polling for alerts. Do you know a
+> way? In the current architecture, a thread polls alerts in each context
+> each 10 second or so.
+>   
+No, I don't know either.
+May be it's not bad to pass such information via alerts...
+>> Well, resume data is saved regularly but asynchronously. When the daemon
+>> exits,
+>> there is resume data for downloading torrents but it's a bit stale (1
+>> minute stale, actually).
+>>     
+>
+> That could be enough to trigger a re-check of the torrent's data. I would
+> like to avoid that..
+>
+>   
+>> According to LT code I dug, it should correctly handle such conditions
+>> unless compact allocation mode (which we don't use).
+>>     
+>
+> I thought that compact allocation mode was the default (in BTG), and you
+> could use full allocation if you wanted to.
+>   
+There are 3 allocation modes in 0.14.2:
+full - all files are allocated at once and filled by 0-bytes
+sparse - generic unix "sparse" files as we know them well
+compact - some "tricky" mode when files are smaller than in full mode
+but pieces are always travel inside that files, used for MacOS where
+sparse mode is not supported AFAIK, see docs, it's hard to explain for
+me :-/
+
+So, I thought we use "sparse" mode, not "compact".
+If we really use "compact" mode - the source of problem is obvious. In
+this mode outdated resume data is rejected anyway.
+But in sparse and full allocation modes outdated resume data works well.
+Do you really need to support "compact" mode for your appletv or so?
+May be "full allocation" will be suitable for you? since "compact" mode
+is rather disk-io-voracious.
+
+-- 
+WBR,
+Roman Rybalko
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20090817/7d485e6c/attachment.html>
+
+From wojci at wojci.dk  Tue Aug 18 20:27:35 2009
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Tue, 18 Aug 2009 20:27:35 +0200
+Subject: [Btg-devel] Fast resume data
+In-Reply-To: <4A89701F.6020201@romanr.name>
+References: <20090816235504.5630b1a8@netpc5.home.wojci.dk>
+	<4A8916FF.4010800@romanr.name>
+	<87d5cd49f3f8c81420aaa883c3a7435a.squirrel@webmail.netimage.dk>
+	<4A89701F.6020201@romanr.name>
+Message-ID: <20090818202735.6ecc7eed@netpc5.home.wojci.dk>
+
+On Mon, 17 Aug 2009 18:58:39 +0400 Roman Rybalko
+<btg-devel at romanr.name> wrote:
+
+> So, I thought we use "sparse" mode, not "compact".
+> If we really use "compact" mode - the source of problem is obvious. In
+> this mode outdated resume data is rejected anyway.
+> But in sparse and full allocation modes outdated resume data works
+> well. Do you really need to support "compact" mode for your appletv
+> or so? May be "full allocation" will be suitable for you? since
+> "compact" mode is rather disk-io-voracious.
+
+I meant sparse but wrote compact. :/ 
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+
+
+From wojci at wojci.dk  Wed Aug 19 23:03:56 2009
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Wed, 19 Aug 2009 23:03:56 +0200
+Subject: [Btg-devel] Fast resume data
+In-Reply-To: <4A89701F.6020201@romanr.name>
+References: <20090816235504.5630b1a8@netpc5.home.wojci.dk>
+	<4A8916FF.4010800@romanr.name>
+	<87d5cd49f3f8c81420aaa883c3a7435a.squirrel@webmail.netimage.dk>
+	<4A89701F.6020201@romanr.name>
+Message-ID: <20090819230356.750fb9d4@netpc5.home.wojci.dk>
+
+On Mon, 17 Aug 2009 18:58:39 +0400 Roman Rybalko
+<btg-devel at romanr.name> wrote:
+
+> Michael Wojciechowski wrote:
+> > I was not able to find any way of _not_ polling for alerts. Do you
+> > know a way? In the current architecture, a thread polls alerts in
+> > each context each 10 second or so.
+> No, I don't know either.
+
+Never mind. I fixed this issue with saving fast resume data, it seems.
+See bug #16157. 
+
+Would you mind reviewing it?
+
+This can be backported to 1.x, I guess. But it adds a thread and
+requires some other changes as well. I am about to remove support for
+lt < 0.14.x in trunk.
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+
+
+From ryan at ryanholt.net  Mon Aug 24 03:46:54 2009
+From: ryan at ryanholt.net (Ryan Holt)
+Date: Sun, 23 Aug 2009 21:46:54 -0400
+Subject: [Btg-devel] Trouble with starting btg-1.0.0
+Message-ID: <4A91F10E.9040306@ryanholt.net>
+
+Hi all,
+
+I'm getting this error after launching the btgdaemon and attempting to
+connect via btgcli:
+
+    ryan at brian ~ $ btgcli
+    Username:
+    ryan
+    Password:
+
+    Unable to get password.
+    [2009-Aug-23 21:38:12] btg*cli: Internal error: start up helper not
+    initialized.
+
+
+
+Any thoughts? Attached are my daemon.ini and client.ini files.
+
+Thanks for any of your help!
+
+Ryan
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: client.ini
+Type: application/x-crossover-ini
+Size: 99 bytes
+Desc: not available
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20090823/936e294e/attachment.bin>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: daemon.ini
+Type: application/x-crossover-ini
+Size: 363 bytes
+Desc: not available
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20090823/936e294e/attachment-0001.bin>
+
+From wojci at wojci.dk  Mon Aug 24 14:20:11 2009
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Mon, 24 Aug 2009 14:20:11 +0200 (CEST)
+Subject: [Btg-devel] Trouble with starting btg-1.0.0
+In-Reply-To: <4A91F10E.9040306@ryanholt.net>
+References: <4A91F10E.9040306@ryanholt.net>
+Message-ID: <cb5ccd7b55e4f3e4862dd6cc67662c95.squirrel@webmail.netimage.dk>
+
+Ryan Holt wrote:
+
+> I'm getting this error after launching the btgdaemon and attempting to
+> connect via btgcli:
+>
+>     ryan at brian ~ $ btgcli
+>     Username:
+>     ryan
+>     Password:
+>
+>     Unable to get password.
+
+getpass() is being used in BTG. From the man page "This function is
+obsolete.  Do not use it." We use it. :)
+
+So my guess is that it returns NULL on your distro/OS, because someone
+decided to remove the functionality. We will have to reimplement
+stdIn::getPassword(..) so it works on all the supported operating systems.
+
+What distro/OS are you using?
+
+Do you mind adding a bug about it using our bug tracker?
+
+-- 
+Best regards
+
+Michael Wojciechowski
+
+http://www.linkedin.com/in/wojci
+http://www.facebook.com/wojci
+http://twitter.com/wojci
+
+
+
+From aspcicc at jumpy.it  Thu Aug 27 20:27:07 2009
+From: aspcicc at jumpy.it (ciccio)
+Date: Thu, 27 Aug 2009 20:27:07 +0200
+Subject: [Btg-devel] start new session error
+Message-ID: <4A96CFFB.3000209@jumpy.it>
+
+Hello i have reinstalled my linux so i needed to configure and reinstall BTG
+
+I obtain a strange error when try to start a new session: failed to
+setup session: invalid directories
+
+Please help me! i can't live without BTG
+
+
+
+From aspiancik at gmail.com  Thu Aug 27 20:25:36 2009
+From: aspiancik at gmail.com (Ing. Serio Francesco)
+Date: Thu, 27 Aug 2009 20:25:36 +0200
+Subject: [Btg-devel] start new session error
+Message-ID: <4A96CFA0.5010108@yahoo.it>
+
+Hello i have reinstalled my linux so i needed to configure and reinstall BTG
+
+I obtain a strange error when try to start a new session: failed to 
+setup session: invalid directories
+
+Please help me! i can't live without BTG
+
+
+From xiong.chiamiov at gmail.com  Thu Aug 27 20:38:59 2009
+From: xiong.chiamiov at gmail.com (James Pearson)
+Date: Thu, 27 Aug 2009 11:38:59 -0700
+Subject: [Btg-devel] start new session error
+In-Reply-To: <4A96CFFB.3000209@jumpy.it>
+References: <4A96CFFB.3000209@jumpy.it>
+Message-ID: <7dbb3da80908271138r380a1965j71bccfa4d1c59d31@mail.gmail.com>
+
+On Thu, Aug 27, 2009 at 11:27 AM, ciccio <aspcicc at jumpy.it> wrote:
+
+> Hello i have reinstalled my linux so i needed to configure and reinstall
+> BTG
+
+
+You don't have your old config, do you?  That would make things easier.
+
+
+> I obtain a strange error when try to start a new session: failed to
+> setup session: invalid directories
+
+
+It's been some time since I've used BTG, but it seems to me that you're
+telling it to store session data in a directory that doesn't exist.
+Double-check the path and permissions.
+
+-- 
+James Pearson
+--
+The best way to predict the future is to invent it.
+ - Alan Kay
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20090827/e7299d42/attachment.html>
+
+From aspcicc at jumpy.it  Sat Aug 29 09:34:59 2009
+From: aspcicc at jumpy.it (ciccio)
+Date: Sat, 29 Aug 2009 09:34:59 +0200
+Subject: [Btg-devel] start new session error
+In-Reply-To: <4A97080C.8060200@jumpy.it>
+References: <4A96CFFB.3000209@jumpy.it>
+	<7dbb3da80908271138r380a1965j71bccfa4d1c59d31@mail.gmail.com>
+	<4A97080C.8060200@jumpy.it>
+Message-ID: <4A98DA23.7020304@jumpy.it>
+
+I haven't used BTG for some 6 months now, so I'm not really familiar 
+with it.  If you forward your message to the mailing list, then 
+someone'll probably come along who could help better than I.
+
+On Thu, Aug 27, 2009 at 3:26 PM, ciccio <aspcicc at jumpy.it 
+<mailto:aspcicc at jumpy.it>> wrote:
+
+    Hello, and thanks for your help. i have double checked all
+    possibility i have also deleted old dir and let btgpasswd create new
+    for me.. the command is:
+
+    btgpasswd --create -a -u sercik -d
+    /mnt/disco/p2p/btg/torrent/sercik/dest -w
+    /mnt/disco/p2p/btg/torrent/sercik/work -s
+    /mnt/disco/p2p/btg/torrent/sercik/seed -t
+    /mnt/disco/p2p/btg/torrent/sercik/temp
+
+    That path exists and the owner of directory btg and other
+    subdirectory is always sercik:casa_ioecri  and i start btgdaemon
+    with user sercik with the following command: su -c
+    "/usr/local/bin/btgdaemon" sercik &
+    I don't know what to do, please help me!!
+
+
+
+    James Pearson ha scritto:
+
+
+        On Thu, Aug 27, 2009 at 11:27 AM, ciccio <aspcicc at jumpy.it
+        <mailto:aspcicc at jumpy.it> <mailto:aspcicc at jumpy.it
+        <mailto:aspcicc at jumpy.it>>> wrote:
+
+           Hello i have reinstalled my linux so i needed to configure and
+           reinstall BTG
+
+
+        You don't have your old config, do you?  That would make things
+        easier.
+         
+           I obtain a strange error when try to start a new session:
+        failed to
+           setup session: invalid directories
+
+
+        It's been some time since I've used BTG, but it seems to me that
+        you're telling it to store session data in a directory that
+        doesn't exist.  Double-check the path and permissions.
+
+        -- 
+        James Pearson
+        --
+        The best way to predict the future is to invent it.
+         - Alan Kay
+
+
+
+
+
+-- 
+James Pearson
+--
+The best way to predict the future is to invent it.
+ - Alan Kay
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20090829/a1d8025a/attachment.html>
+
+From wojci at wojci.dk  Sat Aug 29 09:57:45 2009
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Sat, 29 Aug 2009 09:57:45 +0200
+Subject: [Btg-devel] start new session error
+In-Reply-To: <4A98DA23.7020304@jumpy.it>
+References: <4A96CFFB.3000209@jumpy.it>
+	<7dbb3da80908271138r380a1965j71bccfa4d1c59d31@mail.gmail.com>
+	<4A97080C.8060200@jumpy.it> <4A98DA23.7020304@jumpy.it>
+Message-ID: <20090829095745.3dc92e9b@netpc5.home.wojci.dk>
+
+On Sat, 29 Aug 2009 09:34:59 +0200 ciccio <aspcicc at jumpy.it> wrote:
+
+> If you forward your message to the mailing list, then 
+> someone'll probably come along who could help better than I.
+
+You have to be a member of the mailing list to send to it. 
+
+>     Hello, and thanks for your help. i have double checked all
+>     possibility i have also deleted old dir and let btgpasswd create
+> new for me.. the command is:
+> 
+>     btgpasswd --create -a -u sercik -d
+>     /mnt/disco/p2p/btg/torrent/sercik/dest -w
+>     /mnt/disco/p2p/btg/torrent/sercik/work -s
+>     /mnt/disco/p2p/btg/torrent/sercik/seed -t
+>     /mnt/disco/p2p/btg/torrent/sercik/temp
+> 
+>     That path exists and the owner of directory btg and other
+>     subdirectory is always sercik:casa_ioecri  and i start btgdaemon
+>     with user sercik with the following command: su -c
+>     "/usr/local/bin/btgdaemon" sercik &
+>     I don't know what to do, please help me!!
+
+Try running (from bash):
+btgdaemon -v -n
+
+this will make the daemon not detach from your terminal and print
+messages to stdout about what it is doing. An error message
+will most likely be printed to stdout, when you attempt to create a
+session.
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+http://www.linkedin.com/in/wojci
+http://www.facebook.com/wojci
+http://twitter.com/wojci
+
+"A person who does not share is not only selfish, but bitter and
+alone.", Paulo Coelho.
+
+
+From aspcicc at jumpy.it  Sat Aug 29 13:01:45 2009
+From: aspcicc at jumpy.it (ciccio)
+Date: Sat, 29 Aug 2009 13:01:45 +0200
+Subject: [Btg-devel] start new session error
+In-Reply-To: <20090829095745.3dc92e9b@netpc5.home.wojci.dk>
+References: <4A96CFFB.3000209@jumpy.it>	<7dbb3da80908271138r380a1965j71bccfa4d1c59d31@mail.gmail.com>	<4A97080C.8060200@jumpy.it>	<4A98DA23.7020304@jumpy.it>
+	<20090829095745.3dc92e9b@netpc5.home.wojci.dk>
+Message-ID: <4A990A99.3000402@jumpy.it>
+
+
+i think that i'm a member but, to be sure, can i tell me how to check if 
+i am?
+
+this is the output of this web page: 
+https://lists.berlios.de/mailman/subscribe/btg-devel
+
+
+  Btg-devel Subscription results
+
+You are already subscribed.
+
+so seems i'm ok
+
+On 29/08/2009 Michael Wojciechowski wrote:
+> You have to be a member of the mailing list to send to it. 
+>
+>   
+
+
+
+From aspcicc at jumpy.it  Sat Aug 29 14:36:23 2009
+From: aspcicc at jumpy.it (ciccio)
+Date: Sat, 29 Aug 2009 14:36:23 +0200
+Subject: [Btg-devel] start new session error
+In-Reply-To: <20090829095745.3dc92e9b@netpc5.home.wojci.dk>
+References: <4A96CFFB.3000209@jumpy.it>	<7dbb3da80908271138r380a1965j71bccfa4d1c59d31@mail.gmail.com>	<4A97080C.8060200@jumpy.it>	<4A98DA23.7020304@jumpy.it>
+	<20090829095745.3dc92e9b@netpc5.home.wojci.dk>
+Message-ID: <4A9920C7.5040103@jumpy.it>
+
+hello and thanks,
+i have downloaded latest svn, compiled and installed ,i have created 
+user with command :
+
+btgpasswd --create -a -t "/mnt/disco/p2p/btg/torrents" -w 
+"/mnt/disco/p2p/btg/work" -d "/mnt/disco/p2p/btg/finished" -s 
+"/mnt/disco/p2p/btg/seeding" -p -u sercik
+
+now, when i try to access to btg i obtain: failed to authorize
+
+this is log file:
+
+[2009-Aug-29 14:30:59] Not changing user/group.
+[2009-Aug-29 14:30:59] Not detaching from TTY.
+[2009-Aug-29 14:30:59] pmr: using ports 10024:10025.
+[2009-Aug-29 14:30:59] pmr: available ports: 2.
+[2009-Aug-29 14:30:59] lim: setting limits, upload = 32000,  download = 
+-1,  max upload = -1,  max connections = -1.
+[2009-Aug-29 14:30:59] hdl: Loading sessions from stream.
+[2009-Aug-29 14:30:59] alertthr: started.
+[2009-Aug-29 14:30:59] sess: Upload limit: 32000.
+[2009-Aug-29 14:30:59] sess: Download limit: -1.
+[2009-Aug-29 14:30:59] sess: Max uploads: -1.
+[2009-Aug-29 14:30:59] hdlthr: started.
+[2009-Aug-29 14:30:59] sess: Max connections: -1.
+[2009-Aug-29 14:30:59] lim: setting limits, upload = 32000,  download = 
+-1,  max upload = -1,  max connections = -1.
+[2009-Aug-29 14:30:59] btgdaemon version 2.0.0, SVN rev. 630.
+[2009-Aug-29 14:30:59] Using rasterbar libtorrent version 0.14.
+[2009-Aug-29 14:30:59] There can be only one libtorrent. Accept no 
+substitutes.
+[2009-Aug-29 14:30:59] Ready to accept clients.
+[2009-Aug-29 14:31:01] alertthr: Checking alerts.
+[2009-Aug-29 14:31:03] alertthr: Checking alerts.
+[2009-Aug-29 14:31:05] alertthr: Checking alerts.
+[2009-Aug-29 14:31:07] alertthr: Checking alerts.
+[2009-Aug-29 14:31:09] alertthr: Checking alerts.
+[2009-Aug-29 14:31:10] hdlthr: Checking limits.
+[2009-Aug-29 14:31:11] alertthr: Checking alerts.
+[2009-Aug-29 14:31:13] alertthr: Checking alerts.
+[2009-Aug-29 14:31:15] alertthr: Checking alerts.
+[2009-Aug-29 14:31:17] alertthr: Checking alerts.
+[2009-Aug-29 14:31:19] alertthr: Checking alerts.
+[2009-Aug-29 14:31:21] alertthr: Checking alerts.
+[2009-Aug-29 14:31:21] hdlthr: Checking limits.
+[2009-Aug-29 14:31:23] alertthr: Checking alerts.
+[2009-Aug-29 14:31:23] hdl: client (0): (g) Init connection failed.
+[2009-Aug-29 14:31:23] hdl: Client (0): Rejecting connection from user 
+'sercik'.
+[2009-Aug-29 14:31:23] hdl: Sending error to client (0): 'Failed to 
+authorize user.'.
+[2009-Aug-29 14:31:23] hdl: daemon (0): (g) Error (caused by (g) Init 
+connection).
+[2009-Aug-29 14:31:25] alertthr: Checking alerts.
+[2009-Aug-29 14:31:27] alertthr: Checking alerts.
+[2009-Aug-29 14:31:29] alertthr: Checking alerts.
+[2009-Aug-29 14:31:30] hdlthr: Updating limits.
+
+i don't know what is that Error (caused by (g) Init connection).
+
+> Try running (from bash):
+> btgdaemon -v -n
+>
+> this will make the daemon not detach from your terminal and print
+> messages to stdout about what it is doing. An error message
+> will most likely be printed to stdout, when you attempt to create a
+> session.
+>
+>   
+
+
+
+From wojci at wojci.dk  Sat Aug 29 19:00:20 2009
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Sat, 29 Aug 2009 19:00:20 +0200
+Subject: [Btg-devel] start new session error
+In-Reply-To: <4A9920C7.5040103@jumpy.it>
+References: <4A96CFFB.3000209@jumpy.it>
+	<7dbb3da80908271138r380a1965j71bccfa4d1c59d31@mail.gmail.com>
+	<4A97080C.8060200@jumpy.it> <4A98DA23.7020304@jumpy.it>
+	<20090829095745.3dc92e9b@netpc5.home.wojci.dk>
+	<4A9920C7.5040103@jumpy.it>
+Message-ID: <20090829190020.40911ca3@netpc5.home.wojci.dk>
+
+On Sat, 29 Aug 2009 14:36:23 +0200 ciccio <aspcicc at jumpy.it> wrote:
+
+> [2009-Aug-29 14:31:23] hdl: Client (0): Rejecting connection from
+> user 'sercik'.
+> 
+> i don't know what is that Error (caused by (g) Init connection).
+
+Your log tells me that your password is incorrect. This is the only
+reason for this message that I can see in the source.
+
+Notice that you are using an untested version of BTG - I mean 2.x.
+While trunk works for me, the RC1 was slightly fscked, as some
+synchronization was not implemented. 
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+http://www.linkedin.com/in/wojci
+http://www.facebook.com/wojci
+http://twitter.com/wojci
+
+"A person who does not share is not only selfish, but bitter and
+alone.", Paulo Coelho.
+
+
+From aspcicc at jumpy.it  Mon Aug 31 00:37:34 2009
+From: aspcicc at jumpy.it (ciccio)
+Date: Mon, 31 Aug 2009 00:37:34 +0200
+Subject: [Btg-devel] Btg-devel Digest, Vol 19, Issue 9
+In-Reply-To: <mailman.61.1251626519.14515.btg-devel@lists.berlios.de>
+References: <mailman.61.1251626519.14515.btg-devel@lists.berlios.de>
+Message-ID: <4A9AFF2E.3050704@jumpy.it>
+
+Only to tell that the problem was solved, i'm not exactly sure which was 
+the cause but i have uninstalled btg from snv and downloaded and 
+compiled btg 1.0.0.0 release and now it works good
+Thanks for help and goodbye!!
+
+
+btg-devel-request at lists.berlios.de ha scritto:
+> Send Btg-devel mailing list submissions to
+> 	btg-devel at lists.berlios.de
+>
+> To subscribe or unsubscribe via the World Wide Web, visit
+> 	https://lists.berlios.de/mailman/listinfo/btg-devel
+> or, via email, send a message with subject or body 'help' to
+> 	btg-devel-request at lists.berlios.de
+>
+> You can reach the person managing the list at
+> 	btg-devel-owner at lists.berlios.de
+>
+> When replying, please edit your Subject line so it is more specific
+> than "Re: Contents of Btg-devel digest..."
+>
+>
+> Today's Topics:
+>
+>    1. Re: start new session error (ciccio)
+>    2. Re: start new session error (ciccio)
+>    3. Re: start new session error (Michael Wojciechowski)
+>
+>
+> ----------------------------------------------------------------------
+>
+> Message: 1
+> Date: Sat, 29 Aug 2009 13:01:45 +0200
+> From: ciccio <aspcicc at jumpy.it>
+> Subject: Re: [Btg-devel] start new session error
+> To: wojci at wojci.dk
+> Cc: btg-devel at lists.berlios.de
+> Message-ID: <4A990A99.3000402 at jumpy.it>
+> Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+>
+>
+> i think that i'm a member but, to be sure, can i tell me how to check if 
+> i am?
+>
+> this is the output of this web page: 
+> https://lists.berlios.de/mailman/subscribe/btg-devel
+>
+>
+>   Btg-devel Subscription results
+>
+> You are already subscribed.
+>
+> so seems i'm ok
+>
+> On 29/08/2009 Michael Wojciechowski wrote:
+>   
+>> You have to be a member of the mailing list to send to it. 
+>>
+>>   
+>>     
+>
+>
+>
+> ------------------------------
+>
+> Message: 2
+> Date: Sat, 29 Aug 2009 14:36:23 +0200
+> From: ciccio <aspcicc at jumpy.it>
+> Subject: Re: [Btg-devel] start new session error
+> To: wojci at wojci.dk
+> Cc: btg-devel at lists.berlios.de
+> Message-ID: <4A9920C7.5040103 at jumpy.it>
+> Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+>
+> hello and thanks,
+> i have downloaded latest svn, compiled and installed ,i have created 
+> user with command :
+>
+> btgpasswd --create -a -t "/mnt/disco/p2p/btg/torrents" -w 
+> "/mnt/disco/p2p/btg/work" -d "/mnt/disco/p2p/btg/finished" -s 
+> "/mnt/disco/p2p/btg/seeding" -p -u sercik
+>
+> now, when i try to access to btg i obtain: failed to authorize
+>
+> this is log file:
+>
+> [2009-Aug-29 14:30:59] Not changing user/group.
+> [2009-Aug-29 14:30:59] Not detaching from TTY.
+> [2009-Aug-29 14:30:59] pmr: using ports 10024:10025.
+> [2009-Aug-29 14:30:59] pmr: available ports: 2.
+> [2009-Aug-29 14:30:59] lim: setting limits, upload = 32000,  download = 
+> -1,  max upload = -1,  max connections = -1.
+> [2009-Aug-29 14:30:59] hdl: Loading sessions from stream.
+> [2009-Aug-29 14:30:59] alertthr: started.
+> [2009-Aug-29 14:30:59] sess: Upload limit: 32000.
+> [2009-Aug-29 14:30:59] sess: Download limit: -1.
+> [2009-Aug-29 14:30:59] sess: Max uploads: -1.
+> [2009-Aug-29 14:30:59] hdlthr: started.
+> [2009-Aug-29 14:30:59] sess: Max connections: -1.
+> [2009-Aug-29 14:30:59] lim: setting limits, upload = 32000,  download = 
+> -1,  max upload = -1,  max connections = -1.
+> [2009-Aug-29 14:30:59] btgdaemon version 2.0.0, SVN rev. 630.
+> [2009-Aug-29 14:30:59] Using rasterbar libtorrent version 0.14.
+> [2009-Aug-29 14:30:59] There can be only one libtorrent. Accept no 
+> substitutes.
+> [2009-Aug-29 14:30:59] Ready to accept clients.
+> [2009-Aug-29 14:31:01] alertthr: Checking alerts.
+> [2009-Aug-29 14:31:03] alertthr: Checking alerts.
+> [2009-Aug-29 14:31:05] alertthr: Checking alerts.
+> [2009-Aug-29 14:31:07] alertthr: Checking alerts.
+> [2009-Aug-29 14:31:09] alertthr: Checking alerts.
+> [2009-Aug-29 14:31:10] hdlthr: Checking limits.
+> [2009-Aug-29 14:31:11] alertthr: Checking alerts.
+> [2009-Aug-29 14:31:13] alertthr: Checking alerts.
+> [2009-Aug-29 14:31:15] alertthr: Checking alerts.
+> [2009-Aug-29 14:31:17] alertthr: Checking alerts.
+> [2009-Aug-29 14:31:19] alertthr: Checking alerts.
+> [2009-Aug-29 14:31:21] alertthr: Checking alerts.
+> [2009-Aug-29 14:31:21] hdlthr: Checking limits.
+> [2009-Aug-29 14:31:23] alertthr: Checking alerts.
+> [2009-Aug-29 14:31:23] hdl: client (0): (g) Init connection failed.
+> [2009-Aug-29 14:31:23] hdl: Client (0): Rejecting connection from user 
+> 'sercik'.
+> [2009-Aug-29 14:31:23] hdl: Sending error to client (0): 'Failed to 
+> authorize user.'.
+> [2009-Aug-29 14:31:23] hdl: daemon (0): (g) Error (caused by (g) Init 
+> connection).
+> [2009-Aug-29 14:31:25] alertthr: Checking alerts.
+> [2009-Aug-29 14:31:27] alertthr: Checking alerts.
+> [2009-Aug-29 14:31:29] alertthr: Checking alerts.
+> [2009-Aug-29 14:31:30] hdlthr: Updating limits.
+>
+> i don't know what is that Error (caused by (g) Init connection).
+>
+>   
+>> Try running (from bash):
+>> btgdaemon -v -n
+>>
+>> this will make the daemon not detach from your terminal and print
+>> messages to stdout about what it is doing. An error message
+>> will most likely be printed to stdout, when you attempt to create a
+>> session.
+>>
+>>   
+>>     
+>
+>
+>
+> ------------------------------
+>
+> Message: 3
+> Date: Sat, 29 Aug 2009 19:00:20 +0200
+> From: Michael Wojciechowski <wojci at wojci.dk>
+> Subject: Re: [Btg-devel] start new session error
+> To: ciccio <aspcicc at jumpy.it>
+> Cc: btg-devel at lists.berlios.de
+> Message-ID: <20090829190020.40911ca3 at netpc5.home.wojci.dk>
+> Content-Type: text/plain; charset=US-ASCII
+>
+> On Sat, 29 Aug 2009 14:36:23 +0200 ciccio <aspcicc at jumpy.it> wrote:
+>
+>   
+>> [2009-Aug-29 14:31:23] hdl: Client (0): Rejecting connection from
+>> user 'sercik'.
+>>
+>> i don't know what is that Error (caused by (g) Init connection).
+>>     
+>
+> Your log tells me that your password is incorrect. This is the only
+> reason for this message that I can see in the source.
+>
+> Notice that you are using an untested version of BTG - I mean 2.x.
+> While trunk works for me, the RC1 was slightly fscked, as some
+> synchronization was not implemented. 
+>
+>   
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20090831/07a887b6/attachment.html>
+

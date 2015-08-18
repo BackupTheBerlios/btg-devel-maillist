@@ -1,0 +1,1531 @@
+From daaniel at gmail.com  Sat May  3 02:23:01 2008
+From: daaniel at gmail.com (Daniel Svensson)
+Date: Sat, 3 May 2008 02:23:01 +0200
+Subject: [Btg-devel] Error when reseeding a torrent
+Message-ID: <7a95af970805021723r43b771cag80cc107b5804d161@mail.gmail.com>
+
+Just updated to the latest SVN and when I try to re-seed the wwwUI
+freezez (kind of; every torrent disappears) and gives me this message:
+
+Failed to list contexts: Failed to obtain file information
+
+after a while, i figured when it's done hashing (?), it returns back to normal.
+
+any clues what can be the problem?
+
+
+Daniel
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20080503/986b9675/attachment.html>
+
+From wojci at wojci.dk  Sat May  3 10:23:34 2008
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Sat, 3 May 2008 10:23:34 +0200
+Subject: [Btg-devel] Error when reseeding a torrent
+In-Reply-To: <7a95af970805021723r43b771cag80cc107b5804d161@mail.gmail.com>
+References: <7a95af970805021723r43b771cag80cc107b5804d161@mail.gmail.com>
+Message-ID: <20080503102334.76046518@netpc3.home.wojci.dk>
+
+On Sat, 3 May 2008 02:23:01 +0200 "Daniel Svensson" <daaniel at gmail.com>
+wrote:
+
+> Failed to list contexts: Failed to obtain file information
+> after a while, i figured when it's done hashing (?), it returns back
+> to normal.
+> 
+> any clues what can be the problem?
+
+I think that its a bug caused by the fix for #13460
+(http://developer.berlios.de/bugs/?func=detailbug&bug_id=13460&group_id
+=3293).
+
+I commited a fix (rev 327). Give it a try. 
+
+There are some states, like when a torrent is hash checking, where
+libtorrent will not give information about the contained files in the
+torrent which is being hash checked to the daemon.
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+"When they ask how I died, I said, tell them: still angry." 
+(Altered Carbon by Richard Morgan)
+
+
+From wojci at wojci.dk  Sat May  3 10:41:23 2008
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Sat, 3 May 2008 10:41:23 +0200
+Subject: [Btg-devel] 0.9.7 ebuild
+In-Reply-To: <48185C26.7030708@gmail.com>
+References: <200804301137.30488.peter@peerweb.nl> <48185C26.7030708@gmail.com>
+Message-ID: <20080503104123.521b6a99@netpc3.home.wojci.dk>
+
+On Wed, 30 Apr 2008 13:46:46 +0200 Mounir Lamouri
+<mounir.lamouri at gmail.com> wrote:
+
+> Actually, there already is a thread about this on Gentoo's bugzilla : 
+> http://bugs.gentoo.org/show_bug.cgi?id=214491
+> It looks like there are some problems. I should test that next days.
+
+I could attempt to do something about some of the issues mentioned.
+
+From the bug:
+> a) Broken with as-needed (gonna attach a patch for it)
+
+I have no idea what this is about, but if I knew, I would do something
+about it. :)
+
+> b) Needs the CyberLink Library
+> (http://sourceforge.net/projects/clinkcc/) for uPnP-support
+
+This is not going to be used after lt 0.14 gets released. UPnP from
+libtorrent is going to be used. Right now this is broken (in SVN) and
+should not be used.
+
+> c) Comes bundled with PlotMM (plotmm.sf.net) which: a) needs a lot
+> more
+> than just the deps recorded in the ebuild
+> d) this plotmm-library uses a deprecated API of libsigc++ which makes
+>it
+> break here
+
+Debian, which I use for developing, has no plotmm package that I could
+find. 
+
+I could add detection to the configure script, I guess.
+
+I did not have any problems with plotmm and gtkmm 2.4.
+
+d) Comes bundled with xmlrpc-epi (http://xmlrpc-epi.sourceforge.net/)
+which in turns includes Yet Another Version Of Expat (tm) ;-)
+
+I was not able to find a package for it in debian, but debian is
+somewhat conservative. I guess that the configure script should try to
+detect if xmlrpc is installed system-wide before using the one in
+'external'.
+
+Mounir/Peter, would you be so kind and add some BTG bugs? That is if you
+want me to issues with Gentoo in BTG instead of maintaining patches in
+Gentoo..
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+"When they ask how I died, I said, tell them: still angry." 
+(Altered Carbon by Richard Morgan)
+
+
+From wojci at wojci.dk  Sun May  4 02:03:40 2008
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Sun, 4 May 2008 02:03:40 +0200
+Subject: [Btg-devel] contextUrlStatusResponseCommand, use of floats
+Message-ID: <20080504020340.0e984bc0@netpc3.home.wojci.dk>
+
+Roman,
+
+What is your reason for using floats in contextUrlStatusResponseCommand?
+Would you mind changing it so that integers are used instead?
+
+--
+Best regards
+
+Michael Wojciechowski  
+
+"When they ask how I died, I said, tell them: still angry." 
+(Altered Carbon by Richard Morgan)
+
+
+From romanr at romanr.info  Sun May  4 12:27:49 2008
+From: romanr at romanr.info (Roman Rybalko)
+Date: Sun, 4 May 2008 14:27:49 +0400
+Subject: [Btg-devel] contextUrlStatusResponseCommand, use of floats
+In-Reply-To: <20080504020340.0e984bc0@netpc3.home.wojci.dk>
+References: <20080504020340.0e984bc0@netpc3.home.wojci.dk>
+Message-ID: <481D8FA5.3060704@romanr.info>
+
+Michael Wojciechowski wrote:
+> Roman,
+>
+> What is your reason for using floats in contextUrlStatusResponseCommand?
+> Would you mind changing it so that integers are used instead?
+>   
+I think that better to use floats.
+the reasons:
+1) curl gives us doubles
+2) there isn't need in precision in minor numbers, but there is in
+higher and exponent
+
+why not float? it consumes just 4 bytes and able to describe >1M numbers
+in that particular task
+
+
+
+From wojci at wojci.dk  Sun May  4 13:29:09 2008
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Sun, 4 May 2008 13:29:09 +0200
+Subject: [Btg-devel] contextUrlStatusResponseCommand, use of floats
+In-Reply-To: <481D8FA5.3060704@romanr.info>
+References: <20080504020340.0e984bc0@netpc3.home.wojci.dk>
+	<481D8FA5.3060704@romanr.info>
+Message-ID: <20080504132909.4be045f7@netpc3.home.wojci.dk>
+
+On Sun, 4 May 2008 14:27:49 +0400 Roman Rybalko <romanr at romanr.info>
+wrote:
+
+> I think that better to use floats.
+> the reasons:
+> 1) curl gives us doubles
+> 2) there isn't need in precision in minor numbers, but there is in
+> higher and exponent
+> why not float? it consumes just 4 bytes and able to describe >1M
+> numbers in that particular task
+
+What about hw where you have to emulate floating point in software?
+
+I just wanted you to think about a way of avoiding using floats, if
+possible. If not, then leave it as it is.
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+"When they ask how I died, I said, tell them: still angry." 
+(Altered Carbon by Richard Morgan)
+
+
+From romanr at romanr.info  Sun May  4 13:56:29 2008
+From: romanr at romanr.info (Roman Rybalko)
+Date: Sun, 4 May 2008 15:56:29 +0400
+Subject: [Btg-devel] contextUrlStatusResponseCommand, use of floats
+In-Reply-To: <20080504132909.4be045f7@netpc3.home.wojci.dk>
+References: <20080504020340.0e984bc0@netpc3.home.wojci.dk>	<481D8FA5.3060704@romanr.info>
+	<20080504132909.4be045f7@netpc3.home.wojci.dk>
+Message-ID: <481DA46D.2090401@romanr.info>
+
+Michael Wojciechowski wrote:
+> What about hw where you have to emulate floating point in software?
+>
+> I just wanted you to think about a way of avoiding using floats, if
+> possible. If not, then leave it as it is
+I see your point, but libcurl itself uses doubles and we depend on it.
+Generally we can disable all this part of functionality when building
+for the embedded.
+
+Btw, FP emulation code works only when there is an ALU operation to do.
+On the daemon side there is only conversion from double to float,
+which can be omitted by introducing t_double our type, which consumes
+twice more memory.
+If we use integer, there will be conversion from double to integer,
+which a bit more complicated than between floats.
+
+XML converts floats rather fast (just serializing it's internal
+representation, I think,
+since internal representation of float-like types is standardized by
+IEEE and should be equal on all systems).
+
+
+
+From mounir.lamouri at gmail.com  Sun May  4 15:57:40 2008
+From: mounir.lamouri at gmail.com (Mounir Lamouri)
+Date: Sun, 04 May 2008 15:57:40 +0200
+Subject: [Btg-devel] 0.9.7 ebuild
+In-Reply-To: <20080503104123.521b6a99@netpc3.home.wojci.dk>
+References: <200804301137.30488.peter@peerweb.nl> <48185C26.7030708@gmail.com>
+	<20080503104123.521b6a99@netpc3.home.wojci.dk>
+Message-ID: <481DC0D4.3000907@gmail.com>
+
+For as-needed, I have talk with Tiziano and he explained me that is a 
+LDFLAG with wich you can't build btg.
+I've submitted a  bug about this on btg bug tracker : 
+https://developer.berlios.de/bugs/?func=detailbug&bug_id=13738&group_id=3293 
+with the patch proposed by Tiziano.
+
+I will open new btg bugs about other problems when I will have the time for.
+
+
+Michael Wojciechowski a ?crit :
+> On Wed, 30 Apr 2008 13:46:46 +0200 Mounir Lamouri
+> <mounir.lamouri at gmail.com> wrote:
+>
+>   
+>> Actually, there already is a thread about this on Gentoo's bugzilla : 
+>> http://bugs.gentoo.org/show_bug.cgi?id=214491
+>> It looks like there are some problems. I should test that next days.
+>>     
+>
+> I could attempt to do something about some of the issues mentioned.
+>
+> From the bug:
+>   
+>> a) Broken with as-needed (gonna attach a patch for it)
+>>     
+>
+> I have no idea what this is about, but if I knew, I would do something
+> about it. :)
+>
+>   
+>> b) Needs the CyberLink Library
+>> (http://sourceforge.net/projects/clinkcc/) for uPnP-support
+>>     
+>
+> This is not going to be used after lt 0.14 gets released. UPnP from
+> libtorrent is going to be used. Right now this is broken (in SVN) and
+> should not be used.
+>
+>   
+>> c) Comes bundled with PlotMM (plotmm.sf.net) which: a) needs a lot
+>> more
+>> than just the deps recorded in the ebuild
+>> d) this plotmm-library uses a deprecated API of libsigc++ which makes
+>> it
+>> break here
+>>     
+>
+> Debian, which I use for developing, has no plotmm package that I could
+> find. 
+>
+> I could add detection to the configure script, I guess.
+>
+> I did not have any problems with plotmm and gtkmm 2.4.
+>
+> d) Comes bundled with xmlrpc-epi (http://xmlrpc-epi.sourceforge.net/)
+> which in turns includes Yet Another Version Of Expat (tm) ;-)
+>
+> I was not able to find a package for it in debian, but debian is
+> somewhat conservative. I guess that the configure script should try to
+> detect if xmlrpc is installed system-wide before using the one in
+> 'external'.
+>
+> Mounir/Peter, would you be so kind and add some BTG bugs? That is if you
+> want me to issues with Gentoo in BTG instead of maintaining patches in
+> Gentoo..
+>
+>   
+
+
+
+From wojci at wojci.dk  Sun May  4 21:56:44 2008
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Sun, 4 May 2008 21:56:44 +0200
+Subject: [Btg-devel] 0.9.7 ebuild
+In-Reply-To: <481DC0D4.3000907@gmail.com>
+References: <200804301137.30488.peter@peerweb.nl> <48185C26.7030708@gmail.com>
+	<20080503104123.521b6a99@netpc3.home.wojci.dk>
+	<481DC0D4.3000907@gmail.com>
+Message-ID: <20080504215644.6aa360e3@netpc3.home.wojci.dk>
+
+On Sun, 04 May 2008 15:57:40 +0200 Mounir Lamouri
+<mounir.lamouri at gmail.com> wrote:
+
+> For as-needed, I have talk with Tiziano and he explained me that is a 
+> LDFLAG with wich you can't build btg.
+> I've submitted a  bug about this on btg bug tracker : 
+> https://developer.berlios.de/bugs/?func=detailbug&bug_id=13738&group_id=3293
+> 
+> with the patch proposed by Tiziano.
+
+Thanks, I merged the patch. See the comments I wrote in the bug.
+ 
+> I will open new btg bugs about other problems when I will have the
+> time for.
+
+Ok. Thanks.
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+"When they ask how I died, I said, tell them: still angry." 
+(Altered Carbon by Richard Morgan)
+
+
+From daaniel at gmail.com  Sun May 11 20:51:53 2008
+From: daaniel at gmail.com (Daniel Svensson)
+Date: Sun, 11 May 2008 20:51:53 +0200
+Subject: [Btg-devel] configure: error: Could not link against
+Message-ID: <7a95af970805111151p51dddc08g5e4d5a441e6cff8b@mail.gmail.com>
+
+getting this with revision 342:
+
+checking whether the Boost::System library is available... yes
+configure: "unable to find Boost.System library, this is not required unless
+boost 1.3.5 or better is used."
+checking whether the Boost::IOStreams library is available... yes
+configure: error: Could not link against  !
+
+i am using gentoo with boost 1.3.5 and have no idea what could be broken..
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20080511/4f3f4912/attachment.html>
+
+From mounir.lamouri at gmail.com  Mon May 12 11:01:27 2008
+From: mounir.lamouri at gmail.com (Mounir Lamouri)
+Date: Mon, 12 May 2008 11:01:27 +0200
+Subject: [Btg-devel] configure: error: Could not link against
+In-Reply-To: <7a95af970805111151p51dddc08g5e4d5a441e6cff8b@mail.gmail.com>
+References: <7a95af970805111151p51dddc08g5e4d5a441e6cff8b@mail.gmail.com>
+Message-ID: <48280767.60407@gmail.com>
+
+I see boost 1.35 is masked on Gentoo. Why using a masked version ? May 
+be you try with boost-1.34.1-r2
+
+
+Daniel Svensson a ?crit :
+> getting this with revision 342:
+>
+> checking whether the Boost::System library is available... yes
+> configure: "unable to find Boost.System library, this is not required 
+> unless boost 1.3.5 or better is used."
+> checking whether the Boost::IOStreams library is available... yes
+> configure: error: Could not link against  !
+>
+> i am using gentoo with boost 1.3.5 and have no idea what could be 
+> broken..
+> ------------------------------------------------------------------------
+>
+> _______________________________________________
+> Btg-devel mailing list
+> Btg-devel at lists.berlios.de
+> https://lists.berlios.de/mailman/listinfo/btg-devel
+>   
+
+
+
+From btg at romanr.info  Mon May 12 19:29:34 2008
+From: btg at romanr.info (Roman Rybalko (BTG Project))
+Date: Mon, 12 May 2008 21:29:34 +0400
+Subject: [Btg-devel] configure: error: Could not link against
+In-Reply-To: <48280767.60407@gmail.com>
+References: <7a95af970805111151p51dddc08g5e4d5a441e6cff8b@mail.gmail.com>
+	<48280767.60407@gmail.com>
+Message-ID: <48287E7E.4050308@romanr.info>
+
+--with-boost-iostreams=mt --with-boost-filesystem=mt
+--with-boost-date-time=mt --with-boost-thread=mt
+--with-boost-program-options=mt --with-boost-system=mt
+where "mt" is a library suffix. it also can be 1.35.1-r1 or you can try
+just "r2" or "gcc43-mt" ...
+see config.log for details
+
+Mounir Lamouri ?????:
+> I see boost 1.35 is masked on Gentoo. Why using a masked version ? May 
+> be you try with boost-1.34.1-r2
+>
+>
+> Daniel Svensson a ?crit :
+>   
+>> getting this with revision 342:
+>>
+>> checking whether the Boost::System library is available... yes
+>> configure: "unable to find Boost.System library, this is not required 
+>> unless boost 1.3.5 or better is used."
+>> checking whether the Boost::IOStreams library is available... yes
+>> configure: error: Could not link against  !
+>>
+>> i am using gentoo with boost 1.3.5 and have no idea what could be 
+>> broken..
+>> ------------------------------------------------------------------------
+>>     
+
+-- 
+WBR,
+Roman Rybalko
+
+BTG Project
+http://btg.berlios.de/
+ftp://ftp.berlios.de/pub/btg/
+
+
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: signature.asc
+Type: application/pgp-signature
+Size: 890 bytes
+Desc: OpenPGP digital signature
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20080512/378379e7/attachment.pgp>
+
+From daaniel at gmail.com  Mon May 12 20:40:16 2008
+From: daaniel at gmail.com (Daniel Svensson)
+Date: Mon, 12 May 2008 20:40:16 +0200
+Subject: [Btg-devel] configure: error: Could not link against
+In-Reply-To: <48287E7E.4050308@romanr.info>
+References: <7a95af970805111151p51dddc08g5e4d5a441e6cff8b@mail.gmail.com>
+	<48280767.60407@gmail.com> <48287E7E.4050308@romanr.info>
+Message-ID: <7a95af970805121140i57729befs6134e0af40385f61@mail.gmail.com>
+
+Tried with 1.34-1-r2 before and got the same error but it worked fined with
+the --with-boost-* options added. Had problem with that before but always
+clueless on where to start looking.
+
+Thanks anyways.
+
+On Mon, May 12, 2008 at 7:29 PM, Roman Rybalko (BTG Project) <
+btg at romanr.info> wrote:
+
+> --with-boost-iostreams=mt --with-boost-filesystem=mt
+> --with-boost-date-time=mt --with-boost-thread=mt
+> --with-boost-program-options=mt --with-boost-system=mt
+> where "mt" is a library suffix. it also can be 1.35.1-r1 or you can try
+> just "r2" or "gcc43-mt" ...
+> see config.log for details
+>
+> Mounir Lamouri ?????:
+> > I see boost 1.35 is masked on Gentoo. Why using a masked version ? May
+> > be you try with boost-1.34.1-r2
+> >
+> >
+> > Daniel Svensson a ?crit :
+> >
+> >> getting this with revision 342:
+> >>
+> >> checking whether the Boost::System library is available... yes
+> >> configure: "unable to find Boost.System library, this is not required
+> >> unless boost 1.3.5 or better is used."
+> >> checking whether the Boost::IOStreams library is available... yes
+> >> configure: error: Could not link against  !
+> >>
+> >> i am using gentoo with boost 1.3.5 and have no idea what could be
+> >> broken..
+> >>
+> ------------------------------------------------------------------------
+> >>
+>
+> --
+> WBR,
+> Roman Rybalko
+>
+> BTG Project
+> http://btg.berlios.de/
+> ftp://ftp.berlios.de/pub/btg/
+>
+>
+>
+> _______________________________________________
+> Btg-devel mailing list
+> Btg-devel at lists.berlios.de
+> https://lists.berlios.de/mailman/listinfo/btg-devel
+>
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20080512/af7f216d/attachment.html>
+
+From mounir.lamouri at gmail.com  Tue May 13 13:37:19 2008
+From: mounir.lamouri at gmail.com (Mounir Lamouri)
+Date: Tue, 13 May 2008 13:37:19 +0200
+Subject: [Btg-devel] configure: error: Could not link against
+In-Reply-To: <7a95af970805121140i57729befs6134e0af40385f61@mail.gmail.com>
+References: <7a95af970805111151p51dddc08g5e4d5a441e6cff8b@mail.gmail.com>	<48280767.60407@gmail.com>
+	<48287E7E.4050308@romanr.info>
+	<7a95af970805121140i57729befs6134e0af40385f61@mail.gmail.com>
+Message-ID: <48297D6F.1@gmail.com>
+
+It works with all --with-boost-* options but why is it necessary now ?
+
+Daniel Svensson a ?crit :
+> Tried with 1.34-1-r2 before and got the same error but it worked fined
+> with the --with-boost-* options added. Had problem with that before
+> but always clueless on where to start looking.
+>
+> Thanks anyways.
+>
+> On Mon, May 12, 2008 at 7:29 PM, Roman Rybalko (BTG Project)
+> <btg at romanr.info <mailto:btg at romanr.info>> wrote:
+>
+>     --with-boost-iostreams=mt --with-boost-filesystem=mt
+>     --with-boost-date-time=mt --with-boost-thread=mt
+>     --with-boost-program-options=mt --with-boost-system=mt
+>     where "mt" is a library suffix. it also can be 1.35.1-r1 or you
+>     can try
+>     just "r2" or "gcc43-mt" ...
+>     see config.log for details
+>
+>     Mounir Lamouri ?????:
+>     > I see boost 1.35 is masked on Gentoo. Why using a masked version
+>     ? May
+>     > be you try with boost-1.34.1-r2
+>     >
+>     >
+>     > Daniel Svensson a ?crit :
+>     >
+>     >> getting this with revision 342:
+>     >>
+>     >> checking whether the Boost::System library is available... yes
+>     >> configure: "unable to find Boost.System library, this is not
+>     required
+>     >> unless boost 1.3.5 or better is used."
+>     >> checking whether the Boost::IOStreams library is available... yes
+>     >> configure: error: Could not link against !
+>     >>
+>     >> i am using gentoo with boost 1.3.5 and have no idea what could be
+>     >> broken..
+>     >>
+>     ------------------------------------------------------------------------
+>     >>
+>
+>     --
+>     WBR,
+>     Roman Rybalko
+>
+>     BTG Project
+>     http://btg.berlios.de/
+>     ftp://ftp.berlios.de/pub/btg/
+>
+>
+>
+>     _______________________________________________
+>     Btg-devel mailing list
+>     Btg-devel at lists.berlios.de <mailto:Btg-devel at lists.berlios.de>
+>     https://lists.berlios.de/mailman/listinfo/btg-devel
+>
+>
+> ------------------------------------------------------------------------
+>
+> _______________________________________________
+> Btg-devel mailing list
+> Btg-devel at lists.berlios.de
+> https://lists.berlios.de/mailman/listinfo/btg-devel
+>   
+
+
+
+From btg at romanr.info  Tue May 13 20:27:02 2008
+From: btg at romanr.info (Roman Rybalko (BTG Project))
+Date: Tue, 13 May 2008 22:27:02 +0400
+Subject: [Btg-devel] configure: error: Could not link against
+In-Reply-To: <48297D6F.1@gmail.com>
+References: <7a95af970805111151p51dddc08g5e4d5a441e6cff8b@mail.gmail.com>	<48280767.60407@gmail.com>
+	<48287E7E.4050308@romanr.info>
+	<7a95af970805121140i57729befs6134e0af40385f61@mail.gmail.com>
+	<48297D6F.1@gmail.com>
+Message-ID: <4829DD76.5010509@romanr.info>
+
+Actually we're thinking how to solve it. It's temporarily problem.
+
+For now the BOOST detection scripts expects BOOST_LDFLAGS environment
+variable set,
+and searches for the libraries there (e.g.
+BOOST_LDFLAGS=-L/usr/local/boost-1.34.1/lib,
+or BOOST_LDFLAGS="-L/usr/local/lib -L/usr/lib").
+I think we can set this variable in configure itself, if it wasn't set
+from the outside.
+
+--with-boost-* configure params is just another way
+
+Mounir Lamouri ?????:
+> It works with all --with-boost-* options but why is it necessary now ?
+>
+> Daniel Svensson a ?crit :
+>   
+>> Tried with 1.34-1-r2 before and got the same error but it worked fined
+>> with the --with-boost-* options added. Had problem with that before
+>> but always clueless on where to start looking.
+>>
+>> Thanks anyways.
+>>
+>> On Mon, May 12, 2008 at 7:29 PM, Roman Rybalko (BTG Project)
+>> <btg at romanr.info <mailto:btg at romanr.info>> wrote:
+>>
+>>     --with-boost-iostreams=mt --with-boost-filesystem=mt
+>>     --with-boost-date-time=mt --with-boost-thread=mt
+>>     --with-boost-program-options=mt --with-boost-system=mt
+>>     where "mt" is a library suffix. it also can be 1.35.1-r1 or you
+>>     can try
+>>     just "r2" or "gcc43-mt" ...
+>>     see config.log for details
+>>
+>>     Mounir Lamouri ?????:
+>>     > I see boost 1.35 is masked on Gentoo. Why using a masked version
+>>     ? May
+>>     > be you try with boost-1.34.1-r2
+>>     >
+>>     >
+>>     > Daniel Svensson a ?crit :
+>>     >
+>>     >> getting this with revision 342:
+>>     >>
+>>     >> checking whether the Boost::System library is available... yes
+>>     >> configure: "unable to find Boost.System library, this is not
+>>     required
+>>     >> unless boost 1.3.5 or better is used."
+>>     >> checking whether the Boost::IOStreams library is available... yes
+>>     >> configure: error: Could not link against !
+>>     >>
+>>     >> i am using gentoo with boost 1.3.5 and have no idea what could be
+>>     >> broken..
+>>     >>
+>>     ------------------------------------------------------------------------
+>>     >>
+>>     
+-- 
+WBR,
+Roman Rybalko
+
+BTG Project
+http://btg.berlios.de/
+ftp://ftp.berlios.de/pub/btg/
+
+
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: signature.asc
+Type: application/pgp-signature
+Size: 890 bytes
+Desc: OpenPGP digital signature
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20080513/064e0ef9/attachment.pgp>
+
+From btg at romanr.info  Sat May 17 12:04:54 2008
+From: btg at romanr.info (Roman Rybalko (BTG Project))
+Date: Sat, 17 May 2008 14:04:54 +0400
+Subject: [Btg-devel] configure: error: Could not link against
+In-Reply-To: <4829DD76.5010509@romanr.info>
+References: <7a95af970805111151p51dddc08g5e4d5a441e6cff8b@mail.gmail.com>	<48280767.60407@gmail.com>	<48287E7E.4050308@romanr.info>	<7a95af970805121140i57729befs6134e0af40385f61@mail.gmail.com>	<48297D6F.1@gmail.com>
+	<4829DD76.5010509@romanr.info>
+Message-ID: <482EADC6.1030907@romanr.info>
+
+Fixed in trunk r357
+
+
+Roman Rybalko (BTG Project) wrote:
+> Actually we're thinking how to solve it. It's temporarily problem.
+>
+> For now the BOOST detection scripts expects BOOST_LDFLAGS environment
+> variable set,
+> and searches for the libraries there (e.g.
+> BOOST_LDFLAGS=-L/usr/local/boost-1.34.1/lib,
+> or BOOST_LDFLAGS="-L/usr/local/lib -L/usr/lib").
+> I think we can set this variable in configure itself, if it wasn't set
+> from the outside.
+>
+> --with-boost-* configure params is just another way
+>
+> Mounir Lamouri wrote:
+>   
+>> It works with all --with-boost-* options but why is it necessary now ?
+>>
+>> Daniel Svensson a ?crit :
+>>   
+>>     
+>>> Tried with 1.34-1-r2 before and got the same error but it worked fined
+>>> with the --with-boost-* options added. Had problem with that before
+>>> but always clueless on where to start looking.
+>>>
+>>> Thanks anyways.
+>>>
+>>> On Mon, May 12, 2008 at 7:29 PM, Roman Rybalko (BTG Project)
+>>> <btg at romanr.info <mailto:btg at romanr.info>> wrote:
+>>>
+>>>     --with-boost-iostreams=mt --with-boost-filesystem=mt
+>>>     --with-boost-date-time=mt --with-boost-thread=mt
+>>>     --with-boost-program-options=mt --with-boost-system=mt
+>>>     where "mt" is a library suffix. it also can be 1.35.1-r1 or you
+>>>     can try
+>>>     just "r2" or "gcc43-mt" ...
+>>>     see config.log for details
+>>>
+>>>     Mounir Lamouri wrote:
+>>>     > I see boost 1.35 is masked on Gentoo. Why using a masked version
+>>>     ? May
+>>>     > be you try with boost-1.34.1-r2
+>>>     >
+>>>     >
+>>>     > Daniel Svensson a ?crit :
+>>>     >
+>>>     >> getting this with revision 342:
+>>>     >>
+>>>     >> checking whether the Boost::System library is available... yes
+>>>     >> configure: "unable to find Boost.System library, this is not
+>>>     required
+>>>     >> unless boost 1.3.5 or better is used."
+>>>     >> checking whether the Boost::IOStreams library is available... yes
+>>>     >> configure: error: Could not link against !
+>>>     >>
+>>>     >> i am using gentoo with boost 1.3.5 and have no idea what could be
+>>>     >> broken..
+>>>     >>
+>>>     ------------------------------------------------------------------------
+>>>     >>
+>>>       
+
+
+-- 
+WBR,
+Roman Rybalko
+
+BTG Project
+http://btg.berlios.de/
+ftp://ftp.berlios.de/pub/btg/
+
+
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: signature.asc
+Type: application/pgp-signature
+Size: 890 bytes
+Desc: OpenPGP digital signature
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20080517/02a62ea5/attachment.pgp>
+
+From daaniel at gmail.com  Sat May 17 14:18:05 2008
+From: daaniel at gmail.com (Daniel Svensson)
+Date: Sat, 17 May 2008 14:18:05 +0200
+Subject: [Btg-devel] configure: error: Could not link against
+In-Reply-To: <482EADC6.1030907@romanr.info>
+References: <7a95af970805111151p51dddc08g5e4d5a441e6cff8b@mail.gmail.com>
+	<48280767.60407@gmail.com> <48287E7E.4050308@romanr.info>
+	<7a95af970805121140i57729befs6134e0af40385f61@mail.gmail.com>
+	<48297D6F.1@gmail.com> <4829DD76.5010509@romanr.info>
+	<482EADC6.1030907@romanr.info>
+Message-ID: <7a95af970805170518j6c96141brc580b5a1e93f07fb@mail.gmail.com>
+
+Confirmed! Runs without any problem now.
+2008/5/17 Roman Rybalko (BTG Project) <btg at romanr.info>:
+
+> Fixed in trunk r357
+>
+>
+> Roman Rybalko (BTG Project) wrote:
+> > Actually we're thinking how to solve it. It's temporarily problem.
+> >
+> > For now the BOOST detection scripts expects BOOST_LDFLAGS environment
+> > variable set,
+> > and searches for the libraries there (e.g.
+> > BOOST_LDFLAGS=-L/usr/local/boost-1.34.1/lib,
+> > or BOOST_LDFLAGS="-L/usr/local/lib -L/usr/lib").
+> > I think we can set this variable in configure itself, if it wasn't set
+> > from the outside.
+> >
+> > --with-boost-* configure params is just another way
+> >
+> > Mounir Lamouri wrote:
+> >
+> >> It works with all --with-boost-* options but why is it necessary now ?
+> >>
+> >> Daniel Svensson a ?crit :
+> >>
+> >>
+> >>> Tried with 1.34-1-r2 before and got the same error but it worked fined
+> >>> with the --with-boost-* options added. Had problem with that before
+> >>> but always clueless on where to start looking.
+> >>>
+> >>> Thanks anyways.
+> >>>
+> >>> On Mon, May 12, 2008 at 7:29 PM, Roman Rybalko (BTG Project)
+> >>> <btg at romanr.info <mailto:btg at romanr.info>> wrote:
+> >>>
+> >>>     --with-boost-iostreams=mt --with-boost-filesystem=mt
+> >>>     --with-boost-date-time=mt --with-boost-thread=mt
+> >>>     --with-boost-program-options=mt --with-boost-system=mt
+> >>>     where "mt" is a library suffix. it also can be 1.35.1-r1 or you
+> >>>     can try
+> >>>     just "r2" or "gcc43-mt" ...
+> >>>     see config.log for details
+> >>>
+>  >>>     Mounir Lamouri wrote:
+> >>>     > I see boost 1.35 is masked on Gentoo. Why using a masked version
+> >>>     ? May
+> >>>     > be you try with boost-1.34.1-r2
+> >>>     >
+> >>>     >
+> >>>     > Daniel Svensson a ?crit :
+> >>>     >
+> >>>     >> getting this with revision 342:
+> >>>     >>
+> >>>     >> checking whether the Boost::System library is available... yes
+> >>>     >> configure: "unable to find Boost.System library, this is not
+> >>>     required
+> >>>     >> unless boost 1.3.5 or better is used."
+> >>>     >> checking whether the Boost::IOStreams library is available...
+> yes
+> >>>     >> configure: error: Could not link against !
+> >>>     >>
+> >>>     >> i am using gentoo with boost 1.3.5 and have no idea what could
+> be
+> >>>     >> broken..
+> >>>     >>
+> >>>
+> ------------------------------------------------------------------------
+> >>>     >>
+> >>>
+>
+>
+> --
+> WBR,
+> Roman Rybalko
+>
+> BTG Project
+> http://btg.berlios.de/
+> ftp://ftp.berlios.de/pub/btg/
+>
+>
+>
+> _______________________________________________
+> Btg-devel mailing list
+> Btg-devel at lists.berlios.de
+> https://lists.berlios.de/mailman/listinfo/btg-devel
+>
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20080517/6d3e1414/attachment.html>
+
+From daaniel at gmail.com  Sat May 17 14:38:02 2008
+From: daaniel at gmail.com (Daniel Svensson)
+Date: Sat, 17 May 2008 14:38:02 +0200
+Subject: [Btg-devel] feature request - "missing" button
+Message-ID: <7a95af970805170538h5a3420f4kda37c38b88c39949@mail.gmail.com>
+
+Been thinking of what the "last" button on the second row could be (after
+'Session name', under 'Hide all details');
+
+A session switch button/menu. Either a button that changes pages (like
+rename and global limit does) and shows all session or a drop-down menu like
+in the first page.
+
+Would make having several sessions so much easier.
+
+Well, just a thought.. What do you think?
+
+
+Daniel
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20080517/afd5bca2/attachment.html>
+
+From btg at romanr.info  Sat May 17 20:01:42 2008
+From: btg at romanr.info (Roman Rybalko (BTG Project))
+Date: Sat, 17 May 2008 22:01:42 +0400
+Subject: [Btg-devel] feature request - "missing" button
+In-Reply-To: <7a95af970805170538h5a3420f4kda37c38b88c39949@mail.gmail.com>
+References: <7a95af970805170538h5a3420f4kda37c38b88c39949@mail.gmail.com>
+Message-ID: <482F1D86.4070407@romanr.info>
+
+Did you try "Detach session" ?
+Seems it does exactly what you want.
+
+Daniel Svensson wrote: 
+> Been thinking of what the "last" button on the second row could be
+> (after 'Session name', under 'Hide all details');
+> A session switch button/menu. Either a button that changes pages (like
+> rename and global limit does) and shows all session or a drop-down
+> menu like in the first page. 
+> Would make having several sessions so much easier.
+> Well, just a thought.. What do you think?
+-- 
+WBR,
+Roman Rybalko
+
+BTG Project
+http://btg.berlios.de/
+ftp://ftp.berlios.de/pub/btg/
+
+
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: signature.asc
+Type: application/pgp-signature
+Size: 890 bytes
+Desc: OpenPGP digital signature
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20080517/93fdf4ec/attachment.pgp>
+
+From daaniel at gmail.com  Sat May 17 22:34:36 2008
+From: daaniel at gmail.com (Daniel Svensson)
+Date: Sat, 17 May 2008 22:34:36 +0200
+Subject: [Btg-devel] feature request - "missing" button
+In-Reply-To: <482F1D86.4070407@romanr.info>
+References: <7a95af970805170538h5a3420f4kda37c38b88c39949@mail.gmail.com>
+	<482F1D86.4070407@romanr.info>
+Message-ID: <7a95af970805171334w71fd0ed3g285cb386b67d0684@mail.gmail.com>
+
+Hum, well.. Yeah, actually, now that I think about it..
+
+So what I want is probably the drop-down-menu in the first page on the
+current-session-page without the attach-button (it attaches automatically
+when selected in the menu). Because as it is now I feel that it is too many
+steps in switching between sessions. Say you want to check your other
+session then you have to do detach -> choose in menu -> attach -> *check* ->
+detach -> choose again -> attach.
+
+At least for me it makes me not using sessions when I actually like the
+idea, keeping things separated: incoming, music, series, movies,
+applications etc.. But as it is now I end up with only using one.
+
+I'm not so good in explaining :/
+
+On Sat, May 17, 2008 at 8:01 PM, Roman Rybalko (BTG Project) <
+btg at romanr.info> wrote:
+
+> Did you try "Detach session" ?
+> Seems it does exactly what you want.
+>
+> Daniel Svensson wrote:
+> > Been thinking of what the "last" button on the second row could be
+> > (after 'Session name', under 'Hide all details');
+> > A session switch button/menu. Either a button that changes pages (like
+> > rename and global limit does) and shows all session or a drop-down
+> > menu like in the first page.
+> > Would make having several sessions so much easier.
+> > Well, just a thought.. What do you think?
+> --
+> WBR,
+> Roman Rybalko
+>
+> BTG Project
+> http://btg.berlios.de/
+> ftp://ftp.berlios.de/pub/btg/
+>
+>
+>
+> _______________________________________________
+> Btg-devel mailing list
+> Btg-devel at lists.berlios.de
+> https://lists.berlios.de/mailman/listinfo/btg-devel
+>
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20080517/327fefa4/attachment.html>
+
+From btg at romanr.info  Sat May 17 22:54:53 2008
+From: btg at romanr.info (Roman Rybalko (BTG Project))
+Date: Sun, 18 May 2008 00:54:53 +0400
+Subject: [Btg-devel] feature request - "missing" button
+In-Reply-To: <7a95af970805171334w71fd0ed3g285cb386b67d0684@mail.gmail.com>
+References: <7a95af970805170538h5a3420f4kda37c38b88c39949@mail.gmail.com>	
+	<482F1D86.4070407@romanr.info>
+	<7a95af970805171334w71fd0ed3g285cb386b67d0684@mail.gmail.com>
+Message-ID: <482F461D.5000304@romanr.info>
+
+Use only one session, at least a session per tracker,
+because each session uses different TCP port and some trackers don't
+understand
+that client can connect from different ports simultaneously.
+Also separate sessions consume much more resources (memory, threads)
+then if you use only single session for everything.
+
+Daniel Svensson wrote:
+> Hum, well.. Yeah, actually, now that I think about it..
+> So what I want is probably the drop-down-menu in the first page on the
+> current-session-page without the attach-button (it attaches
+> automatically when selected in the menu). Because as it is now I feel
+> that it is too many steps in switching between sessions. Say you want
+> to check your other session then you have to do detach -> choose in
+> menu -> attach -> *check* -> detach -> choose again -> attach.
+> At least for me it makes me not using sessions when I actually like
+> the idea, keeping things separated: incoming, music, series, movies,
+> applications etc.. But as it is now I end up with only using one.
+> I'm not so good in explaining :/
+>
+> On Sat, May 17, 2008 at 8:01 PM, Roman Rybalko (BTG Project)
+> <btg at romanr.info <mailto:btg at romanr.info>> wrote:
+>
+>     Did you try "Detach session" ?
+>     Seems it does exactly what you want.
+>
+-- 
+WBR,
+Roman Rybalko
+
+BTG Project
+http://btg.berlios.de/
+ftp://ftp.berlios.de/pub/btg/
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20080518/1236db25/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: signature.asc
+Type: application/pgp-signature
+Size: 890 bytes
+Desc: OpenPGP digital signature
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20080518/1236db25/attachment.pgp>
+
+From wojci at wojci.dk  Sun May 18 01:40:59 2008
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Sun, 18 May 2008 01:40:59 +0200
+Subject: [Btg-devel] feature request - "missing" button
+In-Reply-To: <7a95af970805170538h5a3420f4kda37c38b88c39949@mail.gmail.com>
+References: <7a95af970805170538h5a3420f4kda37c38b88c39949@mail.gmail.com>
+Message-ID: <20080518014059.2042a508@netpc3.home.wojci.dk>
+
+On Sat, 17 May 2008 14:38:02 +0200 "Daniel Svensson" <daaniel at gmail.com>
+wrote:
+
+> Been thinking of what the "last" button on the second row could be
+> (after 'Session name', under 'Hide all details');
+> 
+> A session switch button/menu. Either a button that changes pages (like
+> rename and global limit does) and shows all session or a drop-down
+> menu like in the first page.
+> 
+> Would make having several sessions so much easier.
+> 
+> Well, just a thought.. What do you think?
+
+Would you like to add this functionality to the wwwui or do you want us
+to add it for you?
+
+We accept patches. :)
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+"When they ask how I died, I said, tell them: still angry." 
+(Altered Carbon by Richard Morgan)
+
+
+From daaniel at gmail.com  Sun May 18 18:47:14 2008
+From: daaniel at gmail.com (Daniel Svensson)
+Date: Sun, 18 May 2008 18:47:14 +0200
+Subject: [Btg-devel] feature request - "missing" button
+In-Reply-To: <20080518014059.2042a508@netpc3.home.wojci.dk>
+References: <7a95af970805170538h5a3420f4kda37c38b88c39949@mail.gmail.com>
+	<20080518014059.2042a508@netpc3.home.wojci.dk>
+Message-ID: <7a95af970805180947k188f55c4w97dc51169e282bfd@mail.gmail.com>
+
+I could give it a shot this week. But I am not so good at this :p
+
+On Sun, May 18, 2008 at 1:40 AM, Michael Wojciechowski <wojci at wojci.dk>
+wrote:
+
+> On Sat, 17 May 2008 14:38:02 +0200 "Daniel Svensson" <daaniel at gmail.com>
+> wrote:
+>
+> > Been thinking of what the "last" button on the second row could be
+> > (after 'Session name', under 'Hide all details');
+> >
+> > A session switch button/menu. Either a button that changes pages (like
+> > rename and global limit does) and shows all session or a drop-down
+> > menu like in the first page.
+> >
+> > Would make having several sessions so much easier.
+> >
+> > Well, just a thought.. What do you think?
+>
+> Would you like to add this functionality to the wwwui or do you want us
+> to add it for you?
+>
+> We accept patches. :)
+>
+> --
+> Best regards
+>
+> Michael Wojciechowski
+>
+> "When they ask how I died, I said, tell them: still angry."
+> (Altered Carbon by Richard Morgan)
+> _______________________________________________
+> Btg-devel mailing list
+> Btg-devel at lists.berlios.de
+> https://lists.berlios.de/mailman/listinfo/btg-devel
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20080518/d1decec2/attachment.html>
+
+From wojci at wojci.dk  Sun May 18 22:11:41 2008
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Sun, 18 May 2008 22:11:41 +0200
+Subject: [Btg-devel] feature request - "missing" button
+In-Reply-To: <7a95af970805180947k188f55c4w97dc51169e282bfd@mail.gmail.com>
+References: <7a95af970805170538h5a3420f4kda37c38b88c39949@mail.gmail.com>
+	<20080518014059.2042a508@netpc3.home.wojci.dk>
+	<7a95af970805180947k188f55c4w97dc51169e282bfd@mail.gmail.com>
+Message-ID: <20080518221141.6118b84d@netpc3.home.wojci.dk>
+
+On Sun, 18 May 2008 18:47:14 +0200 "Daniel Svensson" <daaniel at gmail.com>
+wrote:
+
+> I could give it a shot this week. But I am not so good at this :p
+
+No one besides jstrom is. And I am sure that jstrom is too busy to add
+features to the www ui.
+
+Please try and ask for help on IRC, if you need it.
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+"When they ask how I died, I said, tell them: still angry." 
+(Altered Carbon by Richard Morgan)
+
+
+From mozi666 at msn.com  Thu May 22 19:01:16 2008
+From: mozi666 at msn.com (Moz Njeshi)
+Date: Thu, 22 May 2008 17:01:16 +0000
+Subject: [Btg-devel] autogen.sh
+Message-ID: <BAY104-W2735578BDC258DCAB0AAF9E2C60@phx.gbl>
+
+
+Hi,
+There's something wrong with autogen.sh. Why do aclocal and automake have the version number in their command name? It doesnt work, had to edit those parts out to make it work.
+
+aclocal -I m4
+
+automake --add-missing --copy --gnu
+
+This worked. Running fedora here.
+
+
+
+-Moz
+_________________________________________________________________
+News, entertainment and everything you care about at Live.com. Get it now!
+http://www.live.com/getstarted.aspx
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20080522/fa29298f/attachment.html>
+
+From btg at romanr.info  Thu May 22 19:10:32 2008
+From: btg at romanr.info (Roman Rybalko (BTG Project))
+Date: Thu, 22 May 2008 21:10:32 +0400
+Subject: [Btg-devel] autogen.sh
+In-Reply-To: <BAY104-W2735578BDC258DCAB0AAF9E2C60@phx.gbl>
+References: <BAY104-W2735578BDC258DCAB0AAF9E2C60@phx.gbl>
+Message-ID: <4835A908.6040600@romanr.info>
+
+Moz Njeshi wrote:
+> Hi,
+> There's something wrong with autogen.sh. Why do aclocal and automake
+> have the version number in their command name? It doesnt work, had to
+> edit those parts out to make it work.
+> aclocal -I m4
+> automake --add-missing --copy --gnu
+>
+> This worked. Running fedora here.
+>   
+Do you see, Michael, I'm not alone who mentions this issue :P
+
+Moz Njeshi:  this issue is fixed in svn rev. 373
+
+-- 
+WBR,
+Roman Rybalko
+
+BTG Project
+http://btg.berlios.de/
+ftp://ftp.berlios.de/pub/btg/
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20080522/2ed42bd8/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: signature.asc
+Type: application/pgp-signature
+Size: 890 bytes
+Desc: OpenPGP digital signature
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20080522/2ed42bd8/attachment.pgp>
+
+From gramozbrace at googlemail.com  Thu May 22 20:36:14 2008
+From: gramozbrace at googlemail.com (Gramoz Brace)
+Date: Thu, 22 May 2008 20:36:14 +0200
+Subject: [Btg-devel] Compilation Error
+Message-ID: <7f1f15320805221136r4fc45efcmc4f9e0ec03b89d44@mail.gmail.com>
+
+Hi,
+Ran into this error when i compiled with these options
+
+./configure --enable-btg-config --enable-gui --enable-viewer
+--enable-cli --enable-www --enable-debug --enable-unittest
+--enable-session-saving --enable-event-callback --enable-command-list
+
+---
+
+g++ -DHAVE_CONFIG_H -I. -I../.. -pthread -I/usr/include
+-I/usr/include/gtkmm-2.4 -I/usr/lib/gtkmm-2.4/include
+-I/usr/include/glibmm-2.4 -I/usr/lib/glibmm-2.4/include
+-I/usr/include/gdkmm-2.4 -I/usr/lib/gdkmm-2.4/include
+-I/usr/include/pangomm-1.4 -I/usr/include/atkmm-1.6
+-I/usr/include/gtk-2.0 -I/usr/include/sigc++-2.0
+-I/usr/lib/sigc++-2.0/include -I/usr/include/glib-2.0
+-I/usr/lib/glib-2.0/include -I/usr/lib/gtk-2.0/include
+-I/usr/include/cairomm-1.0 -I/usr/include/pango-1.0
+-I/usr/include/cairo -I/usr/include/atk-1.0 -I../../external -g -O2
+-MT libplotmm_la-errorcurve.lo -MD -MP -MF
+.deps/libplotmm_la-errorcurve.Tpo -c errorcurve.cc  -fPIC -DPIC -o
+.libs/libplotmm_la-errorcurve.o
+In file included from ../../external/plotmm/errorcurve.h:13,
+                 from errorcurve.cc:15:
+../../external/plotmm/curve.h:143: error: 'SigC' has not been declared
+../../external/plotmm/curve.h:143: error: ISO C++ forbids declaration
+of 'Signal0' with no type
+../../external/plotmm/curve.h:143: error: expected ';' before '<' token
+make[3]: *** [libplotmm_la-errorcurve.lo] Error 1
+make[3]: Leaving directory `/home/moz/btg/external/plotmm'
+make[2]: *** [all-recursive] Error 1
+make[2]: Leaving directory `/home/moz/btg/external'
+make[1]: *** [all-recursive] Error 1
+make[1]: Leaving directory `/home/moz/btg'
+make: *** [all] Error 2
+
+Using fedora with gcc 4.3.
+
+
+From tgc at jupiterrise.com  Mon May 26 20:59:24 2008
+From: tgc at jupiterrise.com (Tom G. Christensen)
+Date: Mon, 26 May 2008 20:59:24 +0200
+Subject: [Btg-devel] [PATCH] Don't require GTK 2.12 for btgui
+Message-ID: <20080526185924.GA21330@ares.tgcnet>
+
+Hello,
+
+The use of BUTTONBOX_CENTER in urldialog.cpp raises the GTK requirement from
+2.6 to 2.12. This is unnecessary IMHO since other dialogs are using
+BUTTONBOX_END and the gui is otherwise working fine with GTK 2.6.
+
+I propose the attached patch to allow btgui to continue to work with GTK
+2.6. I tested it with trunk (r377) on CentOS 5 and it seems to be
+working fine.
+
+-tgc
+
+-------------- next part --------------
+--- btg-0.9.8/UI/gui/urldialog.cpp.oldgtk	2008-05-17 17:28:55.000000000 +0200
++++ btg-0.9.8/UI/gui/urldialog.cpp	2008-05-17 17:29:07.000000000 +0200
+@@ -86,7 +86,7 @@
+             applybutton->set_events(Gdk::POINTER_MOTION_MASK | Gdk::POINTER_MOTION_HINT_MASK | Gdk::BUTTON_PRESS_MASK | Gdk::BUTTON_RELEASE_MASK);
+             applybutton->set_flags(Gtk::CAN_FOCUS);
+             get_action_area()->set_events(Gdk::POINTER_MOTION_MASK | Gdk::POINTER_MOTION_HINT_MASK | Gdk::BUTTON_PRESS_MASK | Gdk::BUTTON_RELEASE_MASK);
+-            get_action_area()->property_layout_style().set_value(Gtk::BUTTONBOX_CENTER);
++            get_action_area()->property_layout_style().set_value(Gtk::BUTTONBOX_END);
+             get_vbox()->set_events(Gdk::POINTER_MOTION_MASK | Gdk::POINTER_MOTION_HINT_MASK | Gdk::BUTTON_PRESS_MASK | Gdk::BUTTON_RELEASE_MASK);
+             get_vbox()->set_spacing(2);
+             get_vbox()->pack_start(*vbox1);
+
+From wojci at wojci.dk  Mon May 26 22:20:00 2008
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Mon, 26 May 2008 22:20:00 +0200
+Subject: [Btg-devel] Compilation Error
+In-Reply-To: <7f1f15320805221136r4fc45efcmc4f9e0ec03b89d44@mail.gmail.com>
+References: <7f1f15320805221136r4fc45efcmc4f9e0ec03b89d44@mail.gmail.com>
+Message-ID: <20080526222000.0809983a@netpc3.home.wojci.dk>
+
+On Thu, 22 May 2008 20:36:14 +0200 "Gramoz Brace"
+<gramozbrace at googlemail.com> wrote:
+
+> Ran into this error when i compiled with these options
+> 
+> ./configure --enable-btg-config --enable-gui --enable-viewer
+> --enable-cli --enable-www --enable-debug --enable-unittest
+> --enable-session-saving --enable-event-callback --enable-command-list
+
+> ../../external/plotmm/curve.h:143: error: 'SigC' has not been declared
+> ../../external/plotmm/curve.h:143: error: ISO C++ forbids declaration
+> of 'Signal0' with no type
+> ../../external/plotmm/curve.h:143: error: expected ';' before '<'
+
+Which version of gtkmm are you using? 
+
+Maybe I can try to build using the same version and see if I can
+reproduce the problem..
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+"When they ask how I died, I said, tell them: still angry." 
+(Altered Carbon by Richard Morgan)
+
+
+From btg at romanr.info  Mon May 26 22:44:28 2008
+From: btg at romanr.info (Roman Rybalko (BTG Project))
+Date: Tue, 27 May 2008 00:44:28 +0400
+Subject: [Btg-devel] [PATCH] Don't require GTK 2.12 for btgui
+In-Reply-To: <20080526185924.GA21330@ares.tgcnet>
+References: <20080526185924.GA21330@ares.tgcnet>
+Message-ID: <483B212C.1040106@romanr.info>
+
+Tom G. Christensen wrote:
+> Hello,
+> The use of BUTTONBOX_CENTER in urldialog.cpp raises the GTK requirement from
+> 2.6 to 2.12. This is unnecessary IMHO since other dialogs are using
+> BUTTONBOX_END and the gui is otherwise working fine with GTK 2.6.
+> I propose the attached patch to allow btgui to continue to work with GTK
+> 2.6. I tested it with trunk (r377) on CentOS 5 and it seems to be
+> working fine.
+>   
+Commited to the trunk.
+r387
+
+Thanks.
+
+-- 
+WBR,
+Roman Rybalko
+
+BTG Project
+http://btg.berlios.de/
+ftp://ftp.berlios.de/pub/btg/
+
+
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: signature.asc
+Type: application/pgp-signature
+Size: 890 bytes
+Desc: OpenPGP digital signature
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20080527/8e2149e6/attachment.pgp>
+
+From gramozbrace at googlemail.com  Tue May 27 01:08:42 2008
+From: gramozbrace at googlemail.com (Gramoz Brace)
+Date: Tue, 27 May 2008 01:08:42 +0200
+Subject: [Btg-devel] Compilation Error
+In-Reply-To: <20080526222000.0809983a@netpc3.home.wojci.dk>
+References: <7f1f15320805221136r4fc45efcmc4f9e0ec03b89d44@mail.gmail.com>
+	<20080526222000.0809983a@netpc3.home.wojci.dk>
+Message-ID: <7f1f15320805261608l1f5fadebw1bad28f1a8b3a3ff@mail.gmail.com>
+
+On 5/26/08, Michael Wojciechowski <wojci at wojci.dk> wrote:
+> On Thu, 22 May 2008 20:36:14 +0200 "Gramoz Brace"
+> <gramozbrace at googlemail.com> wrote:
+>
+>> Ran into this error when i compiled with these options
+>>
+>> ./configure --enable-btg-config --enable-gui --enable-viewer
+>> --enable-cli --enable-www --enable-debug --enable-unittest
+>> --enable-session-saving --enable-event-callback --enable-command-list
+>
+>> ../../external/plotmm/curve.h:143: error: 'SigC' has not been declared
+>> ../../external/plotmm/curve.h:143: error: ISO C++ forbids declaration
+>> of 'Signal0' with no type
+>> ../../external/plotmm/curve.h:143: error: expected ';' before '<'
+>
+> Which version of gtkmm are you using?
+>
+> Maybe I can try to build using the same version and see if I can
+> reproduce the problem..
+>
+> --
+> Best regards
+>
+> Michael Wojciechowski
+>
+> "When they ask how I died, I said, tell them: still angry."
+> (Altered Carbon by Richard Morgan)
+>
+
+Yes, sorry for not stating that. It was only later that i figured out
+it had to do with gtkmm, hence i didnt do --enable-gui after which it
+compiled successfully. Im using v 2.5.12, default package in fedora 9.
+I suppose youre using svn.
+
+-- 
+-Moz
+
+
+From gramozbrace at googlemail.com  Tue May 27 02:28:32 2008
+From: gramozbrace at googlemail.com (Gramoz Brace)
+Date: Tue, 27 May 2008 02:28:32 +0200
+Subject: [Btg-devel] Compilation Error
+In-Reply-To: <7f1f15320805261608l1f5fadebw1bad28f1a8b3a3ff@mail.gmail.com>
+References: <7f1f15320805221136r4fc45efcmc4f9e0ec03b89d44@mail.gmail.com>
+	<20080526222000.0809983a@netpc3.home.wojci.dk>
+	<7f1f15320805261608l1f5fadebw1bad28f1a8b3a3ff@mail.gmail.com>
+Message-ID: <7f1f15320805261728v725c6f21p6d71337af2e0abe5@mail.gmail.com>
+
+Correction, im using v 2.12.5. Silly typo.
+
+On 5/27/08, Gramoz Brace <gramozbrace at googlemail.com> wrote:
+> On 5/26/08, Michael Wojciechowski <wojci at wojci.dk> wrote:
+>> On Thu, 22 May 2008 20:36:14 +0200 "Gramoz Brace"
+>> <gramozbrace at googlemail.com> wrote:
+>>
+>>> Ran into this error when i compiled with these options
+>>>
+>>> ./configure --enable-btg-config --enable-gui --enable-viewer
+>>> --enable-cli --enable-www --enable-debug --enable-unittest
+>>> --enable-session-saving --enable-event-callback --enable-command-list
+>>
+>>> ../../external/plotmm/curve.h:143: error: 'SigC' has not been declared
+>>> ../../external/plotmm/curve.h:143: error: ISO C++ forbids declaration
+>>> of 'Signal0' with no type
+>>> ../../external/plotmm/curve.h:143: error: expected ';' before '<'
+>>
+>> Which version of gtkmm are you using?
+>>
+>> Maybe I can try to build using the same version and see if I can
+>> reproduce the problem..
+>>
+>> --
+>> Best regards
+>>
+>> Michael Wojciechowski
+>>
+>> "When they ask how I died, I said, tell them: still angry."
+>> (Altered Carbon by Richard Morgan)
+>>
+>
+> Yes, sorry for not stating that. It was only later that i figured out
+> it had to do with gtkmm, hence i didnt do --enable-gui after which it
+> compiled successfully. Im using v 2.5.12, default package in fedora 9.
+> I suppose youre using svn.
+>
+> --
+> -Moz
+>
+
+
+-- 
+-Moz
+
+
+From wojci at wojci.dk  Thu May 29 20:31:21 2008
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Thu, 29 May 2008 20:31:21 +0200
+Subject: [Btg-devel]
+ =?iso-8859-1?q?=5BBerliOS_Developer_Blogs=5D_Nouveau_?=
+ =?iso-8859-1?q?commentaire_post=E9_sur_0=2E9=2E8_RC1_is_out?=
+In-Reply-To: <a2bb167331ea41db366ece2db78d5c56@developer.berlios.de>
+References: <a2bb167331ea41db366ece2db78d5c56@developer.berlios.de>
+Message-ID: <20080529203121.3f7015a3@netpc3.home.wojci.dk>
+
+On Thu, 29 May 2008 20:08:05 +0200 (CEST) "Lone Wolf"
+<berlios-admin at berlios.de> wrote:
+
+> Hi,
+> i've just tried BTG and written a guide about its install on Debian
+> 4.0 Etch.
+> http://howto.landure.fr/gnu-linux/debian-4-0-etch-en/install-bittorrent-client-btg-and-its-web-user-interface-wwwbtg-on-debian-4-0-etch
+
+> I've tried version 0.9.8 RC1, but with my config, clients can not
+> connect to btgdaemon when running in daemon mode.
+
+Try using SVN and see if it works for you. I am waiting for another
+developer to finish a task before I can do another RC release. But 0.9.7
+is just fine.
+
+> So i've install 0.9.7, and it is true that its Web UI is really fine.
+> Simple and intuitive. The only problem I have is that the btgdaemon is
+> using a really great amount of CPU (around 90%) when leeching a
+> torrent. Other, this is really a great client. 
+
+You are using libtorrent 0.12. See if you still have this problem if you
+upgrade to 0.13, which BTG 0.9.7 works with as well. If I remember
+correctly, the CPU load issue was with libtorrent 0.12 only.
+
+> Thank you for your work !
+
+Thank you for the howto and testing. :)
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+"When they ask how I died, I said, tell them: still angry." 
+(Altered Carbon by Richard Morgan)
+
+

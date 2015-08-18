@@ -1,0 +1,280 @@
+From daaniel at gmail.com  Thu Sep 11 12:04:52 2008
+From: daaniel at gmail.com (Daniel Svensson)
+Date: Thu, 11 Sep 2008 12:04:52 +0200
+Subject: [Btg-devel] compile error
+Message-ID: <7a95af970809110304l7fc8f4a3s5b7d82c16fe1b650@mail.gmail.com>
+
+couldnt find anything in the bugtracker but when I try to compile (rev 478)
+I get the following error
+
+make[3]: Entering directory `/home/daniel/src/btg-svn/daemon/auth'
+/bin/sh ../../libtool --tag=CXX --mode=link g++  -g -O2  -L/usr/lib -o
+btgpasswd  btgpasswd-arg.o btgpasswd-btgpasswd.o btgpasswd-dconfig.o
+../../bcore/libbtgcore.la libauth.la
+../../external/ini/libini.la-lboost_date_time-mt-s
+libtool: link: g++ -g -O2 -o .libs/btgpasswd btgpasswd-arg.o
+btgpasswd-btgpasswd.o btgpasswd-dconfig.o  -L/usr/lib
+../../bcore/.libs/libbtgcore.so -L/usr/i686-pc-linux-gnu/bin
+-L/usr/i686-pc-linux-gnu/lib
+-L/usr/lib/gcc/i686-pc-linux-gnu/../../../i686-pc-linux-gnu/lib
+-lboost_iostreams-mt-s /usr/lib/libgnutls.so /usr/lib/libtasn1.so
+/usr/lib/libgcrypt.so /usr/lib/libgpg-error.so -lboost_program_options-mt-s
+-lboost_thread-mt-s -lboost_filesystem-mt-s -lboost_system-mt-s
+./.libs/libauth.a ../../external/ini/.libs/libini.a
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.6/libstdc++.so -lm -lgcc_s -lc
+-lboost_date_time-mt-s -pthread -Wl,-rpath -Wl,/usr/local/lib/btg
+../../bcore/.libs/libbtgcore.so: undefined reference to `inflateReset'
+../../bcore/.libs/libbtgcore.so: undefined reference to `inflateEnd'
+../../bcore/.libs/libbtgcore.so: undefined reference to `deflate'
+../../bcore/.libs/libbtgcore.so: undefined reference to `inflateInit2_'
+../../bcore/.libs/libbtgcore.so: undefined reference to `inflate'
+../../bcore/.libs/libbtgcore.so: undefined reference to `crc32'
+../../bcore/.libs/libbtgcore.so: undefined reference to `deflateEnd'
+../../bcore/.libs/libbtgcore.so: undefined reference to `deflateReset'
+../../bcore/.libs/libbtgcore.so: undefined reference to `deflateInit2_'
+collect2: ld returned 1 exit status
+make[3]: *** [btgpasswd] Error 1
+
+
+is there any point in reporting (my) problems? I dont mind since I really
+like BTG and want to help with the little that I can, but I dont want to be
+an annoyance either :p
+
+
+cheers,
+
+daniel
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20080911/fcf91c8d/attachment.html>
+
+From wojci at wojci.dk  Thu Sep 11 12:58:41 2008
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Thu, 11 Sep 2008 12:58:41 +0200 (CEST)
+Subject: [Btg-devel] compile error
+In-Reply-To: <7a95af970809110304l7fc8f4a3s5b7d82c16fe1b650@mail.gmail.com>
+References: <7a95af970809110304l7fc8f4a3s5b7d82c16fe1b650@mail.gmail.com>
+Message-ID: <73f849eff18afc9656b7843339661c32.squirrel@webmail.netimage.dk>
+
+
+Daniel Svensson wrote:
+> couldnt find anything in the bugtracker but when I try to compile (rev
+> 478)
+> I get the following error
+> ..
+> is there any point in reporting (my) problems? I dont mind since I really
+> like BTG and want to help with the little that I can, but I dont want to
+> be
+> an annoyance either :p
+
+I don't mind you reporting issues with BTG. :)
+
+Are you by any chance using Gentoo?
+
+We changed some linker settings a few days ago, which were added by a
+Gentoo developer. Maybe its a related issue.
+
+-- 
+
+Best regards
+
+Michael Wojciechowski
+
+"When they ask how I died, I said, tell them: still angry."
+(Altered Carbon by Richard Morgan)
+
+09F911029D74E35BD84156C5635688C0
+
+
+
+From btg at romanr.info  Thu Sep 11 15:49:01 2008
+From: btg at romanr.info (Roman Rybalko)
+Date: Thu, 11 Sep 2008 17:49:01 +0400
+Subject: [Btg-devel] compile error
+In-Reply-To: <7a95af970809110304l7fc8f4a3s5b7d82c16fe1b650@mail.gmail.com>
+References: <7a95af970809110304l7fc8f4a3s5b7d82c16fe1b650@mail.gmail.com>
+Message-ID: <48C921CD.3060501@romanr.info>
+
+Daniel Svensson wrote:
+> make[3]: Entering directory `/home/daniel/src/btg-svn/daemon/auth'
+> /bin/sh ../../libtool --tag=CXX --mode=link g++  -g -O2  -L/usr/lib -o
+> btgpasswd  btgpasswd-arg.o btgpasswd-btgpasswd.o btgpasswd-dconfig.o
+> ../../bcore/libbtgcore.la <http://libbtgcore.la> libauth.la
+> <http://libauth.la> ../../external/ini/libini.la <http://libini.la>
+> -lboost_date_time-mt-s
+> libtool: link: g++ -g -O2 -o .libs/btgpasswd btgpasswd-arg.o
+> btgpasswd-btgpasswd.o btgpasswd-dconfig.o  -L/usr/lib
+> ../../bcore/.libs/libbtgcore.so -L/usr/i686-pc-linux-gnu/bin
+> -L/usr/i686-pc-linux-gnu/lib
+> -L/usr/lib/gcc/i686-pc-linux-gnu/../../../i686-pc-linux-gnu/lib
+> -lboost_iostreams-mt-s /usr/lib/libgnutls.so /usr/lib/libtasn1.so
+> /usr/lib/libgcrypt.so /usr/lib/libgpg-error.so
+> -lboost_program_options-mt-s -lboost_thread-mt-s
+> -lboost_filesystem-mt-s -lboost_system-mt-s ./.libs/libauth.a
+> ../../external/ini/.libs/libini.a
+> /usr/lib/gcc/i686-pc-linux-gnu/3.4.6/libstdc++.so -lm -lgcc_s -lc
+> -lboost_date_time-mt-s -pthread -Wl,-rpath -Wl,/usr/local/lib/btg
+> ../../bcore/.libs/libbtgcore.so: undefined reference to `inflateReset'
+> ../../bcore/.libs/libbtgcore.so: undefined reference to `inflateEnd'
+> ../../bcore/.libs/libbtgcore.so: undefined reference to `deflate'
+> ../../bcore/.libs/libbtgcore.so: undefined reference to `inflateInit2_'
+> ../../bcore/.libs/libbtgcore.so: undefined reference to `inflate'
+> ../../bcore/.libs/libbtgcore.so: undefined reference to `crc32'
+> ../../bcore/.libs/libbtgcore.so: undefined reference to `deflateEnd'
+> ../../bcore/.libs/libbtgcore.so: undefined reference to `deflateReset'
+> ../../bcore/.libs/libbtgcore.so: undefined reference to `deflateInit2_'
+> collect2: ld returned 1 exit status
+> make[3]: *** [btgpasswd] Error 1
+Can you send us
+ldd /usr/local/lib/libboost_iostreams-mt-s.so
+or
+ldd /usr/lib/libboost_iostreams-mt-s.so
+
+it should be like this:
+ldd /usr/local/lib/libboost_iostreams.so
+/usr/local/lib/libboost_iostreams.so:
+        libbz2.so.3 => /usr/lib/libbz2.so.3 (0x2818f000)
+        libz.so.4 => /lib/libz.so.4 (0x2819f000)
+        libstdc++.so.6 => /usr/lib/libstdc++.so.6 (0x28300000)
+        libm.so.5 => /lib/libm.so.5 (0x281b1000)
+        libgcc_s.so.1 => /lib/libgcc_s.so.1 (0x281c6000)
+        libthr.so.3 => /lib/libthr.so.3 (0x281d1000)
+        libc.so.7 => /lib/libc.so.7 (0x28080000)
+i.e. it should use libz.so
+If it doesn't - probably you compiled your boost without zlib-streams
+support.
+I'm attaching a patch to (supposedly) fix this.
+Please, let us know whether it works.
+
+-- 
+WBR,
+Roman Rybalko
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20080911/e851c654/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: bcore-libz-fix.patch
+Type: text/x-patch
+Size: 554 bytes
+Desc: not available
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20080911/e851c654/attachment.bin>
+
+From btg at romanr.info  Thu Sep 11 18:34:13 2008
+From: btg at romanr.info (Roman Rybalko)
+Date: Thu, 11 Sep 2008 20:34:13 +0400
+Subject: [Btg-devel] compile error
+In-Reply-To: <7a95af970809110819m35a71a33y707ef639ba8665b2@mail.gmail.com>
+References: <7a95af970809110304l7fc8f4a3s5b7d82c16fe1b650@mail.gmail.com>	
+	<48C921CD.3060501@romanr.info>
+	<7a95af970809110819m35a71a33y707ef639ba8665b2@mail.gmail.com>
+Message-ID: <48C94885.6090805@romanr.info>
+
+Daniel Svensson wrote:
+> ldd /usr/lib/libboost_iostreams-mt.so
+>         linux-gate.so.1 =>  (0xffffe000)
+>         libbz2.so.1 => /lib/libbz2.so.1 (0xb7eef000)
+>         libz.so.1 => /lib/libz.so.1 (0xb7edd000)
+>         librt.so.1 => /lib/librt.so.1 (0xb7ed4000)
+>         libstdc++.so.6 =>
+> /usr/lib/gcc/i686-pc-linux-gnu/3.4.6/libstdc++.so.6 (0xb7e06000)
+>         libm.so.6 => /lib/libm.so.6 (0xb7de0000)
+>         libgcc_s.so.1 =>
+> /usr/lib/gcc/i686-pc-linux-gnu/3.4.6/libgcc_s.so.1 (0xb7dd7000)
+>         libpthread.so.0 => /lib/libpthread.so.0 (0xb7dbe000)
+>         libc.so.6 => /lib/libc.so.6 (0xb7c84000)
+>         /lib/ld-linux.so.2 (0x80000000)
+>
+> It seems that it is using zlib and I tried the patch with the same
+> results I'm afraid.
+
+Well, you can try to remove my "fix" as Michael says
+
+svn merge -r 475:474 .
+
+This can help if you're on Gentoo.
+
+-- 
+WBR,
+Roman Rybalko
+
+
+
+From diego at sirdiego.de  Sun Sep 21 00:06:03 2008
+From: diego at sirdiego.de (diego)
+Date: Sun, 21 Sep 2008 00:06:03 +0200
+Subject: [Btg-devel] expat problem using the webinterface
+Message-ID: <c41159520809201506v170ee27eq3116a1cd37958a3d@mail.gmail.com>
+
+hello guys,
+
+i have a problem using the webinterface.
+he always gives me an: "Error: Got status 0 undefined from server instead of
+200 OK. Call failed".
+and the daemon says:
+"expat reports error code 2
+        description: syntax error
+        line: 1
+        column: 0
+        byte index: 0
+        total bytes: 0
+
+        data beginning 0 before byte index: POST / HTTP/1.0
+Host: 127.0.0.1
+Content-Type: text/xml
+Use".
+
+im using archlinux and lighttpd as webserver.
+hope u guys can help me with this.
+
+regards diego
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20080921/c0337d39/attachment.html>
+
+From btg at romanr.info  Sun Sep 21 10:04:08 2008
+From: btg at romanr.info (Roman Rybalko (BTG Project))
+Date: Sun, 21 Sep 2008 12:04:08 +0400
+Subject: [Btg-devel] expat problem using the webinterface
+In-Reply-To: <c41159520809201506v170ee27eq3116a1cd37958a3d@mail.gmail.com>
+References: <c41159520809201506v170ee27eq3116a1cd37958a3d@mail.gmail.com>
+Message-ID: <48D5FFF8.3000407@romanr.info>
+
+diego wrote:
+> i have a problem using the webinterface.
+> he always gives me an: "Error: Got status 0 undefined from server
+> instead of 200 OK. Call failed".
+> and the daemon says:
+> "expat reports error code 2
+>         description: syntax error
+>         line: 1
+>         column: 0
+>         byte index: 0
+>         total bytes: 0
+>
+>         data beginning 0 before byte index: POST / HTTP/1.0
+> Host: 127.0.0.1 <http://127.0.0.1>
+> Content-Type: text/xml
+> Use".
+What browser do you use?
+
+-- 
+WBR,
+Roman Rybalko
+
+BTG Project
+http://btg.berlios.de/
+ftp://ftp.berlios.de/pub/btg/
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20080921/88924fc3/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: signature.asc
+Type: application/pgp-signature
+Size: 890 bytes
+Desc: OpenPGP digital signature
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20080921/88924fc3/attachment.pgp>
+

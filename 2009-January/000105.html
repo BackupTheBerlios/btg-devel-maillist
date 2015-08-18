@@ -1,0 +1,233 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Btg-devel] BTG Hangs when seeding
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/btg-devel/2009-January/index.html" >
+   <LINK REL="made" HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20BTG%20Hangs%20when%20seeding&In-Reply-To=%3Cf6cf04ef0901211312g20f16437oc9d4659b88a82a2f%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000104.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Btg-devel] BTG Hangs when seeding</H1>
+    <B>Rik Dunphy</B> 
+    <A HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20BTG%20Hangs%20when%20seeding&In-Reply-To=%3Cf6cf04ef0901211312g20f16437oc9d4659b88a82a2f%40mail.gmail.com%3E"
+       TITLE="[Btg-devel] BTG Hangs when seeding">rik.dunphy at gmail.com
+       </A><BR>
+    <I>Wed Jan 21 22:12:26 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000104.html">[Btg-devel] not detecting ncurses wide-character support
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#105">[ date ]</a>
+              <a href="thread.html#105">[ thread ]</a>
+              <a href="subject.html#105">[ subject ]</a>
+              <a href="author.html#105">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Kernel: 2.6.27
+Boost:1.35.0-r2
+Libtorrent: 0.14.1
+BTG: 0.9.9
+
+Am running this on Sabayon Linux 4.0-r1
+
+Trying to seed a torrent but btg  but in checking the file it gets to
+about 40% then consumes all the CPU cycles for ~5mins before dying
+without any errors.
+
+torrent is located here:
+<A HREF="http://www.sabayonlinux.org/sabayon/torrents/Sabayon%20Linux%204%20x86%20Lite%20MCE.torrent">http://www.sabayonlinux.org/sabayon/torrents/Sabayon%20Linux%204%20x86%20Lite%20MCE.torrent</A>
+
+I think it's something to do with filesize since am ok with something
+small like Damn Small Linux.
+
+I'd give trying to figure out where it's going wrong a go - but don't
+even know where to start in the code.
+Any ideas?
+
+My BTG log file is:
+<A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">rik at apollo</A> /universe/staging/btg $ cat btg.log
+[2009-Jan-21 20:44:46] Not changing user/group.
+[2009-Jan-21 20:44:46] pmr: using ports 10000:10100.
+[2009-Jan-21 20:44:46] pmr: available ports: 101.
+[2009-Jan-21 20:44:46] lim: setting limits, upload = 40000,  download
+= 600000,  max upload = 4,  max connections = 100.
+[2009-Jan-21 20:44:46] hdl: Loading sessions from stream.
+[2009-Jan-21 20:44:46] sess: Upload limit: 40000.
+[2009-Jan-21 20:44:46] sess: Download limit: 600000.
+[2009-Jan-21 20:44:46] sess: Max uploads: 4.
+[2009-Jan-21 20:44:46] sess: Max connections: 100.
+[2009-Jan-21 20:44:46] lim: setting limits, upload = 40000,  download
+= 600000,  max upload = 4,  max connections = 100.
+[2009-Jan-21 20:44:46] pmr: got port: 10000.
+[2009-Jan-21 20:44:46] ctn: Allocation mode: sparse.
+[2009-Jan-21 20:44:46] btgdaemon version 0.9.9, TRUNK.
+[2009-Jan-21 20:44:46] Using rasterbar libtorrent version 0.14.
+[2009-Jan-21 20:44:46] There can be only one libtorrent. Accept no substitutes.
+[2009-Jan-21 20:44:46] Ready to accept clients.
+[2009-Jan-21 20:44:57] hdl: Checking limits and alerts.
+[2009-Jan-21 20:45:08] hdl: Checking limits and alerts.
+[2009-Jan-21 20:45:13] hdl: client (0): (g) Init connection failed.
+[2009-Jan-21 20:45:13] hdl: Client (0): Rejecting connection from user 'rik'.
+[2009-Jan-21 20:45:13] hdl: Sending error to client (0): 'Failed to
+authorize user.'.
+[2009-Jan-21 20:45:13] hdl: daemon (0): (g) Error (caused by (g) Init
+connection).
+[2009-Jan-21 20:45:16] hdl: Updating limits.
+[2009-Jan-21 20:45:18] hdl: Checking limits and alerts.
+[2009-Jan-21 20:45:21] hdl: client (0): (g) Init connection failed.
+[2009-Jan-21 20:45:21] hdl: Client (0): Rejecting connection from user 'rik'.
+[2009-Jan-21 20:45:21] hdl: Sending error to client (0): 'Failed to
+authorize user.'.
+[2009-Jan-21 20:45:21] hdl: daemon (0): (g) Error (caused by (g) Init
+connection).
+[2009-Jan-21 20:45:29] hdl: Checking limits and alerts.
+[2009-Jan-21 20:45:40] hdl: Checking limits and alerts.
+[2009-Jan-21 20:45:42] hdl: client (0): (g) Init connection.
+[2009-Jan-21 20:45:42] hdl: daemon (0): (g) Ack.
+[2009-Jan-21 20:45:43] hdl: client (0): (g) Init connection.
+[2009-Jan-21 20:45:43] hdl: daemon (0): (g) Ack.
+[2009-Jan-21 20:45:43] hdl: client (0): (s) List.
+[2009-Jan-21 20:45:43] hdl: daemon (0): (s) List response.
+[2009-Jan-21 20:45:44] hdl: client (0): (g) Init connection.
+[2009-Jan-21 20:45:44] hdl: daemon (0): (g) Ack.
+[2009-Jan-21 20:45:44] hdl: client (0): (s) Attach.
+[2009-Jan-21 20:45:44] hdl: daemon (0): (g) Ack.
+[2009-Jan-21 20:45:44] hdl: client (0): (s) Detach.
+[2009-Jan-21 20:45:44] hdl: daemon (0): (g) Ack.
+[2009-Jan-21 20:45:44] hdl: client (0): (g) Init connection.
+[2009-Jan-21 20:45:44] hdl: daemon (0): (g) Ack.
+[2009-Jan-21 20:45:44] hdl: client (0): (s) Attach.
+[2009-Jan-21 20:45:44] hdl: daemon (0): (g) Ack.
+[2009-Jan-21 20:45:44] hdl: client (0): (g) List request.
+[2009-Jan-21 20:45:44] evt: daemon (0): (g) Error (caused by (g) List request).
+[2009-Jan-21 20:45:44] hdl: client (0): (s) Detach.
+[2009-Jan-21 20:45:44] hdl: daemon (0): (g) Ack.
+[2009-Jan-21 20:45:45] hdl: client (0): (g) Init connection.
+[2009-Jan-21 20:45:45] hdl: daemon (0): (g) Ack.
+[2009-Jan-21 20:45:45] hdl: client (0): (s) Attach.
+[2009-Jan-21 20:45:45] hdl: daemon (0): (g) Ack.
+[2009-Jan-21 20:45:45] hdl: client (0): (s) Session name.
+[2009-Jan-21 20:45:45] hdl: daemon (0): (s) Session name response.
+[2009-Jan-21 20:45:45] hdl: client (0): (s) Detach.
+[2009-Jan-21 20:45:45] hdl: daemon (0): (g) Ack.
+[2009-Jan-21 20:45:47] hdl: Periodically saving sessions.
+[2009-Jan-21 20:45:47] sess: Upload limit: 40000.
+[2009-Jan-21 20:45:47] sess: Download limit: 600000.
+[2009-Jan-21 20:45:47] sess: Max uploads: 4.
+[2009-Jan-21 20:45:47] sess: Max connections: 100.
+[2009-Jan-21 20:45:48] hdl: Updating limits.
+[2009-Jan-21 20:45:49] hdl: Updating seed counters.
+[2009-Jan-21 20:45:49] hdl: client (0): (g) Init connection.
+[2009-Jan-21 20:45:49] hdl: daemon (0): (g) Ack.
+[2009-Jan-21 20:45:49] hdl: client (0): (s) Attach.
+[2009-Jan-21 20:45:49] hdl: daemon (0): (g) Ack.
+[2009-Jan-21 20:45:49] hdl: client (0): (c) Status, multiple.
+[2009-Jan-21 20:45:49] evt: daemon (0): (g) Error (caused by (c)
+Status, multiple).
+[2009-Jan-21 20:45:49] hdl: client (0): (s) Detach.
+[2009-Jan-21 20:45:49] hdl: daemon (0): (g) Ack.
+[2009-Jan-21 20:45:50] hdl: client (0): (g) Init connection.
+[2009-Jan-21 20:45:50] hdl: daemon (0): (g) Ack.
+[2009-Jan-21 20:45:50] hdl: Checking limits and alerts.
+[2009-Jan-21 20:45:50] hdl: client (0): (s) Attach.
+[2009-Jan-21 20:45:50] hdl: daemon (0): (g) Ack.
+[2009-Jan-21 20:45:50] hdl: client (0): (g) List request.
+[2009-Jan-21 20:45:50] evt: daemon (0): (g) Error (caused by (g) List request).
+[2009-Jan-21 20:45:50] hdl: client (0): (s) Detach.
+[2009-Jan-21 20:45:50] hdl: daemon (0): (g) Ack.
+[2009-Jan-21 20:45:51] hdl: client (0): (g) Init connection.
+[2009-Jan-21 20:45:51] hdl: daemon (0): (g) Ack.
+[2009-Jan-21 20:45:51] hdl: client (0): (s) Attach.
+[2009-Jan-21 20:45:51] hdl: daemon (0): (g) Ack.
+[2009-Jan-21 20:45:51] hdl: client (0): (c) Status, multiple.
+[2009-Jan-21 20:45:51] evt: daemon (0): (g) Error (caused by (c)
+Status, multiple).
+[2009-Jan-21 20:45:51] hdl: client (0): (s) Detach.
+[2009-Jan-21 20:45:51] hdl: daemon (0): (g) Ack.
+[2009-Jan-21 20:45:52] hdl: client (0): (g) Init connection.
+[2009-Jan-21 20:45:52] hdl: daemon (0): (g) Ack.
+[2009-Jan-21 20:45:52] hdl: client (0): (s) Attach.
+[2009-Jan-21 20:45:52] hdl: daemon (0): (g) Ack.
+[2009-Jan-21 20:45:52] hdl: client (0): (g) List request.
+[2009-Jan-21 20:45:52] evt: daemon (0): (g) Error (caused by (g) List request).
+[2009-Jan-21 20:45:52] hdl: client (0): (s) Detach.
+[2009-Jan-21 20:45:52] hdl: daemon (0): (g) Ack.
+[2009-Jan-21 20:45:53] hdl: client (0): (g) Init connection.
+[2009-Jan-21 20:45:53] hdl: daemon (0): (g) Ack.
+[2009-Jan-21 20:45:53] hdl: client (0): (s) List.
+[2009-Jan-21 20:45:53] hdl: daemon (0): (s) List response.
+[2009-Jan-21 20:46:01] hdl: Checking limits and alerts.
+[2009-Jan-21 20:46:07] hdl: client (0): (g) Init connection.
+[2009-Jan-21 20:46:07] hdl: daemon (0): (g) Ack.
+[2009-Jan-21 20:46:07] hdl: client (0): (s) List.
+[2009-Jan-21 20:46:07] hdl: daemon (0): (s) List response.
+[2009-Jan-21 20:46:08] hdl: client (0): (s) Attach.
+[2009-Jan-21 20:46:08] hdl: daemon (0): (g) Ack.
+[2009-Jan-21 20:46:08] hdl: client (0): (s) Info.
+[2009-Jan-21 20:46:08] hdl: daemon (0): (s) Info response.
+[2009-Jan-21 20:46:08] hdl: client (0): (s) Version.
+[2009-Jan-21 20:46:08] hdl: daemon (0): (s) Version response.
+[2009-Jan-21 20:46:08] hdl: client (0): (c) Status.
+[2009-Jan-21 20:46:08] evt: daemon (0): (g) Error (caused by (c) Status).
+[2009-Jan-21 20:46:11] hdl: client (0): (c) Status.
+[2009-Jan-21 20:46:11] evt: daemon (0): (g) Error (caused by (c) Status).
+[2009-Jan-21 20:46:12] hdl: Checking limits and alerts.
+[2009-Jan-21 20:46:12] hdlf: client (0): (c) Create context from file.
+[2009-Jan-21 20:46:12] hdl: daemon (0): (c) Create context from file response.
+[2009-Jan-21 20:46:12] hdlf: Checking file downloads (1).
+[2009-Jan-21 20:46:12] hdlf: client (0): (c) Create context from file,
+part of file.
+[2009-Jan-21 20:46:12] hdl: daemon (0): (g) Ack.
+[2009-Jan-21 20:46:12] hdl: client (0): (g) Status of operation.
+[2009-Jan-21 20:46:12] hdlf: client (0): (g) Status of operation.
+[2009-Jan-21 20:46:12] hdl: daemon (0): (g) Status of operation response.
+[2009-Jan-21 20:46:13] hdl: client (0): (c) Status.
+[2009-Jan-21 20:46:13] evt: daemon (0): (c) Status all response.
+[2009-Jan-21 20:46:16] hdl: client (0): (c) Status.
+[2009-Jan-21 20:46:16] evt: daemon (0): (c) Status all response.
+[2009-Jan-21 20:46:17] hdl: client (0): (c) Get used trackers.
+[2009-Jan-21 20:46:17] evt: daemon (0): (c) Get used trackers response.
+[2009-Jan-21 20:46:18] hdlf: Checking file downloads (1).
+[2009-Jan-21 20:46:19] hdl: Updating limits.
+[2009-Jan-21 20:46:19] hdl: client (0): (c) Status.
+[2009-Jan-21 20:46:19] evt: daemon (0): (c) Status all response.
+[2009-Jan-21 20:46:22] hdl: client (0): (c) Status.
+[2009-Jan-21 20:46:22] evt: daemon (0): (c) Status all response.
+[2009-Jan-21 20:46:23] hdl: Checking limits and alerts.
+[2009-Jan-21 20:46:25] hdl: client (0): (c) Status.
+[2009-Jan-21 20:46:25] evt: daemon (0): (c) Status all response.
+[2009-Jan-21 20:46:25] hdlf: Checking file downloads (1).
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000104.html">[Btg-devel] not detecting ncurses wide-character support
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#105">[ date ]</a>
+              <a href="thread.html#105">[ thread ]</a>
+              <a href="subject.html#105">[ subject ]</a>
+              <a href="author.html#105">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/btg-devel">More information about the Btg-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,124 @@
+From wojci at wojci.dk  Sat May  2 16:06:54 2009
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Sat, 2 May 2009 16:06:54 +0200
+Subject: [Btg-devel] BTG 1.0 RC 2 released
+Message-ID: <20090502160654.190704b3@netpc5.home.wojci.dk>
+
+Hi,
+
+I uploaded a release candidate earlier today.
+
+The change note etc.:
+http://developer.berlios.de/project/shownotes.php?release_id=16164
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+"When they ask how I died, I said, tell them: still angry." 
+(Altered Carbon by Richard Morgan)
+
+
+From thefeshy at gmail.com  Mon May 18 08:13:57 2009
+From: thefeshy at gmail.com (David Wilhelm)
+Date: Mon, 18 May 2009 02:13:57 -0400
+Subject: [Btg-devel] bug in filemgr.cpp
+Message-ID: <1dec56c50905172313u5e08750eq4d8452f292159cb@mail.gmail.com>
+
+While trying to compile and run btgdaemon under Ubuntu, I found a bug
+in filemgr.cpp, at line 278.? Here's a snippet:
+
+
+???????? for (iter = files.begin();
+????????????? iter != files.end();
+????????????? iter++)
+??????????? {
+?????????????? if (!iter->second.valid)
+????????????????? {
+???????????????????? filetrack->remove(iter->second.dir, iter->second.filename);
+???????????????????? files.erase(iter);
+????????????????? }
+             }
+
+The code "files.erase(iter);" invalidates the iterator iter, however
+the for loop will still increment this invalid iterator on its next
+pass.  That caused the program to crash after adding a torrent via the
+gui.  Replacing that snippet with the following code seems to have
+gotten things running for me:
+
+         while(iter != files.end())
+            {
+               tmp = iter++;
+               if (!tmp->second.valid)
+               {
+                   filetrack->remove(tmp->second.dir, tmp->second.filename);
+		   files.erase(tmp);
+               }
+            }
+
+I haven't been able to compile the unit tests to see if it passes with
+that change (or without!) but I was able to get a few torrent files
+started.
+
+~Dave W.
+
+
+From btg-devel at romanr.name  Tue May 19 20:47:41 2009
+From: btg-devel at romanr.name (Roman Rybalko (BTG Project))
+Date: Tue, 19 May 2009 22:47:41 +0400
+Subject: [Btg-devel] bug in filemgr.cpp
+In-Reply-To: <1dec56c50905172313u5e08750eq4d8452f292159cb@mail.gmail.com>
+References: <1dec56c50905172313u5e08750eq4d8452f292159cb@mail.gmail.com>
+Message-ID: <4A12FECD.2010908@romanr.name>
+
+David Wilhelm wrote:
+> While trying to compile and run btgdaemon under Ubuntu, I found a bug
+> in filemgr.cpp, at line 278.  Here's a snippet:
+>
+>
+>          for (iter = files.begin();
+>               iter != files.end();
+>               iter++)
+>             {
+>                if (!iter->second.valid)
+>                   {
+>                      filetrack->remove(iter->second.dir, iter->second.filename);
+>                      files.erase(iter);
+>                   }
+>              }
+>
+> The code "files.erase(iter);" invalidates the iterator iter, however
+> the for loop will still increment this invalid iterator on its next
+> pass.  That caused the program to crash after adding a torrent via the
+> gui.  Replacing that snippet with the following code seems to have
+> gotten things running for me:
+>
+>          while(iter != files.end())
+>             {
+>                tmp = iter++;
+>                if (!tmp->second.valid)
+>                {
+>                    filetrack->remove(tmp->second.dir, tmp->second.filename);
+> 		   files.erase(tmp);
+>                }
+>             }
+>   
+I fixed it in r580, could you check it please.
+
+-- 
+WBR,
+Roman Rybalko
+
+BTG Project
+http://btg.berlios.de/
+ftp://ftp.berlios.de/pub/btg/
+
+-------------- next part --------------
+An embedded message was scrubbed...
+From: romanr at mail.berlios.de
+Subject: [Btg-svn] r580 - trunk/daemon
+Date: Sat, 2 May 2009 22:38:24 +0200
+Size: 3888
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20090519/644f0bc5/attachment.mht>
+

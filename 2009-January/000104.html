@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Btg-devel] not detecting ncurses wide-character support
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/btg-devel/2009-January/index.html" >
+   <LINK REL="made" HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20not%20detecting%20ncurses%20wide-character%20support&In-Reply-To=%3C20090121002601.19d58211%40netpc4.home.wojci.dk.home.wojci.dk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000103.html">
+   <LINK REL="Next"  HREF="000105.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Btg-devel] not detecting ncurses wide-character support</H1>
+    <B>Michael Wojciechowski</B> 
+    <A HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20not%20detecting%20ncurses%20wide-character%20support&In-Reply-To=%3C20090121002601.19d58211%40netpc4.home.wojci.dk.home.wojci.dk%3E"
+       TITLE="[Btg-devel] not detecting ncurses wide-character support">wojci at wojci.dk
+       </A><BR>
+    <I>Wed Jan 21 00:26:01 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000103.html">[Btg-devel] not detecting ncurses wide-character support
+</A></li>
+        <LI>Next message: <A HREF="000105.html">[Btg-devel] BTG Hangs when seeding
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#104">[ date ]</a>
+              <a href="thread.html#104">[ thread ]</a>
+              <a href="subject.html#104">[ subject ]</a>
+              <a href="author.html#104">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sun, 18 Jan 2009 17:09:32 -0800 &quot;James Pearson&quot;
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">james.m.pearson at gmail.com</A>&gt; wrote:
+
+&gt;<i> I've just adopted the Arch Linux btg package (
+</I>&gt;<i> <A HREF="http://aur.archlinux.org/packages.php?ID=8212">http://aur.archlinux.org/packages.php?ID=8212</A> and which can maybe go
+</I>&gt;<i> on the packages page?),
+</I>
+Please add a bug about it.
+
+&gt;<i>  and I've having trouble getting the
+</I>&gt;<i> --enable-cli option to get through the configure script.  It stops
+</I>&gt;<i> after saying that I don't have ncurses built with wide-character
+</I>&gt;<i> support, but one of the devs assured me that it is.  Where do I go
+</I>&gt;<i> from here?
+</I>
+What the configure script is trying to determine is if the ncurses
+lib(/usr/lib/libcurses.so I think) contains wide character support. If
+it does, the ncurses functions will not work as expected. This is not a
+problem on most distros, just Slackware and Arch Linux. Some people
+would say that those two distros are doing it wrong. :)
+
+On debian there are two packages, one with wcs and one without it.
+
+BTG will not work with wcs ncurses and this is the reason for why
+configure checks for it.
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+&quot;When they ask how I died, I said, tell them: still angry.&quot; 
+(Altered Carbon by Richard Morgan)
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000103.html">[Btg-devel] not detecting ncurses wide-character support
+</A></li>
+	<LI>Next message: <A HREF="000105.html">[Btg-devel] BTG Hangs when seeding
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#104">[ date ]</a>
+              <a href="thread.html#104">[ thread ]</a>
+              <a href="subject.html#104">[ subject ]</a>
+              <a href="author.html#104">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/btg-devel">More information about the Btg-devel
+mailing list</a><br>
+</body></html>

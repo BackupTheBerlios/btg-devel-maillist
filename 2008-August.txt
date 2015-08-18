@@ -1,0 +1,114 @@
+From daaniel at gmail.com  Sat Aug  2 10:00:46 2008
+From: daaniel at gmail.com (Daniel Svensson)
+Date: Sat, 2 Aug 2008 10:00:46 +0200
+Subject: [Btg-devel] link problems again..
+Message-ID: <7a95af970808020100j743404c3n789c346a361a7fcf@mail.gmail.com>
+
+updated to latest svn (haven't done it for a while) and again I get the same
+error as before
+
+checking if BTG can link with the provided/found libraries... no
+
+I'm using boost 1.35.0-r1
+
+this is what config.log generates:
+
+configure:29948: checking if BTG can link with the provided/found libraries
+configure:30020: g++ -o conftest -g -O2 -I/usr/include/libtorrent
+-I/usr/include -I/usr/include  -pthread  -I/usr/include
+            -lboost_system-mt-s -lboost_iostreams-mt-s
+-lboost_filesystem-mt-s -lboost_date_time-mt-s
+            -lboost_thread-mt-s -lboost_program_options-mt-s
+            -ltorrent   -L/usr/lib -lgnutls -L/usr/lib -ltasn1 -lgcrypt
+-lgpg-error  >&5
+/usr/lib/libtorrent.so: undefined reference to `boost::mutex::~mutex()'
+/usr/lib/libtorrent.so: undefined reference to
+`boost::mutex::do_unlock(boost::mutex::cv_state&)'
+/usr/lib/libtorrent.so: undefined reference to
+`boost::recursive_mutex::do_lock(boost::recursive_mutex::cv_state&)'
+/usr/lib/libtorrent.so: undefined reference to
+`boost::detail::condition_impl::notify_all()'
+/usr/lib/libtorrent.so: undefined reference to
+`boost::thread::thread(boost::function0<void,
+std::allocator<boost::function_
+/usr/lib/libtorrent.so: undefined reference to
+`boost::detail::condition_impl::~condition_impl()'
+/usr/lib/libtorrent.so: undefined reference to
+`boost::detail::condition_impl::do_timed_wait(boost::xtime const&,
+pthread_mu
+/usr/lib/libtorrent.so: undefined reference to
+`boost::detail::condition_impl::notify_one()'
+/usr/lib/libtorrent.so: undefined reference to
+`boost::recursive_mutex::do_lock()'
+/usr/lib/libtorrent.so: undefined reference to
+`boost::recursive_mutex::do_unlock(boost::recursive_mutex::cv_state&)'
+/usr/lib/libtorrent.so: undefined reference to `boost::mutex::do_unlock()'
+/usr/lib/libtorrent.so: undefined reference to `boost::mutex::do_lock()'
+/usr/lib/libtorrent.so: undefined reference to
+`boost::detail::condition_impl::condition_impl()'
+/usr/lib/libtorrent.so: undefined reference to
+`boost::recursive_mutex::recursive_mutex()'
+/usr/lib/libtorrent.so: undefined reference to
+`boost::filesystem::detail::status_api(std::basic_string<char,
+std::char_trai
+/usr/lib/libtorrent.so: undefined reference to
+`boost::detail::condition_impl::do_wait(pthread_mutex_t*)'
+/usr/lib/libtorrent.so: undefined reference to
+`boost::mutex::do_lock(boost::mutex::cv_state&)'
+/usr/lib/libtorrent.so: undefined reference to
+`boost::thread::sleep(boost::xtime const&)'
+/usr/lib/libtorrent.so: undefined reference to
+`boost::recursive_mutex::~recursive_mutex()'
+/usr/lib/libtorrent.so: undefined reference to
+`boost::recursive_mutex::do_unlock()'
+/usr/lib/libtorrent.so: undefined reference to `boost::mutex::mutex()'
+collect2: ld returned 1 exit status
+configure:30027: $? = 1
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20080802/a9d8604c/attachment.html>
+
+From wojci at wojci.dk  Sat Aug  2 15:18:11 2008
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Sat, 2 Aug 2008 15:18:11 +0200
+Subject: [Btg-devel] link problems again..
+In-Reply-To: <7a95af970808020100j743404c3n789c346a361a7fcf@mail.gmail.com>
+References: <7a95af970808020100j743404c3n789c346a361a7fcf@mail.gmail.com>
+Message-ID: <20080802151811.2f8d7bc1@netpc3.home.wojci.dk>
+
+On Sat, 2 Aug 2008 10:00:46 +0200 "Daniel Svensson" <daaniel at gmail.com>
+wrote:
+
+> updated to latest svn (haven't done it for a while) and again I get
+> the same error as before
+
+Did you use the same boost version for both libtorrent and btg? Which
+version of libtorrent are you using? I have been using 0.13.x lately.
+ 
+> checking if BTG can link with the provided/found libraries... no
+> 
+> I'm using boost 1.35.0-r1
+> 
+> this is what config.log generates:
+> ..
+> /usr/lib/libtorrent.so: undefined reference to
+> `boost::mutex::~mutex()' /usr/lib/libtorrent.so: undefined reference
+> to `boost::mutex::do_unlock(boost::mutex::cv_state&)'
+
+I have no issues with boost 1.35. I have been using it with libtorrent
+SVN for some time.
+
+I never used it with lt 0.13.x, so I have no idea if it works.
+
+I suggest you use the same version of boost you used for libtorrent,
+which I think was something else than 1.35.
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+"When they ask how I died, I said, tell them: still angry." 
+(Altered Carbon by Richard Morgan)
+
+

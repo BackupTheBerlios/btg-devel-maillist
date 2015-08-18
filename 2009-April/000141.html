@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Btg-devel] 1.0.0-rc1 fails to build on CentOS 5
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/btg-devel/2009-April/index.html" >
+   <LINK REL="made" HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%201.0.0-rc1%20fails%20to%20build%20on%20CentOS%205&In-Reply-To=%3C20090423090746.GA16743%40ares.tgcnet%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000140.html">
+   <LINK REL="Next"  HREF="000142.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Btg-devel] 1.0.0-rc1 fails to build on CentOS 5</H1>
+    <B>Tom G. Christensen</B> 
+    <A HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%201.0.0-rc1%20fails%20to%20build%20on%20CentOS%205&In-Reply-To=%3C20090423090746.GA16743%40ares.tgcnet%3E"
+       TITLE="[Btg-devel] 1.0.0-rc1 fails to build on CentOS 5">tgc at jupiterrise.com
+       </A><BR>
+    <I>Thu Apr 23 11:07:46 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000140.html">[Btg-devel] 1.0.0-rc1 fails to build on CentOS 5
+</A></li>
+        <LI>Next message: <A HREF="000142.html">[Btg-devel] 1.0.0-rc1 fails to build on CentOS 5
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#141">[ date ]</a>
+              <a href="thread.html#141">[ thread ]</a>
+              <a href="subject.html#141">[ subject ]</a>
+              <a href="author.html#141">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wed, Apr 22, 2009 at 10:38:35PM +0200, Michael Wojciechowski wrote:
+&gt;<i> On Wed, 22 Apr 2009 13:39:07 +0200 &quot;Tom G. Christensen&quot;
+</I>&gt;<i> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">tgc at jupiterrise.com</A>&gt; wrote:
+</I>&gt;<i> 
+</I>&gt;<i> &gt; No, it fails the same on CentOS 4 which has gcc 3.4.6.
+</I>&gt;<i> &gt; Full log here:
+</I>&gt;<i> &gt; <A HREF="http://jupiterrise.com/tmp/btg-1.0.0-rc1-rb_libtorrent_0.13-el4-build.log">http://jupiterrise.com/tmp/btg-1.0.0-rc1-rb_libtorrent_0.13-el4-build.log</A>
+</I>&gt;<i> 
+</I>&gt;<i> I added a possible fix in r567 - the change is local to
+</I>&gt;<i> context_file.cpp. It looks like the error you are getting is caused by
+</I>&gt;<i> use of streams and boost::filesystem::path. I just added calls to
+</I>&gt;<i> path::string(). I hope that it helps.
+</I>&gt;<i> 
+</I>I applied it to 1.0.0-rc1 and now the build completes on CentOS 4
+and 5.
+
+New buildlogs was uploaded here:
+<A HREF="http://jupiterrise.com/tmp/btg-1.0.0-rc1-el4-build.log">http://jupiterrise.com/tmp/btg-1.0.0-rc1-el4-build.log</A>
+<A HREF="http://jupiterrise.com/tmp/btg-1.0.0-rc1-el5-build.log">http://jupiterrise.com/tmp/btg-1.0.0-rc1-el5-build.log</A>
+
+However trying to run the new btgdaemon fails:
+/usr/bin/btgdaemon: symbol lookup error: /usr/bin/btgdaemon: undefined
+symbol: _ZTIN3btg4core14settingCommandE
+
+The symbol does exist in libbtgcore.so.0:
+# nm /usr/lib/debug/usr/lib/btg/libbtgcore.so.0.0.0.debug |grep
+ btg4core14settingCommandE
+000e8114 V _ZTIN3btg4core14settingCommandE
+000c83b8 V _ZTSN3btg4core14settingCommandE
+000e80e0 V _ZTVN3btg4core14settingCommandE
+
+# nm -C /usr/lib/debug/usr/lib/btg/libbtgcore.so.0.0.0.debug | egrep
+ '000e8114|000c83b8|000e80e0'
+000e8114 V typeinfo for btg::core::settingCommand
+000c83b8 V typeinfo name for btg::core::settingCommand
+000e80e0 V vtable for btg::core::settingCommand
+
+-tgc
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000140.html">[Btg-devel] 1.0.0-rc1 fails to build on CentOS 5
+</A></li>
+	<LI>Next message: <A HREF="000142.html">[Btg-devel] 1.0.0-rc1 fails to build on CentOS 5
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#141">[ date ]</a>
+              <a href="thread.html#141">[ thread ]</a>
+              <a href="subject.html#141">[ subject ]</a>
+              <a href="author.html#141">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/btg-devel">More information about the Btg-devel
+mailing list</a><br>
+</body></html>

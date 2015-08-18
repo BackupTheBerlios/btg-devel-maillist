@@ -1,0 +1,32 @@
+From wojci at wojci.dk  Mon Mar 15 22:24:22 2010
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Mon, 15 Mar 2010 22:24:22 +0100
+Subject: [Btg-devel] magnet links support
+In-Reply-To: <77a13e151002010708h5ec47b61vd5fd59ffd1da904f@mail.gmail.com>
+References: <77a13e151002010708h5ec47b61vd5fd59ffd1da904f@mail.gmail.com>
+Message-ID: <20100315222422.2d32b3c0@netpc5.home.wojci.dk>
+
+On Mon, 1 Feb 2010 20:08:05 +0500 Oleg Surfer <surfer56 at gmail.com>
+wrote:
+
+> Do you have plans to support magnet links(BTIH) in bittorrent
+> protocol ?
+
+Not right now, as I have no time to implement this. I might get some
+time soon, so add a bug about it and cross your fingers. 
+
+-- 
+Best regards
+
+M. Sc. CS
+Michael Wojciechowski
+
+
+http://www.linkedin.com/in/wojci
+http://www.facebook.com/wojci
+http://twitter.com/wojci
+
+"You must be the change you want to see in the world.", Mahatma Gandhi
+
+
+

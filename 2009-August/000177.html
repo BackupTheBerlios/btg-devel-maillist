@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Btg-devel] Fast resume data
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/btg-devel/2009-August/index.html" >
+   <LINK REL="made" HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20Fast%20resume%20data&In-Reply-To=%3C4A8916FF.4010800%40romanr.name%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000176.html">
+   <LINK REL="Next"  HREF="000178.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Btg-devel] Fast resume data</H1>
+    <B>Roman Rybalko</B> 
+    <A HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20Fast%20resume%20data&In-Reply-To=%3C4A8916FF.4010800%40romanr.name%3E"
+       TITLE="[Btg-devel] Fast resume data">btg-devel at romanr.name
+       </A><BR>
+    <I>Mon Aug 17 10:38:23 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000176.html">[Btg-devel] Fast resume data
+</A></li>
+        <LI>Next message: <A HREF="000178.html">[Btg-devel] Fast resume data]
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#177">[ date ]</a>
+              <a href="thread.html#177">[ thread ]</a>
+              <a href="subject.html#177">[ subject ]</a>
+              <a href="author.html#177">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Michael Wojciechowski wrote:
+&gt;<i> I don't know why data is rejected - and I will not know, since the
+</I>&gt;<i> alert about resume not being written is not received by the alert
+</I>&gt;<i> handler in context_alert.cpp.
+</I>&gt;<i>   
+</I>So, writing an additional alert handler is not a problem, right?
+Just write some log message when this resume_data_rejected alert is
+received.
+&gt;<i> I want for a context to wait to the fast data to be saved - this does
+</I>&gt;<i> not happen AFAIK.
+</I>&gt;<i>
+</I>&gt;<i>   
+</I>That's right, is it necessary?
+&gt;<i> So I think that when the daemon is being shut down (only when using
+</I>&gt;<i> lt 0.14.x), it starts to write fast resume data, but does not wait for
+</I>&gt;<i> the write to complete before removing the context. This is probably the
+</I>&gt;<i> source of the problem that I experience -&gt; missing fast resume data. It
+</I>&gt;<i> probably works fine when fast resume data is written together with
+</I>&gt;<i> saved sessions.
+</I>&gt;<i>   
+</I>Well, resume data is saved regularly but asynchronously. When the daemon
+exits,
+there is resume data for downloading torrents but it's a bit stale (1
+minute stale, actually).
+According to LT code I dug, it should correctly handle such conditions
+unless compact allocation mode (which we don't use).
+
+-- 
+WBR,
+Roman Rybalko
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000176.html">[Btg-devel] Fast resume data
+</A></li>
+	<LI>Next message: <A HREF="000178.html">[Btg-devel] Fast resume data]
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#177">[ date ]</a>
+              <a href="thread.html#177">[ thread ]</a>
+              <a href="subject.html#177">[ subject ]</a>
+              <a href="author.html#177">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/btg-devel">More information about the Btg-devel
+mailing list</a><br>
+</body></html>

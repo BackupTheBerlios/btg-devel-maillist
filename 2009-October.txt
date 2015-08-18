@@ -1,0 +1,254 @@
+From bohdan.linda at seznam.cz  Fri Oct  2 20:18:38 2009
+From: bohdan.linda at seznam.cz (Bohdan Linda)
+Date: Fri, 2 Oct 2009 20:18:38 +0200
+Subject: [Btg-devel] 2.0.0 RC2
+In-Reply-To: <20090929230902.7908b891@netpc5.home.wojci.dk>
+References: <20090928191628.GA11679@bafster.baflabs.org>
+	<20090928232139.061ec4b4@netpc5.home.wojci.dk>
+	<20090929192519.GA9722@bafster.baflabs.org>
+	<20090929230902.7908b891@netpc5.home.wojci.dk>
+Message-ID: <20091002181838.GA31678@bafster.baflabs.org>
+
+On 29.09.2009 23:09 +0200, Michael Wojciechowski wrote:
+> This can only mean that the md5 hash your provided to use by your
+> client does not match the one stored in the password file used by the
+> daemon.
+
+I have upgraded to trunk
+
+[2009-Oct-02 20:13:51] hdl: client (0): (g) Init connection failed.                                                                        
+[2009-Oct-02 20:13:51] hdl: Client (0): Rejecting connection from user 'download'.                                                         
+[2009-Oct-02 20:13:51] hdl: Sending error to client (0): 'Failed to authorize user.'.                                                      
+[2009-Oct-02 20:13:51] hdl: daemon (0): (g) Error (caused by (g) Init connection).               
+
+deleted btg-auth and recreated it via:
+
+btgpasswd -c -a -u download -p -t /home/download/data/temp/ -w \
+/home/download/data/downloading/ -s /home/download/data/seeding/ -d \
+/home/download/data/finished/
+
+and still the same authorization problem.
+
+> 
+> This was fixed in bugfix 016196, I think. 
+> 
+> I am not sure, if it made it into the RC you are talking about, but its
+> in SVN.
+> 
+
+with trunk version even cli (not ncurses) does not ask for pwd
+
+
+Thank you for help, 
+-- 
+Bohdan Linda
+
+
+
+From wojci at wojci.dk  Mon Oct  5 12:32:23 2009
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Mon, 5 Oct 2009 12:32:23 +0200
+Subject: [Btg-devel] 2.0.0 RC2
+In-Reply-To: <20091002181838.GA31678@bafster.baflabs.org>
+References: <20090928191628.GA11679@bafster.baflabs.org>
+	<20090928232139.061ec4b4@netpc5.home.wojci.dk>
+	<20090929192519.GA9722@bafster.baflabs.org>
+	<20090929230902.7908b891@netpc5.home.wojci.dk>
+	<20091002181838.GA31678@bafster.baflabs.org>
+Message-ID: <20091005123223.0a4d45be@netpc5.home.wojci.dk>
+
+On Fri, 2 Oct 2009 20:18:38 +0200 Bohdan Linda <bohdan.linda at seznam.cz>
+wrote:
+
+> and still the same authorization problem.
+> 
+> > 
+> > This was fixed in bugfix 016196, I think. 
+> > 
+> > I am not sure, if it made it into the RC you are talking about, but
+> > its in SVN.
+> > 
+> 
+> with trunk version even cli (not ncurses) does not ask for pwd
+
+This is still not good enough. Could it be, that you are using the
+btgdaemon from trunk, but clients from some earlier release? That would
+not work and it would explain what you are seeing now.
+
+I cannot reproduce your problem with trunk on Debian, so what would
+you like me to do? 
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+http://www.linkedin.com/in/wojci
+http://www.facebook.com/wojci
+http://twitter.com/wojci
+
+"You must be the change you want to see in the world.", Mahatma Gandhi
+
+
+
+From bohdan.linda at seznam.cz  Mon Oct  5 13:15:59 2009
+From: bohdan.linda at seznam.cz (Bohdan Linda)
+Date: Mon, 5 Oct 2009 13:15:59 +0200
+Subject: [Btg-devel] 2.0.0 RC2
+In-Reply-To: <20091005123223.0a4d45be@netpc5.home.wojci.dk>
+References: <20090928191628.GA11679@bafster.baflabs.org>
+	<20090928232139.061ec4b4@netpc5.home.wojci.dk>
+	<20090929192519.GA9722@bafster.baflabs.org>
+	<20090929230902.7908b891@netpc5.home.wojci.dk>
+	<20091002181838.GA31678@bafster.baflabs.org>
+	<20091005123223.0a4d45be@netpc5.home.wojci.dk>
+Message-ID: <20091005111559.GA32028@bafster.baflabs.org>
+
+On 05.10.2009 12:32 +0200, Michael Wojciechowski wrote:
+> This is still not good enough. Could it be, that you are using the
+> btgdaemon from trunk, but clients from some earlier release? That would
+> not work and it would explain what you are seeing now.
+
+Version seems to be the same
+
+$ btgdaemon --help
+BTG daemon (version 2.0.0, SVN rev. 642) options:
+
+$ btgcli --help
+BTG client (version 2.0.0, SVN rev. 642) options:
+
+
+I have tried to enter a non-existing username and the behaviour seems is
+the same. This leads me to the question, if btg-auth is properly
+recognized by the btgdaemon. Can I somehow verify this??
+
+I am happy to do any tests/recompilations etc, just what I need from you is
+pointing in some direction. BTG is just worth that. So summ up the
+questions:
+
+1. what happens with your installation when you enter non-existing user.
+Are you asked for pwd or are you aborted with " btg*cli: Internal error:
+start up helper not initialized."
+
+2. am I able to verify which users are properly loaded by btgdaemon?
+
+3. what are the explicit causes for message "Sending error to client (0):
+'Failed to authorize user.'."
+
+Thank you,
+-- 
+Bohdan Linda
+
+
+
+From wojci at wojci.dk  Mon Oct  5 20:41:05 2009
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Mon, 5 Oct 2009 20:41:05 +0200
+Subject: [Btg-devel] 2.0.0 RC2
+In-Reply-To: <20091005111559.GA32028@bafster.baflabs.org>
+References: <20090928191628.GA11679@bafster.baflabs.org>
+	<20090928232139.061ec4b4@netpc5.home.wojci.dk>
+	<20090929192519.GA9722@bafster.baflabs.org>
+	<20090929230902.7908b891@netpc5.home.wojci.dk>
+	<20091002181838.GA31678@bafster.baflabs.org>
+	<20091005123223.0a4d45be@netpc5.home.wojci.dk>
+	<20091005111559.GA32028@bafster.baflabs.org>
+Message-ID: <20091005204105.485f0917@netpc5.home.wojci.dk>
+
+On Mon, 5 Oct 2009 13:15:59 +0200 Bohdan Linda <bohdan.linda at seznam.cz>
+wrote:
+
+> I have tried to enter a non-existing username and the behaviour seems
+> is the same. This leads me to the question, if btg-auth is properly
+> recognized by the btgdaemon. Can I somehow verify this??
+>
+> I am happy to do any tests/recompilations etc, just what I need from
+> you is pointing in some direction. BTG is just worth that. So summ up
+> the questions:
+> 
+> 1. what happens with your installation when you enter non-existing
+> user. Are you asked for pwd or are you aborted with " btg*cli:
+> Internal error: start up helper not initialized."
+> 
+> 2. am I able to verify which users are properly loaded by btgdaemon?
+
+I added verbose logging of this.
+
+> 3. what are the explicit causes for message "Sending error to client
+> (0): 'Failed to authorize user.'."
+
+I spent some time debugging this issue. I was able to reproduce it - I
+was not using clients from trunk myself. :(
+
+I suggest that you do a "svn update" of your trunk and rebuild it. I
+think that I have fixed your problem.
+ 
+The version of the software you are using now does not prompt for a
+password. The call to getline returns 1, and an empty string, I think.
+
+Please let me know, if you still have issues with trunk after my last
+update. Please see
+http://developer.berlios.de/bugs/?func=detailbug&bug_id=16196&group_id=3293
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+http://www.linkedin.com/in/wojci
+http://www.facebook.com/wojci
+http://twitter.com/wojci
+
+"You must be the change you want to see in the world.", Mahatma Gandhi
+
+
+
+From bohdan.linda at seznam.cz  Mon Oct  5 22:21:56 2009
+From: bohdan.linda at seznam.cz (Bohdan Linda)
+Date: Mon, 5 Oct 2009 22:21:56 +0200
+Subject: [Btg-devel] 2.0.0 RC2
+In-Reply-To: <20091005204105.485f0917@netpc5.home.wojci.dk>
+References: <20090928191628.GA11679@bafster.baflabs.org>
+	<20090928232139.061ec4b4@netpc5.home.wojci.dk>
+	<20090929192519.GA9722@bafster.baflabs.org>
+	<20090929230902.7908b891@netpc5.home.wojci.dk>
+	<20091002181838.GA31678@bafster.baflabs.org>
+	<20091005123223.0a4d45be@netpc5.home.wojci.dk>
+	<20091005111559.GA32028@bafster.baflabs.org>
+	<20091005204105.485f0917@netpc5.home.wojci.dk>
+Message-ID: <20091005202156.GA31673@bafster.baflabs.org>
+
+On 05.10.2009 20:41 +0200, Michael Wojciechowski wrote:
+> Please let me know, if you still have issues with trunk after my last
+> update. 
+
+Perfect, it works!
+
+Thank you,
+-- 
+Bohdan Linda
+
+
+
+From wojci at wojci.dk  Wed Oct  7 11:40:46 2009
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Wed, 7 Oct 2009 11:40:46 +0200
+Subject: [Btg-devel] BTG 2.0.0 RC3
+Message-ID: <20091007114046.1a3a33fb@netpc5.home.wojci.dk>
+
+I released BTG 2.0.0 RC3, see
+http://developer.berlios.de/project/shownotes.php?release_id=16795.
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+http://www.linkedin.com/in/wojci
+http://www.facebook.com/wojci
+http://twitter.com/wojci
+
+"You must be the change you want to see in the world.", Mahatma Gandhi
+
+
+

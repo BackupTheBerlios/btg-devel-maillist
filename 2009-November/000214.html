@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Btg-devel] btg and XML-RPC - API for WIN / MAC / UNIX clients
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/btg-devel/2009-November/index.html" >
+   <LINK REL="made" HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20btg%20and%20XML-RPC%20-%20API%20for%20WIN%20/%20MAC%20/%20UNIX%20clients&In-Reply-To=%3C4AF1A6B8.20905%40web.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000213.html">
+   <LINK REL="Next"  HREF="000215.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Btg-devel] btg and XML-RPC - API for WIN / MAC / UNIX clients</H1>
+    <B>J&#246;rg Bernau</B> 
+    <A HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20btg%20and%20XML-RPC%20-%20API%20for%20WIN%20/%20MAC%20/%20UNIX%20clients&In-Reply-To=%3C4AF1A6B8.20905%40web.de%3E"
+       TITLE="[Btg-devel] btg and XML-RPC - API for WIN / MAC / UNIX clients">Joerg.Bernau at web.de
+       </A><BR>
+    <I>Wed Nov  4 17:07:20 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000213.html">[Btg-devel] btg and XML-RPC - API for WIN / MAC / UNIX clients
+</A></li>
+        <LI>Next message: <A HREF="000215.html">[Btg-devel] btg and XML-RPC - API for WIN / MAC / UNIX clients
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#214">[ date ]</a>
+              <a href="thread.html#214">[ thread ]</a>
+              <a href="subject.html#214">[ subject ]</a>
+              <a href="author.html#214">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Michael,
+
+as you see in the attached file your daemon closes the connection after 
+doing a http-put with:
+
+&lt;methodCall&gt;
+&lt;methodName&gt;general.initconnection&lt;/methodName&gt;
+&lt;params&gt;
+&lt;param&gt;
+&lt;value&gt;
+&lt;int&gt;1&lt;/int&gt;
+&lt;/value&gt;
+&lt;/param&gt;.
+&lt;param&gt;
+&lt;value&gt;.
+&lt;string&gt;joerg&lt;/string&gt;
+&lt;/value&gt;
+...
+
+&lt;/params&gt;
+&lt;/methodCall&gt;
+
+After that the daemon closes the connection without any response or 
+reason why. An error message is that what I suppesed to get when an 
+xmlr-rpc connection is beedn detected. What does you think for it??
+
+Joerg
+
+Am 04.11.2009 14:26, schrieb Michael Wojciechowski:
+&gt;<i> On Wed, 04 Nov 2009 13:25:20 +0100 J&#246;rg Bernau&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">Joerg.Bernau at web.de</A>&gt;
+</I>&gt;<i> wrote:
+</I>&gt;<i>
+</I>&gt;<i>    
+</I>&gt;&gt;<i> Hi there ;)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Here is the output:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> [2009-Nov-04 13:22:12] hdlthr: Checking limits.
+</I>&gt;&gt;<i> [2009-Nov-04 13:22:12] alertthr: Checking alerts.
+</I>&gt;&gt;<i> [2009-Nov-04 13:22:14] alertthr: Checking alerts.
+</I>&gt;&gt;<i> [2009-Nov-04 13:22:15] hdlthr: Updating limits.
+</I>&gt;&gt;<i> [2009-Nov-04 13:22:17] alertthr: Checking alerts.
+</I>&gt;&gt;<i> [2009-Nov-04 13:22:19] alertthr: Checking alerts.
+</I>&gt;&gt;<i> [2009-Nov-04 13:22:21] alertthr: Checking alerts.
+</I>&gt;&gt;<i> [2009-Nov-04 13:22:23] alertthr: Checking alerts.
+</I>&gt;&gt;<i> [2009-Nov-04 13:22:23] hdlthr: Checking limits.
+</I>&gt;&gt;<i> [2009-Nov-04 13:22:25] alertthr: Checking alerts.
+</I>&gt;&gt;<i> [2009-Nov-04 13:22:27] alertthr: Checking alerts.
+</I>&gt;&gt;<i> [2009-Nov-04 13:22:29] alertthr: Checking alerts.
+</I>&gt;&gt;<i> [2009-Nov-04 13:22:31] alertthr: Checking alerts.
+</I>&gt;&gt;<i> [2009-Nov-04 13:22:33] alertthr: Checking alerts.
+</I>&gt;&gt;<i> [2009-Nov-04 13:22:34] hdlthr: Checking limits.
+</I>&gt;&gt;<i> [2009-Nov-04 13:22:35] alertthr: Checking alerts.
+</I>&gt;&gt;<i>      
+</I>&gt;<i> This gives me absolutely nothing. Are you sure you used
+</I>&gt;<i> &quot;btgdaemon -v -D -n&quot;?
+</I>&gt;<i>
+</I>&gt;<i> If the above is what you get, it means that you never even connect to
+</I>&gt;<i> the daemon.
+</I>&gt;<i>
+</I>&gt;<i> I suggest that you use one of my clients first and look at the logs
+</I>&gt;<i> produced by the daemon. And possibly a capture of TCP/IP data in for
+</I>&gt;<i> example wireshark.
+</I>&gt;<i>
+</I>&gt;<i>    
+</I>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: btgdaemon.pdf
+Type: application/pdf
+Size: 9916 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/btg-devel/attachments/20091104/1af56629/attachment.pdf">https://lists.berlios.de/pipermail/btg-devel/attachments/20091104/1af56629/attachment.pdf</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000213.html">[Btg-devel] btg and XML-RPC - API for WIN / MAC / UNIX clients
+</A></li>
+	<LI>Next message: <A HREF="000215.html">[Btg-devel] btg and XML-RPC - API for WIN / MAC / UNIX clients
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#214">[ date ]</a>
+              <a href="thread.html#214">[ thread ]</a>
+              <a href="subject.html#214">[ subject ]</a>
+              <a href="author.html#214">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/btg-devel">More information about the Btg-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,707 @@
+From wojci at wojci.dk  Fri Jul  3 18:16:41 2009
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Fri, 3 Jul 2009 18:16:41 +0200
+Subject: [Btg-devel] BTG-1.0.0 released
+Message-ID: <20090703181641.2286c693@netpc5.home.wojci.dk>
+
+Hi,
+
+I released BTG 1.0.0 yesterday. See
+http://developer.berlios.de/project/shownotes.php?release_id=16445 and
+my bloeg entry
+http://developer.berlios.de/devlog/btgdev/2009/07/02/btg-100-released/.
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+James Bond: Do you expect me to talk?
+Auric Goldfinger: No, Mr. Bond, I expect you to be more efficient!
+
+
+From wojci at wojci.dk  Mon Jul  6 23:19:02 2009
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Mon, 6 Jul 2009 23:19:02 +0200
+Subject: [Btg-devel] BTG-1.0.0 released
+In-Reply-To: <4A524A3B.9000300@gentoo.org>
+References: <20090703181641.2286c693@netpc5.home.wojci.dk>
+	<4A524A3B.9000300@gentoo.org>
+Message-ID: <20090706231902.34d08992@netpc5.home.wojci.dk>
+
+On Mon, 06 Jul 2009 21:02:19 +0200 Mounir Lamouri <volkmar at gentoo.org>
+wrote:
+
+> I would like to inform you btg 1.0.0 is in the official Gentoo tree.
+> btg website is still pointing users to the sunrise overlay even if
+> btg is in the tree since a long time.
+> 
+> May you change text to:
+> Btg is available in Gentoo.
+> It can be installed as every other packages:
+> emerge -av btg
+
+Thanks, I updated the site. 
+
+This is good news. Now we just have to wait 20 years before Debian
+includes it as well. :)
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+
+
+From lasaine at lvk.cs.msu.su  Thu Jul  9 14:03:47 2009
+From: lasaine at lvk.cs.msu.su (Alexander Gordeev)
+Date: Thu, 9 Jul 2009 16:03:47 +0400
+Subject: [Btg-devel] suggestion about using SASL for user authentication
+Message-ID: <20090709160347.070ed321@desktopvm.lvknet>
+
+Hi All!
+
+I've recently tried BTG and found it very promising. Thank you!
+
+I have a couple of suggestions that I'd like to talk a bit about if you
+don't mind :)
+The first is about using Cyrus SASL (http://asg.web.cmu.edu/sasl/) to
+authenticate users.
+
+Cyrus SASL is specifically designed as a glue layer for adding
+authentication support to connection-based protocols. It supports a
+lot of authentication methods. So IMHO it fits great between BTG daemon
+and clients and surely allows more flexibility than plain passwd-like
+file.
+
+I'm going to use BTG in a multiuser network on a standalone server
+(well, virtual server in fact :) ). Clients are authorized using
+Kerberos+LDAP. So if BTG starts using SASL then it'll integrate
+seamlessly. So this is my motivation.
+
+Do you want to see it in the main development branch?
+
+Well, I'll try to implement it myself unless somebody is already
+working on this.
+
+-- 
+  Alexander
+
+
+From wojci at wojci.dk  Thu Jul  9 15:33:03 2009
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Thu, 9 Jul 2009 15:33:03 +0200 (CEST)
+Subject: [Btg-devel] suggestion about using SASL for user authentication
+In-Reply-To: <20090709160347.070ed321@desktopvm.lvknet>
+References: <20090709160347.070ed321@desktopvm.lvknet>
+Message-ID: <e4f7b1caeb7f738ff5c90889bb8bb749.squirrel@webmail.netimage.dk>
+
+> The first is about using Cyrus SASL (http://asg.web.cmu.edu/sasl/) to
+> authenticate users.
+> Cyrus SASL is specifically designed as a glue layer for adding
+> authentication support to connection-based protocols. It supports a
+> lot of authentication methods. So IMHO it fits great between BTG daemon
+> and clients and surely allows more flexibility than plain passwd-like
+> file.
+> I'm going to use BTG in a multiuser network on a standalone server
+> (well, virtual server in fact :) ). Clients are authorized using
+> Kerberos+LDAP. So if BTG starts using SASL then it'll integrate
+> seamlessly. So this is my motivation.
+
+Adding SASL support sounds like a good idea.
+
+> Do you want to see it in the main development branch?
+
+I would not mind including it, if you do the implementation. A few points:
+
+- Add a bug about this.
+- Use SVN trunk.
+- Make sure that the SASL lib used is detected by the configure script.
+- Make sure that using SASL can be disabled at compile time, as with most
+other features in BTG.
+- A plain password file has to work as well, if you configure it at
+compile time. For backwards compatibility. Making changes to the auth
+interface used might be required.
+- Send a patch that we can review.
+
+> Well, I'll try to implement it myself unless somebody is already
+> working on this.
+
+I have not heard about anyone working on this. SASL support is not
+something that I need myself, but I can help you if you have questions
+about the parts of BTG that you need to modify.
+
+-- 
+
+Best regards
+
+Michael Wojciechowski
+
+"When they ask how I died, I said, tell them: still angry."
+(Altered Carbon by Richard Morgan)
+
+
+
+From lasaine at lvk.cs.msu.su  Fri Jul 10 15:51:22 2009
+From: lasaine at lvk.cs.msu.su (Alexander Gordeev)
+Date: Fri, 10 Jul 2009 17:51:22 +0400
+Subject: [Btg-devel] suggestion about using SASL for user authentication
+In-Reply-To: <e4f7b1caeb7f738ff5c90889bb8bb749.squirrel@webmail.netimage.dk>
+References: <20090709160347.070ed321@desktopvm.lvknet>
+	<e4f7b1caeb7f738ff5c90889bb8bb749.squirrel@webmail.netimage.dk>
+Message-ID: <20090710175122.177e988d@desktopvm.lvknet>
+
+Hi Michael,
+
+Thanks for the quick answer!
+
+On Thu, 9 Jul 2009 15:33:03 +0200 (CEST)
+"Michael Wojciechowski" <wojci at wojci.dk> wrote:
+
+> > The first is about using Cyrus SASL (http://asg.web.cmu.edu/sasl/)
+> > to authenticate users.
+> > Cyrus SASL is specifically designed as a glue layer for adding
+> > authentication support to connection-based protocols. It supports a
+> > lot of authentication methods. So IMHO it fits great between BTG
+> > daemon and clients and surely allows more flexibility than plain
+> > passwd-like file.
+> > I'm going to use BTG in a multiuser network on a standalone server
+> > (well, virtual server in fact :) ). Clients are authorized using
+> > Kerberos+LDAP. So if BTG starts using SASL then it'll integrate
+> > seamlessly. So this is my motivation.
+> 
+> Adding SASL support sounds like a good idea.
+
+Good!
+
+> > Do you want to see it in the main development branch?
+> 
+> I would not mind including it, if you do the implementation. A few
+> points:
+> 
+> - Add a bug about this.
+> - Use SVN trunk.
+> - Make sure that the SASL lib used is detected by the configure
+> script.
+> - Send a patch that we can review.
+
+Sure.
+
+> - Make sure that using SASL can be disabled at compile time, as with
+> most other features in BTG.
+> - A plain password file has to work as well, if you configure it at
+> compile time. For backwards compatibility. Making changes to the auth
+> interface used might be required.
+
+I'd like to talk a bit more about it. The current password file handles
+actually both authentication and authorization (and also the
+directories). Only the users that are mentioned there are allowed to
+create sessions. The current approach has a lot of problems IMO:
+  * custom authentication scheme with custom passwords for users which
+    makes it harder to administer
+  * mixing both authentication and authorization is a problem because
+    SASL can do advanced authentication but has no means for
+    authorization i.e. allowing/restricting known users
+  * also I think that directories should be per-session, not per-user
+    but this is a bit off-topic
+
+IMHO the current scheme should be deprecated as soon as SASL is
+adopted. Just because it mixes everything in one place. Of course,
+there could be work-arounds, like ignoring the password field in the
+password file. But I think this will only distract users.
+
+SASL has already good means for handling plain password files. I mean
+the traditional passwd files :) It supports a lot of other sources of
+information about passwords including PAM.
+
+Instead of preserving the current password file it would be better to
+split it into at least two files:
+  * users/passwords for authentication
+  * user restrictions + directories
+
+If you don't want SASL as a dependency (on embedded systems likely)
+than authentication can be handled by the system (/etc/passwd,
+PAM, ...). So I really don't see any reason to keep the user/passwords
+file.
+
+SASL will allow even more advanced authentication if installed.
+
+BTW, on user restrictions. I'd really like to introduce
+per-group restrictions along with per-user which you have now. For
+example:
+
+allowed_users = joe, bob, ...
+allowed_groups = btg, staff, ...
+
+But this is not related to SASL. This is what I'd like to do after
+adopting SASL. :) And per-session directories too maybe.
+
+> > Well, I'll try to implement it myself unless somebody is already
+> > working on this.
+> 
+> I have not heard about anyone working on this. SASL support is not
+> something that I need myself, but I can help you if you have questions
+> about the parts of BTG that you need to modify.
+
+I didn't look at the code yet so I don't have questions at the
+moment. :)
+But I will be happy to get any kind of information about the design of
+the daemon, about where to look and how you expect me to do the
+integration.
+
+-- 
+  Alexander
+
+
+From wojci at wojci.dk  Sat Jul 11 21:01:24 2009
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Sat, 11 Jul 2009 21:01:24 +0200
+Subject: [Btg-devel] suggestion about using SASL for user authentication
+In-Reply-To: <20090710175122.177e988d@desktopvm.lvknet>
+References: <20090709160347.070ed321@desktopvm.lvknet>
+	<e4f7b1caeb7f738ff5c90889bb8bb749.squirrel@webmail.netimage.dk>
+	<20090710175122.177e988d@desktopvm.lvknet>
+Message-ID: <20090711210124.27f2ab4c@netpc5.home.wojci.dk>
+
+On Fri, 10 Jul 2009 17:51:22 +0400 Alexander Gordeev
+<lasaine at lvk.cs.msu.su> wrote:
+
+> I'd like to talk a bit more about it. The current password file
+> handles actually both authentication and authorization (and also the
+> directories). Only the users that are mentioned there are allowed to
+> create sessions. The current approach has a lot of problems IMO:
+>   * custom authentication scheme with custom passwords for users which
+>     makes it harder to administer
+>   * mixing both authentication and authorization is a problem because
+>     SASL can do advanced authentication but has no means for
+>     authorization i.e. allowing/restricting known users
+>   * also I think that directories should be per-session, not per-user
+>     but this is a bit off-topic
+
+There is no real reason for why BTG uses a custom password file. If you
+want to use a better approach, just remember that some people, like me,
+us the daemon on a system with only one user, so using a more
+complicated approach could be overkill to setup.
+
+I don't know who a typical BTG user is. I suspect that most of the
+users just use the daemon by themselves and maybe a couple of friends.
+
+> IMHO the current scheme should be deprecated as soon as SASL is
+> adopted. Just because it mixes everything in one place. Of course,
+> there could be work-arounds, like ignoring the password field in the
+> password file. But I think this will only distract users.
+
+> SASL has already good means for handling plain password files. I mean
+> the traditional passwd files :) It supports a lot of other sources of
+> information about passwords including PAM.
+
+I sure hope that you understand the difference between a BTG user and
+a system user. There is not a 1:1 mapping between them. Currently the
+daemon runs as one system user and a BTG client can login using hash of
+a password stored in the BTG passwd file, communicating with the btg
+daemon. Files are written by the daemon as the user it runs as. It
+does not matter which BTG user created the session that writes the
+files.
+
+We have been planning to create a BTG 2.x branch for future
+development. It would make sense to upgrade the auth system the way you
+want it on this branch. 
+
+I personally just need it to be easy to use BTG on a system where I am
+the only user on. You also mention embedded systems like routers and
+NAS boxen. It should be possible to use some kind of simple auth for
+these kind of systems.
+
+So, if you can make sure that adding users works in a similar way as
+with the current release (see btgpasswd), I would be happy.
+
+> Instead of preserving the current password file it would be better to
+> split it into at least two files:
+>   * users/passwords for authentication
+>   * user restrictions + directories
+> 
+> If you don't want SASL as a dependency (on embedded systems likely)
+> than authentication can be handled by the system (/etc/passwd,
+> PAM, ...). So I really don't see any reason to keep the user/passwords
+> file.
+
+See the comment I wrote about BTG vs. system users.
+
+> I didn't look at the code yet so I don't have questions at the
+> moment. :)
+> But I will be happy to get any kind of information about the design of
+> the daemon, about where to look and how you expect me to do the
+> integration.
+
+You can start by looking at the doxygen comments (make doxygen, I
+think, should create a number of html files). Components are separated
+by namespaces. If you run the daemon with "btgdaemon -v -n", it will
+write helpful comments about the components/interfaces it is
+initializing. You could start by looking at the interfaces first to get
+an overview. Finally, you can ask for help on IRC (#libtorrent,
+freenode).
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+
+
+From lasaine at lvk.cs.msu.su  Tue Jul 14 14:02:24 2009
+From: lasaine at lvk.cs.msu.su (Alexander Gordeev)
+Date: Tue, 14 Jul 2009 16:02:24 +0400
+Subject: [Btg-devel] suggestion about using SASL for user authentication
+In-Reply-To: <20090711210124.27f2ab4c@netpc5.home.wojci.dk>
+References: <20090709160347.070ed321@desktopvm.lvknet>
+	<e4f7b1caeb7f738ff5c90889bb8bb749.squirrel@webmail.netimage.dk>
+	<20090710175122.177e988d@desktopvm.lvknet>
+	<20090711210124.27f2ab4c@netpc5.home.wojci.dk>
+Message-ID: <20090714160224.42a3f283@desktopvm.lvknet>
+
+Hi Michael,
+
+Sorry, I was away for a couple of days...
+
+On Sat, 11 Jul 2009 21:01:24 +0200
+Michael Wojciechowski <wojci at wojci.dk> wrote:
+
+> On Fri, 10 Jul 2009 17:51:22 +0400 Alexander Gordeev
+> <lasaine at lvk.cs.msu.su> wrote:
+> 
+> > I'd like to talk a bit more about it. The current password file
+> > handles actually both authentication and authorization (and also the
+> > directories). Only the users that are mentioned there are allowed to
+> > create sessions. The current approach has a lot of problems IMO:
+> >   * custom authentication scheme with custom passwords for users
+> > which makes it harder to administer
+> >   * mixing both authentication and authorization is a problem
+> > because SASL can do advanced authentication but has no means for
+> >     authorization i.e. allowing/restricting known users
+> >   * also I think that directories should be per-session, not
+> > per-user but this is a bit off-topic
+> 
+> There is no real reason for why BTG uses a custom password file. If
+> you want to use a better approach, just remember that some people,
+> like me, us the daemon on a system with only one user, so using a more
+> complicated approach could be overkill to setup.
+
+Sure, it would be an overkill for simple setups, I see.
+
+> I don't know who a typical BTG user is. I suspect that most of the
+> users just use the daemon by themselves and maybe a couple of friends.
+
+Well, BTG can reach other "markets" too. :)
+
+> > IMHO the current scheme should be deprecated as soon as SASL is
+> > adopted. Just because it mixes everything in one place. Of course,
+> > there could be work-arounds, like ignoring the password field in the
+> > password file. But I think this will only distract users.
+> 
+> > SASL has already good means for handling plain password files. I
+> > mean the traditional passwd files :) It supports a lot of other
+> > sources of information about passwords including PAM.
+> 
+> I sure hope that you understand the difference between a BTG user and
+> a system user. There is not a 1:1 mapping between them. Currently the
+> daemon runs as one system user and a BTG client can login using hash
+> of a password stored in the BTG passwd file, communicating with the
+> btg daemon. Files are written by the daemon as the user it runs as. It
+> does not matter which BTG user created the session that writes the
+> files.
+> 
+> We have been planning to create a BTG 2.x branch for future
+> development. It would make sense to upgrade the auth system the way
+> you want it on this branch. 
+> 
+> I personally just need it to be easy to use BTG on a system where I am
+> the only user on. You also mention embedded systems like routers and
+> NAS boxen. It should be possible to use some kind of simple auth for
+> these kind of systems.
+
+Ok, I think the following scheme will address all issues:
+ * the source of authentication information will be either plain
+custom passwd file or PAM. Or other methods, like Kerberos. And this
+can be configurable.
+ * if btgdaemon is running as root and the users are authenticated as
+real system users, than it sets uid/gid of all the user files it is
+working on.
+ * when a client connects to daemon, it asks about the daemon's
+capabilities (this is requierd for SASL anyway). The "simple"
+authentication mecthod will be there by default (unless disabled in
+the daemon config). If SASL is compiled in, then it will add it's own
+mechanisms. Then the client can choose.
+ * the defaults in all config files will be matching the "simple" case
+
+> So, if you can make sure that adding users works in a similar way as
+> with the current release (see btgpasswd), I would be happy.
+
+This is great! Then I'll just change btgpasswd, keeping its user
+interface untouched.
+
+> > Instead of preserving the current password file it would be better
+> > to split it into at least two files:
+> >   * users/passwords for authentication
+> >   * user restrictions + directories
+> > 
+> > If you don't want SASL as a dependency (on embedded systems likely)
+> > than authentication can be handled by the system (/etc/passwd,
+> > PAM, ...). So I really don't see any reason to keep the
+> > user/passwords file.
+> 
+> See the comment I wrote about BTG vs. system users.
+
+Thanks for the clarification!
+
+> > I didn't look at the code yet so I don't have questions at the
+> > moment. :)
+> > But I will be happy to get any kind of information about the design
+> > of the daemon, about where to look and how you expect me to do the
+> > integration.
+> 
+> You can start by looking at the doxygen comments (make doxygen, I
+> think, should create a number of html files). Components are separated
+> by namespaces. If you run the daemon with "btgdaemon -v -n", it will
+> write helpful comments about the components/interfaces it is
+> initializing. You could start by looking at the interfaces first to
+> get an overview. Finally, you can ask for help on IRC (#libtorrent,
+> freenode).
+
+Ok, thanks!
+Is there any documentation on the client-server protocol? BTW, is it
+XMLRPC-based for all transports? It seems to me (after looking at the
+code) that "xmlrpc/sxmlrpc" transport is actually "http/https"
+transport with XMLRPC-based protocol atop the transport layer.
+
+I will have to add at least the "capability" request if not present.
+
+-- 
+  Alexander
+
+
+From wojci at wojci.dk  Fri Jul 17 12:19:56 2009
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Fri, 17 Jul 2009 12:19:56 +0200 (CEST)
+Subject: [Btg-devel] suggestion about using SASL for user authentication
+In-Reply-To: <20090714160224.42a3f283@desktopvm.lvknet>
+References: <20090709160347.070ed321@desktopvm.lvknet>
+	<e4f7b1caeb7f738ff5c90889bb8bb749.squirrel@webmail.netimage.dk>
+	<20090710175122.177e988d@desktopvm.lvknet>
+	<20090711210124.27f2ab4c@netpc5.home.wojci.dk>
+	<20090714160224.42a3f283@desktopvm.lvknet>
+Message-ID: <f8ecee8ea7e5cd9ef19e11a253ada240.squirrel@webmail.netimage.dk>
+
+Alexander Gordeev wrote:
+
+> Ok, I think the following scheme will address all issues:
+>  * the source of authentication information will be either plain
+> custom passwd file or PAM. Or other methods, like Kerberos. And this
+> can be configurable.
+>  * if btgdaemon is running as root and the users are authenticated as
+> real system users, than it sets uid/gid of all the user files it is
+> working on.
+
+btgdaemon will not run as root. It can be setup to change uid/gid but it
+refuses to run as root.
+
+> Is there any documentation on the client-server protocol?
+
+There is an automagically generated list of commands here:
+http://btg.berlios.de/howto_devel.html#list-of-commands
+
+> BTW, is it
+> XMLRPC-based for all transports? It seems to me (after looking at the
+> code) that "xmlrpc/sxmlrpc" transport is actually "http/https"
+> transport with XMLRPC-based protocol atop the transport layer.
+
+Yes, only one data representation is supported. It can be used with
+different transports.
+
+> I will have to add at least the "capability" request if not present.
+
+If the transport/encoding will be backwards compatible, I don't see why not.
+
+-- 
+
+Best regards
+
+Michael Wojciechowski
+
+"When they ask how I died, I said, tell them: still angry."
+(Altered Carbon by Richard Morgan)
+
+
+
+From lasaine at lvk.cs.msu.su  Fri Jul 17 12:31:35 2009
+From: lasaine at lvk.cs.msu.su (Alexander Gordeev)
+Date: Fri, 17 Jul 2009 14:31:35 +0400
+Subject: [Btg-devel] suggestion about using SASL for user authentication
+In-Reply-To: <f8ecee8ea7e5cd9ef19e11a253ada240.squirrel@webmail.netimage.dk>
+References: <20090709160347.070ed321@desktopvm.lvknet>
+	<e4f7b1caeb7f738ff5c90889bb8bb749.squirrel@webmail.netimage.dk>
+	<20090710175122.177e988d@desktopvm.lvknet>
+	<20090711210124.27f2ab4c@netpc5.home.wojci.dk>
+	<20090714160224.42a3f283@desktopvm.lvknet>
+	<f8ecee8ea7e5cd9ef19e11a253ada240.squirrel@webmail.netimage.dk>
+Message-ID: <20090717143135.0d51865e@desktopvm.lvknet>
+
+On Fri, 17 Jul 2009 12:19:56 +0200 (CEST)
+"Michael Wojciechowski" <wojci at wojci.dk> wrote:
+
+> Alexander Gordeev wrote:
+> 
+> > Ok, I think the following scheme will address all issues:
+> >  * the source of authentication information will be either plain
+> > custom passwd file or PAM. Or other methods, like Kerberos. And this
+> > can be configurable.
+> >  * if btgdaemon is running as root and the users are authenticated
+> > as real system users, than it sets uid/gid of all the user files it
+> > is working on.
+> 
+> btgdaemon will not run as root. It can be setup to change uid/gid but
+> it refuses to run as root.
+
+Well, it's ok since it supports the hook scripts, I think. I can do
+chown in the script and setuid it to root so it'll be more secure in
+fact.
+
+> > Is there any documentation on the client-server protocol?
+> 
+> There is an automagically generated list of commands here:
+> http://btg.berlios.de/howto_devel.html#list-of-commands
+
+Well, I actually meant something higher level, but this is ok too,
+thanks. :)
+
+> > BTW, is it
+> > XMLRPC-based for all transports? It seems to me (after looking at
+> > the code) that "xmlrpc/sxmlrpc" transport is actually "http/https"
+> > transport with XMLRPC-based protocol atop the transport layer.
+> 
+> Yes, only one data representation is supported. It can be used with
+> different transports.
+> 
+> > I will have to add at least the "capability" request if not present.
+> 
+> If the transport/encoding will be backwards compatible, I don't see
+> why not.
+> 
+
+Ok, good.
+
+-- 
+  Alexander
+
+
+From desgibbons at gmail.com  Mon Jul 27 15:20:41 2009
+From: desgibbons at gmail.com (Des Gibbons)
+Date: Mon, 27 Jul 2009 14:20:41 +0100
+Subject: [Btg-devel] Error getting packages
+Message-ID: <1822ec310907270620i38391ddfw4c705ad6466bfc36@mail.gmail.com>
+
+Hi,
+
+
+There is no btg-user list, so apologies in advance :)
+
+I am  trying to install BTG on debian 64 bit
+
+
+I get the following error after adding the berlios repositories:-
+
+
+doing an apt-get update:
+
+Hit ftp://ftp.berlios.de main Release.gpg
+Get: 1 ftp://ftp.berlios.de main/stable Translation-en_GB
+Ign ftp://ftp.berlios.de main/stable Translation-en_GB
+Get: 2 ftp://ftp.berlios.de main/unstable Translation-en_GB
+Ign ftp://ftp.berlios.de main/unstable Translation-en_GB
+Hit ftp://ftp.berlios.de other Release.gpg
+Get: 3 ftp://ftp.berlios.de other/stable Translation-en_GB
+Ign ftp://ftp.berlios.de other/stable Translation-en_GB
+Get: 4 ftp://ftp.berlios.de other/unstable Translation-en_GB
+Ign ftp://ftp.berlios.de other/unstable Translation-en_GB
+Hit ftp://ftp.berlios.de main Release
+Hit ftp://ftp.berlios.de other Release
+Hit ftp://ftp.berlios.de other/stable Packages
+Hit ftp://ftp.berlios.de other/unstable Packages
+W: Failed to fetch
+ftp://ftp.berlios.de/pub/btg/debian/dists/main/Release  Unable to find
+expected entry  stable/binary-amd64/Packages in Meta-index file
+(malformed Release file?)
+
+E: Some index files failed to download, they have been ignored, or old
+ones used instead.
+
+
+
+Digging around the ftp site, I don't see any 64 bit packages, are they
+available?
+
+Cheers, Des.
+
+
+From btg-devel at romanr.name  Mon Jul 27 20:21:44 2009
+From: btg-devel at romanr.name (Roman Rybalko (BTG Project))
+Date: Mon, 27 Jul 2009 22:21:44 +0400
+Subject: [Btg-devel] Error getting packages
+In-Reply-To: <1822ec310907270620i38391ddfw4c705ad6466bfc36@mail.gmail.com>
+References: <1822ec310907270620i38391ddfw4c705ad6466bfc36@mail.gmail.com>
+Message-ID: <4A6DF038.2020304@romanr.name>
+
+Des Gibbons wrote:
+> Hi,
+>
+>
+> There is no btg-user list, so apologies in advance :)
+>
+> I am  trying to install BTG on debian 64 bit
+>
+>
+> I get the following error after adding the berlios repositories:-
+>
+>
+> doing an apt-get update:
+>
+> Hit ftp://ftp.berlios.de main Release.gpg
+> Get: 1 ftp://ftp.berlios.de main/stable Translation-en_GB
+> Ign ftp://ftp.berlios.de main/stable Translation-en_GB
+> Get: 2 ftp://ftp.berlios.de main/unstable Translation-en_GB
+> Ign ftp://ftp.berlios.de main/unstable Translation-en_GB
+> Hit ftp://ftp.berlios.de other Release.gpg
+> Get: 3 ftp://ftp.berlios.de other/stable Translation-en_GB
+> Ign ftp://ftp.berlios.de other/stable Translation-en_GB
+> Get: 4 ftp://ftp.berlios.de other/unstable Translation-en_GB
+> Ign ftp://ftp.berlios.de other/unstable Translation-en_GB
+> Hit ftp://ftp.berlios.de main Release
+> Hit ftp://ftp.berlios.de other Release
+> Hit ftp://ftp.berlios.de other/stable Packages
+> Hit ftp://ftp.berlios.de other/unstable Packages
+> W: Failed to fetch
+> ftp://ftp.berlios.de/pub/btg/debian/dists/main/Release  Unable to find
+> expected entry  stable/binary-amd64/Packages in Meta-index file
+> (malformed Release file?)
+>
+> E: Some index files failed to download, they have been ignored, or old
+> ones used instead.
+>
+>
+>
+> Digging around the ftp site, I don't see any 64 bit packages, are they
+> available?
+>   
+No, they aren't.
+
+
+-- 
+WBR,
+Roman Rybalko
+
+BTG Project
+http://btg.berlios.de/
+ftp://ftp.berlios.de/pub/btg/
+
+
+
+

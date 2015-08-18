@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Btg-devel] bug in filemgr.cpp
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/btg-devel/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20bug%20in%20filemgr.cpp&In-Reply-To=%3C4A12FECD.2010908%40romanr.name%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000163.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Btg-devel] bug in filemgr.cpp</H1>
+    <B>Roman Rybalko (BTG Project)</B> 
+    <A HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20bug%20in%20filemgr.cpp&In-Reply-To=%3C4A12FECD.2010908%40romanr.name%3E"
+       TITLE="[Btg-devel] bug in filemgr.cpp">btg-devel at romanr.name
+       </A><BR>
+    <I>Tue May 19 20:47:41 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000163.html">[Btg-devel] bug in filemgr.cpp
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#164">[ date ]</a>
+              <a href="thread.html#164">[ thread ]</a>
+              <a href="subject.html#164">[ subject ]</a>
+              <a href="author.html#164">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>David Wilhelm wrote:
+&gt;<i> While trying to compile and run btgdaemon under Ubuntu, I found a bug
+</I>&gt;<i> in filemgr.cpp, at line 278.  Here's a snippet:
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>          for (iter = files.begin();
+</I>&gt;<i>               iter != files.end();
+</I>&gt;<i>               iter++)
+</I>&gt;<i>             {
+</I>&gt;<i>                if (!iter-&gt;second.valid)
+</I>&gt;<i>                   {
+</I>&gt;<i>                      filetrack-&gt;remove(iter-&gt;second.dir, iter-&gt;second.filename);
+</I>&gt;<i>                      files.erase(iter);
+</I>&gt;<i>                   }
+</I>&gt;<i>              }
+</I>&gt;<i>
+</I>&gt;<i> The code &quot;files.erase(iter);&quot; invalidates the iterator iter, however
+</I>&gt;<i> the for loop will still increment this invalid iterator on its next
+</I>&gt;<i> pass.  That caused the program to crash after adding a torrent via the
+</I>&gt;<i> gui.  Replacing that snippet with the following code seems to have
+</I>&gt;<i> gotten things running for me:
+</I>&gt;<i>
+</I>&gt;<i>          while(iter != files.end())
+</I>&gt;<i>             {
+</I>&gt;<i>                tmp = iter++;
+</I>&gt;<i>                if (!tmp-&gt;second.valid)
+</I>&gt;<i>                {
+</I>&gt;<i>                    filetrack-&gt;remove(tmp-&gt;second.dir, tmp-&gt;second.filename);
+</I>&gt;<i> 		   files.erase(tmp);
+</I>&gt;<i>                }
+</I>&gt;<i>             }
+</I>&gt;<i>   
+</I>I fixed it in r580, could you check it please.
+
+-- 
+WBR,
+Roman Rybalko
+
+BTG Project
+<A HREF="http://btg.berlios.de/">http://btg.berlios.de/</A>
+<A HREF="ftp://ftp.berlios.de/pub/btg/">ftp://ftp.berlios.de/pub/btg/</A>
+
+-------------- next part --------------
+An embedded message was scrubbed...
+From: <A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">romanr at mail.berlios.de</A>
+Subject: [Btg-svn] r580 - trunk/daemon
+Date: Sat, 2 May 2009 22:38:24 +0200
+Size: 3888
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/btg-devel/attachments/20090519/644f0bc5/attachment.mht">https://lists.berlios.de/pipermail/btg-devel/attachments/20090519/644f0bc5/attachment.mht</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000163.html">[Btg-devel] bug in filemgr.cpp
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#164">[ date ]</a>
+              <a href="thread.html#164">[ thread ]</a>
+              <a href="subject.html#164">[ subject ]</a>
+              <a href="author.html#164">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/btg-devel">More information about the Btg-devel
+mailing list</a><br>
+</body></html>

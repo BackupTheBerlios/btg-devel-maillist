@@ -1,0 +1,26 @@
+From surfer56 at gmail.com  Mon Feb  1 16:08:05 2010
+From: surfer56 at gmail.com (Oleg Surfer)
+Date: Mon, 1 Feb 2010 20:08:05 +0500
+Subject: [Btg-devel] magnet links support
+Message-ID: <77a13e151002010708h5ec47b61vd5fd59ffd1da904f@mail.gmail.com>
+
+Hello.
+
+Do you have plans to support magnet links(BTIH) in bittorrent protocol ?
+
+Best regards, Oleg.
+
+
+From surfer56 at gmail.com  Mon Feb  1 16:08:05 2010
+From: surfer56 at gmail.com (Oleg Surfer)
+Date: Mon, 1 Feb 2010 20:08:05 +0500
+Subject: [Btg-devel] magnet links support
+Message-ID: <77a13e151002010708h5ec47b61vd5fd59ffd1da904f@mail.gmail.com>
+
+Hello.
+
+Do you have plans to support magnet links(BTIH) in bittorrent protocol ?
+
+Best regards, Oleg.
+
+

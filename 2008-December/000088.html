@@ -1,0 +1,123 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Btg-devel] btgweb problem (expat reports error code 2)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/btg-devel/2008-December/index.html" >
+   <LINK REL="made" HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20btgweb%20problem%20%28expat%20reports%20error%20code%202%29&In-Reply-To=%3C1828.212.178.64.154.1228311210.squirrel%40jurrie.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000087.html">
+   <LINK REL="Next"  HREF="000092.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Btg-devel] btgweb problem (expat reports error code 2)</H1>
+    <B>Jurriaan Nijkamp</B> 
+    <A HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20btgweb%20problem%20%28expat%20reports%20error%20code%202%29&In-Reply-To=%3C1828.212.178.64.154.1228311210.squirrel%40jurrie.net%3E"
+       TITLE="[Btg-devel] btgweb problem (expat reports error code 2)">jurriaan.nijkamp at jurrie.net
+       </A><BR>
+    <I>Wed Dec  3 14:33:30 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000087.html">[Btg-devel] btgweb problem (expat reports error code 2)
+</A></li>
+        <LI>Next message: <A HREF="000092.html">[Btg-devel] btgweb problem (expat reports error code 2)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#88">[ date ]</a>
+              <a href="thread.html#88">[ thread ]</a>
+              <a href="subject.html#88">[ subject ]</a>
+              <a href="author.html#88">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Before I switched my server to BSD it used to run Gentoo amd64. I have
+used BTG 0.9.6 - 0.9.8 on it and used xmlrpc-c from portage.
+
+I used an ebuild from this bug thread:
+<A HREF="http://bugs.gentoo.org/show_bug.cgi?id=231105">http://bugs.gentoo.org/show_bug.cgi?id=231105</A>
+
+It pulled in packages from the sunrise repository, xmlrpc-c included, I
+think. Perhaps that thread is your answer.
+
+Good luck,
+Jurriaan Nijkamp
+
+&gt;<i> I have some problems with using the xmlrpc library from Gentoo with btg.
+</I>&gt;<i>
+</I>&gt;<i> BTG refuses to recognize it.
+</I>&gt;<i>
+</I>&gt;<i> I tracked it down to the error that the btg configure expects a
+</I>&gt;<i> XMLRPC_REQUEST macro which is not present.
+</I>&gt;<i>
+</I>&gt;<i> Gentoo uses the xmlrpc library from  <A HREF="http://xmlrpc-c.sourceforge.net/.">http://xmlrpc-c.sourceforge.net/.</A>
+</I>&gt;<i>
+</I>&gt;<i> Is that the same library btg expects (are there more xmlrpc libraries
+</I>&gt;<i> flooting around the net)?
+</I>&gt;<i>
+</I>&gt;<i> regards,
+</I>&gt;<i> Fitzgerald.
+</I>&gt;<i>
+</I>&gt;<i> Michael Wojciechowski wrote:
+</I>&gt;&gt;<i> On Sat, 29 Nov 2008 23:14:19 +0100 &quot;<A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">unknown-user at krudde.nl</A>&quot;
+</I>&gt;&gt;<i> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">fitzgerald at krudde.nl</A>&gt; wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I saw that post, but there was no root-cause or solution followed up.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I don't remember how he responded to me. It might have been using IRC or
+</I>&gt;&gt;<i> e-mail only to me.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> The problem looks (at least)  similar..
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I would like you to try to install the xml-rpc from the Gentoo system
+</I>&gt;&gt;<i> and try using it instead of the one you are using now (internal vs.
+</I>&gt;&gt;<i> system wise). I remember that gentoo had patches for xmlrpc, of which I
+</I>&gt;&gt;<i> merged some of. Maybe it could fix your issues. Do you have a 32 bit
+</I>&gt;&gt;<i> system you could try to run the web server used by the wwwui? Just to
+</I>&gt;&gt;<i> see if this is the issue..
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> The xml-rpc implementation used by PHP is something the developer who
+</I>&gt;&gt;<i> implemented the wwwui integrated - it could possibly have some errors
+</I>&gt;&gt;<i> in it.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Btg-devel mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">Btg-devel at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">https://lists.berlios.de/mailman/listinfo/btg-devel</A>
+</I>&gt;<i>
+</I>
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000087.html">[Btg-devel] btgweb problem (expat reports error code 2)
+</A></li>
+	<LI>Next message: <A HREF="000092.html">[Btg-devel] btgweb problem (expat reports error code 2)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#88">[ date ]</a>
+              <a href="thread.html#88">[ thread ]</a>
+              <a href="subject.html#88">[ subject ]</a>
+              <a href="author.html#88">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/btg-devel">More information about the Btg-devel
+mailing list</a><br>
+</body></html>

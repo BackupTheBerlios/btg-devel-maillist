@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Btg-devel] btgdaemon is running but not downloading
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/btg-devel/2008-December/index.html" >
+   <LINK REL="made" HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20btgdaemon%20is%20running%20but%20not%20downloading&In-Reply-To=%3C62bc09df0812291935u75d99c88iacae66ac3b32f122%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000097.html">
+   <LINK REL="Next"  HREF="000099.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Btg-devel] btgdaemon is running but not downloading</H1>
+    <B>Xavier Lamien</B> 
+    <A HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20btgdaemon%20is%20running%20but%20not%20downloading&In-Reply-To=%3C62bc09df0812291935u75d99c88iacae66ac3b32f122%40mail.gmail.com%3E"
+       TITLE="[Btg-devel] btgdaemon is running but not downloading">laxathom at fedoraproject.org
+       </A><BR>
+    <I>Tue Dec 30 04:35:43 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000097.html">[Btg-devel] CONGRATULATIONS YOU WON OUR 987,	500 Coca-cola PROMO BT:12 052006/
+</A></li>
+        <LI>Next message: <A HREF="000099.html">[Btg-devel] btgdaemon is running but not downloading
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#98">[ date ]</a>
+              <a href="thread.html#98">[ thread ]</a>
+              <a href="subject.html#98">[ subject ]</a>
+              <a href="author.html#98">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello folks,
+
+firstly, an happy new year to all of you guys in the time you will get
+this mail.
+
+I'm currently having problem to get btgdaemon working properly.
+Once launched, through the web interface after logged in, all my
+downloads are freezing to 0% (after 2 hours of waiting and still
+continue) from any tracker i can test.
+Seeder and leecher status are fine.
+
+btgdaemon is not enough verbose to tell me what is going on.
+
+
+Configuration details :
+---------------------------
+btg-0.9.8
+wwwbtg-0.9.8
+rb_libtorrent-0.12 (libtorrent-rasterbar)
+boost-1.33.1
+
+daemon.ini :
+transport = xml-rpc
+work_dir = nfs mount (with group writable)
+
+log at startup :
+----------------------
+ Verbose logging enabled.
+ config: '/etc/btg/daemon.ini'.
+ dem: config read from '/etc/btg/daemon.ini'.
+ Sending status using file names.
+ Using session file from config: '/var/lib/btg/session'.
+ Transport, XML-RPC, created and initialized.
+
+ btgdaemon version 0.9.8, TRUNK.
+  Ready to accept clients.
+  hdl: Checking limits and alerts.
+ Tracker reply alert: filename 'manga_test', status = 200 OK
+ Tracker reply alert: filename 'Fedora-10-x86_64-Live-KDE.torrent',
+status = 200 OK
+ Tracker reply alert: filename 'barcode_demo_art.torrent', status = 200 OK
+ hdl: Checking limits and alerts.
+ hdl: Updating limits.
+ hdl: Checking limits and alerts.
+ ctn: Peer ID used: '0000000000000000000000000000000000000000'.
+ hdl: Updating seed counters.
+ hdl: Checking limits and alerts.
+ hdl: Updating limits.
+ hdl: Checking limits and alerts.
+
+-- 
+Xavier.t Lamien
+--
+<A HREF="http://fedoraproject.org/wiki/XavierLamien">http://fedoraproject.org/wiki/XavierLamien</A>
+GPG-Key ID: F3903DEB
+Fingerprint: 0F2A 7A17 0F1B 82EE FCBF 1F51 76B7 A28D F390 3DEB
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000097.html">[Btg-devel] CONGRATULATIONS YOU WON OUR 987,	500 Coca-cola PROMO BT:12 052006/
+</A></li>
+	<LI>Next message: <A HREF="000099.html">[Btg-devel] btgdaemon is running but not downloading
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#98">[ date ]</a>
+              <a href="thread.html#98">[ thread ]</a>
+              <a href="subject.html#98">[ subject ]</a>
+              <a href="author.html#98">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/btg-devel">More information about the Btg-devel
+mailing list</a><br>
+</body></html>

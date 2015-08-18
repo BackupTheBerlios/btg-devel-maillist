@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Btg-devel] another compiling problem
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/btg-devel/2009-January/index.html" >
+   <LINK REL="made" HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20another%20compiling%20problem&In-Reply-To=%3C7a95af970901071452n53cb9c5qb4957f88a03d0a18%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000101.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Btg-devel] another compiling problem</H1>
+    <B>Daniel Svensson</B> 
+    <A HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20another%20compiling%20problem&In-Reply-To=%3C7a95af970901071452n53cb9c5qb4957f88a03d0a18%40mail.gmail.com%3E"
+       TITLE="[Btg-devel] another compiling problem">daniel at kofta.se
+       </A><BR>
+    <I>Wed Jan  7 23:52:18 CET 2009</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000101.html">[Btg-devel] another compiling problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#100">[ date ]</a>
+              <a href="thread.html#100">[ thread ]</a>
+              <a href="subject.html#100">[ subject ]</a>
+              <a href="author.html#100">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>latest trunk on gentoo with
+
+dev-libs/boost-1.35.0-r2
+net-libs/rb_libtorrent-0.14.1
+
+gives me
+
+make[3]: Entering directory `/home/daniel/src/temp/trunk/daemon/auth'
+/bin/sh ../../libtool --tag=CXX   --mode=link g++ -g -O2 -DNDEBUG
+-I/usr/include -I/usr/include -DBTG_DEBUG=0 -DBTG_OPTION_SAVESESSIONS=1
+-DBTG_OPTION_EVENTCALLBACK=0 -DBTG_OPTION_UPNP=0 -DBTG_OPTION_USECYBERLINK=0
+-DBTG_REV=&quot;SVN rev. 515&quot; -DBTG_INTERNAL_XMLRPC=&quot;1&quot; -g -O2  -L/usr/lib -o
+btgpasswd btgpasswd-arg.o btgpasswd-btgpasswd.o btgpasswd-dconfig.o
+../../bcore/libbtgcore.la libauth.la
+../../external/ini/libini.la-lboost_date_time-mt-s
+-lboost_program_options-mt-s -lboost_system-mt-s
+-lboost_iostreams-mt-s -lboost_filesystem-mt-s
+libtool: link: g++ -g -O2 -DNDEBUG -I/usr/include -I/usr/include
+-DBTG_DEBUG=0 -DBTG_OPTION_SAVESESSIONS=1 -DBTG_OPTION_EVENTCALLBACK=0
+-DBTG_OPTION_UPNP=0 -DBTG_OPTION_USECYBERLINK=0 &quot;-DBTG_REV=SVN rev. 515&quot;
+-DBTG_INTERNAL_XMLRPC=1 -g -O2 -o .libs/btgpasswd btgpasswd-arg.o
+btgpasswd-btgpasswd.o btgpasswd-dconfig.o  -L/usr/lib
+../../bcore/.libs/libbtgcore.so -L/usr/i686-pc-linux-gnu/bin
+-L/usr/i686-pc-linux-gnu/lib
+-L/usr/lib/gcc/i686-pc-linux-gnu/../../../i686-pc-linux-gnu/lib
+/usr/lib/libgnutls.so /usr/lib/libtasn1.so /usr/lib/libgcrypt.so
+/usr/lib/libgpg-error.so -lboost_thread-mt-s ./.libs/libauth.a
+../../external/ini/.libs/libini.a
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.6/libstdc++.so -lm -lgcc_s -lc
+-lboost_date_time-mt-s -lboost_program_options-mt-s -lboost_system-mt-s
+-lboost_iostreams-mt-s -lboost_filesystem-mt-s -pthread -Wl,-rpath
+-Wl,/usr/local/lib/btg
+../../bcore/.libs/libbtgcore.so: undefined reference to `inflateReset'
+../../bcore/.libs/libbtgcore.so: undefined reference to `inflateEnd'
+../../bcore/.libs/libbtgcore.so: undefined reference to `deflate'
+../../bcore/.libs/libbtgcore.so: undefined reference to `inflateInit2_'
+../../bcore/.libs/libbtgcore.so: undefined reference to `inflate'
+../../bcore/.libs/libbtgcore.so: undefined reference to `crc32'
+../../bcore/.libs/libbtgcore.so: undefined reference to `deflateEnd'
+../../bcore/.libs/libbtgcore.so: undefined reference to `deflateReset'
+../../bcore/.libs/libbtgcore.so: undefined reference to `deflateInit2_'
+collect2: ld returned 1 exit status
+
+any ideas? :/
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/btg-devel/attachments/20090107/7d0f82b2/attachment.html">https://lists.berlios.de/pipermail/btg-devel/attachments/20090107/7d0f82b2/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000101.html">[Btg-devel] another compiling problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#100">[ date ]</a>
+              <a href="thread.html#100">[ thread ]</a>
+              <a href="subject.html#100">[ subject ]</a>
+              <a href="author.html#100">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/btg-devel">More information about the Btg-devel
+mailing list</a><br>
+</body></html>

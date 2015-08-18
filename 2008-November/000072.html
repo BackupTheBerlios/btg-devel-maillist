@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Btg-devel] btgweb problem (expat reports error code 2)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/btg-devel/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20btgweb%20problem%20%28expat%20reports%20error%20code%202%29&In-Reply-To=%3C492C7BAE.70303%40krudde.nl%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000071.html">
+   <LINK REL="Next"  HREF="000073.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Btg-devel] btgweb problem (expat reports error code 2)</H1>
+    <B>unknown-user@krudde.nl</B> 
+    <A HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20btgweb%20problem%20%28expat%20reports%20error%20code%202%29&In-Reply-To=%3C492C7BAE.70303%40krudde.nl%3E"
+       TITLE="[Btg-devel] btgweb problem (expat reports error code 2)">fitzgerald at krudde.nl
+       </A><BR>
+    <I>Tue Nov 25 23:26:54 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000071.html">[Btg-devel] btgweb problem (expat reports error code 2)
+</A></li>
+        <LI>Next message: <A HREF="000073.html">[Btg-devel] btgweb problem (expat reports error code 2)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#72">[ date ]</a>
+              <a href="thread.html#72">[ thread ]</a>
+              <a href="subject.html#72">[ subject ]</a>
+              <a href="author.html#72">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Michael,
+
+Well, it took me some effort to update to 0.9.9-RC2 (I am running on an
+AMD64):
+
+- first I got complaints during linking due to missing PIC-enabled
+libraries (I had to rebuild boost and rb_libtorrent with -fPIC)
+- then I had issues during linking with pthread stuff which I solved
+(after some Google-ing) with adding  -pthread to the LDFLAGS for the
+Makefile in
+daemon/auth and UI/cli/ncurses.
+
+Then I got a working btg but the web UI gave exactly the same problem as
+before :-(
+
+expat reports error code 2
+    description: syntax error
+    line: 1
+    column: 0
+    byte index: 0
+    total bytes: 0
+
+    data beginning 0 before byte index: POST / HTTP/1.0
+Host: 127.0.0.1
+Content-Type: text/xml
+
+Would you have any more ideas/suggestions?
+I have not installed wireshark (yet) to capture the exact http traffic
+but it definitely is not working for me somehow..
+
+thx,
+regards,
+Fitzgerald.
+
+Michael Wojciechowski wrote:
+&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">unknown-user at krudde.nl</A> wrote:
+</I>&gt;<i>   
+</I>&gt;&gt;<i> I have running btg 0.9.7. running on my Gentoo box succesfully.
+</I>&gt;&gt;<i> The btgdaemon and btgcli are working allright (downloading a torrent
+</I>&gt;&gt;<i> right now).
+</I>&gt;&gt;<i> But the btgweb does not work.
+</I>&gt;&gt;<i>     
+</I>&gt;<i>
+</I>&gt;<i> Can you update to the most recent 0.9.9-RC2? Just to make sure that this
+</I>&gt;<i> is not something which has been fixed already.
+</I>&gt;<i>
+</I>&gt;<i>   
+</I>&gt;&gt;<i> I have started the btgdaemon in debug mode (-D).
+</I>&gt;&gt;<i> When the browser submits the login page the following error is visible
+</I>&gt;&gt;<i> in the debug output:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> expat reports error code 2
+</I>&gt;&gt;<i>         description: syntax error
+</I>&gt;&gt;<i>         line: 1
+</I>&gt;&gt;<i>         column: 0
+</I>&gt;&gt;<i>         byte index: 0
+</I>&gt;&gt;<i>         total bytes: 0
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>         data beginning 0 before byte index: POST / HTTP/1.0
+</I>&gt;&gt;<i> Host: 127.0.0.1
+</I>&gt;&gt;<i> Content-Type: text/xml
+</I>&gt;&gt;<i> Use [2008-Nov-24 21:05:53] hdl: alive.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Any clues/ideas what might be wrong or where to troubleshoot?
+</I>&gt;&gt;<i>     
+</I>&gt;<i>
+</I>&gt;<i> I would use wireshark to capture the http traffic and look at what the
+</I>&gt;<i> wwwui is doing. The more recent versions of the wwwui can log to syslog.
+</I>&gt;<i>
+</I>&gt;<i>   
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000071.html">[Btg-devel] btgweb problem (expat reports error code 2)
+</A></li>
+	<LI>Next message: <A HREF="000073.html">[Btg-devel] btgweb problem (expat reports error code 2)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#72">[ date ]</a>
+              <a href="thread.html#72">[ thread ]</a>
+              <a href="subject.html#72">[ subject ]</a>
+              <a href="author.html#72">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/btg-devel">More information about the Btg-devel
+mailing list</a><br>
+</body></html>

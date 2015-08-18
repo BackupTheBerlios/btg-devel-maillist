@@ -1,0 +1,257 @@
+From maxim at osetia.org  Wed Sep 23 11:46:51 2009
+From: maxim at osetia.org (Maxim Shpakov)
+Date: Wed, 23 Sep 2009 12:46:51 +0300
+Subject: [Btg-devel] btg + geoip
+Message-ID: <7e1cd2190909230246m4b03e7e6q93e7b65055f8dd4f@mail.gmail.com>
+
+Hello
+I've migrated to btg from mldonkey.
+BitTorrent works nice. But I missed one feature "IP-Filter by GeoIP"
+
+Space-seperated List of countries to block connections from/to
+(requires Geoip). Names are in ISO 3166 format, see
+http://www.maxmind.com/app/iso3166 You can also at your own risk use
+"Unknown", for IPs Geoip won't recognize.
+ip_blocking_countries = ""
+
+Switch to use ip_blocking_countries as block list (false) or as white
+list (true)
+
+ip_blocking_countries_block = false
+
+
+Any chances? :) It would be very nice to see such small but powerful feature.
+
+
+From bohdan.linda at seznam.cz  Mon Sep 28 21:16:28 2009
+From: bohdan.linda at seznam.cz (Bohdan Linda)
+Date: Mon, 28 Sep 2009 21:16:28 +0200
+Subject: [Btg-devel] 2.0.0 RC2
+Message-ID: <20090928191628.GA11679@bafster.baflabs.org>
+
+Hello,
+
+just performed an upgrade to 2.0.0 RC2 to do some tests. Daemon seems to
+be running, but I cannot connect into it (tried both xml-rpc and tcpip
+transport). What can be the problem?
+
+[2009-Sep-28 21:12:30] config: '/home/download/.btg/client.ini'.
+Username:
+download
+Password:
+[2009-Sep-28 21:12:35] Snd: (g) Init connection.
+[2009-Sep-28 21:12:36] Rec: (g) Error.
+[2009-Sep-28 21:12:36] btg*cli: Internal error: start up helper not initialized.
+
+$ cat client.ini
+; Generated with btg-config.
+;
+[transport]
+default=tcpip
+;default=xml-rpc
+
+[network]
+daemon-address=127.0.0.1:16000
+
+$ cat daemon.ini
+; Generated with btg-config.
+;
+[transport]
+;default=xml-rpc
+default=tcpip
+
+[logging]
+type=file
+filename=/home/download/btg.log
+
+[auth]
+passwd-file=/home/download/btg-auth
+
+[network]
+listen-to=127.0.0.1:16000
+torrent-range=9000:9100
+
+[misc]
+#proxy=127.0.0.1:8118
+
+filter=level1
+filename = /home/download/btg-filter
+
+[limit]
+upload_rate_limit = 8000
+
+[savesessions]
+enable=true
+filename=/home/download/btg-session
+
+
+Thanks,
+
+-- 
+Bohdan Linda
+
+
+
+From wojci at wojci.dk  Mon Sep 28 23:21:39 2009
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Mon, 28 Sep 2009 23:21:39 +0200
+Subject: [Btg-devel] 2.0.0 RC2
+In-Reply-To: <20090928191628.GA11679@bafster.baflabs.org>
+References: <20090928191628.GA11679@bafster.baflabs.org>
+Message-ID: <20090928232139.061ec4b4@netpc5.home.wojci.dk>
+
+On Mon, 28 Sep 2009 21:16:28 +0200 Bohdan Linda
+<bohdan.linda at seznam.cz> wrote:
+
+> Hello,
+> 
+> just performed an upgrade to 2.0.0 RC2 to do some tests. Daemon seems
+> to be running, but I cannot connect into it (tried both xml-rpc and
+> tcpip transport). What can be the problem?
+> [2009-Sep-28 21:12:30] config: '/home/download/.btg/client.ini'.
+> Username:
+> download
+> Password:
+> [2009-Sep-28 21:12:35] Snd: (g) Init connection.
+> [2009-Sep-28 21:12:36] Rec: (g) Error.
+> [2009-Sep-28 21:12:36] btg*cli: Internal error: start up helper not
+> initialized.
+
+Any daemon logs from when you do this?
+
+I don't see anything wrong with your config files, but make sure that
+your password file uses the format specified in the howto.
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+http://www.linkedin.com/in/wojci
+http://www.facebook.com/wojci
+http://twitter.com/wojci
+
+"You must be the change you want to see in the world.", Mahatma Gandhi
+
+
+
+From wojci at wojci.dk  Mon Sep 28 23:24:06 2009
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Mon, 28 Sep 2009 23:24:06 +0200
+Subject: [Btg-devel] btg + geoip
+In-Reply-To: <7e1cd2190909230246m4b03e7e6q93e7b65055f8dd4f@mail.gmail.com>
+References: <7e1cd2190909230246m4b03e7e6q93e7b65055f8dd4f@mail.gmail.com>
+Message-ID: <20090928232406.7d199de6@netpc5.home.wojci.dk>
+
+On Wed, 23 Sep 2009 12:46:51 +0300 Maxim Shpakov <maxim at osetia.org>
+wrote:
+
+> Space-seperated List of countries to block connections from/to
+> (requires Geoip). Names are in ISO 3166 format, see
+> http://www.maxmind.com/app/iso3166 You can also at your own risk use
+> "Unknown", for IPs Geoip won't recognize.
+> ip_blocking_countries = ""
+> 
+> Switch to use ip_blocking_countries as block list (false) or as white
+> list (true)
+> 
+> ip_blocking_countries_block = false
+> 
+> Any chances? :) It would be very nice to see such small but powerful
+> feature.
+
+I might have time soon. You should add a bug about this with as much
+information as you can. This means how this is supported in
+libtorrent ..
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+http://www.linkedin.com/in/wojci
+http://www.facebook.com/wojci
+http://twitter.com/wojci
+
+"You must be the change you want to see in the world.", Mahatma Gandhi
+
+
+
+From bohdan.linda at seznam.cz  Tue Sep 29 21:25:19 2009
+From: bohdan.linda at seznam.cz (Bohdan Linda)
+Date: Tue, 29 Sep 2009 21:25:19 +0200
+Subject: [Btg-devel] 2.0.0 RC2
+In-Reply-To: <20090928232139.061ec4b4@netpc5.home.wojci.dk>
+References: <20090928191628.GA11679@bafster.baflabs.org>
+	<20090928232139.061ec4b4@netpc5.home.wojci.dk>
+Message-ID: <20090929192519.GA9722@bafster.baflabs.org>
+
+On 28.09.2009 23:21 +0200, Michael Wojciechowski wrote:
+> Any daemon logs from when you do this?
+> 
+> I don't see anything wrong with your config files, but make sure that
+> your password file uses the format specified in the howto.
+
+[2009-Sep-29 21:20:19] hdl: client (0): (g) Init connection failed.                                                           
+[2009-Sep-29 21:20:19] hdl: Client (0): Rejecting connection from user 'download'.                                            
+[2009-Sep-29 21:20:19] hdl: Sending error to client (0): 'Failed to authorize user.'.                                         
+[2009-Sep-29 21:20:19] hdl: daemon (0): (g) Error (caused by (g) Init connection).                      
+
+when using btgncli, I am not even asked for password. User download was
+recreated with:
+
+btgpasswd -m -u download -p
+
+but no help
+
+Kind regards,
+-- 
+Bohdan Linda
+
+
+
+From wojci at wojci.dk  Tue Sep 29 23:09:02 2009
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Tue, 29 Sep 2009 23:09:02 +0200
+Subject: [Btg-devel] 2.0.0 RC2
+In-Reply-To: <20090929192519.GA9722@bafster.baflabs.org>
+References: <20090928191628.GA11679@bafster.baflabs.org>
+	<20090928232139.061ec4b4@netpc5.home.wojci.dk>
+	<20090929192519.GA9722@bafster.baflabs.org>
+Message-ID: <20090929230902.7908b891@netpc5.home.wojci.dk>
+
+On Tue, 29 Sep 2009 21:25:19 +0200 Bohdan Linda
+<bohdan.linda at seznam.cz> wrote:
+
+> [2009-Sep-29 21:20:19] hdl: client (0): (g) Init connection
+> failed. [2009-Sep-29 21:20:19] hdl: Client (0): Rejecting connection
+> from user 'download'. [2009-Sep-29 21:20:19] hdl: Sending error to
+> client (0): 'Failed to authorize user.'. [2009-Sep-29 21:20:19] hdl:
+> daemon (0): (g) Error (caused by (g) Init
+> connection).                      
+
+This can only mean that the md5 hash your provided to use by your
+client does not match the one stored in the password file used by the
+daemon.
+
+> when using btgncli, I am not even asked for password. User download
+> was recreated with:
+
+This was fixed in bugfix 016196, I think. 
+
+I am not sure, if it made it into the RC you are talking about, but its
+in SVN.
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+http://www.linkedin.com/in/wojci
+http://www.facebook.com/wojci
+http://twitter.com/wojci
+
+"You must be the change you want to see in the world.", Mahatma Gandhi
+
+
+

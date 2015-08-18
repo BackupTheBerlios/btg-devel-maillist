@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Btg-devel] Fast resume data
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/btg-devel/2009-August/index.html" >
+   <LINK REL="made" HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20Fast%20resume%20data&In-Reply-To=%3C4A89701F.6020201%40romanr.name%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000178.html">
+   <LINK REL="Next"  HREF="000180.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Btg-devel] Fast resume data</H1>
+    <B>Roman Rybalko</B> 
+    <A HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20Fast%20resume%20data&In-Reply-To=%3C4A89701F.6020201%40romanr.name%3E"
+       TITLE="[Btg-devel] Fast resume data">btg-devel at romanr.name
+       </A><BR>
+    <I>Mon Aug 17 16:58:39 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000178.html">[Btg-devel] Fast resume data]
+</A></li>
+        <LI>Next message: <A HREF="000180.html">[Btg-devel] Fast resume data
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#179">[ date ]</a>
+              <a href="thread.html#179">[ thread ]</a>
+              <a href="subject.html#179">[ subject ]</a>
+              <a href="author.html#179">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Michael Wojciechowski wrote:
+&gt;<i> I was not able to find any way of _not_ polling for alerts. Do you know a
+</I>&gt;<i> way? In the current architecture, a thread polls alerts in each context
+</I>&gt;<i> each 10 second or so.
+</I>&gt;<i>   
+</I>No, I don't know either.
+May be it's not bad to pass such information via alerts...
+&gt;&gt;<i> Well, resume data is saved regularly but asynchronously. When the daemon
+</I>&gt;&gt;<i> exits,
+</I>&gt;&gt;<i> there is resume data for downloading torrents but it's a bit stale (1
+</I>&gt;&gt;<i> minute stale, actually).
+</I>&gt;&gt;<i>     
+</I>&gt;<i>
+</I>&gt;<i> That could be enough to trigger a re-check of the torrent's data. I would
+</I>&gt;<i> like to avoid that..
+</I>&gt;<i>
+</I>&gt;<i>   
+</I>&gt;&gt;<i> According to LT code I dug, it should correctly handle such conditions
+</I>&gt;&gt;<i> unless compact allocation mode (which we don't use).
+</I>&gt;&gt;<i>     
+</I>&gt;<i>
+</I>&gt;<i> I thought that compact allocation mode was the default (in BTG), and you
+</I>&gt;<i> could use full allocation if you wanted to.
+</I>&gt;<i>   
+</I>There are 3 allocation modes in 0.14.2:
+full - all files are allocated at once and filled by 0-bytes
+sparse - generic unix &quot;sparse&quot; files as we know them well
+compact - some &quot;tricky&quot; mode when files are smaller than in full mode
+but pieces are always travel inside that files, used for MacOS where
+sparse mode is not supported AFAIK, see docs, it's hard to explain for
+me :-/
+
+So, I thought we use &quot;sparse&quot; mode, not &quot;compact&quot;.
+If we really use &quot;compact&quot; mode - the source of problem is obvious. In
+this mode outdated resume data is rejected anyway.
+But in sparse and full allocation modes outdated resume data works well.
+Do you really need to support &quot;compact&quot; mode for your appletv or so?
+May be &quot;full allocation&quot; will be suitable for you? since &quot;compact&quot; mode
+is rather disk-io-voracious.
+
+-- 
+WBR,
+Roman Rybalko
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/btg-devel/attachments/20090817/7d485e6c/attachment.html">https://lists.berlios.de/pipermail/btg-devel/attachments/20090817/7d485e6c/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000178.html">[Btg-devel] Fast resume data]
+</A></li>
+	<LI>Next message: <A HREF="000180.html">[Btg-devel] Fast resume data
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#179">[ date ]</a>
+              <a href="thread.html#179">[ thread ]</a>
+              <a href="subject.html#179">[ subject ]</a>
+              <a href="author.html#179">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/btg-devel">More information about the Btg-devel
+mailing list</a><br>
+</body></html>

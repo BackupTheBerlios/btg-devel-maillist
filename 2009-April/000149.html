@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Btg-devel] External xmlrpc-epi includes have moved?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/btg-devel/2009-April/index.html" >
+   <LINK REL="made" HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20External%20xmlrpc-epi%20includes%20have%20moved%3F&In-Reply-To=%3C20090424115531.GA22516%40ares.tgcnet%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000147.html">
+   <LINK REL="Next"  HREF="000152.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Btg-devel] External xmlrpc-epi includes have moved?</H1>
+    <B>Tom G. Christensen</B> 
+    <A HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20External%20xmlrpc-epi%20includes%20have%20moved%3F&In-Reply-To=%3C20090424115531.GA22516%40ares.tgcnet%3E"
+       TITLE="[Btg-devel] External xmlrpc-epi includes have moved?">tgc at jupiterrise.com
+       </A><BR>
+    <I>Fri Apr 24 13:55:31 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000147.html">[Btg-devel] External xmlrpc-epi includes have moved?
+</A></li>
+        <LI>Next message: <A HREF="000152.html">[Btg-devel] External xmlrpc-epi includes have moved?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#149">[ date ]</a>
+              <a href="thread.html#149">[ thread ]</a>
+              <a href="subject.html#149">[ subject ]</a>
+              <a href="author.html#149">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Fri, Apr 24, 2009 at 12:47:50PM +0200, Michael Wojciechowski wrote:
+&gt;<i> On Fri, 24 Apr 2009 10:08:25 +0200 &quot;Tom G. Christensen&quot;
+</I>&gt;<i> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">tgc at jupiterrise.com</A>&gt; wrote:
+</I>&gt;<i> 
+</I>&gt;<i> &gt; I've attempted to build with external xmlrpc-epi and I
+</I>&gt;<i> &gt; found I needed a small patch since the headers are now in
+</I>&gt;<i> &gt; /usr/include/xmlrpc-epi:
+</I>&gt;<i> &gt; diff -up btg-1.0.0/bcore/externalization/xmlrpc.h.orig
+</I>&gt;<i> &gt; btg-1.0.0/bcore/externalization/xmlrpc.h ---
+</I>&gt;<i> &gt; btg-1.0.0/bcore/externalization/xmlrpc.h.orig       2009-04-21
+</I>&gt;<i> &gt; 16:31:55.000000000 +0200 +++
+</I>&gt;<i> &gt; btg-1.0.0/bcore/externalization/xmlrpc.h    2009-04-21
+</I>&gt;<i> &gt; 16:32:07.000000000 +0200 @@ -32,7 +32,7 @@ extern &quot;C&quot; #if
+</I>&gt;<i> &gt; BTG_INTERNAL_XMLRPC #  include &lt;external/xmlrpc-epi/src/xmlrpc.h&gt;
+</I>&gt;<i> &gt; #else 
+</I>&gt;<i> &gt; -#  include &lt;xmlrpc.h&gt;
+</I>&gt;<i> &gt; +#  include &lt;xmlrpc-epi/xmlrpc.h&gt;
+</I>&gt;<i> &gt;  #endif
+</I>&gt;<i> &gt;  }
+</I>&gt;<i> &gt; 
+</I>&gt;<i> 
+</I>&gt;<i> Applying you patch will make using system XML-RPC difficult on debian
+</I>&gt;<i> systems and possibly other Linux distros.
+</I>&gt;<i> 
+</I>Debian also puts xmlrpc.h from xmlrpc-epi in /usr/include/xmlrpc-epi
+probably because that is where upstream wants to put it.
+See:
+<A HREF="http://packages.debian.org/lenny/i386/libxmlrpc-epi-dev/filelist">http://packages.debian.org/lenny/i386/libxmlrpc-epi-dev/filelist</A>
+
+Does your Debian install have it somewhere else?
+
+&gt;<i> &gt; The configure test should probably be updated aswell otherwise one
+</I>&gt;<i> &gt; needs to set XMLRPC_CFLAGS=&quot;-I/usr/include/xmlrpc-epi&quot; to have it
+</I>&gt;<i> &gt; detect that external xmlrpc-epi is available.
+</I>&gt;<i> 
+</I>&gt;<i> I think that the above is what you should use instead. If you want to
+</I>&gt;<i> extend the m4 script used to detect XML-RPC, send me a patch and I
+</I>&gt;<i> will merge it. :) 
+</I>&gt;<i> 
+</I>You miss the point. Setting XMLRPC_CFLAGS is only enough to fool the
+configure script I get a build error later without the patch because it
+can't find xmlrpc.h.
+
+You can see the error in the build log here:
+<A HREF="http://jupiterrise.com/tmp/btg-1.0.0-rc1-external-xmlrpc-epi-build.log">http://jupiterrise.com/tmp/btg-1.0.0-rc1-external-xmlrpc-epi-build.log</A>
+
+-tgc
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000147.html">[Btg-devel] External xmlrpc-epi includes have moved?
+</A></li>
+	<LI>Next message: <A HREF="000152.html">[Btg-devel] External xmlrpc-epi includes have moved?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#149">[ date ]</a>
+              <a href="thread.html#149">[ thread ]</a>
+              <a href="subject.html#149">[ subject ]</a>
+              <a href="author.html#149">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/btg-devel">More information about the Btg-devel
+mailing list</a><br>
+</body></html>

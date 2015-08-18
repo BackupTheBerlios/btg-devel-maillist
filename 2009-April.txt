@@ -1,0 +1,1325 @@
+From aspcicc at jumpy.it  Thu Apr 16 16:36:41 2009
+From: aspcicc at jumpy.it (ciccio)
+Date: Thu, 16 Apr 2009 16:36:41 +0200
+Subject: [Btg-devel] request: automatic download
+Message-ID: <49E74279.2050506@jumpy.it>
+
+I was wonder it could be possible to put a torrent into a directory and 
+btg automatically starts download it
+
+
+From wojci at wojci.dk  Thu Apr 16 21:16:36 2009
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Thu, 16 Apr 2009 21:16:36 +0200
+Subject: [Btg-devel] request: automatic download
+In-Reply-To: <49E74279.2050506@jumpy.it>
+References: <49E74279.2050506@jumpy.it>
+Message-ID: <20090416211636.34bf476d@netpc5.home.wojci.dk>
+
+On Thu, 16 Apr 2009 16:36:41 +0200 ciccio <aspcicc at jumpy.it> wrote:
+
+> I was wonder it could be possible to put a torrent into a directory
+> and btg automatically starts download it
+
+Yes, this is described in the howto,
+http://btg.berlios.de/howto.html#using-an-incoming-directory.
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+"When they ask how I died, I said, tell them: still angry." 
+(Altered Carbon by Richard Morgan)
+
+
+From btg at romanr.info  Thu Apr 16 21:19:08 2009
+From: btg at romanr.info (Roman Rybalko (BTG Project))
+Date: Thu, 16 Apr 2009 23:19:08 +0400
+Subject: [Btg-devel] request: automatic download
+In-Reply-To: <49E74279.2050506@jumpy.it>
+References: <49E74279.2050506@jumpy.it>
+Message-ID: <49E784AC.2000507@romanr.info>
+
+Yes, it could be.
+Use shell + btgcli
+
+ciccio wrote:
+> I was wonder it could be possible to put a torrent into a directory and 
+> btg automatically starts download it
+>   
+
+-- 
+WBR,
+Roman Rybalko
+
+BTG Project
+http://btg.berlios.de/
+ftp://ftp.berlios.de/pub/btg/
+
+
+
+
+From ghostarthour at gmail.com  Sat Apr 18 19:00:22 2009
+From: ghostarthour at gmail.com (gH0StArthour)
+Date: Sat, 18 Apr 2009 19:00:22 +0200
+Subject: [Btg-devel] Btg WWW Translated to hungarian
+Message-ID: <95a8cd490904181000y65428e33w6b20043d9ff7f27d@mail.gmail.com>
+
+Hi!
+
+I translated the 0.9.9 wwwbtg version to hungarian. I attached the zip
+packed package.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20090418/ea3cd93e/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: wwwbtg_translated_hu.zip
+Type: application/zip
+Size: 129241 bytes
+Desc: not available
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20090418/ea3cd93e/attachment.zip>
+
+From wojci at wojci.dk  Sat Apr 18 22:09:45 2009
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Sat, 18 Apr 2009 22:09:45 +0200
+Subject: [Btg-devel] Btg WWW Translated to hungarian
+In-Reply-To: <95a8cd490904181000y65428e33w6b20043d9ff7f27d@mail.gmail.com>
+References: <95a8cd490904181000y65428e33w6b20043d9ff7f27d@mail.gmail.com>
+Message-ID: <20090418220945.067e5d42@netpc5.home.wojci.dk>
+
+On Sat, 18 Apr 2009 19:00:22 +0200 gH0StArthour
+<ghostarthour at gmail.com> wrote:
+
+> I translated the 0.9.9 wwwbtg version to hungarian. I attached the zip
+> packed package.
+
+What would you like me to do? 
+
+I don't see any attempt to add internationalization to the the
+interface, just changes to the text. Maybe you should think about
+adding i18n support?
+
+While I can mention that a translation exists in the documentation,
+this is not something that can be merged into BTG.
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+"When they ask how I died, I said, tell them: still angry." 
+(Altered Carbon by Richard Morgan)
+
+
+From ghostarthour at gmail.com  Sun Apr 19 14:59:59 2009
+From: ghostarthour at gmail.com (gH0StArthour)
+Date: Sun, 19 Apr 2009 14:59:59 +0200
+Subject: [Btg-devel] Btg-devel Digest, Vol 16, Issue 6
+In-Reply-To: <mailman.77.1240135310.21277.btg-devel@lists.berlios.de>
+References: <mailman.77.1240135310.21277.btg-devel@lists.berlios.de>
+Message-ID: <95a8cd490904190559t526ff477pf2c51301e760d7f0@mail.gmail.com>
+
+Ok. I think an "hungarian patch" is a good idea.
+Now, i made a little changes. Watch it.
+Changes in the readme_olvassel.txt.
+
+I attached the zip package.
+
+
+In the documentation i didn't founded deeper documentation for the xml-rpc
+class. If, can everyone read a better documentation for it, i try make a
+better webui for the btg.
+Only, i need the xml-rpc - php documentation, how can i use the xml-rpc
+class.
+
+Sorry, for my bad english, my grammaticar knowledge is not perfect.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20090419/a6d073f8/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: btgwww.zip
+Type: application/zip
+Size: 266024 bytes
+Desc: not available
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20090419/a6d073f8/attachment.zip>
+
+From wojci at wojci.dk  Sun Apr 19 20:02:40 2009
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Sun, 19 Apr 2009 20:02:40 +0200
+Subject: [Btg-devel] Btg-devel Digest, Vol 16, Issue 6
+In-Reply-To: <95a8cd490904190559t526ff477pf2c51301e760d7f0@mail.gmail.com>
+References: <mailman.77.1240135310.21277.btg-devel@lists.berlios.de>
+	<95a8cd490904190559t526ff477pf2c51301e760d7f0@mail.gmail.com>
+Message-ID: <20090419200240.1a34ecba@netpc5.home.wojci.dk>
+
+On Sun, 19 Apr 2009 14:59:59 +0200 gH0StArthour
+<ghostarthour at gmail.com> wrote:
+
+> Ok. I think an "hungarian patch" is a good idea.
+
+A better idea is for you to finish what you started and make hungarian
+a supported language. :)
+
+> Now, i made a little changes. Watch it.
+> Changes in the readme_olvassel.txt.
+
+Yes, your changes look a lot better now than before.
+
+The following files
+btg_en.js
+btg_hu.js
+
+differ only in terms of language - the js code is identical. Why not do
+the same as with the php files in btg/languages?  
+
+Please fix the above problem and I would be happy to merge this into
+trunk.
+
+> In the documentation i didn't founded deeper documentation for the
+> xml-rpc class. If, can everyone read a better documentation for it, i
+> try make a better webui for the btg.
+
+Johan Str?m is the one who wrote the xml-rpc class. You could ask him
+about it.
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+"When they ask how I died, I said, tell them: still angry." 
+(Altered Carbon by Richard Morgan)
+
+
+From wojci at wojci.dk  Mon Apr 20 19:42:07 2009
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Mon, 20 Apr 2009 19:42:07 +0200
+Subject: [Btg-devel] request: automatic download
+In-Reply-To: <49E9ECB2.3020808@jumpy.it>
+References: <49E74279.2050506@jumpy.it>
+	<20090416211636.34bf476d@netpc5.home.wojci.dk>
+	<49E9ECB2.3020808@jumpy.it>
+Message-ID: <20090420194207.0e7e475b@netpc5.home.wojci.dk>
+
+On Sat, 18 Apr 2009 17:07:30 +0200 ciccio <aspcicc at jumpy.it> wrote:
+
+> Then it moves .torrent file to another dir? DONE_DIR ?
+> and where it saves downloaded file?
+
+As soon as the script/btgcli is done loading the torrent file, it can
+be deleted, as the daemon loaded it and will take care of downloading.
+
+Please try to read and understand:
+http://btg.berlios.de/howto.html#supported-directory-structure
+
+> Can i check torrent download from btgcli with btgdaemon and its web 
+> interface?
+> 
+> Or i need to use ssh to watch progress from another computer?
+
+After the script loads a torrent, you can check the status with the www
+interface or use one of the other clients. Just make sure that you use
+the same session. You can use all the clients at the same time to
+access the same session.
+
+Please try to read the documentation, it does explain how BTG works. If
+not, add a bug and I will try to make the docs more clear. :)
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+"When they ask how I died, I said, tell them: still angry." 
+(Altered Carbon by Richard Morgan)
+
+
+From tgc at jupiterrise.com  Tue Apr 21 14:30:06 2009
+From: tgc at jupiterrise.com (Tom G. Christensen)
+Date: Tue, 21 Apr 2009 14:30:06 +0200
+Subject: [Btg-devel] 1.0.0-rc1 fails to build on CentOS 5
+Message-ID: <20090421123006.GA23142@ares.tgcnet>
+
+I was trying to update from 0.9.8 to 1.0.0-rc1 but it failed to build where
+0.9.8 worked fine.
+
+I'm building on CentOS 5 with boost 1.33.1 and rb_libtorrent 0.13 and this
+is the error I'm getting:
+ g++ -DHAVE_CONFIG_H -I. -I.. -I/usr/include/libtorrent -I.. -pthread -I/usr/include -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=4 -m32 -march=i386 -mtune=generic -fasynchronous-unwind-tables -g -Wall -W -rdynamic -DBTG_DEBUG=1 -DBTG_OPTION_SAVESESSIONS=1 -DBTG_OPTION_EVENTCALLBACK=1 -DBTG_OPTION_UPNP=0 -DBTG_OPTION_USELTUPNP=0 -DBTG_OPTION_USECYBERLINK=0 -DBTG_REV=TRUNK -DBTG_OPTION_URL=1 -DBTG_INTERNAL_XMLRPC=1 -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=4 -m32 -march=i386 -mtune=generic -fasynchronous-unwind-tables -MT libdaemon_la-context_file.lo -MD -MP -MF .deps/libdaemon_la-context_file.Tpo -c context_file.cpp  -fPIC -DPIC -o .libs/libdaemon_la-context_file.o
+context_file.cpp: In member function 'bool btg::daemon::Context::dataPresentInSeedDir(const libtorrent::torrent_info&)':
+context_file.cpp:266: error: no match for 'operator<<' in 'std::operator<< [with _Traits = std::char_traits<char>](((std::basic_ostream<char, std::char_traits<char> >&)((std::basic_ostream<char, std::char_traits<char> >*)std::operator<< [with _Traits = std::char_traits<char>](((std::basic_ostream<char, std::char_traits<char> >&)((std::basic_ostream<char, std::char_traits<char> >*)std::operator<< [with _CharT = char, _Traits = std::char_traits<char>, _Alloc = std::allocator<char>](((std::basic_ostream<char, std::char_traits<char> >&)logstream), ((const std::basic_string<char, std::char_traits<char>, std::allocator<char> >&)(& btg::daemon::moduleName))))), ((const char*)": ")))), ((const char*)"dataPresentInSeedDir: torrent file \'")) << file_path'
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:67: note: candidates are: std::basic_ostream<_CharT, _Traits>& std::basic_ostream<_CharT, _Traits>::operator<<(std::basic_ostream<_CharT, _Traits>& (*)(std::basic_ostream<_CharT, _Traits>&)) [with _CharT = char, _Traits = std::char_traits<char>]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:78: note:                 std::basic_ostream<_CharT, _Traits>& std::basic_ostream<_CharT, _Traits>::operator<<(std::basic_ios<_CharT, _Traits>& (*)(std::basic_ios<_CharT, _Traits>&)) [with _CharT = char, _Traits = std::char_traits<char>]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:90: note:                 std::basic_ostream<_CharT, _Traits>& std::basic_ostream<_CharT, _Traits>::operator<<(std::ios_base& (*)(std::ios_base&)) [with _CharT = char, _Traits = std::char_traits<char>]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:241: note:                 std::basic_ostream<_CharT, _Traits>& std::basic_ostream<_CharT, _Traits>::operator<<(long int) [with _CharT = char, _Traits = std::char_traits<char>]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:264: note:                 std::basic_ostream<_CharT, _Traits>& std::basic_ostream<_CharT, _Traits>::operator<<(long unsigned int) [with _CharT = char, _Traits = std::char_traits<char>]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:102: note:                 std::basic_ostream<_CharT, _Traits>& std::basic_ostream<_CharT, _Traits>::operator<<(bool) [with _CharT = char, _Traits = std::char_traits<char>]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:125: note:                 std::basic_ostream<_CharT, _Traits>& std::basic_ostream<_CharT, _Traits>::operator<<(short int) [with _CharT = char, _Traits = std::char_traits<char>]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:157: note:                 std::basic_ostream<_CharT, _Traits>& std::basic_ostream<_CharT, _Traits>::operator<<(short unsigned int) [with _CharT = char, _Traits = std::char_traits<char>]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:183: note:                 std::basic_ostream<_CharT, _Traits>& std::basic_ostream<_CharT, _Traits>::operator<<(int) [with _CharT = char, _Traits = std::char_traits<char>]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:215: note:                 std::basic_ostream<_CharT, _Traits>& std::basic_ostream<_CharT, _Traits>::operator<<(unsigned int) [with _CharT = char, _Traits = std::char_traits<char>]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:288: note:                 std::basic_ostream<_CharT, _Traits>& std::basic_ostream<_CharT, _Traits>::operator<<(long long int) [with _CharT = char, _Traits = std::char_traits<char>]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:311: note:                 std::basic_ostream<_CharT, _Traits>& std::basic_ostream<_CharT, _Traits>::operator<<(long long unsigned int) [with _CharT = char, _Traits = std::char_traits<char>]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:361: note:                 std::basic_ostream<_CharT, _Traits>& std::basic_ostream<_CharT, _Traits>::operator<<(double) [with _CharT = char, _Traits = std::char_traits<char>]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:335: note:                 std::basic_ostream<_CharT, _Traits>& std::basic_ostream<_CharT, _Traits>::operator<<(float) [with _CharT = char, _Traits = std::char_traits<char>]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:384: note:                 std::basic_ostream<_CharT, _Traits>& std::basic_ostream<_CharT, _Traits>::operator<<(long double) [with _CharT = char, _Traits = std::char_traits<char>]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:407: note:                 std::basic_ostream<_CharT, _Traits>& std::basic_ostream<_CharT, _Traits>::operator<<(const void*) [with _CharT = char, _Traits = std::char_traits<char>]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:430: note:                 std::basic_ostream<_CharT, _Traits>& std::basic_ostream<_CharT, _Traits>::operator<<(std::basic_streambuf<_CharT, _Traits>*) [with _CharT = char, _Traits = std::char_traits<char>]
+context_file.cpp:273: error: no match for 'operator<<' in 'std::operator<< [with _Traits = std::char_traits<char>](((std::basic_ostream<char, std::char_traits<char> >&)((std::basic_ostream<char, std::char_traits<char> >*)std::operator<< [with _Traits = std::char_traits<char>](((std::basic_ostream<char, std::char_traits<char> >&)((std::basic_ostream<char, std::char_traits<char> >*)std::operator<< [with _CharT = char, _Traits = std::char_traits<char>, _Alloc = std::allocator<char>](((std::basic_ostream<char, std::char_traits<char> >&)logstream), ((const std::basic_string<char, std::char_traits<char>, std::allocator<char> >&)(& btg::daemon::moduleName))))), ((const char*)": ")))), ((const char*)"dataPresentInSeedDir: found torrent file \'")) << file_path'
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:67: note: candidates are: std::basic_ostream<_CharT, _Traits>& std::basic_ostream<_CharT, _Traits>::operator<<(std::basic_ostream<_CharT, _Traits>& (*)(std::basic_ostream<_CharT, _Traits>&)) [with _CharT = char, _Traits = std::char_traits<char>]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:78: note:                 std::basic_ostream<_CharT, _Traits>& std::basic_ostream<_CharT, _Traits>::operator<<(std::basic_ios<_CharT, _Traits>& (*)(std::basic_ios<_CharT, _Traits>&)) [with _CharT = char, _Traits = std::char_traits<char>]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:90: note:                 std::basic_ostream<_CharT, _Traits>& std::basic_ostream<_CharT, _Traits>::operator<<(std::ios_base& (*)(std::ios_base&)) [with _CharT = char, _Traits = std::char_traits<char>]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:241: note:                 std::basic_ostream<_CharT, _Traits>& std::basic_ostream<_CharT, _Traits>::operator<<(long int) [with _CharT = char, _Traits = std::char_traits<char>]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:264: note:                 std::basic_ostream<_CharT, _Traits>& std::basic_ostream<_CharT, _Traits>::operator<<(long unsigned int) [with _CharT = char, _Traits = std::char_traits<char>]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:102: note:                 std::basic_ostream<_CharT, _Traits>& std::basic_ostream<_CharT, _Traits>::operator<<(bool) [with _CharT = char, _Traits = std::char_traits<char>]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:125: note:                 std::basic_ostream<_CharT, _Traits>& std::basic_ostream<_CharT, _Traits>::operator<<(short int) [with _CharT = char, _Traits = std::char_traits<char>]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:157: note:                 std::basic_ostream<_CharT, _Traits>& std::basic_ostream<_CharT, _Traits>::operator<<(short unsigned int) [with _CharT = char, _Traits = std::char_traits<char>]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:183: note:                 std::basic_ostream<_CharT, _Traits>& std::basic_ostream<_CharT, _Traits>::operator<<(int) [with _CharT = char, _Traits = std::char_traits<char>]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:215: note:                 std::basic_ostream<_CharT, _Traits>& std::basic_ostream<_CharT, _Traits>::operator<<(unsigned int) [with _CharT = char, _Traits = std::char_traits<char>]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:288: note:                 std::basic_ostream<_CharT, _Traits>& std::basic_ostream<_CharT, _Traits>::operator<<(long long int) [with _CharT = char, _Traits = std::char_traits<char>]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:311: note:                 std::basic_ostream<_CharT, _Traits>& std::basic_ostream<_CharT, _Traits>::operator<<(long long unsigned int) [with _CharT = char, _Traits = std::char_traits<char>]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:361: note:                 std::basic_ostream<_CharT, _Traits>& std::basic_ostream<_CharT, _Traits>::operator<<(double) [with _CharT = char, _Traits = std::char_traits<char>]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:335: note:                 std::basic_ostream<_CharT, _Traits>& std::basic_ostream<_CharT, _Traits>::operator<<(float) [with _CharT = char, _Traits = std::char_traits<char>]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:384: note:                 std::basic_ostream<_CharT, _Traits>& std::basic_ostream<_CharT, _Traits>::operator<<(long double) [with _CharT = char, _Traits = std::char_traits<char>]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:407: note:                 std::basic_ostream<_CharT, _Traits>& std::basic_ostream<_CharT, _Traits>::operator<<(const void*) [with _CharT = char, _Traits = std::char_traits<char>]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:430: note:                 std::basic_ostream<_CharT, _Traits>& std::basic_ostream<_CharT, _Traits>::operator<<(std::basic_streambuf<_CharT, _Traits>*) [with _CharT = char, _Traits = std::char_traits<char>]
+/usr/include/libtorrent/intrusive_ptr_base.hpp: At global scope:
+/usr/include/libtorrent/intrusive_ptr_base.hpp: In instantiation of 'libtorrent::intrusive_ptr_base<T>& libtorrent::intrusive_ptr_base<T>::operator=(const libtorrent::intrusive_ptr_base<T>&) [with T = libtorrent::torrent_info]':
+/usr/include/libtorrent/torrent_info.hpp:108:   instantiated from here
+/usr/include/libtorrent/intrusive_ptr_base.hpp:49: warning: unused parameter 'rhs'
+make[3]: *** [libdaemon_la-context_file.lo] Error 1
+make[3]: Leaving directory `/builddir/build/BUILD/btg-1.0.0/daemon'
+make[2]: *** [all-recursive] Error 1
+make[2]: Leaving directory `/builddir/build/BUILD/btg-1.0.0/daemon'
+make[1]: *** [all-recursive] Error 1
+make[1]: Leaving directory `/builddir/build/BUILD/btg-1.0.0'
+make: *** [all] Error 2
+
+You can see the full buildlog here:
+http://jupiterrise.com/tmp/btg-1.0.0-rc1-rb_libtorrent_0.13-el5-build.log
+
+The same build succeeds on fedora 10 which has boost 1.34.1 and
+rb_libtorrent 0.13.1.
+
+-tgc
+
+
+From wojci at wojci.dk  Tue Apr 21 17:57:46 2009
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Tue, 21 Apr 2009 17:57:46 +0200
+Subject: [Btg-devel] 1.0.0-rc1 fails to build on CentOS 5
+In-Reply-To: <20090421123006.GA23142@ares.tgcnet>
+References: <20090421123006.GA23142@ares.tgcnet>
+Message-ID: <20090421175746.78cea597@netpc5.home.wojci.dk>
+
+On Tue, 21 Apr 2009 14:30:06 +0200 "Tom G. Christensen"
+<tgc at jupiterrise.com> wrote:
+
+> You can see the full buildlog here:
+> http://jupiterrise.com/tmp/btg-1.0.0-rc1-rb_libtorrent_0.13-el5-build.log
+
+Does the build work when you use an older version of GCC?
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+"When they ask how I died, I said, tell them: still angry." 
+(Altered Carbon by Richard Morgan)
+
+
+From tgc at jupiterrise.com  Wed Apr 22 13:39:07 2009
+From: tgc at jupiterrise.com (Tom G. Christensen)
+Date: Wed, 22 Apr 2009 13:39:07 +0200
+Subject: [Btg-devel] 1.0.0-rc1 fails to build on CentOS 5
+In-Reply-To: <20090421175746.78cea597@netpc5.home.wojci.dk>
+References: <20090421123006.GA23142@ares.tgcnet>
+	<20090421175746.78cea597@netpc5.home.wojci.dk>
+Message-ID: <20090422113907.GA31094@ares.tgcnet>
+
+On Tue, Apr 21, 2009 at 05:57:46PM +0200, Michael Wojciechowski wrote:
+> On Tue, 21 Apr 2009 14:30:06 +0200 "Tom G. Christensen"
+> <tgc at jupiterrise.com> wrote:
+> 
+> > You can see the full buildlog here:
+> > http://jupiterrise.com/tmp/btg-1.0.0-rc1-rb_libtorrent_0.13-el5-build.log
+> 
+> Does the build work when you use an older version of GCC?
+> 
+No, it fails the same on CentOS 4 which has gcc 3.4.6.
+
+Full log here:
+http://jupiterrise.com/tmp/btg-1.0.0-rc1-rb_libtorrent_0.13-el4-build.log
+
+-tgc
+
+
+From wojci at wojci.dk  Wed Apr 22 22:38:35 2009
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Wed, 22 Apr 2009 22:38:35 +0200
+Subject: [Btg-devel] 1.0.0-rc1 fails to build on CentOS 5
+In-Reply-To: <20090422113907.GA31094@ares.tgcnet>
+References: <20090421123006.GA23142@ares.tgcnet>
+	<20090421175746.78cea597@netpc5.home.wojci.dk>
+	<20090422113907.GA31094@ares.tgcnet>
+Message-ID: <20090422223835.4ccc6610@netpc5.home.wojci.dk>
+
+On Wed, 22 Apr 2009 13:39:07 +0200 "Tom G. Christensen"
+<tgc at jupiterrise.com> wrote:
+
+> No, it fails the same on CentOS 4 which has gcc 3.4.6.
+> Full log here:
+> http://jupiterrise.com/tmp/btg-1.0.0-rc1-rb_libtorrent_0.13-el4-build.log
+
+I added a possible fix in r567 - the change is local to
+context_file.cpp. It looks like the error you are getting is caused by
+use of streams and boost::filesystem::path. I just added calls to
+path::string(). I hope that it helps.
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+"When they ask how I died, I said, tell them: still angry." 
+(Altered Carbon by Richard Morgan)
+
+
+From tgc at jupiterrise.com  Thu Apr 23 11:07:46 2009
+From: tgc at jupiterrise.com (Tom G. Christensen)
+Date: Thu, 23 Apr 2009 11:07:46 +0200
+Subject: [Btg-devel] 1.0.0-rc1 fails to build on CentOS 5
+In-Reply-To: <20090422223835.4ccc6610@netpc5.home.wojci.dk>
+References: <20090421123006.GA23142@ares.tgcnet>
+	<20090421175746.78cea597@netpc5.home.wojci.dk>
+	<20090422113907.GA31094@ares.tgcnet>
+	<20090422223835.4ccc6610@netpc5.home.wojci.dk>
+Message-ID: <20090423090746.GA16743@ares.tgcnet>
+
+On Wed, Apr 22, 2009 at 10:38:35PM +0200, Michael Wojciechowski wrote:
+> On Wed, 22 Apr 2009 13:39:07 +0200 "Tom G. Christensen"
+> <tgc at jupiterrise.com> wrote:
+> 
+> > No, it fails the same on CentOS 4 which has gcc 3.4.6.
+> > Full log here:
+> > http://jupiterrise.com/tmp/btg-1.0.0-rc1-rb_libtorrent_0.13-el4-build.log
+> 
+> I added a possible fix in r567 - the change is local to
+> context_file.cpp. It looks like the error you are getting is caused by
+> use of streams and boost::filesystem::path. I just added calls to
+> path::string(). I hope that it helps.
+> 
+I applied it to 1.0.0-rc1 and now the build completes on CentOS 4
+and 5.
+
+New buildlogs was uploaded here:
+http://jupiterrise.com/tmp/btg-1.0.0-rc1-el4-build.log
+http://jupiterrise.com/tmp/btg-1.0.0-rc1-el5-build.log
+
+However trying to run the new btgdaemon fails:
+/usr/bin/btgdaemon: symbol lookup error: /usr/bin/btgdaemon: undefined
+symbol: _ZTIN3btg4core14settingCommandE
+
+The symbol does exist in libbtgcore.so.0:
+# nm /usr/lib/debug/usr/lib/btg/libbtgcore.so.0.0.0.debug |grep
+ btg4core14settingCommandE
+000e8114 V _ZTIN3btg4core14settingCommandE
+000c83b8 V _ZTSN3btg4core14settingCommandE
+000e80e0 V _ZTVN3btg4core14settingCommandE
+
+# nm -C /usr/lib/debug/usr/lib/btg/libbtgcore.so.0.0.0.debug | egrep
+ '000e8114|000c83b8|000e80e0'
+000e8114 V typeinfo for btg::core::settingCommand
+000c83b8 V typeinfo name for btg::core::settingCommand
+000e80e0 V vtable for btg::core::settingCommand
+
+-tgc
+
+
+From wojci at wojci.dk  Thu Apr 23 22:38:05 2009
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Thu, 23 Apr 2009 22:38:05 +0200
+Subject: [Btg-devel] 1.0.0-rc1 fails to build on CentOS 5
+In-Reply-To: <20090423090746.GA16743@ares.tgcnet>
+References: <20090421123006.GA23142@ares.tgcnet>
+	<20090421175746.78cea597@netpc5.home.wojci.dk>
+	<20090422113907.GA31094@ares.tgcnet>
+	<20090422223835.4ccc6610@netpc5.home.wojci.dk>
+	<20090423090746.GA16743@ares.tgcnet>
+Message-ID: <20090423223805.558fd078@netpc5.home.wojci.dk>
+
+On Thu, 23 Apr 2009 11:07:46 +0200 "Tom G. Christensen"
+<tgc at jupiterrise.com> wrote:
+
+> New buildlogs was uploaded here:
+> http://jupiterrise.com/tmp/btg-1.0.0-rc1-el4-build.log
+> http://jupiterrise.com/tmp/btg-1.0.0-rc1-el5-build.log
+
+These look fine to me.
+ 
+> However trying to run the new btgdaemon fails:
+> /usr/bin/btgdaemon: symbol lookup error: /usr/bin/btgdaemon: undefined
+> symbol: _ZTIN3btg4core14settingCommandE
+
+Can you try building from source without using the packaging scripts?
+And see if you get the same errors? From your logs I see that the
+binaries and libs are stripped. Maybe it got something to do with this
+issue.
+ 
+> # nm -C /usr/lib/debug/usr/lib/btg/libbtgcore.so.0.0.0.debug | egrep
+>  '000e8114|000c83b8|000e80e0'
+> 000e8114 V typeinfo for btg::core::settingCommand
+> 000c83b8 V typeinfo name for btg::core::settingCommand
+> 000e80e0 V vtable for btg::core::settingCommand
+
+Maybe you have to set LD_LIBRARY_PATH to /usr/lib/debug/usr/lib/btg/
+since the BTG libs are not installed to /usr/lib or some such where ld
+searches for libs per default.. ?
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+"When they ask how I died, I said, tell them: still angry." 
+(Altered Carbon by Richard Morgan)
+
+
+From tgc at jupiterrise.com  Fri Apr 24 08:03:50 2009
+From: tgc at jupiterrise.com (Tom G. Christensen)
+Date: Fri, 24 Apr 2009 08:03:50 +0200
+Subject: [Btg-devel] 1.0.0-rc1 fails to build on CentOS 5
+In-Reply-To: <20090423223805.558fd078@netpc5.home.wojci.dk>
+References: <20090421123006.GA23142@ares.tgcnet>
+	<20090421175746.78cea597@netpc5.home.wojci.dk>
+	<20090422113907.GA31094@ares.tgcnet>
+	<20090422223835.4ccc6610@netpc5.home.wojci.dk>
+	<20090423090746.GA16743@ares.tgcnet>
+	<20090423223805.558fd078@netpc5.home.wojci.dk>
+Message-ID: <20090424060350.GA10639@ares.tgcnet>
+
+On Thu, Apr 23, 2009 at 10:38:05PM +0200, Michael Wojciechowski wrote:
+> On Thu, 23 Apr 2009 11:07:46 +0200 "Tom G. Christensen"
+> <tgc at jupiterrise.com> wrote:
+> 
+> Can you try building from source without using the packaging scripts?
+> And see if you get the same errors? From your logs I see that the
+> binaries and libs are stripped. Maybe it got something to do with this
+> issue.
+>  
+Well I can probably make it not do that step and see what happens.
+
+> Maybe you have to set LD_LIBRARY_PATH to /usr/lib/debug/usr/lib/btg/
+> since the BTG libs are not installed to /usr/lib or some such where ld
+> searches for libs per default.. ?
+> 
+Sorry I should have been more clear.
+The libraries are in /usr/lib/btg what you see in /usr/lib/debug/* is
+just the debug information that was stripped out of the binaries and
+libraries and put into the btg-debuginfo package.
+On RHEL/CentOS/Fedora this is the way it's done and the tools support
+this split so that when I run nm on the debug file it nows where the
+real object is and maps the debuginfo to the object.
+
+-tgc
+
+
+From tgc at jupiterrise.com  Fri Apr 24 10:03:16 2009
+From: tgc at jupiterrise.com (Tom G. Christensen)
+Date: Fri, 24 Apr 2009 10:03:16 +0200
+Subject: [Btg-devel] 1.0.0-rc1 fails to build on CentOS 5
+In-Reply-To: <20090423090746.GA16743@ares.tgcnet>
+References: <20090421123006.GA23142@ares.tgcnet>
+	<20090421175746.78cea597@netpc5.home.wojci.dk>
+	<20090422113907.GA31094@ares.tgcnet>
+	<20090422223835.4ccc6610@netpc5.home.wojci.dk>
+	<20090423090746.GA16743@ares.tgcnet>
+Message-ID: <20090424080316.GA13656@ares.tgcnet>
+
+On Thu, Apr 23, 2009 at 11:07:46AM +0200, Tom G. Christensen wrote:
+> However trying to run the new btgdaemon fails:
+> /usr/bin/btgdaemon: symbol lookup error: /usr/bin/btgdaemon: undefined
+> symbol: _ZTIN3btg4core14settingCommandE
+> 
+This error was caused by trying to run 1.0.0-rc1 with 0.9.8 libs.
+Sorry for bothering you with that.
+
+I'll add a more explicit dependency to the specfile to avoid this issue
+in the future.
+
+-tgc
+
+
+From tgc at jupiterrise.com  Fri Apr 24 10:08:25 2009
+From: tgc at jupiterrise.com (Tom G. Christensen)
+Date: Fri, 24 Apr 2009 10:08:25 +0200
+Subject: [Btg-devel] External xmlrpc-epi includes have moved?
+Message-ID: <20090424080825.GB13656@ares.tgcnet>
+
+I've attempted to build with external xmlrpc-epi and I
+found I needed a small patch since the headers are now in
+/usr/include/xmlrpc-epi:
+diff -up btg-1.0.0/bcore/externalization/xmlrpc.h.orig btg-1.0.0/bcore/externalization/xmlrpc.h
+--- btg-1.0.0/bcore/externalization/xmlrpc.h.orig       2009-04-21 16:31:55.000000000 +0200
++++ btg-1.0.0/bcore/externalization/xmlrpc.h    2009-04-21 16:32:07.000000000 +0200
+@@ -32,7 +32,7 @@ extern "C"
+ #if BTG_INTERNAL_XMLRPC
+ #  include <external/xmlrpc-epi/src/xmlrpc.h>
+ #else
+-#  include <xmlrpc.h>
++#  include <xmlrpc-epi/xmlrpc.h>
+ #endif
+ }
+
+The configure test should probably be updated aswell otherwise one needs to
+set XMLRPC_CFLAGS="-I/usr/include/xmlrpc-epi" to have it detect that external
+xmlrpc-epi is available.
+
+-tgc
+
+
+From tgc at jupiterrise.com  Fri Apr 24 10:31:35 2009
+From: tgc at jupiterrise.com (Tom G. Christensen)
+Date: Fri, 24 Apr 2009 10:31:35 +0200
+Subject: [Btg-devel] webBTG problem with alignment in 1.0.0-rc1
+Message-ID: <20090424083135.GC13656@ares.tgcnet>
+
+webBTG in 1.0.0-rc1 seems to have a problem with aligning the right
+side.
+I've put a screenshot here:
+http://jupiterrise.com/tmp/webbtg-1.0.0-rc1.png
+
+The browser is firefox 3.0.7 and I did not see this issue with 0.9.8 in
+the same browser (and the same torrents).
+
+-tgc
+
+
+From wojci at wojci.dk  Fri Apr 24 12:47:50 2009
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Fri, 24 Apr 2009 12:47:50 +0200
+Subject: [Btg-devel] External xmlrpc-epi includes have moved?
+In-Reply-To: <20090424080825.GB13656@ares.tgcnet>
+References: <20090424080825.GB13656@ares.tgcnet>
+Message-ID: <20090424124750.5ccb6510@netpc5.home.wojci.dk>
+
+On Fri, 24 Apr 2009 10:08:25 +0200 "Tom G. Christensen"
+<tgc at jupiterrise.com> wrote:
+
+> I've attempted to build with external xmlrpc-epi and I
+> found I needed a small patch since the headers are now in
+> /usr/include/xmlrpc-epi:
+> diff -up btg-1.0.0/bcore/externalization/xmlrpc.h.orig
+> btg-1.0.0/bcore/externalization/xmlrpc.h ---
+> btg-1.0.0/bcore/externalization/xmlrpc.h.orig       2009-04-21
+> 16:31:55.000000000 +0200 +++
+> btg-1.0.0/bcore/externalization/xmlrpc.h    2009-04-21
+> 16:32:07.000000000 +0200 @@ -32,7 +32,7 @@ extern "C" #if
+> BTG_INTERNAL_XMLRPC #  include <external/xmlrpc-epi/src/xmlrpc.h>
+> #else 
+> -#  include <xmlrpc.h>
+> +#  include <xmlrpc-epi/xmlrpc.h>
+>  #endif
+>  }
+> 
+
+Applying you patch will make using system XML-RPC difficult on debian
+systems and possibly other Linux distros.
+
+> The configure test should probably be updated aswell otherwise one
+> needs to set XMLRPC_CFLAGS="-I/usr/include/xmlrpc-epi" to have it
+> detect that external xmlrpc-epi is available.
+
+I think that the above is what you should use instead. If you want to
+extend the m4 script used to detect XML-RPC, send me a patch and I
+will merge it. :) 
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+"When they ask how I died, I said, tell them: still angry." 
+(Altered Carbon by Richard Morgan)
+
+
+From wojci at wojci.dk  Fri Apr 24 12:49:29 2009
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Fri, 24 Apr 2009 12:49:29 +0200
+Subject: [Btg-devel] 1.0.0-rc1 fails to build on CentOS 5
+In-Reply-To: <20090424080316.GA13656@ares.tgcnet>
+References: <20090421123006.GA23142@ares.tgcnet>
+	<20090421175746.78cea597@netpc5.home.wojci.dk>
+	<20090422113907.GA31094@ares.tgcnet>
+	<20090422223835.4ccc6610@netpc5.home.wojci.dk>
+	<20090423090746.GA16743@ares.tgcnet>
+	<20090424080316.GA13656@ares.tgcnet>
+Message-ID: <20090424124929.32bcbaf5@netpc5.home.wojci.dk>
+
+On Fri, 24 Apr 2009 10:03:16 +0200 "Tom G. Christensen"
+<tgc at jupiterrise.com> wrote:
+
+> This error was caused by trying to run 1.0.0-rc1 with 0.9.8 libs.
+> Sorry for bothering you with that.
+
+I meant to suggest running with wrong libs, but I did not want to be
+rude. ;)
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+"When they ask how I died, I said, tell them: still angry." 
+(Altered Carbon by Richard Morgan)
+
+
+From tgc at jupiterrise.com  Fri Apr 24 13:55:31 2009
+From: tgc at jupiterrise.com (Tom G. Christensen)
+Date: Fri, 24 Apr 2009 13:55:31 +0200
+Subject: [Btg-devel] External xmlrpc-epi includes have moved?
+In-Reply-To: <20090424124750.5ccb6510@netpc5.home.wojci.dk>
+References: <20090424080825.GB13656@ares.tgcnet>
+	<20090424124750.5ccb6510@netpc5.home.wojci.dk>
+Message-ID: <20090424115531.GA22516@ares.tgcnet>
+
+On Fri, Apr 24, 2009 at 12:47:50PM +0200, Michael Wojciechowski wrote:
+> On Fri, 24 Apr 2009 10:08:25 +0200 "Tom G. Christensen"
+> <tgc at jupiterrise.com> wrote:
+> 
+> > I've attempted to build with external xmlrpc-epi and I
+> > found I needed a small patch since the headers are now in
+> > /usr/include/xmlrpc-epi:
+> > diff -up btg-1.0.0/bcore/externalization/xmlrpc.h.orig
+> > btg-1.0.0/bcore/externalization/xmlrpc.h ---
+> > btg-1.0.0/bcore/externalization/xmlrpc.h.orig       2009-04-21
+> > 16:31:55.000000000 +0200 +++
+> > btg-1.0.0/bcore/externalization/xmlrpc.h    2009-04-21
+> > 16:32:07.000000000 +0200 @@ -32,7 +32,7 @@ extern "C" #if
+> > BTG_INTERNAL_XMLRPC #  include <external/xmlrpc-epi/src/xmlrpc.h>
+> > #else 
+> > -#  include <xmlrpc.h>
+> > +#  include <xmlrpc-epi/xmlrpc.h>
+> >  #endif
+> >  }
+> > 
+> 
+> Applying you patch will make using system XML-RPC difficult on debian
+> systems and possibly other Linux distros.
+> 
+Debian also puts xmlrpc.h from xmlrpc-epi in /usr/include/xmlrpc-epi
+probably because that is where upstream wants to put it.
+See:
+http://packages.debian.org/lenny/i386/libxmlrpc-epi-dev/filelist
+
+Does your Debian install have it somewhere else?
+
+> > The configure test should probably be updated aswell otherwise one
+> > needs to set XMLRPC_CFLAGS="-I/usr/include/xmlrpc-epi" to have it
+> > detect that external xmlrpc-epi is available.
+> 
+> I think that the above is what you should use instead. If you want to
+> extend the m4 script used to detect XML-RPC, send me a patch and I
+> will merge it. :) 
+> 
+You miss the point. Setting XMLRPC_CFLAGS is only enough to fool the
+configure script I get a build error later without the patch because it
+can't find xmlrpc.h.
+
+You can see the error in the build log here:
+http://jupiterrise.com/tmp/btg-1.0.0-rc1-external-xmlrpc-epi-build.log
+
+-tgc
+
+
+From ghostarthour at gmail.com  Sat Apr 25 21:11:22 2009
+From: ghostarthour at gmail.com (gH0StArthour)
+Date: Sat, 25 Apr 2009 21:11:22 +0200
+Subject: [Btg-devel] Btg-devel Digest, Vol 16, Issue 11
+In-Reply-To: <mailman.103.1240480923.30855.btg-devel@lists.berlios.de>
+References: <mailman.103.1240480923.30855.btg-devel@lists.berlios.de>
+Message-ID: <95a8cd490904251211s1d1bce7ewad37c4310d35adf4@mail.gmail.com>
+
+Hello!
+
+Now, i finished the btg-www with easiest language handling. It was hard, and
+now it is not finished, but working. In the future, i want to make more
+modifications.
+
+I attached the zip package. Please read for more details the readme.txt. You
+can find the 'change log' in it.
+
+I really hope, this package getting in the btg release.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20090425/7633b267/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: btgwww.zip
+Type: application/zip
+Size: 139878 bytes
+Desc: not available
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20090425/7633b267/attachment.zip>
+
+From wojci at wojci.dk  Sat Apr 25 22:04:27 2009
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Sat, 25 Apr 2009 22:04:27 +0200
+Subject: [Btg-devel] Btg-devel Digest, Vol 16, Issue 11
+In-Reply-To: <95a8cd490904251211s1d1bce7ewad37c4310d35adf4@mail.gmail.com>
+References: <mailman.103.1240480923.30855.btg-devel@lists.berlios.de>
+	<95a8cd490904251211s1d1bce7ewad37c4310d35adf4@mail.gmail.com>
+Message-ID: <20090425220427.35ba72c4@netpc5.home.wojci.dk>
+
+On Sat, 25 Apr 2009 21:11:22 +0200 gH0StArthour
+<ghostarthour at gmail.com> wrote:
+
+> Now, i finished the btg-www with easiest language handling. It was
+> hard, and now it is not finished, but working. In the future, i want
+> to make more modifications.
+
+Thank you. I merged your changes to trunk - see bug 015571.
+Would you mind checking that I merged everything you wanted me to merge?
+Also, maybe you should write a readme.hu file for placing in
+languages?
+
+> I really hope, this package getting in the btg release.
+
+Unless you broke something, I don't see why not. :)
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+"When they ask how I died, I said, tell them: still angry." 
+(Altered Carbon by Richard Morgan)
+
+
+From wojci at wojci.dk  Sat Apr 25 23:27:50 2009
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Sat, 25 Apr 2009 23:27:50 +0200
+Subject: [Btg-devel] External xmlrpc-epi includes have moved?
+In-Reply-To: <20090424115531.GA22516@ares.tgcnet>
+References: <20090424080825.GB13656@ares.tgcnet>
+	<20090424124750.5ccb6510@netpc5.home.wojci.dk>
+	<20090424115531.GA22516@ares.tgcnet>
+Message-ID: <20090425232750.7806016f@netpc5.home.wojci.dk>
+
+On Fri, 24 Apr 2009 13:55:31 +0200 "Tom G. Christensen"
+<tgc at jupiterrise.com> wrote:
+
+> Does your Debian install have it somewhere else?
+
+I meant that including xmlrpc.h makes it possible for it to be in some
+distro defined prefix. I don't want to assume that the header resides
+in xmlrpc-epi. I mean there is nasty stuff like Gentoo and Slackware.
+
+> You miss the point. Setting XMLRPC_CFLAGS is only enough to fool the
+> configure script I get a build error later without the patch because
+> it can't find xmlrpc.h.
+> 
+> You can see the error in the build log here:
+> http://jupiterrise.com/tmp/btg-1.0.0-rc1-external-xmlrpc-epi-build.log
+
+So you get an error because XMLRPC_CFLAGS is not used in
+bcore/client/Makefile.am. Lets fix that instead of hardcoding includes
+in certain header files.
+
+I corrected the problem in r570. Would you mind telling me if I need to
+add this in other places? XMLRPC_LDFLAGS is being used for the daemon.
+Do you think it needs to be used for other executables (I mean do you
+have a problem with missing symbols because of this)?
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+"When they ask how I died, I said, tell them: still angry." 
+(Altered Carbon by Richard Morgan)
+
+
+From wojci at wojci.dk  Sat Apr 25 23:29:57 2009
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Sat, 25 Apr 2009 23:29:57 +0200
+Subject: [Btg-devel] webBTG problem with alignment in 1.0.0-rc1
+In-Reply-To: <20090424083135.GC13656@ares.tgcnet>
+References: <20090424083135.GC13656@ares.tgcnet>
+Message-ID: <20090425232957.2fd99faf@netpc5.home.wojci.dk>
+
+On Fri, 24 Apr 2009 10:31:35 +0200 "Tom G. Christensen"
+<tgc at jupiterrise.com> wrote:
+
+> webBTG in 1.0.0-rc1 seems to have a problem with aligning the right
+> side.
+> I've put a screenshot here:
+> http://jupiterrise.com/tmp/webbtg-1.0.0-rc1.png
+> 
+> The browser is firefox 3.0.7 and I did not see this issue with 0.9.8
+> in the same browser (and the same torrents).
+
+You should add a bug using our bug tracker and someone will hopefully
+fix it. :)
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+"When they ask how I died, I said, tell them: still angry." 
+(Altered Carbon by Richard Morgan)
+
+
+From tgc at jupiterrise.com  Sun Apr 26 14:37:02 2009
+From: tgc at jupiterrise.com (Tom G. Christensen)
+Date: Sun, 26 Apr 2009 14:37:02 +0200
+Subject: [Btg-devel] External xmlrpc-epi includes have moved?
+In-Reply-To: <20090425232750.7806016f@netpc5.home.wojci.dk>
+References: <20090424080825.GB13656@ares.tgcnet>
+	<20090424124750.5ccb6510@netpc5.home.wojci.dk>
+	<20090424115531.GA22516@ares.tgcnet>
+	<20090425232750.7806016f@netpc5.home.wojci.dk>
+Message-ID: <20090426123702.GA13030@ares.tgcnet>
+
+On Sat, Apr 25, 2009 at 11:27:50PM +0200, Michael Wojciechowski wrote:
+> I corrected the problem in r570. Would you mind telling me if I need to
+> add this in other places? XMLRPC_LDFLAGS is being used for the daemon.
+> Do you think it needs to be used for other executables (I mean do you
+> have a problem with missing symbols because of this)?
+> 
+I've only tested the daemon and btgui and they don't have any missing
+symbols.
+I see that both cli and ncurses clients are linked with
+xmlrpc-epi so presumably they are good aswell.
+
+I added the below patch to r570 to fix more instances of not being able
+to find xmlrpc.h.
+Note that it also moves PLOTMM_LDFLAGS from btgui CXXFLAGS to btgui LDFLAGS.
+Also the viewer bits are untested.
+
+diff -up btg-1.0.0/daemon/Makefile.am.xmlrpc_cflags btg-1.0.0/daemon/Makefile.am
+--- btg-1.0.0/daemon/Makefile.am.xmlrpc_cflags	2009-03-05 17:40:05.000000000 +0100
++++ btg-1.0.0/daemon/Makefile.am	2009-04-26 13:54:43.000000000 +0200
+@@ -52,7 +52,7 @@ libdaemon_la_SOURCES = dconfig.cpp darg.
+                        context_alert.cpp context_file.cpp context_session.cpp context.cpp \
+                        eventhandler.cpp connectionextrastate.cpp $(SSSOURCES) $(CALLBACKSOURCES)
+ 
+-libdaemon_la_CFLAGS   = @CFLAGS@ @DEBUG_CFLAGS@ -DBTG_DEBUG=@BTG_DEBUG@ \
++libdaemon_la_CFLAGS   = @CFLAGS@ @XMLRPC_CFLAGS@ @DEBUG_CFLAGS@ -DBTG_DEBUG=@BTG_DEBUG@ \
+ -DBTG_OPTION_SAVESESSIONS=@BTG_OPTION_SAVESESSIONS@ \
+ -DBTG_OPTION_EVENTCALLBACK=@BTG_OPTION_EVENTCALLBACK@ \
+ -DBTG_OPTION_UPNP=@BTG_OPTION_UPNP@ \
+@@ -61,7 +61,7 @@ libdaemon_la_CFLAGS   = @CFLAGS@ @DEBUG_
+ -DBTG_REV="@BTG_REV@" $(URL_DEFINES) \
+ -DBTG_INTERNAL_XMLRPC="@BTG_INTERNAL_XMLRPC@"
+ 
+-libdaemon_la_CXXFLAGS = @CXXFLAGS@ @DEBUG_CXXFLAGS@ -DBTG_DEBUG=@BTG_DEBUG@ \
++libdaemon_la_CXXFLAGS = @CXXFLAGS@ @XMLRPC_CFLAGS@ @DEBUG_CXXFLAGS@ -DBTG_DEBUG=@BTG_DEBUG@ \
+ -DBTG_OPTION_SAVESESSIONS=@BTG_OPTION_SAVESESSIONS@ \
+ -DBTG_OPTION_EVENTCALLBACK=@BTG_OPTION_EVENTCALLBACK@ \
+ -DBTG_OPTION_UPNP=@BTG_OPTION_UPNP@ \
+@@ -97,7 +97,7 @@ btgdaemon_LDADD   = $(top_builddir)/bcor
+ 
+ #btgdaemon_LDFLAGS  = -all-static
+ 
+-btgdaemon_CFLAGS   = @CFLAGS@   @DEBUG_CFLAGS@ @LIBGNUTLS_CFLAGS@ \
++btgdaemon_CFLAGS   = @CFLAGS@ @XMLRPC_CFLAGS@ @DEBUG_CFLAGS@ @LIBGNUTLS_CFLAGS@ \
+ -DBTG_DEBUG=@BTG_DEBUG@ -DBTG_OPTION_SAVESESSIONS=@BTG_OPTION_SAVESESSIONS@ \
+ -DBTG_OPTION_EVENTCALLBACK=@BTG_OPTION_EVENTCALLBACK@ \
+ -DBTG_OPTION_UPNP=@BTG_OPTION_UPNP@ \
+@@ -105,7 +105,7 @@ btgdaemon_CFLAGS   = @CFLAGS@   @DEBUG_C
+ -DBTG_OPTION_USECYBERLINK=@BTG_OPTION_USECYBERLINK@ @CYBERLINK_CFLAGS@ $(URL_DEFINES) \
+ -DBTG_INTERNAL_XMLRPC="@BTG_INTERNAL_XMLRPC@"
+ 
+-btgdaemon_CXXFLAGS = @CXXFLAGS@ @DEBUG_CXXFLAGS@ @LIBGNUTLS_CFLAGS@ \
++btgdaemon_CXXFLAGS = @CXXFLAGS@ @XMLRPC_CFLAGS@ @DEBUG_CXXFLAGS@ @LIBGNUTLS_CFLAGS@ \
+ -DBTG_DEBUG=@BTG_DEBUG@ -DBTG_OPTION_SAVESESSIONS=@BTG_OPTION_SAVESESSIONS@ \
+ -DBTG_OPTION_EVENTCALLBACK=@BTG_OPTION_EVENTCALLBACK@ \
+ -DBTG_OPTION_UPNP=@BTG_OPTION_UPNP@ \
+diff -up btg-1.0.0/UI/gui/Makefile.am.xmlrpc_cflags btg-1.0.0/UI/gui/Makefile.am
+--- btg-1.0.0/UI/gui/Makefile.am.xmlrpc_cflags	2008-06-14 15:26:40.000000000 +0200
++++ btg-1.0.0/UI/gui/Makefile.am	2009-04-26 13:55:06.000000000 +0200
+@@ -35,13 +35,13 @@ if BUILDINTERNALPLOTMM
+ btgui_LDADD  += $(top_builddir)/external/plotmm/libplotmm.la
+ endif
+ 
+-btgui_LDFLAGS  = @LIBS@ @GTKMM_LIBS@ @BOOST_SYSTEM_LIB@ @BOOST_DATE_TIME_LIB@ @BOOST_IOSTREAMS_LIB@ @BOOST_FILESYSTEM_LIB@ @LIBGNUTLS_LIBS@ @BOOST_PROGRAM_OPTIONS_LIB@ @BOOST_THREAD_LIB@
+-btgui_CXXFLAGS = @CXXFLAGS@ @GTKMM_CFLAGS@ @LIBGNUTLS_CFLAGS@ @PLOTMM_LDFLAGS@ @PLOTMM_CXXFLAGS@ \
++btgui_LDFLAGS  = @LIBS@ @GTKMM_LIBS@ @BOOST_SYSTEM_LIB@ @BOOST_DATE_TIME_LIB@ @BOOST_IOSTREAMS_LIB@ @BOOST_FILESYSTEM_LIB@ @LIBGNUTLS_LIBS@ @BOOST_PROGRAM_OPTIONS_LIB@ @BOOST_THREAD_LIB@ @PLOTMM_LDFLAGS@
++btgui_CXXFLAGS = @CXXFLAGS@ @XMLRPC_CFLAGS@ @GTKMM_CFLAGS@ @LIBGNUTLS_CFLAGS@ @PLOTMM_CXXFLAGS@ \
+ -DBTG_DEBUG=@BTG_DEBUG@ \
+ -DBTG_REV="@BTG_REV@" \
+ -DBTG_INTERNAL_XMLRPC="@BTG_INTERNAL_XMLRPC@"
+ 
+-btgui_CFLAGS   = @CFLAGS@ @LIBGNUTLS_CFLAGS@ \
++btgui_CFLAGS   = @CFLAGS@ @XMLRPC_CFLAGS@ @LIBGNUTLS_CFLAGS@ \
+ -DBTG_DEBUG=@BTG_DEBUG@ \
+ -DBTG_REV="@BTG_REV@" \
+ -DBTG_INTERNAL_XMLRPC="@BTG_INTERNAL_XMLRPC@"
+diff -up btg-1.0.0/UI/gui/viewer/sdl/Makefile.am.xmlrpc_cflags btg-1.0.0/UI/gui/viewer/sdl/Makefile.am
+--- btg-1.0.0/UI/gui/viewer/sdl/Makefile.am.xmlrpc_cflags	2009-01-15 20:42:29.000000000 +0100
++++ btg-1.0.0/UI/gui/viewer/sdl/Makefile.am	2009-04-26 13:54:43.000000000 +0200
+@@ -11,12 +11,12 @@ btgvs_LDADD   = $(top_builddir)/bcore/li
+ 
+ btgvs_LDFLAGS = @LIBS@ @AGAR_LIBS@ @BOOST_SYSTEM_LIB@ @BOOST_DATE_TIME_LIB@ @BOOST_IOSTREAMS_LIB@ @BOOST_FILESYSTEM_LIB@ @LIBGNUTLS_LIBS@ @BOOST_PROGRAM_OPTIONS_LIB@ @BOOST_THREAD_LIB@ @LIRC_CLIENT_LIB@
+ 
+-btgvs_CXXFLAGS = @CXXFLAGS@ @LIBGNUTLS_CFLAGS@ @AGAR_CFLAGS@ \
++btgvs_CXXFLAGS = @CXXFLAGS@ @XMLRPC_CFLAGS@ @LIBGNUTLS_CFLAGS@ @AGAR_CFLAGS@ \
+ -DBTG_DEBUG=@BTG_DEBUG@ \
+ -DBTG_REV="@BTG_REV@" \
+ -DBTG_INTERNAL_XMLRPC="@BTG_INTERNAL_XMLRPC@"
+ 
+-btgvs_CFLAGS   = @CFLAGS@ @LIBGNUTLS_CFLAGS@ @AGAR_CFLAGS@ \
++btgvs_CFLAGS   = @CFLAGS@ @XMLRPC_CFLAGS@ @LIBGNUTLS_CFLAGS@ @AGAR_CFLAGS@ \
+ -DBTG_DEBUG=@BTG_DEBUG@ \
+ -DBTG_REV="@BTG_REV@" \
+ -DBTG_INTERNAL_XMLRPC="@BTG_INTERNAL_XMLRPC@"
+
+
+-tgc
+
+
+From wojci at wojci.dk  Mon Apr 27 16:59:58 2009
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Mon, 27 Apr 2009 16:59:58 +0200
+Subject: [Btg-devel] External xmlrpc-epi includes have moved?
+In-Reply-To: <20090426123702.GA13030@ares.tgcnet>
+References: <20090424080825.GB13656@ares.tgcnet>
+	<20090424124750.5ccb6510@netpc5.home.wojci.dk>
+	<20090424115531.GA22516@ares.tgcnet>
+	<20090425232750.7806016f@netpc5.home.wojci.dk>
+	<20090426123702.GA13030@ares.tgcnet>
+Message-ID: <20090427165958.2a6138a4@netpc5.home.wojci.dk>
+
+On Sun, 26 Apr 2009 14:37:02 +0200 "Tom G. Christensen"
+<tgc at jupiterrise.com> wrote:
+
+> I added the below patch to r570 to fix more instances of not being
+> able to find xmlrpc.h.
+> Note that it also moves PLOTMM_LDFLAGS from btgui CXXFLAGS to btgui
+> LDFLAGS. Also the viewer bits are untested.
+
+I cannot use this patch - I am not able to merge it to trunk. Would you
+mind making one against trunk and not against the RC?
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+"When they ask how I died, I said, tell them: still angry." 
+(Altered Carbon by Richard Morgan)
+
+
+From tgc at jupiterrise.com  Tue Apr 28 07:32:25 2009
+From: tgc at jupiterrise.com (Tom G. Christensen)
+Date: Tue, 28 Apr 2009 07:32:25 +0200
+Subject: [Btg-devel] External xmlrpc-epi includes have moved?
+Message-ID: <20090428053225.GA18275@ares.tgcnet>
+
+
+[your reply did not reach my inbox so this mail was constructed by
+using the archive]
+
+On Mon, 27 Apr 2009 16:59:58 +0200, Michael Wojciechowski wrote:
+>I cannot use this patch - I am not able to merge it to trunk. Would you
+>mind making one against trunk and not against the RC?
+
+The patch applies cleanly to trunk but perhaps it was garbled on it's
+way through the mailsystem.
+
+I'm attaching it instead.
+
+-tgc
+-------------- next part --------------
+diff -up btg-1.0.0/daemon/Makefile.am.xmlrpc_cflags btg-1.0.0/daemon/Makefile.am
+--- btg-1.0.0/daemon/Makefile.am.xmlrpc_cflags	2009-03-05 17:40:05.000000000 +0100
++++ btg-1.0.0/daemon/Makefile.am	2009-04-26 13:54:43.000000000 +0200
+@@ -52,7 +52,7 @@ libdaemon_la_SOURCES = dconfig.cpp darg.
+                        context_alert.cpp context_file.cpp context_session.cpp context.cpp \
+                        eventhandler.cpp connectionextrastate.cpp $(SSSOURCES) $(CALLBACKSOURCES)
+ 
+-libdaemon_la_CFLAGS   = @CFLAGS@ @DEBUG_CFLAGS@ -DBTG_DEBUG=@BTG_DEBUG@ \
++libdaemon_la_CFLAGS   = @CFLAGS@ @XMLRPC_CFLAGS@ @DEBUG_CFLAGS@ -DBTG_DEBUG=@BTG_DEBUG@ \
+ -DBTG_OPTION_SAVESESSIONS=@BTG_OPTION_SAVESESSIONS@ \
+ -DBTG_OPTION_EVENTCALLBACK=@BTG_OPTION_EVENTCALLBACK@ \
+ -DBTG_OPTION_UPNP=@BTG_OPTION_UPNP@ \
+@@ -61,7 +61,7 @@ libdaemon_la_CFLAGS   = @CFLAGS@ @DEBUG_
+ -DBTG_REV="@BTG_REV@" $(URL_DEFINES) \
+ -DBTG_INTERNAL_XMLRPC="@BTG_INTERNAL_XMLRPC@"
+ 
+-libdaemon_la_CXXFLAGS = @CXXFLAGS@ @DEBUG_CXXFLAGS@ -DBTG_DEBUG=@BTG_DEBUG@ \
++libdaemon_la_CXXFLAGS = @CXXFLAGS@ @XMLRPC_CFLAGS@ @DEBUG_CXXFLAGS@ -DBTG_DEBUG=@BTG_DEBUG@ \
+ -DBTG_OPTION_SAVESESSIONS=@BTG_OPTION_SAVESESSIONS@ \
+ -DBTG_OPTION_EVENTCALLBACK=@BTG_OPTION_EVENTCALLBACK@ \
+ -DBTG_OPTION_UPNP=@BTG_OPTION_UPNP@ \
+@@ -97,7 +97,7 @@ btgdaemon_LDADD   = $(top_builddir)/bcor
+ 
+ #btgdaemon_LDFLAGS  = -all-static
+ 
+-btgdaemon_CFLAGS   = @CFLAGS@   @DEBUG_CFLAGS@ @LIBGNUTLS_CFLAGS@ \
++btgdaemon_CFLAGS   = @CFLAGS@ @XMLRPC_CFLAGS@ @DEBUG_CFLAGS@ @LIBGNUTLS_CFLAGS@ \
+ -DBTG_DEBUG=@BTG_DEBUG@ -DBTG_OPTION_SAVESESSIONS=@BTG_OPTION_SAVESESSIONS@ \
+ -DBTG_OPTION_EVENTCALLBACK=@BTG_OPTION_EVENTCALLBACK@ \
+ -DBTG_OPTION_UPNP=@BTG_OPTION_UPNP@ \
+@@ -105,7 +105,7 @@ btgdaemon_CFLAGS   = @CFLAGS@   @DEBUG_C
+ -DBTG_OPTION_USECYBERLINK=@BTG_OPTION_USECYBERLINK@ @CYBERLINK_CFLAGS@ $(URL_DEFINES) \
+ -DBTG_INTERNAL_XMLRPC="@BTG_INTERNAL_XMLRPC@"
+ 
+-btgdaemon_CXXFLAGS = @CXXFLAGS@ @DEBUG_CXXFLAGS@ @LIBGNUTLS_CFLAGS@ \
++btgdaemon_CXXFLAGS = @CXXFLAGS@ @XMLRPC_CFLAGS@ @DEBUG_CXXFLAGS@ @LIBGNUTLS_CFLAGS@ \
+ -DBTG_DEBUG=@BTG_DEBUG@ -DBTG_OPTION_SAVESESSIONS=@BTG_OPTION_SAVESESSIONS@ \
+ -DBTG_OPTION_EVENTCALLBACK=@BTG_OPTION_EVENTCALLBACK@ \
+ -DBTG_OPTION_UPNP=@BTG_OPTION_UPNP@ \
+diff -up btg-1.0.0/UI/gui/Makefile.am.xmlrpc_cflags btg-1.0.0/UI/gui/Makefile.am
+--- btg-1.0.0/UI/gui/Makefile.am.xmlrpc_cflags	2008-06-14 15:26:40.000000000 +0200
++++ btg-1.0.0/UI/gui/Makefile.am	2009-04-26 13:55:06.000000000 +0200
+@@ -35,13 +35,13 @@ if BUILDINTERNALPLOTMM
+ btgui_LDADD  += $(top_builddir)/external/plotmm/libplotmm.la
+ endif
+ 
+-btgui_LDFLAGS  = @LIBS@ @GTKMM_LIBS@ @BOOST_SYSTEM_LIB@ @BOOST_DATE_TIME_LIB@ @BOOST_IOSTREAMS_LIB@ @BOOST_FILESYSTEM_LIB@ @LIBGNUTLS_LIBS@ @BOOST_PROGRAM_OPTIONS_LIB@ @BOOST_THREAD_LIB@
+-btgui_CXXFLAGS = @CXXFLAGS@ @GTKMM_CFLAGS@ @LIBGNUTLS_CFLAGS@ @PLOTMM_LDFLAGS@ @PLOTMM_CXXFLAGS@ \
++btgui_LDFLAGS  = @LIBS@ @GTKMM_LIBS@ @BOOST_SYSTEM_LIB@ @BOOST_DATE_TIME_LIB@ @BOOST_IOSTREAMS_LIB@ @BOOST_FILESYSTEM_LIB@ @LIBGNUTLS_LIBS@ @BOOST_PROGRAM_OPTIONS_LIB@ @BOOST_THREAD_LIB@ @PLOTMM_LDFLAGS@
++btgui_CXXFLAGS = @CXXFLAGS@ @XMLRPC_CFLAGS@ @GTKMM_CFLAGS@ @LIBGNUTLS_CFLAGS@ @PLOTMM_CXXFLAGS@ \
+ -DBTG_DEBUG=@BTG_DEBUG@ \
+ -DBTG_REV="@BTG_REV@" \
+ -DBTG_INTERNAL_XMLRPC="@BTG_INTERNAL_XMLRPC@"
+ 
+-btgui_CFLAGS   = @CFLAGS@ @LIBGNUTLS_CFLAGS@ \
++btgui_CFLAGS   = @CFLAGS@ @XMLRPC_CFLAGS@ @LIBGNUTLS_CFLAGS@ \
+ -DBTG_DEBUG=@BTG_DEBUG@ \
+ -DBTG_REV="@BTG_REV@" \
+ -DBTG_INTERNAL_XMLRPC="@BTG_INTERNAL_XMLRPC@"
+diff -up btg-1.0.0/UI/gui/viewer/sdl/Makefile.am.xmlrpc_cflags btg-1.0.0/UI/gui/viewer/sdl/Makefile.am
+--- btg-1.0.0/UI/gui/viewer/sdl/Makefile.am.xmlrpc_cflags	2009-01-15 20:42:29.000000000 +0100
++++ btg-1.0.0/UI/gui/viewer/sdl/Makefile.am	2009-04-26 13:54:43.000000000 +0200
+@@ -11,12 +11,12 @@ btgvs_LDADD   = $(top_builddir)/bcore/li
+ 
+ btgvs_LDFLAGS = @LIBS@ @AGAR_LIBS@ @BOOST_SYSTEM_LIB@ @BOOST_DATE_TIME_LIB@ @BOOST_IOSTREAMS_LIB@ @BOOST_FILESYSTEM_LIB@ @LIBGNUTLS_LIBS@ @BOOST_PROGRAM_OPTIONS_LIB@ @BOOST_THREAD_LIB@ @LIRC_CLIENT_LIB@
+ 
+-btgvs_CXXFLAGS = @CXXFLAGS@ @LIBGNUTLS_CFLAGS@ @AGAR_CFLAGS@ \
++btgvs_CXXFLAGS = @CXXFLAGS@ @XMLRPC_CFLAGS@ @LIBGNUTLS_CFLAGS@ @AGAR_CFLAGS@ \
+ -DBTG_DEBUG=@BTG_DEBUG@ \
+ -DBTG_REV="@BTG_REV@" \
+ -DBTG_INTERNAL_XMLRPC="@BTG_INTERNAL_XMLRPC@"
+ 
+-btgvs_CFLAGS   = @CFLAGS@ @LIBGNUTLS_CFLAGS@ @AGAR_CFLAGS@ \
++btgvs_CFLAGS   = @CFLAGS@ @XMLRPC_CFLAGS@ @LIBGNUTLS_CFLAGS@ @AGAR_CFLAGS@ \
+ -DBTG_DEBUG=@BTG_DEBUG@ \
+ -DBTG_REV="@BTG_REV@" \
+ -DBTG_INTERNAL_XMLRPC="@BTG_INTERNAL_XMLRPC@"
+
+From wojci at wojci.dk  Wed Apr 29 11:47:18 2009
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Wed, 29 Apr 2009 11:47:18 +0200
+Subject: [Btg-devel] External xmlrpc-epi includes have moved?
+In-Reply-To: <20090428053225.GA18275@ares.tgcnet>
+References: <20090428053225.GA18275@ares.tgcnet>
+Message-ID: <20090429114718.282d51a6@netpc5.home.wojci.dk>
+
+On Tue, 28 Apr 2009 07:32:25 +0200 "Tom G. Christensen"
+<tgc at jupiterrise.com> wrote:
+
+> The patch applies cleanly to trunk but perhaps it was garbled on it's
+> way through the mailsystem.
+> I'm attaching it instead.
+
+I merged it manually. The patch you provided was not made from
+trunk, as far as I can see. The changes are in r572.
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+"When they ask how I died, I said, tell them: still angry." 
+(Altered Carbon by Richard Morgan)
+
+
+From tgc at jupiterrise.com  Wed Apr 29 18:38:21 2009
+From: tgc at jupiterrise.com (Tom G. Christensen)
+Date: Wed, 29 Apr 2009 18:38:21 +0200
+Subject: [Btg-devel] External xmlrpc-epi includes have moved?
+In-Reply-To: <20090429114718.282d51a6@netpc5.home.wojci.dk>
+References: <20090428053225.GA18275@ares.tgcnet>
+	<20090429114718.282d51a6@netpc5.home.wojci.dk>
+Message-ID: <20090429163821.GA2625@ares.tgcnet>
+
+On Wed, Apr 29, 2009 at 11:47:18AM +0200, Michael Wojciechowski wrote:
+> On Tue, 28 Apr 2009 07:32:25 +0200 "Tom G. Christensen"
+> <tgc at jupiterrise.com> wrote:
+> 
+> > The patch applies cleanly to trunk but perhaps it was garbled on it's
+> > way through the mailsystem.
+> > I'm attaching it instead.
+> 
+> I merged it manually. The patch you provided was not made from
+> trunk, as far as I can see. The changes are in r572.
+> 
+The patch applies cleanly to trunk (r571).
+Observe:
+[tgc at ares btg]$ svn co http://svn.berlios.de/svnroot/repos/btg/trunk -r571
+...
+[tgc at ares btg]$ cd trunk
+[tgc at ares trunk]$ svn info
+Path: .
+URL: http://svn.berlios.de/svnroot/repos/btg/trunk
+Repository Root: http://svn.berlios.de/svnroot/repos/btg
+Repository UUID: 99f9c56b-b639-0410-8dc2-9496e6a26d34
+Revision: 571
+Node Kind: directory
+Schedule: normal
+Last Changed Author: wojci
+Last Changed Rev: 571
+Last Changed Date: 2009-04-27 17:04:26 +0200 (Mon, 27 Apr 2009)
+[tgc at ares trunk]$ curl -o /tmp/xmlrpc_flags.eml \
+http://lists.berlios.de/pipermail/btg-devel/2009-April/000156.html
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  7273  100  7273    0     0  38815      0 --:--:-- --:--:-- --:--:--  137k
+
+[tgc at ares trunk]$ sed -i 's/&quot;/"/g' /tmp/xmlrpc_flags.eml
+[tgc at ares trunk]$ patch -p1 < /tmp/xmlrpc_flags.eml
+patching file daemon/Makefile.am
+patching file UI/gui/Makefile.am
+patching file UI/gui/viewer/sdl/Makefile.am
+[tgc at ares trunk]$
+
+Anyway thanks for merging the changes.
+
+I can't currently test trunk since autogen.sh fails:
+[tgc at ares trunk]$ bash autogen.sh
++ set -e
++ aclocal -I m4
++ autoheader
++ libtoolize -c -f
++ automake -a -c
+configure.in:563: required file `UI/www/php/htdocs/languages/Makefile.in' not found
+configure.in:563: required file `UI/www/php/htdocs/languages/js/Makefile.in' not found
+[tgc at ares trunk]$
+
+-tgc
+
+
+From wojci at wojci.dk  Wed Apr 29 19:10:19 2009
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Wed, 29 Apr 2009 19:10:19 +0200
+Subject: [Btg-devel] External xmlrpc-epi includes have moved?
+In-Reply-To: <20090429163821.GA2625@ares.tgcnet>
+References: <20090428053225.GA18275@ares.tgcnet>
+	<20090429114718.282d51a6@netpc5.home.wojci.dk>
+	<20090429163821.GA2625@ares.tgcnet>
+Message-ID: <20090429191019.5306f249@netpc5.home.wojci.dk>
+
+On Wed, 29 Apr 2009 18:38:21 +0200 "Tom G. Christensen"
+<tgc at jupiterrise.com> wrote:
+
+> I can't currently test trunk since autogen.sh fails:
+> [tgc at ares trunk]$ bash autogen.sh
+> + set -e
+> + aclocal -I m4
+> + autoheader
+> + libtoolize -c -f
+> + automake -a -c
+> configure.in:563: required file
+> `UI/www/php/htdocs/languages/Makefile.in' not found configure.in:563:
+> required file `UI/www/php/htdocs/languages/js/Makefile.in' not found
+> [tgc at ares trunk]$
+> 
+> -tgc
+> 
+
+r572 works for me. I removed all Makefile and Makefile.in before
+running autogen.
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+"When they ask how I died, I said, tell them: still angry." 
+(Altered Carbon by Richard Morgan)
+
+
+From tgc at jupiterrise.com  Wed Apr 29 20:51:02 2009
+From: tgc at jupiterrise.com (Tom G. Christensen)
+Date: Wed, 29 Apr 2009 20:51:02 +0200
+Subject: [Btg-devel] Unable to complete autogen.sh on trunk [was Re:
+	External xmlrpc-epi includes have moved?]
+In-Reply-To: <20090429191019.5306f249@netpc5.home.wojci.dk>
+References: <20090428053225.GA18275@ares.tgcnet>
+	<20090429114718.282d51a6@netpc5.home.wojci.dk>
+	<20090429163821.GA2625@ares.tgcnet>
+	<20090429191019.5306f249@netpc5.home.wojci.dk>
+Message-ID: <20090429185102.GA8971@ares.tgcnet>
+
+On Wed, Apr 29, 2009 at 07:10:19PM +0200, Michael Wojciechowski wrote:
+> On Wed, 29 Apr 2009 18:38:21 +0200 "Tom G. Christensen"
+> <tgc at jupiterrise.com> wrote:
+> 
+> > I can't currently test trunk since autogen.sh fails:
+> > [tgc at ares trunk]$ bash autogen.sh
+> > + set -e
+> > + aclocal -I m4
+> > + autoheader
+> > + libtoolize -c -f
+> > + automake -a -c
+> > configure.in:563: required file
+> > `UI/www/php/htdocs/languages/Makefile.in' not found configure.in:563:
+> > required file `UI/www/php/htdocs/languages/js/Makefile.in' not found
+> > [tgc at ares trunk]$
+> > 
+> 
+> r572 works for me. I removed all Makefile and Makefile.in before
+> running autogen.
+> 
+I just tested with a freshly checked out trunk on CentOS 5 and
+Fedora 10 and both fail like this:
+
+configure.in:561: the top level
+configure.in:563: required file `UI/www/php/htdocs/languages/Makefile.in' not found
+configure.in:563: required file `UI/www/php/htdocs/languages/js/Makefile.in' not found
+
+There are no Makefile.am files in those two directories hence no
+Makefile.in files were generated.
+
+-tgc
+
+
+From wojci at wojci.dk  Thu Apr 30 11:39:16 2009
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Thu, 30 Apr 2009 11:39:16 +0200
+Subject: [Btg-devel] Unable to complete autogen.sh on trunk [was Re:
+ External xmlrpc-epi includes have moved?]
+In-Reply-To: <20090429185102.GA8971@ares.tgcnet>
+References: <20090428053225.GA18275@ares.tgcnet>
+	<20090429114718.282d51a6@netpc5.home.wojci.dk>
+	<20090429163821.GA2625@ares.tgcnet>
+	<20090429191019.5306f249@netpc5.home.wojci.dk>
+	<20090429185102.GA8971@ares.tgcnet>
+Message-ID: <20090430113916.4bc8b807@netpc5.home.wojci.dk>
+
+On Wed, 29 Apr 2009 20:51:02 +0200 "Tom G. Christensen"
+<tgc at jupiterrise.com> wrote:
+
+> There are no Makefile.am files in those two directories hence no
+> Makefile.in files were generated.
+
+Sorry about that. I suck. 
+
+I added the two files in r573.
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+"When they ask how I died, I said, tell them: still angry." 
+(Altered Carbon by Richard Morgan)
+
+

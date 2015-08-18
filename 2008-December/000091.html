@@ -1,0 +1,487 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Btg-devel] Cross-compiling for WD MBWE
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/btg-devel/2008-December/index.html" >
+   <LINK REL="made" HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20Cross-compiling%20for%20WD%20MBWE&In-Reply-To=%3C12a18ef30812080015p4e8b96c8g95c7120c5426983b%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000090.html">
+   <LINK REL="Next"  HREF="000093.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Btg-devel] Cross-compiling for WD MBWE</H1>
+    <B>Alex Potapenko</B> 
+    <A HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20Cross-compiling%20for%20WD%20MBWE&In-Reply-To=%3C12a18ef30812080015p4e8b96c8g95c7120c5426983b%40mail.gmail.com%3E"
+       TITLE="[Btg-devel] Cross-compiling for WD MBWE">opotapenko at gmail.com
+       </A><BR>
+    <I>Mon Dec  8 09:15:25 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000090.html">[Btg-devel] Christmas gift ideaa!
+</A></li>
+        <LI>Next message: <A HREF="000093.html">[Btg-devel] Cross-compiling for WD MBWE
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#91">[ date ]</a>
+              <a href="thread.html#91">[ thread ]</a>
+              <a href="subject.html#91">[ subject ]</a>
+              <a href="author.html#91">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi.
+
+I've managed to cross-compile boost 1.35.0, libtorrent rasterbar and btg
+0.9.8 for my NAS drive MBWE (<A HREF="http://mybookworld.wikidot.com/">http://mybookworld.wikidot.com/</A>).
+
+btg-conf runs well, but unfortunately daemon and cli give Segmentation fault
+error:
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+[<A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">root at WDStorage</A> btg-0.9.8]# strace btgdaemon
+execve(&quot;/opt/bin/btgdaemon&quot;, [&quot;btgdaemon&quot;], [/* 26 vars */]) = 0
+old_mmap(NULL, 20, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) =
+0x40005000
+stat(&quot;/etc/ld.so.cache&quot;, {st_mode=S_IFREG|0644, st_size=12265, ...}) = 0
+open(&quot;/etc/ld.so.cache&quot;, O_RDONLY) = 3
+old_mmap(NULL, 12265, PROT_READ, MAP_SHARED, 3, 0) = 0x40006000
+close(3) = 0
+open(&quot;/opt/lib/libboost_iostreams-mt.so&quot;, O_RDONLY) = 3
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0)
+= 0x40009000
+read(3,
+&quot;\177ELF\1\1\1a\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0\300&gt;\0\0004\0\0\0&quot;..., 4096)
+= 4096
+old_mmap(NULL, 77824, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) =
+0x4000d000
+old_mmap(0x4000d000, 42940, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3,
+0) = 0x4000d000
+old_mmap(0x4001f000, 3388, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3,
+0xa000) = 0x4001f000
+close(3) = 0
+munmap(0x40009000, 4096) = 0
+open(&quot;/opt/lib/libgnutls.so.26&quot;, O_RDONLY) = 3
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0)
+= 0x40009000
+read(3, &quot;\177ELF\1\1\1a\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0\fY\1\0004\0\0\0&quot;...,
+4096) = 4096
+old_mmap(NULL, 626688, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) =
+0x40020000
+old_mmap(0x40020000, 566120, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3,
+0) = 0x40020000
+old_mmap(0x400b2000, 25504, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3,
+0x8a000) = 0x400b2000
+close(3) = 0
+munmap(0x40009000, 4096) = 0
+open(&quot;/opt/lib/libtasn1.so.3&quot;, O_RDONLY) = 3
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0)
+= 0x40009000
+read(3,
+&quot;\177ELF\1\1\1a\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0\10\22\0\0004\0\0\0&quot;..., 4096)
+= 4096
+old_mmap(NULL, 90112, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) =
+0x400b9000
+old_mmap(0x400b9000, 52352, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3,
+0) = 0x400b9000
+old_mmap(0x400ce000, 872, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3,
+0xd000) = 0x400ce000
+close(3) = 0
+munmap(0x40009000, 4096) = 0
+open(&quot;/opt/lib/libgcrypt.so.11&quot;, O_RDONLY) = 3
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0)
+= 0x40009000
+read(3,
+&quot;\177ELF\1\1\1a\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0\210E\0\0004\0\0\0&quot;..., 4096)
+= 4096
+old_mmap(NULL, 344064, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) =
+0x400cf000
+old_mmap(0x400cf000, 288532, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3,
+0) = 0x400cf000
+old_mmap(0x4011e000, 18708, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3,
+0x47000) = 0x4011e000
+close(3) = 0
+munmap(0x40009000, 4096) = 0
+open(&quot;/opt/lib/libgpg-error.so.0&quot;, O_RDONLY) = 3
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0)
+= 0x40009000
+read(3, &quot;\177ELF\1\1\1a\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0p\7\0\0004\0\0\0&quot;...,
+4096) = 4096
+old_mmap(NULL, 45056, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) =
+0x40123000
+old_mmap(0x40123000, 10344, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3,
+0) = 0x40123000
+old_mmap(0x4012d000, 2508, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3,
+0x2000) = 0x4012d000
+close(3) = 0
+munmap(0x40009000, 4096) = 0
+open(&quot;/opt/lib/libboost_program_options-mt.so&quot;, O_RDONLY) = 3
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0)
+= 0x40009000
+read(3,
+&quot;\177ELF\1\1\1a\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0h\270\0\0004\0\0\0&quot;..., 4096)
+= 4096
+old_mmap(NULL, 237568, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) =
+0x4012e000
+old_mmap(0x4012e000, 229004, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3,
+0) = 0x4012e000
+old_mmap(0x40166000, 6404, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3,
+0x38000) = 0x40166000
+close(3) = 0
+munmap(0x40009000, 4096) = 0
+open(&quot;/opt/lib/libtorrent-rasterbar.so.0&quot;, O_RDONLY) = 3
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0)
+= 0x40009000
+read(3,
+&quot;\177ELF\1\1\1a\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0P\341\n\0004\0\0\0&quot;..., 4096)
+= 4096
+old_mmap(NULL, 4280320, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) =
+0x40168000
+old_mmap(0x40168000, 4169816, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3,
+0) = 0x40168000
+old_mmap(0x4056a000, 74792, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3,
+0x3fa000) = 0x4056a000
+close(3) = 0
+munmap(0x40009000, 4096) = 0
+open(&quot;/lib/libz.so.1&quot;, O_RDONLY) = 3
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0)
+= 0x40009000
+read(3,
+&quot;\177ELF\1\1\1a\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0\250\27\0\0004\0\0\0&quot;...,
+4096) = 4096
+old_mmap(NULL, 110592, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) =
+0x4057d000
+old_mmap(0x4057d000, 73080, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3,
+0) = 0x4057d000
+old_mmap(0x40597000, 824, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3,
+0x12000) = 0x40597000
+close(3) = 0
+munmap(0x40009000, 4096) = 0
+open(&quot;/opt/lib/libboost_system-mt.so&quot;, O_RDONLY) = 3
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0)
+= 0x40009000
+read(3, &quot;\177ELF\1\1\1a\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0D\26\0\0004\0\0\0&quot;...,
+4096) = 4096
+old_mmap(NULL, 45056, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) =
+0x40598000
+old_mmap(0x40598000, 10680, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3,
+0) = 0x40598000
+old_mmap(0x405a2000, 3112, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3,
+0x2000) = 0x405a2000
+close(3) = 0
+munmap(0x40009000, 4096) = 0
+open(&quot;/opt/lib/libboost_date_time-mt.so&quot;, O_RDONLY) = 3
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0)
+= 0x40009000
+read(3, &quot;\177ELF\1\1\1a\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0P&gt;\0\0004\0\0\0&quot;...,
+4096) = 4096
+old_mmap(NULL, 73728, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) =
+0x405a3000
+old_mmap(0x405a3000, 36044, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3,
+0) = 0x405a3000
+old_mmap(0x405b4000, 1616, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3,
+0x9000) = 0x405b4000
+close(3) = 0
+munmap(0x40009000, 4096) = 0
+open(&quot;/opt/lib/libboost_filesystem-mt.so&quot;, O_RDONLY) = 3
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0)
+= 0x40009000
+read(3,
+&quot;\177ELF\1\1\1a\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0\2248\0\0004\0\0\0&quot;..., 4096)
+= 4096
+old_mmap(NULL, 77824, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) =
+0x405b5000
+old_mmap(0x405b5000, 40052, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3,
+0) = 0x405b5000
+old_mmap(0x405c7000, 1528, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3,
+0xa000) = 0x405c7000
+close(3) = 0
+munmap(0x40009000, 4096) = 0
+open(&quot;/opt/lib/libboost_thread-mt.so&quot;, O_RDONLY) = 3
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0)
+= 0x40009000
+read(3,
+&quot;\177ELF\1\1\1a\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0\34\\\0\0004\0\0\0&quot;..., 4096)
+= 4096
+old_mmap(NULL, 110592, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) =
+0x405c8000
+old_mmap(0x405c8000, 73536, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3,
+0) = 0x405c8000
+old_mmap(0x405e2000, 1928, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3,
+0x12000) = 0x405e2000
+close(3) = 0
+munmap(0x40009000, 4096) = 0
+open(&quot;/usr/lib/libssl.so.0.9.7&quot;, O_RDONLY) = 3
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0)
+= 0x40009000
+read(3, &quot;\177ELF\1\1\1a\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0
+\204\0\0004\0\0\0&quot;..., 4096) = 4096
+old_mmap(NULL, 212992, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) =
+0x405e3000
+old_mmap(0x405e3000, 166672, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3,
+0) = 0x405e3000
+old_mmap(0x40614000, 9136, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3,
+0x29000) = 0x40614000
+close(3) = 0
+munmap(0x40009000, 4096) = 0
+open(&quot;/usr/lib/libcrypto.so.0.9.7&quot;, O_RDONLY) = 3
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0)
+= 0x40009000
+read(3,
+&quot;\177ELF\1\1\1a\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0\300\331\2\0004\0\0\0&quot;...,
+4096) = 4096
+old_mmap(NULL, 1011712, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) =
+0x40617000
+old_mmap(0x40617000, 892364, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3,
+0) = 0x40617000
+old_mmap(0x406) = 0x406f9000
+old_mmap(0x4070a000, 13500, PROT_READ|PROT_WRITE,
+MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x4070a000
+close(3) = 0
+munmap(0x40009000, 4096) = 0
+open(&quot;/opt/lib/btg/libbtgcore.so.0&quot;, O_RDONLY) = 3
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0)
+= 0x40009000
+read(3, &quot;\177ELF\1\1\1a\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0\24V\4\0004\0\0\0&quot;...,
+4096) = 4096
+old_mmap(NULL, 1155072, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) =
+0x4070e000
+old_mmap(0x4070e000, 1085056, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3,
+0) = 0x4070e000
+old_mmap(0x4081f000, 33776, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3,
+0x109000) = 0x4081f000
+close(3) = 0
+old_mmap(NULL, 216, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0)
+= 0x4000a000
+munmap(0x40009000, 4096) = 0
+open(&quot;/lib/libstdc++.so.6&quot;, O_RDONLY) = 3
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0)
+= 0x40009000
+read(3,
+&quot;\177ELF\1\1\1a\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0\274S\2\0004\0\0\0&quot;..., 4096)
+= 4096
+old_mmap(NULL, 585728, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) =
+0x40828000
+old_mmap(0x40828000, 517532, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3,
+0) = 0x40828000
+old_mmap(0x408ae000, 16972, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3,
+0x7e000) = 0x408ae000
+old_mmap(0x408b3000, 15680, PROT_READ|PROT_WRITE,
+MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x408b3000
+close(3) = 0
+munmap(0x40009000, 4096) = 0
+open(&quot;/lib/libm.so.0&quot;, O_RDONLY) = 3
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0)
+= 0x40009000
+read(3,
+&quot;\177ELF\1\1\1a\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0\300\&quot;\0\0004\0\0\0&quot;..., 4096)
+= 4096
+old_mmap(NULL, 114688, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) =
+0x408b7000
+old_mmap(0x408b7000, 80556, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3,
+0) = 0x408b7000
+old_mmap(0x408d2000, 3516, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3,
+0x13000) = 0x408d2000
+close(3) = 0
+munmap(0x40009000, 4096) = 0
+open(&quot;/lib/libgcc_s.so.1&quot;, O_RDONLY) = 3
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0)
+= 0x40009000
+read(3,
+&quot;\177ELF\1\1\1a\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0\34\32\0\0004\0\0\0&quot;..., 4096)
+= 4096
+old_mmap(NULL, 69632, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) =
+0x408d3000
+old_mmap(0x408d3000, 33108, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3,
+0) = 0x408d3000
+old_mmap(0x408e3000, 880, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3,
+0x8000) = 0x408e3000
+close(3) = 0
+munmap(0x40009000, 4096) = 0
+open(&quot;/lib/libc.so.0&quot;, O_RDONLY) = 3
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0)
+= 0x40009000
+read(3,
+&quot;\177ELF\1\1\1a\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0\300\360\0\0004\0\0\0&quot;...,
+4096) = 4096
+old_mmap(NULL, 368640, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) =
+0x408e4000
+old_mmap(0x408e4000, 309736, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3,
+0) = 0x408e4000
+old_mmap(0x40938000, 5484, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3,
+0x4c000) = 0x40938000
+old_mmap(0x4093a000, 16136, PROT_READ|PROT_WRITE,
+MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x4093a000
+close(3) = 0
+munmap(0x40009000, 4096) = 0
+open(&quot;/usr/lib/libbz2.so.1.0&quot;, O_RDONLY) = 3
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0)
+= 0x40009000
+read(3,
+&quot;\177ELF\1\1\1a\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0\350\20\0\0004\0\0\0&quot;...,
+4096) = 4096
+old_mmap(NULL, 106496, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) =
+0x4093e000
+old_mmap(0x4093e000, 69244, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3,
+0) = 0x4093e000
+old_mmap(0x40957000, 3684, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3,
+0x11000) = 0x40957000
+close(3) = 0
+munmap(0x40009000, 4096) = 0
+open(&quot;/lib/librt.so.0&quot;, O_RDONLY) = 3
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0)
+= 0x40009000
+read(3,
+&quot;\177ELF\1\1\1a\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0\370\5\0\0004\0\0\0&quot;..., 4096)
+= 3568
+old_mmap(NULL, 36864, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) =
+0x40958000
+old_mmap(0x40958000, 2784, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3, 0)
+= 0x40958000
+old_mmap(0x40960000, 2964, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3,
+0) = 0x40960000
+close(3) = 0
+munmap(0x40009000, 4096) = 0
+open(&quot;/lib/libpthread.so.0&quot;, O_RDONLY) = 3
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0)
+= 0x40009000
+read(3,
+&quot;\177ELF\1\1\1a\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0\210&gt;\0\0004\0\0\0&quot;..., 4096)
+= 4096
+old_mmap(NULL, 110592, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) =
+0x40961000
+old_mmap(0x40961000, 47988, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3,
+0) = 0x40961000
+old_mmap(0x40975000, 18408, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3,
+0xc000) = 0x40975000
+old_mmap(0x4097a000, 6552, PROT_READ|PROT_WRITE,
+MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x4097a000
+close(3) = 0
+munmap(0x40009000, 4096) = 0
+open(&quot;/lib/libnsl.so.0&quot;, O_RDONLY) = 3
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0)
+= 0x40009000
+read(3, &quot;\177ELF\1\1\1a\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0&lt;\3\0\0004\0\0\0&quot;...,
+4096) = 1944
+old_mmap(NULL, 36864, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) =
+0x4097c000
+old_mmap(0x4097c000, 1128, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3, 0)
+= 0x4097c000
+old_mmap(0x40984000, 1280, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3,
+0) = 0x40984000
+close(3) = 0
+munmap(0x40009000, 4096) = 0
+open(&quot;/lib/libdl.so.0&quot;, O_RDONLY) = 3
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0)
+= 0x40009000
+read(3,
+&quot;\177ELF\1\1\1a\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0\324\7\0\0004\0\0\0&quot;..., 4096)
+= 4096
+old_mmap(NULL, 40960, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) =
+0x40985000
+old_mmap(0x40985000, 5836, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3, 0)
+= 0x40985000
+old_mmap(0x4098e000, 2068, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3,
+0x1000) = 0x4098e000
+close(3) = 0
+munmap(0x40009000, 4096) = 0
+open(&quot;/opt/lib/libiconv.so.2&quot;, O_RDONLY) = 3
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0)
+= 0x40009000
+read(3, &quot;\177ELF\1\1\1a\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0 &amp;\0\0004\0\0\0&quot;...,
+4096) = 4096
+old_mmap(NULL, 950272, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) =
+0x4098f000
+old_mmap(0x4098f000, 910432, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3,
+0) = 0x4098f000
+old_mmap(0x40a75000, 6164, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3,
+0xde000) = 0x40a75000
+close(3) = 0
+munmap(0x40009000, 4096) = 0
+munmap(0x40006000, 12265) = 0
+ioctl(0, SNDCTL_TMR_TIMEBASE or TCGETS, {B38400 opost isig icanon echo ...})
+= 0
+ioctl(1, SNDCTL_TMR_TIMEBASE or TCGETS, {B38400 opost isig icanon echo ...})
+= 0
+getpid() = 15743
+getrlimit(RLIMIT_STACK, {rlim_cur=8192*1024, rlim_max=RLIM_INFINITY}) = 0
+setrlimit(RLIMIT_STACK, {rlim_cur=2040*1024, rlim_max=RLIM_INFINITY}) = 0
+rt_sigaction(SIGRTMIN, {0x40968e2c, [], 0x4000000 /* SA_??? */}, NULL, 8) =
+0
+rt_sigaction(SIGRT_1, {0x40968ee8, [RTMIN], 0x4000000 /* SA_??? */}, NULL,
+8) = 0
+rt_sigaction(SIGRT_2, {0x4096903c, [], 0x4000000 /* SA_??? */}, NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, [RTMIN], NULL, 8) = 0
+rt_sigprocmask(SIG_UNBLOCK, [RT_1], NULL, 8) = 0
+brk(0) = 0x11b000
+brk(0x11c000) = 0x11c000
+time(NULL) = 1228667735
+brk(0x11d000) = 0x11d000
+brk(0x11e000) = 0x11e000
+time([1228667739]) = 1228667739
+brk(0x11f000) = 0x11f000
+readlink(&quot;/root&quot;, 0xbee5f5f0, 4095) = -1 EINVAL (Invalid argument)
+readlink(&quot;/root/.btg&quot;, 0xbee5f5f0, 4095) = -1 EINVAL (Invalid argument)
+readlink(&quot;/root/.btg/daemon.ini&quot;, 0xbee5f5f0, 4095) = -1 EINVAL (Invalid
+argument)
+stat64(&quot;/root/.btg/daemon.ini&quot;, {st_mode=S_IFREG|0644, st_size=365, ...}) =
+0
+readlink(&quot;/root&quot;, 0xbee5f5f0, 4095) = -1 EINVAL (Invalid argument)
+readlink(&quot;/root/.btg&quot;, 0xbee5f5f0, 4095) = -1 EINVAL (Invalid argument)
+readlink(&quot;/root/.btg/daemon.ini&quot;, 0xbee5f5f0, 4095) = -1 EINVAL (Invalid
+argument)
+stat64(&quot;/root/.btg/daemon.ini&quot;, {st_mode=S_IFREG|0644, st_size=365, ...}) =
+0
+stat64(&quot;/root/.btg/daemon.ini&quot;, {st_mode=S_IFREG|0644, st_size=365, ...}) =
+0
+open(&quot;/root/.btg/daemon.ini&quot;, O_RDONLY|O_LARGEFILE) = 3
+ioctl(3, SNDCTL_TMR_TIMEBASE or TCGETS, 0xbee60d94) = -1 ENOTTY
+(Inappropriate ioctl for device)
+brk(0x120000) = 0x120000
+brk(0x121000) = 0x121000
+write(1, &quot;&lt;info&gt; [CDataFile::Load] Unable &quot;..., 61&lt;info&gt; [CDataFile::Load]
+Unable to open file. Does it exist?
+) = 61
+close(3) = 0
+--- SIGSEGV (Segmentation fault) @ 0 (0) ---
++++ killed by SIGSEGV +++
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Obviously, something must have gone wrong during cross-compilation, but I
+can't see what.
+
+Thanks in advance,
+
+Alex.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/btg-devel/attachments/20081208/68a0770d/attachment.html">https://lists.berlios.de/pipermail/btg-devel/attachments/20081208/68a0770d/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000090.html">[Btg-devel] Christmas gift ideaa!
+</A></li>
+	<LI>Next message: <A HREF="000093.html">[Btg-devel] Cross-compiling for WD MBWE
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#91">[ date ]</a>
+              <a href="thread.html#91">[ thread ]</a>
+              <a href="subject.html#91">[ subject ]</a>
+              <a href="author.html#91">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/btg-devel">More information about the Btg-devel
+mailing list</a><br>
+</body></html>

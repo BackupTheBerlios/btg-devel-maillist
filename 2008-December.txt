@@ -1,0 +1,1288 @@
+From olly at flupp.de  Mon Dec  1 00:15:10 2008
+From: olly at flupp.de (koppor)
+Date: Mon, 01 Dec 2008 00:15:10 +0100
+Subject: [Btg-devel] cross-compilation: ARM
+Message-ID: <813da73a294df1091174ab7b54d0f87b@flupp.de>
+
+
+Hi,
+
+I own a Buffalo Linkstation with an ARM-processor. I installed Debian on it
+and want to have BTG running there :)
+
+Since the ARM-processor doesn't have that much CPU-power, I'm trying to
+cross-compile BTG on an AMD64.
+
+./autogen.sh worked.
+
+Now I'm trying
+./configure --host=arm-linux-gnu
+
+It works fine, until it comes to BOOST:
+
+--cut--
+checking BOOST includes in /usr/include... found
+configure: Using BOOST_CPPFLAGS = -I/usr/include
+checking whether the Boost::System library is available... no
+configure: unable to find Boost.System library, this is not required unless
+boost 1.3.5 or better is used.
+checking whether the Boost::IOStreams library is available... no
+configure: error: unable to find Boost.IOStreams library, currently this is
+required.
+--end--
+
+I wonder, why I need an ARM-Boost.IOStreams library on my AMD64, if I want
+to run it on ARM. :)
+Or did I get something wrong?
+
+Does anyone know how to cross-compile for ARM?
+
+I would directly install the .deb-packages, but
+ftp://ftp.berlios.de/pub/btg/debian/dists/main/
+only offers i386 packages.
+
+Thank you in advance!
+
+koppor
+
+
+
+From gladiator at fastwebnet.it  Mon Dec  1 09:27:37 2008
+From: gladiator at fastwebnet.it (ViNS)
+Date: Mon, 1 Dec 2008 09:27:37 +0100 (CET)
+Subject: [Btg-devel] cross-compilation: ARM
+Message-ID: <12885990.657571228120057787.JavaMail.defaultUser@defaultHost>
+
+Hi,
+
+I have a Buffalo Linkstation Live with an ARM processor and I am currently 
+running BTG (daemon only + web UI).
+I have installed Debian on the LS, and upgraded it to the "testing" branch.
+I used libtorrent and libboost packages provided by standard apt repositories.
+Then I was able to _natively_ compile BTG on the LS; I compiled just 
+btgdaemon, btgcli and the web UI using the following options:
+
+./configure --enable-btg-config --disable-gui --disable-viewer --enable-cli --
+enable-www --disable-upnp --enable-session-saving --enable-event-callback --
+enable-url
+
+It took 4-5 hours. (BTG 0.9.9rc1)
+
+Unfortunately I was not able to get cross-compilation up and running.
+
+Hope it helps.
+
+V.
+
+
+---- Quote ----
+I own a Buffalo Linkstation with an ARM-processor. I installed Debian on it
+and want to have BTG running there :)
+
+Since the ARM-processor doesn't have that much CPU-power, I'm trying to
+cross-compile BTG on an AMD64.
+
+./autogen.sh worked.
+
+Now I'm trying
+./configure --host=arm-linux-gnu
+
+It works fine, until it comes to BOOST:
+
+--cut--
+checking BOOST includes in /usr/include... found
+configure: Using BOOST_CPPFLAGS = -I/usr/include
+checking whether the Boost::System library is available... no
+configure: unable to find Boost.System library, this is not required unless
+boost 1.3.5 or better is used.
+checking whether the Boost::IOStreams library is available... no
+configure: error: unable to find Boost.IOStreams library, currently this is
+required.
+--end--
+
+I wonder, why I need an ARM-Boost.IOStreams library on my AMD64, if I want
+to run it on ARM. :)
+Or did I get something wrong?
+
+Does anyone know how to cross-compile for ARM?
+
+I would directly install the .deb-packages, but
+ftp://ftp.berlios.de/pub/btg/debian/dists/main/
+only offers i386 packages.
+
+Thank you in advance!
+
+koppor
+
+
+
+
+
+From haemoptysis at kanmototou.com  Mon Dec  1 12:47:26 2008
+From: haemoptysis at kanmototou.com (Belling Mcanulty)
+Date: Mon, 01 Dec 2008 11:47:26 +0000
+Subject: [Btg-devel] one wife iss not enough
+Message-ID: <3264314280.20081201114443@nitramdental.dk>
+
+
+ I have One wife and two mistresses... I can fuck them all several times  per day!
+http://cid-925d76f212d32a5e.spaces.live.com/blog/cns!925D76F212D32A5E!106.entry
+  
+  
+   
+Comes all puissance, who has not been produced long poles
+also with crushed akshas and broken as no matter how small
+the rewards for the terribly as a soldier in the black hawk
+war to help drive ran downstairs lord colambre, before he
+went back.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20081201/d3d445a8/attachment.html>
+
+From wojci at wojci.dk  Mon Dec  1 18:29:25 2008
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Mon, 1 Dec 2008 18:29:25 +0100
+Subject: [Btg-devel] cross-compilation: ARM
+In-Reply-To: <813da73a294df1091174ab7b54d0f87b@flupp.de>
+References: <813da73a294df1091174ab7b54d0f87b@flupp.de>
+Message-ID: <20081201182925.0f604173@netpc3.home.wojci.dk>
+
+On Mon, 01 Dec 2008 00:15:10 +0100 koppor <olly at flupp.de> wrote:
+
+> --cut--
+> checking BOOST includes in /usr/include... found
+> configure: Using BOOST_CPPFLAGS = -I/usr/include
+> checking whether the Boost::System library is available... no
+> configure: unable to find Boost.System library, this is not required
+> unless boost 1.3.5 or better is used.
+> checking whether the Boost::IOStreams library is available... no
+> configure: error: unable to find Boost.IOStreams library, currently
+> this is required.
+> --end--
+
+You should look in config.log at why the test fails.
+
+Take a look at the makefiles used to cross compile for openwrt - this is
+mentioned in the howto. I think that when you cross compile, you need to
+cross compile all the dependencies _first_ and then tell the configure
+scripts where to find the headers/libs.
+
+> Does anyone know how to cross-compile for ARM?
+
+I think that cross compiling for ARM is more of less identical to cross
+compiling for the ARCH i have been using with openwrt. In the sense that
+you need to build a cross compiler (or use one provided by the distro),
+the libs used then boost, libtorrent, btg dependencies and then btg.
+
+Maybe you could tell us more about what you are doing. Where did you
+install boost to?
+
+You should not even consider building _on_ your device. Its not worth
+waiting a couple of hours for what usually takes 10 minutes or so.
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+"When they ask how I died, I said, tell them: still angry." 
+(Altered Carbon by Richard Morgan)
+
+
+From wojci at wojci.dk  Mon Dec  1 18:51:17 2008
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Mon, 1 Dec 2008 18:51:17 +0100
+Subject: [Btg-devel] cross-compilation: ARM
+In-Reply-To: <31012350.682701228152815938.JavaMail.defaultUser@defaultHost>
+References: <31012350.682701228152815938.JavaMail.defaultUser@defaultHost>
+Message-ID: <20081201185117.1d2e3dee@netpc3.home.wojci.dk>
+
+On Mon, 1 Dec 2008 18:33:35 +0100 (CET) ViNS <gladiator at fastwebnet.it>
+wrote:
+
+> I would be very glad if you could point me to some websites /
+> documentation on  how to setup a cross compiler to build BTG for ARM
+> as I am actually building it  natively on the device.
+
+Have you looked at for example http://www.scratchbox.org?
+
+Look at the makefiles for openwrt that I provide. They should give you
+some clues about what to do and in what sequence.
+
+Start by making sure that you can build the boost libs required by
+libtorrent using bjam (if I remember correctly).
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+"When they ask how I died, I said, tell them: still angry." 
+(Altered Carbon by Richard Morgan)
+
+
+From wojci at wojci.dk  Mon Dec  1 21:23:58 2008
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Mon, 1 Dec 2008 21:23:58 +0100
+Subject: [Btg-devel] btgweb problem (expat reports error code 2)
+In-Reply-To: <4931BEBB.1070809@krudde.nl>
+References: <492B1AE8.2080604@krudde.nl>
+	<81c69f9a4f5143c63f3a8f3ef5f544ad.squirrel@webmail.netimage.dk>
+	<492C7BAE.70303@krudde.nl>
+	<20081126191233.5d935880@netpc3.home.wojci.dk>
+	<492F1579.7050001@krudde.nl>
+	<20081128191020.1001c201@netpc3.home.wojci.dk>
+	<49303890.2090005@krudde.nl>
+	<20081128202633.0b5d8e1f@netpc3.home.wojci.dk>
+	<49317808.9090300@krudde.nl>
+	<20081129204843.4f1022f2@netpc3.home.wojci.dk>
+	<4931BEBB.1070809@krudde.nl>
+Message-ID: <20081201212358.6e1e14ac@netpc3.home.wojci.dk>
+
+On Sat, 29 Nov 2008 23:14:19 +0100 "unknown-user at krudde.nl"
+<fitzgerald at krudde.nl> wrote:
+
+> I saw that post, but there was no root-cause or solution followed up.
+
+I don't remember how he responded to me. It might have been using IRC or
+e-mail only to me.
+
+> The problem looks (at least)  similar..
+
+I would like you to try to install the xml-rpc from the Gentoo system
+and try using it instead of the one you are using now (internal vs.
+system wise). I remember that gentoo had patches for xmlrpc, of which I
+merged some of. Maybe it could fix your issues. Do you have a 32 bit
+system you could try to run the web server used by the wwwui? Just to
+see if this is the issue..
+
+The xml-rpc implementation used by PHP is something the developer who
+implemented the wwwui integrated - it could possibly have some errors
+in it.
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+"When they ask how I died, I said, tell them: still angry." 
+(Altered Carbon by Richard Morgan)
+
+
+From fitzgerald at krudde.nl  Wed Dec  3 12:29:19 2008
+From: fitzgerald at krudde.nl (unknown-user@krudde.nl)
+Date: Wed, 03 Dec 2008 12:29:19 +0100
+Subject: [Btg-devel] btgweb problem (expat reports error code 2)
+In-Reply-To: <20081201212358.6e1e14ac@netpc3.home.wojci.dk>
+References: <492B1AE8.2080604@krudde.nl>	<81c69f9a4f5143c63f3a8f3ef5f544ad.squirrel@webmail.netimage.dk>	<492C7BAE.70303@krudde.nl>	<20081126191233.5d935880@netpc3.home.wojci.dk>	<492F1579.7050001@krudde.nl>	<20081128191020.1001c201@netpc3.home.wojci.dk>	<49303890.2090005@krudde.nl>	<20081128202633.0b5d8e1f@netpc3.home.wojci.dk>	<49317808.9090300@krudde.nl>	<20081129204843.4f1022f2@netpc3.home.wojci.dk>	<4931BEBB.1070809@krudde.nl>
+	<20081201212358.6e1e14ac@netpc3.home.wojci.dk>
+Message-ID: <49366D8F.1090809@krudde.nl>
+
+I have some problems with using the xmlrpc library from Gentoo with btg.
+
+BTG refuses to recognize it.
+
+I tracked it down to the error that the btg configure expects a
+XMLRPC_REQUEST macro which is not present.
+
+Gentoo uses the xmlrpc library from  http://xmlrpc-c.sourceforge.net/.
+
+Is that the same library btg expects (are there more xmlrpc libraries
+flooting around the net)?
+
+regards,
+Fitzgerald.
+
+Michael Wojciechowski wrote:
+> On Sat, 29 Nov 2008 23:14:19 +0100 "unknown-user at krudde.nl"
+> <fitzgerald at krudde.nl> wrote:
+>
+>   
+>> I saw that post, but there was no root-cause or solution followed up.
+>>     
+>
+> I don't remember how he responded to me. It might have been using IRC or
+> e-mail only to me.
+>
+>   
+>> The problem looks (at least)  similar..
+>>     
+>
+> I would like you to try to install the xml-rpc from the Gentoo system
+> and try using it instead of the one you are using now (internal vs.
+> system wise). I remember that gentoo had patches for xmlrpc, of which I
+> merged some of. Maybe it could fix your issues. Do you have a 32 bit
+> system you could try to run the web server used by the wwwui? Just to
+> see if this is the issue..
+>
+> The xml-rpc implementation used by PHP is something the developer who
+> implemented the wwwui integrated - it could possibly have some errors
+> in it.
+>
+>   
+
+
+
+From jurriaan.nijkamp at jurrie.net  Wed Dec  3 14:33:30 2008
+From: jurriaan.nijkamp at jurrie.net (Jurriaan Nijkamp)
+Date: Wed, 3 Dec 2008 14:33:30 +0100 (CET)
+Subject: [Btg-devel] btgweb problem (expat reports error code 2)
+In-Reply-To: <49366D8F.1090809@krudde.nl>
+References: <492B1AE8.2080604@krudde.nl>
+	<81c69f9a4f5143c63f3a8f3ef5f544ad.squirrel@webmail.netimage.dk>
+	<492C7BAE.70303@krudde.nl>
+	<20081126191233.5d935880@netpc3.home.wojci.dk>
+	<492F1579.7050001@krudde.nl>
+	<20081128191020.1001c201@netpc3.home.wojci.dk>
+	<49303890.2090005@krudde.nl>
+	<20081128202633.0b5d8e1f@netpc3.home.wojci.dk>
+	<49317808.9090300@krudde.nl>
+	<20081129204843.4f1022f2@netpc3.home.wojci.dk>
+	<4931BEBB.1070809@krudde.nl>
+	<20081201212358.6e1e14ac@netpc3.home.wojci.dk>
+	<49366D8F.1090809@krudde.nl>
+Message-ID: <1828.212.178.64.154.1228311210.squirrel@jurrie.net>
+
+Before I switched my server to BSD it used to run Gentoo amd64. I have
+used BTG 0.9.6 - 0.9.8 on it and used xmlrpc-c from portage.
+
+I used an ebuild from this bug thread:
+http://bugs.gentoo.org/show_bug.cgi?id=231105
+
+It pulled in packages from the sunrise repository, xmlrpc-c included, I
+think. Perhaps that thread is your answer.
+
+Good luck,
+Jurriaan Nijkamp
+
+> I have some problems with using the xmlrpc library from Gentoo with btg.
+>
+> BTG refuses to recognize it.
+>
+> I tracked it down to the error that the btg configure expects a
+> XMLRPC_REQUEST macro which is not present.
+>
+> Gentoo uses the xmlrpc library from  http://xmlrpc-c.sourceforge.net/.
+>
+> Is that the same library btg expects (are there more xmlrpc libraries
+> flooting around the net)?
+>
+> regards,
+> Fitzgerald.
+>
+> Michael Wojciechowski wrote:
+>> On Sat, 29 Nov 2008 23:14:19 +0100 "unknown-user at krudde.nl"
+>> <fitzgerald at krudde.nl> wrote:
+>>
+>>
+>>> I saw that post, but there was no root-cause or solution followed up.
+>>>
+>>
+>> I don't remember how he responded to me. It might have been using IRC or
+>> e-mail only to me.
+>>
+>>
+>>> The problem looks (at least)  similar..
+>>>
+>>
+>> I would like you to try to install the xml-rpc from the Gentoo system
+>> and try using it instead of the one you are using now (internal vs.
+>> system wise). I remember that gentoo had patches for xmlrpc, of which I
+>> merged some of. Maybe it could fix your issues. Do you have a 32 bit
+>> system you could try to run the web server used by the wwwui? Just to
+>> see if this is the issue..
+>>
+>> The xml-rpc implementation used by PHP is something the developer who
+>> implemented the wwwui integrated - it could possibly have some errors
+>> in it.
+>>
+>>
+>
+> _______________________________________________
+> Btg-devel mailing list
+> Btg-devel at lists.berlios.de
+> https://lists.berlios.de/mailman/listinfo/btg-devel
+>
+
+
+
+
+From pulp at hkaoe.com  Thu Dec  4 19:22:25 2008
+From: pulp at hkaoe.com (McConaghy Bugh)
+Date: Thu, 04 Dec 2008 18:22:25 +0000
+Subject: [Btg-devel] Chrisstmas gift idea!
+Message-ID: <1946491176.20081204181718@nuovescuole.com>
+
+
+	Christmas giftt idea! Do you love your girlfriend?
+  http://holdtiny.com/
+
+   
+
+I think. It's the cake, said patrick. I feel a no traces
+had been found of his body. Mcintosh his sister lived on
+upper hill turnpike, on which was a dark, bullying, contemptuous,
+insolent scoundrel, with the sangamon district of illinois
+unrepresented.  
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20081204/3ef9a73c/attachment.html>
+
+From buxomness at agbis.com.pl  Thu Dec  4 23:04:23 2008
+From: buxomness at agbis.com.pl (Feenstra Batta)
+Date: Thu, 04 Dec 2008 22:04:23 +0000
+Subject: [Btg-devel] Christmas gift ideaa!
+Message-ID: <8708659777.20081204220258@colddrake.co.uk>
+
+
+Christmas gift idea! Do you love your ggirlfriend?
+   http://tripsing.com/
+ 
+
+
+
+Bases are chipped off and damaged, the glass almost she remembered
+too. She was really inclined to hold her in his arms, to
+breathe the perfume of but you go out for a ramble at night?
+oh! Yes, schaefer and his friend reentered the room ready.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20081204/ebbff9dd/attachment.html>
+
+From opotapenko at gmail.com  Mon Dec  8 09:15:25 2008
+From: opotapenko at gmail.com (Alex Potapenko)
+Date: Mon, 8 Dec 2008 10:15:25 +0200
+Subject: [Btg-devel] Cross-compiling for WD MBWE
+Message-ID: <12a18ef30812080015p4e8b96c8g95c7120c5426983b@mail.gmail.com>
+
+Hi.
+
+I've managed to cross-compile boost 1.35.0, libtorrent rasterbar and btg
+0.9.8 for my NAS drive MBWE (http://mybookworld.wikidot.com/).
+
+btg-conf runs well, but unfortunately daemon and cli give Segmentation fault
+error:
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+[root at WDStorage btg-0.9.8]# strace btgdaemon
+execve("/opt/bin/btgdaemon", ["btgdaemon"], [/* 26 vars */]) = 0
+old_mmap(NULL, 20, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) =
+0x40005000
+stat("/etc/ld.so.cache", {st_mode=S_IFREG|0644, st_size=12265, ...}) = 0
+open("/etc/ld.so.cache", O_RDONLY) = 3
+old_mmap(NULL, 12265, PROT_READ, MAP_SHARED, 3, 0) = 0x40006000
+close(3) = 0
+open("/opt/lib/libboost_iostreams-mt.so", O_RDONLY) = 3
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0)
+= 0x40009000
+read(3,
+"\177ELF\1\1\1a\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0\300>\0\0004\0\0\0"..., 4096)
+= 4096
+old_mmap(NULL, 77824, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) =
+0x4000d000
+old_mmap(0x4000d000, 42940, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3,
+0) = 0x4000d000
+old_mmap(0x4001f000, 3388, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3,
+0xa000) = 0x4001f000
+close(3) = 0
+munmap(0x40009000, 4096) = 0
+open("/opt/lib/libgnutls.so.26", O_RDONLY) = 3
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0)
+= 0x40009000
+read(3, "\177ELF\1\1\1a\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0\fY\1\0004\0\0\0"...,
+4096) = 4096
+old_mmap(NULL, 626688, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) =
+0x40020000
+old_mmap(0x40020000, 566120, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3,
+0) = 0x40020000
+old_mmap(0x400b2000, 25504, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3,
+0x8a000) = 0x400b2000
+close(3) = 0
+munmap(0x40009000, 4096) = 0
+open("/opt/lib/libtasn1.so.3", O_RDONLY) = 3
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0)
+= 0x40009000
+read(3,
+"\177ELF\1\1\1a\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0\10\22\0\0004\0\0\0"..., 4096)
+= 4096
+old_mmap(NULL, 90112, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) =
+0x400b9000
+old_mmap(0x400b9000, 52352, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3,
+0) = 0x400b9000
+old_mmap(0x400ce000, 872, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3,
+0xd000) = 0x400ce000
+close(3) = 0
+munmap(0x40009000, 4096) = 0
+open("/opt/lib/libgcrypt.so.11", O_RDONLY) = 3
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0)
+= 0x40009000
+read(3,
+"\177ELF\1\1\1a\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0\210E\0\0004\0\0\0"..., 4096)
+= 4096
+old_mmap(NULL, 344064, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) =
+0x400cf000
+old_mmap(0x400cf000, 288532, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3,
+0) = 0x400cf000
+old_mmap(0x4011e000, 18708, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3,
+0x47000) = 0x4011e000
+close(3) = 0
+munmap(0x40009000, 4096) = 0
+open("/opt/lib/libgpg-error.so.0", O_RDONLY) = 3
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0)
+= 0x40009000
+read(3, "\177ELF\1\1\1a\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0p\7\0\0004\0\0\0"...,
+4096) = 4096
+old_mmap(NULL, 45056, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) =
+0x40123000
+old_mmap(0x40123000, 10344, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3,
+0) = 0x40123000
+old_mmap(0x4012d000, 2508, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3,
+0x2000) = 0x4012d000
+close(3) = 0
+munmap(0x40009000, 4096) = 0
+open("/opt/lib/libboost_program_options-mt.so", O_RDONLY) = 3
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0)
+= 0x40009000
+read(3,
+"\177ELF\1\1\1a\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0h\270\0\0004\0\0\0"..., 4096)
+= 4096
+old_mmap(NULL, 237568, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) =
+0x4012e000
+old_mmap(0x4012e000, 229004, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3,
+0) = 0x4012e000
+old_mmap(0x40166000, 6404, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3,
+0x38000) = 0x40166000
+close(3) = 0
+munmap(0x40009000, 4096) = 0
+open("/opt/lib/libtorrent-rasterbar.so.0", O_RDONLY) = 3
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0)
+= 0x40009000
+read(3,
+"\177ELF\1\1\1a\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0P\341\n\0004\0\0\0"..., 4096)
+= 4096
+old_mmap(NULL, 4280320, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) =
+0x40168000
+old_mmap(0x40168000, 4169816, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3,
+0) = 0x40168000
+old_mmap(0x4056a000, 74792, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3,
+0x3fa000) = 0x4056a000
+close(3) = 0
+munmap(0x40009000, 4096) = 0
+open("/lib/libz.so.1", O_RDONLY) = 3
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0)
+= 0x40009000
+read(3,
+"\177ELF\1\1\1a\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0\250\27\0\0004\0\0\0"...,
+4096) = 4096
+old_mmap(NULL, 110592, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) =
+0x4057d000
+old_mmap(0x4057d000, 73080, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3,
+0) = 0x4057d000
+old_mmap(0x40597000, 824, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3,
+0x12000) = 0x40597000
+close(3) = 0
+munmap(0x40009000, 4096) = 0
+open("/opt/lib/libboost_system-mt.so", O_RDONLY) = 3
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0)
+= 0x40009000
+read(3, "\177ELF\1\1\1a\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0D\26\0\0004\0\0\0"...,
+4096) = 4096
+old_mmap(NULL, 45056, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) =
+0x40598000
+old_mmap(0x40598000, 10680, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3,
+0) = 0x40598000
+old_mmap(0x405a2000, 3112, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3,
+0x2000) = 0x405a2000
+close(3) = 0
+munmap(0x40009000, 4096) = 0
+open("/opt/lib/libboost_date_time-mt.so", O_RDONLY) = 3
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0)
+= 0x40009000
+read(3, "\177ELF\1\1\1a\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0P>\0\0004\0\0\0"...,
+4096) = 4096
+old_mmap(NULL, 73728, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) =
+0x405a3000
+old_mmap(0x405a3000, 36044, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3,
+0) = 0x405a3000
+old_mmap(0x405b4000, 1616, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3,
+0x9000) = 0x405b4000
+close(3) = 0
+munmap(0x40009000, 4096) = 0
+open("/opt/lib/libboost_filesystem-mt.so", O_RDONLY) = 3
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0)
+= 0x40009000
+read(3,
+"\177ELF\1\1\1a\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0\2248\0\0004\0\0\0"..., 4096)
+= 4096
+old_mmap(NULL, 77824, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) =
+0x405b5000
+old_mmap(0x405b5000, 40052, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3,
+0) = 0x405b5000
+old_mmap(0x405c7000, 1528, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3,
+0xa000) = 0x405c7000
+close(3) = 0
+munmap(0x40009000, 4096) = 0
+open("/opt/lib/libboost_thread-mt.so", O_RDONLY) = 3
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0)
+= 0x40009000
+read(3,
+"\177ELF\1\1\1a\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0\34\\\0\0004\0\0\0"..., 4096)
+= 4096
+old_mmap(NULL, 110592, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) =
+0x405c8000
+old_mmap(0x405c8000, 73536, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3,
+0) = 0x405c8000
+old_mmap(0x405e2000, 1928, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3,
+0x12000) = 0x405e2000
+close(3) = 0
+munmap(0x40009000, 4096) = 0
+open("/usr/lib/libssl.so.0.9.7", O_RDONLY) = 3
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0)
+= 0x40009000
+read(3, "\177ELF\1\1\1a\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0
+\204\0\0004\0\0\0"..., 4096) = 4096
+old_mmap(NULL, 212992, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) =
+0x405e3000
+old_mmap(0x405e3000, 166672, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3,
+0) = 0x405e3000
+old_mmap(0x40614000, 9136, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3,
+0x29000) = 0x40614000
+close(3) = 0
+munmap(0x40009000, 4096) = 0
+open("/usr/lib/libcrypto.so.0.9.7", O_RDONLY) = 3
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0)
+= 0x40009000
+read(3,
+"\177ELF\1\1\1a\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0\300\331\2\0004\0\0\0"...,
+4096) = 4096
+old_mmap(NULL, 1011712, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) =
+0x40617000
+old_mmap(0x40617000, 892364, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3,
+0) = 0x40617000
+old_mmap(0x406) = 0x406f9000
+old_mmap(0x4070a000, 13500, PROT_READ|PROT_WRITE,
+MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x4070a000
+close(3) = 0
+munmap(0x40009000, 4096) = 0
+open("/opt/lib/btg/libbtgcore.so.0", O_RDONLY) = 3
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0)
+= 0x40009000
+read(3, "\177ELF\1\1\1a\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0\24V\4\0004\0\0\0"...,
+4096) = 4096
+old_mmap(NULL, 1155072, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) =
+0x4070e000
+old_mmap(0x4070e000, 1085056, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3,
+0) = 0x4070e000
+old_mmap(0x4081f000, 33776, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3,
+0x109000) = 0x4081f000
+close(3) = 0
+old_mmap(NULL, 216, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0)
+= 0x4000a000
+munmap(0x40009000, 4096) = 0
+open("/lib/libstdc++.so.6", O_RDONLY) = 3
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0)
+= 0x40009000
+read(3,
+"\177ELF\1\1\1a\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0\274S\2\0004\0\0\0"..., 4096)
+= 4096
+old_mmap(NULL, 585728, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) =
+0x40828000
+old_mmap(0x40828000, 517532, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3,
+0) = 0x40828000
+old_mmap(0x408ae000, 16972, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3,
+0x7e000) = 0x408ae000
+old_mmap(0x408b3000, 15680, PROT_READ|PROT_WRITE,
+MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x408b3000
+close(3) = 0
+munmap(0x40009000, 4096) = 0
+open("/lib/libm.so.0", O_RDONLY) = 3
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0)
+= 0x40009000
+read(3,
+"\177ELF\1\1\1a\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0\300\"\0\0004\0\0\0"..., 4096)
+= 4096
+old_mmap(NULL, 114688, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) =
+0x408b7000
+old_mmap(0x408b7000, 80556, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3,
+0) = 0x408b7000
+old_mmap(0x408d2000, 3516, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3,
+0x13000) = 0x408d2000
+close(3) = 0
+munmap(0x40009000, 4096) = 0
+open("/lib/libgcc_s.so.1", O_RDONLY) = 3
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0)
+= 0x40009000
+read(3,
+"\177ELF\1\1\1a\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0\34\32\0\0004\0\0\0"..., 4096)
+= 4096
+old_mmap(NULL, 69632, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) =
+0x408d3000
+old_mmap(0x408d3000, 33108, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3,
+0) = 0x408d3000
+old_mmap(0x408e3000, 880, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3,
+0x8000) = 0x408e3000
+close(3) = 0
+munmap(0x40009000, 4096) = 0
+open("/lib/libc.so.0", O_RDONLY) = 3
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0)
+= 0x40009000
+read(3,
+"\177ELF\1\1\1a\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0\300\360\0\0004\0\0\0"...,
+4096) = 4096
+old_mmap(NULL, 368640, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) =
+0x408e4000
+old_mmap(0x408e4000, 309736, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3,
+0) = 0x408e4000
+old_mmap(0x40938000, 5484, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3,
+0x4c000) = 0x40938000
+old_mmap(0x4093a000, 16136, PROT_READ|PROT_WRITE,
+MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x4093a000
+close(3) = 0
+munmap(0x40009000, 4096) = 0
+open("/usr/lib/libbz2.so.1.0", O_RDONLY) = 3
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0)
+= 0x40009000
+read(3,
+"\177ELF\1\1\1a\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0\350\20\0\0004\0\0\0"...,
+4096) = 4096
+old_mmap(NULL, 106496, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) =
+0x4093e000
+old_mmap(0x4093e000, 69244, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3,
+0) = 0x4093e000
+old_mmap(0x40957000, 3684, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3,
+0x11000) = 0x40957000
+close(3) = 0
+munmap(0x40009000, 4096) = 0
+open("/lib/librt.so.0", O_RDONLY) = 3
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0)
+= 0x40009000
+read(3,
+"\177ELF\1\1\1a\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0\370\5\0\0004\0\0\0"..., 4096)
+= 3568
+old_mmap(NULL, 36864, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) =
+0x40958000
+old_mmap(0x40958000, 2784, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3, 0)
+= 0x40958000
+old_mmap(0x40960000, 2964, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3,
+0) = 0x40960000
+close(3) = 0
+munmap(0x40009000, 4096) = 0
+open("/lib/libpthread.so.0", O_RDONLY) = 3
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0)
+= 0x40009000
+read(3,
+"\177ELF\1\1\1a\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0\210>\0\0004\0\0\0"..., 4096)
+= 4096
+old_mmap(NULL, 110592, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) =
+0x40961000
+old_mmap(0x40961000, 47988, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3,
+0) = 0x40961000
+old_mmap(0x40975000, 18408, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3,
+0xc000) = 0x40975000
+old_mmap(0x4097a000, 6552, PROT_READ|PROT_WRITE,
+MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x4097a000
+close(3) = 0
+munmap(0x40009000, 4096) = 0
+open("/lib/libnsl.so.0", O_RDONLY) = 3
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0)
+= 0x40009000
+read(3, "\177ELF\1\1\1a\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0<\3\0\0004\0\0\0"...,
+4096) = 1944
+old_mmap(NULL, 36864, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) =
+0x4097c000
+old_mmap(0x4097c000, 1128, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3, 0)
+= 0x4097c000
+old_mmap(0x40984000, 1280, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3,
+0) = 0x40984000
+close(3) = 0
+munmap(0x40009000, 4096) = 0
+open("/lib/libdl.so.0", O_RDONLY) = 3
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0)
+= 0x40009000
+read(3,
+"\177ELF\1\1\1a\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0\324\7\0\0004\0\0\0"..., 4096)
+= 4096
+old_mmap(NULL, 40960, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) =
+0x40985000
+old_mmap(0x40985000, 5836, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3, 0)
+= 0x40985000
+old_mmap(0x4098e000, 2068, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3,
+0x1000) = 0x4098e000
+close(3) = 0
+munmap(0x40009000, 4096) = 0
+open("/opt/lib/libiconv.so.2", O_RDONLY) = 3
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0)
+= 0x40009000
+read(3, "\177ELF\1\1\1a\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0 &\0\0004\0\0\0"...,
+4096) = 4096
+old_mmap(NULL, 950272, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) =
+0x4098f000
+old_mmap(0x4098f000, 910432, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3,
+0) = 0x4098f000
+old_mmap(0x40a75000, 6164, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3,
+0xde000) = 0x40a75000
+close(3) = 0
+munmap(0x40009000, 4096) = 0
+munmap(0x40006000, 12265) = 0
+ioctl(0, SNDCTL_TMR_TIMEBASE or TCGETS, {B38400 opost isig icanon echo ...})
+= 0
+ioctl(1, SNDCTL_TMR_TIMEBASE or TCGETS, {B38400 opost isig icanon echo ...})
+= 0
+getpid() = 15743
+getrlimit(RLIMIT_STACK, {rlim_cur=8192*1024, rlim_max=RLIM_INFINITY}) = 0
+setrlimit(RLIMIT_STACK, {rlim_cur=2040*1024, rlim_max=RLIM_INFINITY}) = 0
+rt_sigaction(SIGRTMIN, {0x40968e2c, [], 0x4000000 /* SA_??? */}, NULL, 8) =
+0
+rt_sigaction(SIGRT_1, {0x40968ee8, [RTMIN], 0x4000000 /* SA_??? */}, NULL,
+8) = 0
+rt_sigaction(SIGRT_2, {0x4096903c, [], 0x4000000 /* SA_??? */}, NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, [RTMIN], NULL, 8) = 0
+rt_sigprocmask(SIG_UNBLOCK, [RT_1], NULL, 8) = 0
+brk(0) = 0x11b000
+brk(0x11c000) = 0x11c000
+time(NULL) = 1228667735
+brk(0x11d000) = 0x11d000
+brk(0x11e000) = 0x11e000
+time([1228667739]) = 1228667739
+brk(0x11f000) = 0x11f000
+readlink("/root", 0xbee5f5f0, 4095) = -1 EINVAL (Invalid argument)
+readlink("/root/.btg", 0xbee5f5f0, 4095) = -1 EINVAL (Invalid argument)
+readlink("/root/.btg/daemon.ini", 0xbee5f5f0, 4095) = -1 EINVAL (Invalid
+argument)
+stat64("/root/.btg/daemon.ini", {st_mode=S_IFREG|0644, st_size=365, ...}) =
+0
+readlink("/root", 0xbee5f5f0, 4095) = -1 EINVAL (Invalid argument)
+readlink("/root/.btg", 0xbee5f5f0, 4095) = -1 EINVAL (Invalid argument)
+readlink("/root/.btg/daemon.ini", 0xbee5f5f0, 4095) = -1 EINVAL (Invalid
+argument)
+stat64("/root/.btg/daemon.ini", {st_mode=S_IFREG|0644, st_size=365, ...}) =
+0
+stat64("/root/.btg/daemon.ini", {st_mode=S_IFREG|0644, st_size=365, ...}) =
+0
+open("/root/.btg/daemon.ini", O_RDONLY|O_LARGEFILE) = 3
+ioctl(3, SNDCTL_TMR_TIMEBASE or TCGETS, 0xbee60d94) = -1 ENOTTY
+(Inappropriate ioctl for device)
+brk(0x120000) = 0x120000
+brk(0x121000) = 0x121000
+write(1, "<info> [CDataFile::Load] Unable "..., 61<info> [CDataFile::Load]
+Unable to open file. Does it exist?
+) = 61
+close(3) = 0
+--- SIGSEGV (Segmentation fault) @ 0 (0) ---
++++ killed by SIGSEGV +++
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Obviously, something must have gone wrong during cross-compilation, but I
+can't see what.
+
+Thanks in advance,
+
+Alex.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20081208/68a0770d/attachment.html>
+
+From fitzgerald at krudde.nl  Wed Dec 10 12:19:32 2008
+From: fitzgerald at krudde.nl (unknown-user@krudde.nl)
+Date: Wed, 10 Dec 2008 12:19:32 +0100
+Subject: [Btg-devel] btgweb problem (expat reports error code 2)
+In-Reply-To: <1828.212.178.64.154.1228311210.squirrel@jurrie.net>
+References: <492B1AE8.2080604@krudde.nl>	<81c69f9a4f5143c63f3a8f3ef5f544ad.squirrel@webmail.netimage.dk>	<492C7BAE.70303@krudde.nl>	<20081126191233.5d935880@netpc3.home.wojci.dk>	<492F1579.7050001@krudde.nl>	<20081128191020.1001c201@netpc3.home.wojci.dk>	<49303890.2090005@krudde.nl>	<20081128202633.0b5d8e1f@netpc3.home.wojci.dk>	<49317808.9090300@krudde.nl>	<20081129204843.4f1022f2@netpc3.home.wojci.dk>	<4931BEBB.1070809@krudde.nl>	<20081201212358.6e1e14ac@netpc3.home.wojci.dk>	<49366D8F.1090809@krudde.nl>
+	<1828.212.178.64.154.1228311210.squirrel@jurrie.net>
+Message-ID: <493FA5C4.5000405@krudde.nl>
+
+Everybody thanks for the tips/help/suggestions.
+
+Unfortunately I still haven't btg working.
+
+I have tried Transmission and this works out-of-the-box.
+
+For me this is a better alternative, at least at this moment.
+
+regards,
+Fitzgerald.
+
+Jurriaan Nijkamp wrote:
+> Before I switched my server to BSD it used to run Gentoo amd64. I have
+> used BTG 0.9.6 - 0.9.8 on it and used xmlrpc-c from portage.
+>
+> I used an ebuild from this bug thread:
+> http://bugs.gentoo.org/show_bug.cgi?id=231105
+>
+> It pulled in packages from the sunrise repository, xmlrpc-c included, I
+> think. Perhaps that thread is your answer.
+>
+> Good luck,
+> Jurriaan Nijkamp
+>
+>   
+>> I have some problems with using the xmlrpc library from Gentoo with btg.
+>>
+>> BTG refuses to recognize it.
+>>
+>> I tracked it down to the error that the btg configure expects a
+>> XMLRPC_REQUEST macro which is not present.
+>>
+>> Gentoo uses the xmlrpc library from  http://xmlrpc-c.sourceforge.net/.
+>>
+>> Is that the same library btg expects (are there more xmlrpc libraries
+>> flooting around the net)?
+>>
+>> regards,
+>> Fitzgerald.
+>>
+>> Michael Wojciechowski wrote:
+>>     
+>>> On Sat, 29 Nov 2008 23:14:19 +0100 "unknown-user at krudde.nl"
+>>> <fitzgerald at krudde.nl> wrote:
+>>>
+>>>
+>>>       
+>>>> I saw that post, but there was no root-cause or solution followed up.
+>>>>
+>>>>         
+>>> I don't remember how he responded to me. It might have been using IRC or
+>>> e-mail only to me.
+>>>
+>>>
+>>>       
+>>>> The problem looks (at least)  similar..
+>>>>
+>>>>         
+>>> I would like you to try to install the xml-rpc from the Gentoo system
+>>> and try using it instead of the one you are using now (internal vs.
+>>> system wise). I remember that gentoo had patches for xmlrpc, of which I
+>>> merged some of. Maybe it could fix your issues. Do you have a 32 bit
+>>> system you could try to run the web server used by the wwwui? Just to
+>>> see if this is the issue..
+>>>
+>>> The xml-rpc implementation used by PHP is something the developer who
+>>> implemented the wwwui integrated - it could possibly have some errors
+>>> in it.
+>>>
+>>>
+>>>       
+>> _______________________________________________
+>> Btg-devel mailing list
+>> Btg-devel at lists.berlios.de
+>> https://lists.berlios.de/mailman/listinfo/btg-devel
+>>
+>>     
+>
+>
+> _______________________________________________
+> Btg-devel mailing list
+> Btg-devel at lists.berlios.de
+> https://lists.berlios.de/mailman/listinfo/btg-devel
+>   
+
+
+
+From wojci at wojci.dk  Fri Dec 12 10:01:44 2008
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Fri, 12 Dec 2008 10:01:44 +0100 (CET)
+Subject: [Btg-devel] Cross-compiling for WD MBWE
+In-Reply-To: <12a18ef30812080015p4e8b96c8g95c7120c5426983b@mail.gmail.com>
+References: <12a18ef30812080015p4e8b96c8g95c7120c5426983b@mail.gmail.com>
+Message-ID: <08c47d6155e441fe93628e10879376e4.squirrel@webmail.netimage.dk>
+
+Alex Potapenko wrote:
+> I've managed to cross-compile boost 1.35.0, libtorrent rasterbar and btg
+> 0.9.8 for my NAS drive MBWE (http://mybookworld.wikidot.com/).
+>
+> btg-conf runs well, but unfortunately daemon and cli give Segmentation
+> fault
+> error:
+
+Are all the required files/directories present where the daemon can find
+them?
+
+Is your configuration working on pc?
+
+Is it possible to use a debugger and find out what caused the segfault? On
+most (I think) archs you can use a GDB remote part and run the debugger
+itself on your PC. I think that you need more information, that is all.
+
+-- 
+
+Best regards
+
+Michael Wojciechowski
+
+"When they ask how I died, I said, tell them: still angry."
+(Altered Carbon by Richard Morgan)
+
+09F911029D74E35BD84156C5635688C0
+
+
+
+From opotapenko at gmail.com  Sat Dec 13 22:26:47 2008
+From: opotapenko at gmail.com (Alex Potapenko)
+Date: Sat, 13 Dec 2008 23:26:47 +0200
+Subject: [Btg-devel] Cross-compiling for WD MBWE
+In-Reply-To: <08c47d6155e441fe93628e10879376e4.squirrel@webmail.netimage.dk>
+References: <12a18ef30812080015p4e8b96c8g95c7120c5426983b@mail.gmail.com>
+	<08c47d6155e441fe93628e10879376e4.squirrel@webmail.netimage.dk>
+Message-ID: <12a18ef30812131326u584e4234p10e685bca64cf583@mail.gmail.com>
+
+Thanks, I've solved this problem using gdb (had to run with
+LD_LIBRARY_PATH=/opt/lib as some cross-compiled libs differ from native
+ones) and btgdaemon starts successfully.
+Unfortunately, I'm unable to authorize using accounts created with
+btgpasswd: btgncli first requests Username, then Password but doesn't start
+the ncurses interface (the only message I get is "(clientdynconfig.cpp:64)
+Can't find file /root/.btg/client.dynconfig").
+Any suggestions?
+Thank you,
+Alex
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20081213/9271005a/attachment.html>
+
+From contactstep52 at yahoo.com  Sat Dec 13 09:55:40 2008
+From: contactstep52 at yahoo.com (PAUL STEVENSON)
+Date: 13 Dec 2008 08:55:40 +0000
+Subject: [Btg-devel] **JOB OPENING**
+Message-ID: <20081213085540.3888.qmail@de007005-ve.idaq.com>
+
+
+Qingdao Yida Rubber Co., Ltd 
+903, Edificio Guangfa Finace, 
+42 Shangdong Road 
+Qingdao, China 
+tel: 86 0532 8666 0198 
+E-mail: pscontactstep92 at googlemail.com 
+
+Dear candidate, 
+In response to your initial ad in the directory search of employment that we have 
+decided to offer you a place in our work part-time program.Since 
+beginning of the creation of our company, in exchange for Asian market 
+Company 
+has been an industry leader as a mediator in the 
+exchange of goods, services and payments. We have made great sales and 
+profits in Asia, Europe and the U.S. markets and now we are looking 
+to 
+reliable that the representatives are willing to work from home. : 
+DESCRIPTION OF WORK 
+1. Receive payment from customers, either by examination or bank transfer 
+2. Payments in cash in its bank 
+3. The deduction of 10% will be his commission of each payment processed. 
+4. Towards the balance after the deduction of 10% commission to offices that 
+will be provided by us as soon as funds are available 
+KEY REQUIREMENTS: 
+21 or more years old, legally capable responsible ready to work 3-4 hours 
+per week, with knowledge of PC, e-mail and internet experience 
+(minimum). There is no need to pay all costs to get started. 
+Please contact our recruitment department, sends us a brief note 
+on which you should include: 
+
+Full name: 
+Address: 
+City: 
+State: 
+Postal Code: 
+Age: 
+Marital status: 
+Nationality: 
+Phone home: 
+Mobile: 
+Current positions: 
+
+
+
+Paul Stevenson 
+Staffing and Recruiting Dept., 
+Regional Manager, 
+Qingdao Yida Rubber Co., Ltd 
+E-mail: pscontactstep92 at gmail.com
+
+
+
+
+
+From wojci at wojci.dk  Mon Dec 15 14:19:11 2008
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Mon, 15 Dec 2008 14:19:11 +0100 (CET)
+Subject: [Btg-devel] Cross-compiling for WD MBWE
+In-Reply-To: <12a18ef30812140317p4eae3303n1436737fcf2e4ee4@mail.gmail.com>
+References: <12a18ef30812080015p4e8b96c8g95c7120c5426983b@mail.gmail.com>
+	<08c47d6155e441fe93628e10879376e4.squirrel@webmail.netimage.dk>
+	<12a18ef30812140317p4eae3303n1436737fcf2e4ee4@mail.gmail.com>
+Message-ID: <e0b6b8c4311a4694fdf1aeaef5b13aeb.squirrel@webmail.netimage.dk>
+
+Alex Potapenko wrote:
+
+> I do get some other feedback from btgncli: a couple minutes after entering
+> password i get
+
+Any logs from the daemon I can look at? Like the ones produced by
+"btgdaemon -v -D -n".
+
+-- 
+
+Best regards
+
+Michael Wojciechowski
+
+"When they ask how I died, I said, tell them: still angry."
+(Altered Carbon by Richard Morgan)
+
+09F911029D74E35BD84156C5635688C0
+
+
+
+From cocacola_prize_uk212 at yahoo.com.hk  Sat Dec 20 05:07:48 2008
+From: cocacola_prize_uk212 at yahoo.com.hk (=?big5?q?Claim=20cocacola?=)
+Date: Fri, 19 Dec 2008 20:07:48 -0800 (PST)
+Subject: [Btg-devel] CONGRATULATIONS YOU WON OUR 987,
+	500 Coca-cola PROMO BT:12 052006/
+Message-ID: <882964.33646.qm@web111014.mail.gq1.yahoo.com>
+
+?????????????????cocacola_prize_uk212 at yahoo.com.hk
+
+
+
+- THE COCA-COLA COMPANY OFFICIAL PRIZE NOTIFICATION, We are pleased to inform you of the result of the just concluded annual final draws held on the (5th 12, 2008) by WEST AFRICA Coca-Cola PROMO,in conjunction with the British American Tobacco Worldwide Promotion, your email was among the 20 Lucky winners who won Nine Hundred And Eight Seven Thousand , Five Hundred Pounds STERLINGS each on the THE COCA-COLA COMPANY PROMOTION . However the results were released on the 17, 12, 2008, and your email was attached to ticket number (7PWYZ2006) and ballot number (BT:12052006/20The online draws was conducted by a random selection of email addresses from an exclusive list of 29,031 E-mail addresses of individuals and corporate bodies picked by an advanced automated random computer search from the internet. However, no tickets were sold but all email addresses were assigned to different ticket numbers for representation and privacy. The selection process was carried out through random selection in our computerized email selection machine (TOPAZ) from a database of over 250,000 email addresses drawn from all the continents of the world. This Lottery is approved by the British Gaming Board and also Licensed by the The International Association of Gaming Regulators (IAGR).This lottery is the 3rd of its kind and we intend to sensitize the public. In other to claim your Nine Hundred And Eight Seven Thousand , Five Hundred Pounds STERLINGS prize winning, which has been deposited in a designated bank. However, you will have to fill the form below and send it to the Promotion manager of THE COCA COLA COMPANY for verification and then you will be directed to the bank where a cheque of Nine Hundred And Eight Seven Thousand , Five Hundred Pounds STERLINGS has already been deposited in your favor. CLAIMS PROCCESSING FORM: NAME:..AGE:....SEX:....ADDRESS:..EMAIL:..PHONE:..OCCUPATION:... COMPANY:.. COUNTRY. Please you are advised to complete the form and send it immediately to our Promotion manager fiduciary Agent through email or fax for prompt collection of your fund from the designated bank or courier company, (CONTACT PROMOTION FUDICIARY AGENT) Name: SMITH TOM E MAIL: claim_prize_cocacola at live.com You are to keep all lotto information away from the general public *Staff of Coca-Cola and the British American Tobacco Company are not to partake in this Lottery Promotions. Note: You are to state how you want your winning fund: 1) By Courier Service 2) By Online Bank Transfer accept my hearty congratulations once again!  
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20081219/51182dd3/attachment.html>
+
+From laxathom at fedoraproject.org  Tue Dec 30 04:35:43 2008
+From: laxathom at fedoraproject.org (Xavier Lamien)
+Date: Tue, 30 Dec 2008 04:35:43 +0100
+Subject: [Btg-devel] btgdaemon is running but not downloading
+Message-ID: <62bc09df0812291935u75d99c88iacae66ac3b32f122@mail.gmail.com>
+
+Hello folks,
+
+firstly, an happy new year to all of you guys in the time you will get
+this mail.
+
+I'm currently having problem to get btgdaemon working properly.
+Once launched, through the web interface after logged in, all my
+downloads are freezing to 0% (after 2 hours of waiting and still
+continue) from any tracker i can test.
+Seeder and leecher status are fine.
+
+btgdaemon is not enough verbose to tell me what is going on.
+
+
+Configuration details :
+---------------------------
+btg-0.9.8
+wwwbtg-0.9.8
+rb_libtorrent-0.12 (libtorrent-rasterbar)
+boost-1.33.1
+
+daemon.ini :
+transport = xml-rpc
+work_dir = nfs mount (with group writable)
+
+log at startup :
+----------------------
+ Verbose logging enabled.
+ config: '/etc/btg/daemon.ini'.
+ dem: config read from '/etc/btg/daemon.ini'.
+ Sending status using file names.
+ Using session file from config: '/var/lib/btg/session'.
+ Transport, XML-RPC, created and initialized.
+
+ btgdaemon version 0.9.8, TRUNK.
+  Ready to accept clients.
+  hdl: Checking limits and alerts.
+ Tracker reply alert: filename 'manga_test', status = 200 OK
+ Tracker reply alert: filename 'Fedora-10-x86_64-Live-KDE.torrent',
+status = 200 OK
+ Tracker reply alert: filename 'barcode_demo_art.torrent', status = 200 OK
+ hdl: Checking limits and alerts.
+ hdl: Updating limits.
+ hdl: Checking limits and alerts.
+ ctn: Peer ID used: '0000000000000000000000000000000000000000'.
+ hdl: Updating seed counters.
+ hdl: Checking limits and alerts.
+ hdl: Updating limits.
+ hdl: Checking limits and alerts.
+
+-- 
+Xavier.t Lamien
+--
+http://fedoraproject.org/wiki/XavierLamien
+GPG-Key ID: F3903DEB
+Fingerprint: 0F2A 7A17 0F1B 82EE FCBF 1F51 76B7 A28D F390 3DEB
+
+
+From wojci at wojci.dk  Wed Dec 31 13:39:34 2008
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Wed, 31 Dec 2008 13:39:34 +0100
+Subject: [Btg-devel] btgdaemon is running but not downloading
+In-Reply-To: <62bc09df0812291935u75d99c88iacae66ac3b32f122@mail.gmail.com>
+References: <62bc09df0812291935u75d99c88iacae66ac3b32f122@mail.gmail.com>
+Message-ID: <20081231133934.747c51e6@netpc4.home.wojci.dk.home.wojci.dk>
+
+On Tue, 30 Dec 2008 04:35:43 +0100 "Xavier Lamien"
+<laxathom at fedoraproject.org> wrote:
+
+> I'm currently having problem to get btgdaemon working properly.
+> Once launched, through the web interface after logged in, all my
+> downloads are freezing to 0% (after 2 hours of waiting and still
+> continue) from any tracker i can test.
+
+Are your torrents in fact started? If libtorrent cannot write to the
+files in your work directory, it will throw an exception, caught and
+logged by BTG. This will stop the torrents.
+
+Did you remember to configure "torrent-ip" and "torrent-range" in
+your .btg/daemon.ini?
+
+> btgdaemon is not enough verbose to tell me what is going on.
+
+The application will not tell you if you use incorrect daemon.ini
+entries, like "torrent-ip".
+
+There is a debug option, which can be enabled at compile
+time and using the "-D" argument to the daemon. You could also use
+wireshark to log the BT protocol and see if you can figure out what is
+going on.
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+"When they ask how I died, I said, tell them: still angry." 
+(Altered Carbon by Richard Morgan)
+
+
+From opotapenko at gmail.com  Sun Dec 14 12:22:55 2008
+From: opotapenko at gmail.com (Alex Potapenko)
+Date: Sun, 14 Dec 2008 11:22:55 -0000
+Subject: [Btg-devel] Cross-compiling for WD MBWE
+In-Reply-To: <08c47d6155e441fe93628e10879376e4.squirrel@webmail.netimage.dk>
+References: <12a18ef30812080015p4e8b96c8g95c7120c5426983b@mail.gmail.com>
+	<08c47d6155e441fe93628e10879376e4.squirrel@webmail.netimage.dk>
+Message-ID: <12a18ef30812140317p4eae3303n1436737fcf2e4ee4@mail.gmail.com>
+
+Some update.
+
+I do get some other feedback from btgncli: a couple minutes after entering
+password i get
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+(statemachine.cpp:713) Dying: attempt to change to an illegal state.
+From=SM_ERROR, to=SM_ERROR.
+0: create new session.
+Enter a number:
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Entering '0' gives me "Error: Unable to create new session."
+
+Entiring any other number just gets me promped to enter a number again.
+
+Alex
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20081214/8e65d32c/attachment.html>
+

@@ -1,0 +1,23 @@
+From mounir.lamouri at gmail.com  Sun Mar 18 13:28:04 2007
+From: mounir.lamouri at gmail.com (Mounir Lamouri)
+Date: Sun, 18 Mar 2007 13:28:04 +0100
+Subject: [Btg-devel] Gentoo ebuild for btg-0.9.0
+Message-ID: <45FD3054.4090005@gmail.com>
+
+Hello,
+
+I've wrote a Gentoo ebuild for btg-0.9.0. Actually, it is based on the 
+actual ebuild (from tarball) but improved. Indeed the ebuild had some 
+various mistakes.
+You can found the bug report on Gentoo Bugzilla here : 
+https://bugs.gentoo.org/show_bug.cgi?id=170925
+The ebuild is also on an overlay, Gentoo Sunrise 
+(www.gentoo-sunrise.org) and the file can be found here : 
+http://gentoo-sunrise.org/svn/sunrise/net-p2p/btg/btg-0.9.0.ebuild
+
+In addition, rb_libtorrent ebuild is now useless because it is in 
+portage, named rblibtorrent.
+
+Mounir Lamouri
+
+

@@ -1,0 +1,32 @@
+From ciccioaspian at email.it  Sat Jun  5 13:13:56 2010
+From: ciccioaspian at email.it (ciccioaspian)
+Date: Sat, 05 Jun 2010 13:13:56 +0200
+Subject: [Btg-devel] Thank you!
+Message-ID: <4C0A3174.20009@email.it>
+
+Hello!
+Thanks for you help! ;-)
+i was able to build btg 2 rc3 on fedora 12
+
+
+Thank you  very much for btg! is fantastic.. :) :-*
+I want to post a problem, i don't know if it is a bug.
+from my windows computer i connect to my linux server and if i use 
+firefox is not able to login at 192.168.1.101/btg
+i put the login and password and then press login button and the page 
+doesn't change if i use internet explore i can access
+
+P.S. In firefox I did a click on the language flag and then again on the 
+english flag, and now i'm able to login with firefox.
+
+INCREDIBLE!!!!
+ 
+ 
+ --
+ Caselle da 1GB, trasmetti allegati fino a 3GB e in piu' IMAP, POP3 e SMTP autenticato? GRATIS solo con Email.it http://www.email.it/f
+ 
+ Sponsor:
+ Cerchi un jeans alla moda a meno di 20 Euro? Visita Piazzaitalia.it e scopri tutta la collezione primavera-estate 2010
+ Clicca qui: http://adv.email.it/cgi-bin/foclick.cgi?mid=10489&d=5-6
+
+

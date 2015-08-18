@@ -1,0 +1,256 @@
+From alias at jurrie.net  Thu Oct 23 22:38:49 2008
+From: alias at jurrie.net (Jurriaan Nijkamp)
+Date: Thu, 23 Oct 2008 22:38:49 +0200
+Subject: [Btg-devel] BTG & FreeBSD
+Message-ID: <op.ujhvmzaahdf5ma@localhost>
+
+Hi,
+
+I have no idea if this is the proper place to ask, but I will give it a  
+shot anyway.
+
+I changed my home server from Gentoo Linux to FreeBSD 7. No specific  
+reason other than my curiosity. Anyway, all is working fine so far, except  
+for BTG which is completely crashing the system after adding a torrent  
+(using www ui). 0.9.9-RC1 crashes the system immediately after uploading a  
+torrent. When turning on the server's screen, I see nothing but characters  
+flashing over the screen really quick. I also just tried 0.9.8, which  
+started to download, but ended up freezing the server within the minute  
+(can still ping the server, but can't do anything else on it).
+
+I installed all packages using pkg_add and compiled BTG myself. I did  
+notice the FreeBSD notes in the current HOWTO, but could not put them to  
+use. I got some error about not being able to use -ltorrent-rasterbar. I  
+have no further info at this time, since I still have to reboot the  
+crashed server from my 0.9.8 attempt.
+
+I hope this is some mistake on my side and anyone can tell me what I am  
+doing wrong, since there is no better torrent daemon for linux/unix  
+available than BTG, in my opinion.
+
+Regards,
+Jurriaan Nijkamp
+
+
+From wojci at wojci.dk  Fri Oct 24 09:11:20 2008
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Fri, 24 Oct 2008 09:11:20 +0200 (CEST)
+Subject: [Btg-devel] BTG & FreeBSD
+In-Reply-To: <op.ujhvmzaahdf5ma@localhost>
+References: <op.ujhvmzaahdf5ma@localhost>
+Message-ID: <64fb1864f5b2da02e6e3604068865a62.squirrel@webmail.netimage.dk>
+
+Jurriaan Nijkamp wrote:
+
+> I changed my home server from Gentoo Linux to FreeBSD 7. No specific
+> reason other than my curiosity. Anyway, all is working fine so far, except
+> for BTG which is completely crashing the system after adding a torrent
+> (using www ui). 0.9.9-RC1 crashes the system immediately after uploading a
+> torrent. When turning on the server's screen, I see nothing but characters
+> flashing over the screen really quick.
+
+Are they from the BTG daemon process which logs to stdout?
+
+> I also just tried 0.9.8, which
+> started to download, but ended up freezing the server within the minute
+> (can still ping the server, but can't do anything else on it).
+
+An user space application is not supposed to be able to crash your whole
+server. A faulty driver could lead to the described behaviour.
+
+Can you simulate IO load in any other way to make sure that its not the
+fault of BTG/webserver?
+
+I am currently not aware of any issues with BTG on FreeBSD. What you tell
+me is not enough to identify any problem with your BTG installation.
+
+-- 
+
+Best regards
+
+Michael Wojciechowski
+
+09F911029D74E35BD84156C5635688C0
+
+
+
+From alias at jurrie.net  Fri Oct 24 11:30:12 2008
+From: alias at jurrie.net (Jurriaan Nijkamp)
+Date: Fri, 24 Oct 2008 11:30:12 +0200
+Subject: [Btg-devel] BTG & FreeBSD
+In-Reply-To: <64fb1864f5b2da02e6e3604068865a62.squirrel@webmail.netimage.dk>
+References: <op.ujhvmzaahdf5ma@localhost>
+	<64fb1864f5b2da02e6e3604068865a62.squirrel@webmail.netimage.dk>
+Message-ID: <op.ujivcmcrhdf5ma@sunny>
+
+Hello again,
+
+I'm giving the installation another shot and this time I am adding the  
+FreeBSD specific configuration flags which were mentioned in the HOWTO  
+(current) on the website. The configure step gives me an error, though. I  
+am applying them to 0.9.8 at this moment, but 0.9.9-RC1 gave me the same  
+error.
+
+Short version -- configure: error: Unable to link with required libraries.
+
+I have uploaded my config.log to http://jurrie.net/misc/config.log.bz2  
+hoping you are willing to check it out and see if you can find what's  
+wrong. Though I have some experience compiling, I'm not adept enough to  
+figure out these kinds of errors.
+
+The BSD installation is very fresh (new install this morning) and I only  
+added some neccesary packages required for BTG. I added all of them using  
+pkg_add, not by compiling them from ports.
+
+Noteable:
+- rblibtorrent 0.13
+- boost 1.34.1
+- gnutls 2.4.1_1
+- autotools 20080819
+- curl 7.18.0
+
+FreeBSD 7.0-p5, amd64
+
+I ran autogen.sh and am configuring like this:
+
+./configure --enable-www --enable-cli --enable-url  
+LIBTORRENT_LIBS="-L/usr/local/lib -ltorrent-rasterbar"  
+LIBTORRENT_CFLAGS="-DTORRENT_USE_OPENSSL -D_THREAD_SAFE -pthread  
+-I/usr/local/include -I/usr/local/include/libtorrent" LIBS="-lpthread"
+
+(the quotes were needed or configure wouldn't accept it)
+
+If you need any other information from me, I'd be happy to oblige.
+Thank you very much in advance.
+
+Regards,
+Jurriaan Nijkamp
+
+
+From alias at jurrie.net  Fri Oct 24 13:31:36 2008
+From: alias at jurrie.net (Jurriaan Nijkamp)
+Date: Fri, 24 Oct 2008 13:31:36 +0200
+Subject: [Btg-devel] BTG & FreeBSD
+In-Reply-To: <op.ujivcmcrhdf5ma@sunny>
+References: <op.ujhvmzaahdf5ma@localhost>
+	<64fb1864f5b2da02e6e3604068865a62.squirrel@webmail.netimage.dk>
+	<op.ujivcmcrhdf5ma@sunny>
+Message-ID: <op.uji0yyprhdf5ma@sunny>
+
+I hate replying to myself, but I guess this time it's a good thing.
+
+It was a wild guess of mine, but I made a minor change to the configure  
+line. I replaced
+
+LIBTORRENT_LIBS="-L/usr/local/lib -ltorrent-rasterbar"
+
+with
+
+LIBTORRENT_LIBS="-L/usr/local/lib -ltorrent"
+
+and the configure stage completed. Afterwards a make install completed the  
+job.
+
+This time around I used apache 2.0 (2.2 previously) since it did not  
+require loading the kernel module accf_http. I don't have any proof, but  
+my previous freezes may have had something to do with that module. Pure  
+speculation though.
+
+Anway, I launched my btgdaemon a few minutes ago and it is happily  
+downloading a torrent at a nice speed, whereas previously the server just  
+froze after a few seconds.
+
+This case is closed now. I hope it will be of use to anyone out there ;-)
+
+On Fri, 24 Oct 2008 11:30:12 +0200, Jurriaan Nijkamp <alias at jurrie.net>  
+wrote:
+
+> Hello again,
+>
+> I'm giving the installation another shot and this time I am adding the
+> FreeBSD specific configuration flags which were mentioned in the HOWTO
+> (current) on the website. The configure step gives me an error, though. I
+> am applying them to 0.9.8 at this moment, but 0.9.9-RC1 gave me the same
+> error.
+>
+> Short version -- configure: error: Unable to link with required  
+> libraries.
+>
+> I have uploaded my config.log to http://jurrie.net/misc/config.log.bz2
+> hoping you are willing to check it out and see if you can find what's
+> wrong. Though I have some experience compiling, I'm not adept enough to
+> figure out these kinds of errors.
+>
+> The BSD installation is very fresh (new install this morning) and I only
+> added some neccesary packages required for BTG. I added all of them using
+> pkg_add, not by compiling them from ports.
+>
+> Noteable:
+> - rblibtorrent 0.13
+> - boost 1.34.1
+> - gnutls 2.4.1_1
+> - autotools 20080819
+> - curl 7.18.0
+>
+> FreeBSD 7.0-p5, amd64
+>
+> I ran autogen.sh and am configuring like this:
+>
+> ./configure --enable-www --enable-cli --enable-url
+> LIBTORRENT_LIBS="-L/usr/local/lib -ltorrent-rasterbar"
+> LIBTORRENT_CFLAGS="-DTORRENT_USE_OPENSSL -D_THREAD_SAFE -pthread
+> -I/usr/local/include -I/usr/local/include/libtorrent" LIBS="-lpthread"
+>
+> (the quotes were needed or configure wouldn't accept it)
+>
+> If you need any other information from me, I'd be happy to oblige.
+> Thank you very much in advance.
+>
+> Regards,
+> Jurriaan Nijkamp
+> _______________________________________________
+> Btg-devel mailing list
+> Btg-devel at lists.berlios.de
+> https://lists.berlios.de/mailman/listinfo/btg-devel
+
+
+
+-- 
+Using Opera's revolutionary e-mail client: http://www.opera.com/mail/
+
+
+From gwilliams at williamschambers.co.uk  Sat Oct 25 08:37:06 2008
+From: gwilliams at williamschambers.co.uk (Garry Williams)
+Date: Sat, 25 Oct 2008 02:37:06 -0400 (EDT)
+Subject: [Btg-devel] Garry Williams
+Message-ID: <20081025063706.592E173458@mailbox.finits.com>
+
+
+Garry Williams
+13 North End Croydon CR9 1RN
+LONDON UK
+Email: g.willims01 at live.com
+
+
+I am  Garry Williams, Barrister and  Solicitor.This mail is Written and intended to solicit your  assistance to  be presented
+
+as NEXT OF KIN to my Late Client, Mr. William Barnes, (Colorado USA). Mr. William Barnes made a fixed Deposit of Fund valued at USD25M (Twenty
+Five  Million United States Dollars Only) with a Security Firm in London  and  unfortunately lost his life aboard Egypt Air Flight 990, which
+crashed in  to the  Atlantic Ocean on November 2nd, 1999. (news.bbc.co.uk/1/hi/world/americas/502503.stm) and  left no clear beneficiary as Next of Kin except some vital documents  related  to the Deposit still with me.The Governing Body of the Security  Company  where  the funds had been deposited has contacted me on this matter and I am  yet to provide the Next of Kin to lay claims to the Fund. Under a  clear  and  legitimate agreement with you, I shall seek your consent to be  presented  as the  next of Kin so that my late Client?s Fund will not be confiscated by  the  Security Company.For the sake of transparency on this matter, you are  free  to make  immediate contact with me through my  E-mail:g.willims01 at live.com
+for  further information relating to this Matter.
+
+Thank you very much for your anticipated acceptance  while we expect your prompt response.
+
+Know that  It does not matter the country you come from or your  color everything would be taken care of.
+
+Yours faithfully,
+
+Garry Williams
+
+Email: g.willims01 at live.com
+
+
+
+
+
+

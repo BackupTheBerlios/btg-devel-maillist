@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Btg-devel] btgweb problem (expat reports error code 2)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/btg-devel/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20btgweb%20problem%20%28expat%20reports%20error%20code%202%29&In-Reply-To=%3C20081126191233.5d935880%40netpc3.home.wojci.dk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000072.html">
+   <LINK REL="Next"  HREF="000074.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Btg-devel] btgweb problem (expat reports error code 2)</H1>
+    <B>Michael Wojciechowski</B> 
+    <A HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20btgweb%20problem%20%28expat%20reports%20error%20code%202%29&In-Reply-To=%3C20081126191233.5d935880%40netpc3.home.wojci.dk%3E"
+       TITLE="[Btg-devel] btgweb problem (expat reports error code 2)">wojci at wojci.dk
+       </A><BR>
+    <I>Wed Nov 26 19:12:33 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000072.html">[Btg-devel] btgweb problem (expat reports error code 2)
+</A></li>
+        <LI>Next message: <A HREF="000074.html">[Btg-devel] btgweb problem (expat reports error code 2)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#73">[ date ]</a>
+              <a href="thread.html#73">[ thread ]</a>
+              <a href="subject.html#73">[ subject ]</a>
+              <a href="author.html#73">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Tue, 25 Nov 2008 23:26:54 +0100 &quot;<A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">unknown-user at krudde.nl</A>&quot;
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">fitzgerald at krudde.nl</A>&gt; wrote:
+
+&gt;<i> Well, it took me some effort to update to 0.9.9-RC2 (I am running on
+</I>&gt;<i> an AMD64):
+</I>
+AMD64 is one of the archs btg has been tested on, at least using
+FreeBSD.
+
+&gt;<i> - first I got complaints during linking due to missing PIC-enabled
+</I>&gt;<i> libraries (I had to rebuild boost and rb_libtorrent with -fPIC)
+</I>&gt;<i> - then I had issues during linking with pthread stuff which I solved
+</I>&gt;<i> (after some Google-ing) with adding  -pthread to the LDFLAGS for the
+</I>&gt;<i> Makefile in
+</I>&gt;<i> daemon/auth and UI/cli/ncurses.
+</I>
+Yes .. it sucks that you use gentoo. It has some issues.
+ 
+&gt;<i> Then I got a working btg but the web UI gave exactly the same problem
+</I>&gt;<i> as before :-(
+</I>
+What xml-rpc lib are you using? The built-in or the one provided by your
+distro?
+
+&gt;<i> expat reports error code 2
+</I>&gt;<i>     description: syntax error
+</I>&gt;<i>     line: 1
+</I>&gt;<i>     column: 0
+</I>&gt;<i>     byte index: 0
+</I>&gt;<i>     total bytes: 0
+</I>&gt;<i> 
+</I>&gt;<i>     data beginning 0 before byte index: POST / HTTP/1.0
+</I>&gt;<i> Host: 127.0.0.1
+</I>&gt;<i> Content-Type: text/xml
+</I>&gt;<i> 
+</I>&gt;<i> Would you have any more ideas/suggestions?
+</I>&gt;<i> I have not installed wireshark (yet) to capture the exact http traffic
+</I>&gt;<i> but it definitely is not working for me somehow..
+</I>
+Give me a wireshark dump of the traffic between the wwwui and the
+daemon. I will try to compare it to what I get here.
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+&quot;When they ask how I died, I said, tell them: still angry.&quot; 
+(Altered Carbon by Richard Morgan)
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000072.html">[Btg-devel] btgweb problem (expat reports error code 2)
+</A></li>
+	<LI>Next message: <A HREF="000074.html">[Btg-devel] btgweb problem (expat reports error code 2)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#73">[ date ]</a>
+              <a href="thread.html#73">[ thread ]</a>
+              <a href="subject.html#73">[ subject ]</a>
+              <a href="author.html#73">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/btg-devel">More information about the Btg-devel
+mailing list</a><br>
+</body></html>

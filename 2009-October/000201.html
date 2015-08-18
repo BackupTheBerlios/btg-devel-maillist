@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Btg-devel] 2.0.0 RC2
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/btg-devel/2009-October/index.html" >
+   <LINK REL="made" HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%202.0.0%20RC2&In-Reply-To=%3C20091005111559.GA32028%40bafster.baflabs.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000200.html">
+   <LINK REL="Next"  HREF="000202.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Btg-devel] 2.0.0 RC2</H1>
+    <B>Bohdan Linda</B> 
+    <A HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%202.0.0%20RC2&In-Reply-To=%3C20091005111559.GA32028%40bafster.baflabs.org%3E"
+       TITLE="[Btg-devel] 2.0.0 RC2">bohdan.linda at seznam.cz
+       </A><BR>
+    <I>Mon Oct  5 13:15:59 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000200.html">[Btg-devel] 2.0.0 RC2
+</A></li>
+        <LI>Next message: <A HREF="000202.html">[Btg-devel] 2.0.0 RC2
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#201">[ date ]</a>
+              <a href="thread.html#201">[ thread ]</a>
+              <a href="subject.html#201">[ subject ]</a>
+              <a href="author.html#201">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 05.10.2009 12:32 +0200, Michael Wojciechowski wrote:
+&gt;<i> This is still not good enough. Could it be, that you are using the
+</I>&gt;<i> btgdaemon from trunk, but clients from some earlier release? That would
+</I>&gt;<i> not work and it would explain what you are seeing now.
+</I>
+Version seems to be the same
+
+$ btgdaemon --help
+BTG daemon (version 2.0.0, SVN rev. 642) options:
+
+$ btgcli --help
+BTG client (version 2.0.0, SVN rev. 642) options:
+
+
+I have tried to enter a non-existing username and the behaviour seems is
+the same. This leads me to the question, if btg-auth is properly
+recognized by the btgdaemon. Can I somehow verify this??
+
+I am happy to do any tests/recompilations etc, just what I need from you is
+pointing in some direction. BTG is just worth that. So summ up the
+questions:
+
+1. what happens with your installation when you enter non-existing user.
+Are you asked for pwd or are you aborted with &quot; btg*cli: Internal error:
+start up helper not initialized.&quot;
+
+2. am I able to verify which users are properly loaded by btgdaemon?
+
+3. what are the explicit causes for message &quot;Sending error to client (0):
+'Failed to authorize user.'.&quot;
+
+Thank you,
+-- 
+Bohdan Linda
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000200.html">[Btg-devel] 2.0.0 RC2
+</A></li>
+	<LI>Next message: <A HREF="000202.html">[Btg-devel] 2.0.0 RC2
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#201">[ date ]</a>
+              <a href="thread.html#201">[ thread ]</a>
+              <a href="subject.html#201">[ subject ]</a>
+              <a href="author.html#201">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/btg-devel">More information about the Btg-devel
+mailing list</a><br>
+</body></html>

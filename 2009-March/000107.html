@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Btg-devel] Configure problems with btg 0.99,	libtorrent-rasterbar-0.14.2,	boost_1_38_0 during attempted building from source on FreeBSD 7.1
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/btg-devel/2009-March/index.html" >
+   <LINK REL="made" HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20Configure%20problems%20with%20btg%200.99%2C%0A%09libtorrent-rasterbar-0.14.2%2C%0A%09boost_1_38_0%20during%20attempted%20building%20from%20source%20on%20FreeBSD%207.1&In-Reply-To=%3C205ad7060903020306u15b8cfdfua9d824b453c981b7%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000108.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Btg-devel] Configure problems with btg 0.99,	libtorrent-rasterbar-0.14.2,	boost_1_38_0 during attempted building from source on FreeBSD 7.1</H1>
+    <B>christophe taranotte</B> 
+    <A HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20Configure%20problems%20with%20btg%200.99%2C%0A%09libtorrent-rasterbar-0.14.2%2C%0A%09boost_1_38_0%20during%20attempted%20building%20from%20source%20on%20FreeBSD%207.1&In-Reply-To=%3C205ad7060903020306u15b8cfdfua9d824b453c981b7%40mail.gmail.com%3E"
+       TITLE="[Btg-devel] Configure problems with btg 0.99,	libtorrent-rasterbar-0.14.2,	boost_1_38_0 during attempted building from source on FreeBSD 7.1">christophe.taranotte at gmail.com
+       </A><BR>
+    <I>Mon Mar  2 12:06:53 CET 2009</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000108.html">[Btg-devel] Configure problems with btg 0.99, libtorrent-rasterbar-0.14.2, boost_1_38_0 during attempted building from source on FreeBSD 7.1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#107">[ date ]</a>
+              <a href="thread.html#107">[ thread ]</a>
+              <a href="subject.html#107">[ subject ]</a>
+              <a href="author.html#107">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Greetings,
+I am trying to build from source btg 0.99 with libtorrent-rasterbar-0.14.2
+and boost_1_38_0 on FreeBSD 7.1.
+
+libtorrent-rasterbar-0.14.2 and boost_1_38_0 have already been built from
+source.
+
+My configure arguments (under bash) are as follows:
+
+#./configure --enable-www --enable-cli --enable-url --enable-command-list
+--enable-session-saving --prefix='/usr/local/opt' \
+LIBTORRENT_LIBS=&quot;-L/usr/local/opt/lib -ltorrent-rasterbar&quot;
+LIBTORRENT_CFLAGS=&quot;-DTORRENT_USE_OPENSSL -D_THREAD_SAFE -pthread
+-I/usr/local/opt/include -I/usr/local/opt/include/libtorrent&quot; \
+LIBS=&quot;-lpthread&quot; BOOST_LDFLAGS=&quot;-L/usr/local/opt/lib&quot;
+BOOST_CPPFLAGS=&quot;-I/usr/local/opt/include&quot; \
+--with-rblibtorrent=/usr/local/opt/lib
+--with-boost-system=boost_system-gcc42-mt-1_38 \
+--with-boost-iostreams=boost_iostreams-gcc42-mt-1_38
+--with-boost-filesystem=boost_filesystem-gcc42-mt-1_38 \
+--with-boost-date-time=boost_date_time-gcc42-mt-1_38
+--with-boost-thread=boost_thread-gcc42-mt-1_38
+--with-boost-program-options=boost_program_options-gcc42-mt-1_38
+
+The configure script stops and returns the following error:
+..../....
+configure: Using BOOST_LDFLAGS = -L/usr/local/opt/lib configure: Using
+BOOST_CPPFLAGS = -I/usr/local/opt/include checking whether the Boost::System
+library is available... yes checking for exit in
+-lboost_system-gcc42-mt-1_38... yes checking whether the Boost::IOStreams
+library is available... yes checking for main in
+-lboost_iostreams-gcc42-mt-1_38... yes checking whether the
+Boost::Filesystem library is available... yes checking for exit in
+-lboost_filesystem-gcc42-mt-1_38... no checking for exit in
+-lboost_filesystem-boost_filesystem-gcc42-mt-1_38... no configure: error:
+Could not link against boost_filesystem-boost_filesystem-gcc42-mt-1_38 ! #
+
+In the attached config.log, I have:
+.../...
+configure:25245: checking whether the Boost::Filesystem library is available
+configure:25279: g++ -c -g -O2 -D_THREAD_SAFE -I/usr/local/include
+-I/usr/local/opt/include -I/usr/local/opt/include conftest.cpp &gt;&amp;5
+configure:25286: $? = 0 configure:25308: result: yes configure:25479:
+checking for exit in -lboost_filesystem-gcc42-mt-1_38 configure:25514: g++
+-o conftest -g -O2 -D_THREAD_SAFE -I/usr/local/include
+-I/usr/local/opt/include -I/usr/local/opt/include -L/usr/local/lib
+-L/usr/loca /usr/bin/ld: warning: libboost_system-gcc42-mt-1_38.so.1.38.0,
+needed by /usr/local/opt/lib/libboost_filesystem-gcc42-mt-1_38.so, not found
+(try using -rpath /usr/local/opt/lib/libboost_filesystem-gcc42-mt-1_38.so:
+undefined reference to `boost::system::get_system_category()'
+/usr/local/opt/lib/libboost_filesystem-gcc42-mt-1_38.so: undefined reference
+to `boost::system::get_generic_category()' .../...
+
+I am at a loss here: the script finds/tests
+libboost_system-gcc42-mt-1_38.so.1.38.0
+and libboost_iostreams-gcc42-mt-1_38.so.1.38.0 but not
+libboost_filesystem-gcc42-mt-1_38.so.1.38.0
+
+libtorrent-rasterbar was successfully built with
+libboost_filesystem-gcc42-mt-1_38.so.1.38.0
+
+Is it a problem with boost 1.38.0?
+
+Regards,
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/btg-devel/attachments/20090302/c126e67b/attachment.html">https://lists.berlios.de/pipermail/btg-devel/attachments/20090302/c126e67b/attachment.html</A>&gt;
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: config.log
+Type: application/octet-stream
+Size: 65538 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/btg-devel/attachments/20090302/c126e67b/attachment.obj">https://lists.berlios.de/pipermail/btg-devel/attachments/20090302/c126e67b/attachment.obj</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000108.html">[Btg-devel] Configure problems with btg 0.99, libtorrent-rasterbar-0.14.2, boost_1_38_0 during attempted building from source on FreeBSD 7.1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#107">[ date ]</a>
+              <a href="thread.html#107">[ thread ]</a>
+              <a href="subject.html#107">[ subject ]</a>
+              <a href="author.html#107">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/btg-devel">More information about the Btg-devel
+mailing list</a><br>
+</body></html>

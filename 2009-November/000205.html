@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Btg-devel] Syntax error in btg-config and btgcli helper error
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/btg-devel/2009-November/index.html" >
+   <LINK REL="made" HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20Syntax%20error%20in%20btg-config%20and%20btgcli%20helper%20error&In-Reply-To=%3Ce71abfa30911010037s16223586m11f2a2deaa96d795%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000206.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Btg-devel] Syntax error in btg-config and btgcli helper error</H1>
+    <B>Richard Thornton</B> 
+    <A HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20Syntax%20error%20in%20btg-config%20and%20btgcli%20helper%20error&In-Reply-To=%3Ce71abfa30911010037s16223586m11f2a2deaa96d795%40mail.gmail.com%3E"
+       TITLE="[Btg-devel] Syntax error in btg-config and btgcli helper error">richie.thornton at gmail.com
+       </A><BR>
+    <I>Sun Nov  1 08:37:58 CET 2009</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000206.html">[Btg-devel] Syntax error in btg-config and btgcli helper error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#205">[ date ]</a>
+              <a href="thread.html#205">[ thread ]</a>
+              <a href="subject.html#205">[ subject ]</a>
+              <a href="author.html#205">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi.
+
+I installed BTG using the Debian apt repository, but when I try to run
+btg-config, I get:
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">root at ubuntu</A>:~# sh /usr/bin/btg-config
+/usr/bin/btg-config: 142: Syntax error: &quot;(&quot; unexpected
+
+Some info:
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">root at ubuntu</A>:~# uname -a
+Linux ubuntu 2.6.28-13-server #45-Ubuntu SMP Tue Jun 30 20:51:10 UTC
+2009 i686 GNU/Linux
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">root at ubuntu</A>:~# ps -ax
+32309 ?        Ssl    0:00 /usr/bin/btgdaemon --verbose --config
+/etc/btg/daemon.ini --pid-file /var/run/btgdaemon.pid
+
+I guess I could just configure the ini files by hand, apt seemed to
+run an installer but it complained about not being able to configure a
+directory.
+
+If I try to run btgcli:
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">root at ubuntu</A>:~# btgcli
+Username:
+btg
+Password:
+
+[2009-Nov-01 18:35:05] btg*cli: Internal error: start up helper not initialized.
+
+Ultimately, I would like to use wwwBTG, but I am a wee bit off.
+
+Your help is appreciated.
+
+Cheers
+Richard
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000206.html">[Btg-devel] Syntax error in btg-config and btgcli helper error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#205">[ date ]</a>
+              <a href="thread.html#205">[ thread ]</a>
+              <a href="subject.html#205">[ subject ]</a>
+              <a href="author.html#205">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/btg-devel">More information about the Btg-devel
+mailing list</a><br>
+</body></html>

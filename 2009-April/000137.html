@@ -1,0 +1,123 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Btg-devel] 1.0.0-rc1 fails to build on CentOS 5
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/btg-devel/2009-April/index.html" >
+   <LINK REL="made" HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%201.0.0-rc1%20fails%20to%20build%20on%20CentOS%205&In-Reply-To=%3C20090421123006.GA23142%40ares.tgcnet%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000136.html">
+   <LINK REL="Next"  HREF="000138.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Btg-devel] 1.0.0-rc1 fails to build on CentOS 5</H1>
+    <B>Tom G. Christensen</B> 
+    <A HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%201.0.0-rc1%20fails%20to%20build%20on%20CentOS%205&In-Reply-To=%3C20090421123006.GA23142%40ares.tgcnet%3E"
+       TITLE="[Btg-devel] 1.0.0-rc1 fails to build on CentOS 5">tgc at jupiterrise.com
+       </A><BR>
+    <I>Tue Apr 21 14:30:06 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000136.html">[Btg-devel] request: automatic download
+</A></li>
+        <LI>Next message: <A HREF="000138.html">[Btg-devel] 1.0.0-rc1 fails to build on CentOS 5
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#137">[ date ]</a>
+              <a href="thread.html#137">[ thread ]</a>
+              <a href="subject.html#137">[ subject ]</a>
+              <a href="author.html#137">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I was trying to update from 0.9.8 to 1.0.0-rc1 but it failed to build where
+0.9.8 worked fine.
+
+I'm building on CentOS 5 with boost 1.33.1 and rb_libtorrent 0.13 and this
+is the error I'm getting:
+ g++ -DHAVE_CONFIG_H -I. -I.. -I/usr/include/libtorrent -I.. -pthread -I/usr/include -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=4 -m32 -march=i386 -mtune=generic -fasynchronous-unwind-tables -g -Wall -W -rdynamic -DBTG_DEBUG=1 -DBTG_OPTION_SAVESESSIONS=1 -DBTG_OPTION_EVENTCALLBACK=1 -DBTG_OPTION_UPNP=0 -DBTG_OPTION_USELTUPNP=0 -DBTG_OPTION_USECYBERLINK=0 -DBTG_REV=TRUNK -DBTG_OPTION_URL=1 -DBTG_INTERNAL_XMLRPC=1 -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=4 -m32 -march=i386 -mtune=generic -fasynchronous-unwind-tables -MT libdaemon_la-context_file.lo -MD -MP -MF .deps/libdaemon_la-context_file.Tpo -c context_file.cpp  -fPIC -DPIC -o .libs/libdaemon_la-context_file.o
+context_file.cpp: In member function 'bool btg::daemon::Context::dataPresentInSeedDir(const libtorrent::torrent_info&amp;)':
+context_file.cpp:266: error: no match for 'operator&lt;&lt;' in 'std::operator&lt;&lt; [with _Traits = std::char_traits&lt;char&gt;](((std::basic_ostream&lt;char, std::char_traits&lt;char&gt; &gt;&amp;)((std::basic_ostream&lt;char, std::char_traits&lt;char&gt; &gt;*)std::operator&lt;&lt; [with _Traits = std::char_traits&lt;char&gt;](((std::basic_ostream&lt;char, std::char_traits&lt;char&gt; &gt;&amp;)((std::basic_ostream&lt;char, std::char_traits&lt;char&gt; &gt;*)std::operator&lt;&lt; [with _CharT = char, _Traits = std::char_traits&lt;char&gt;, _Alloc = std::allocator&lt;char&gt;](((std::basic_ostream&lt;char, std::char_traits&lt;char&gt; &gt;&amp;)logstream), ((const std::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;&amp;)(&amp; btg::daemon::moduleName))))), ((const char*)&quot;: &quot;)))), ((const char*)&quot;dataPresentInSeedDir: torrent file \'&quot;)) &lt;&lt; file_path'
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:67: note: candidates are: std::basic_ostream&lt;_CharT, _Traits&gt;&amp; std::basic_ostream&lt;_CharT, _Traits&gt;::operator&lt;&lt;(std::basic_ostream&lt;_CharT, _Traits&gt;&amp; (*)(std::basic_ostream&lt;_CharT, _Traits&gt;&amp;)) [with _CharT = char, _Traits = std::char_traits&lt;char&gt;]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:78: note:                 std::basic_ostream&lt;_CharT, _Traits&gt;&amp; std::basic_ostream&lt;_CharT, _Traits&gt;::operator&lt;&lt;(std::basic_ios&lt;_CharT, _Traits&gt;&amp; (*)(std::basic_ios&lt;_CharT, _Traits&gt;&amp;)) [with _CharT = char, _Traits = std::char_traits&lt;char&gt;]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:90: note:                 std::basic_ostream&lt;_CharT, _Traits&gt;&amp; std::basic_ostream&lt;_CharT, _Traits&gt;::operator&lt;&lt;(std::ios_base&amp; (*)(std::ios_base&amp;)) [with _CharT = char, _Traits = std::char_traits&lt;char&gt;]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:241: note:                 std::basic_ostream&lt;_CharT, _Traits&gt;&amp; std::basic_ostream&lt;_CharT, _Traits&gt;::operator&lt;&lt;(long int) [with _CharT = char, _Traits = std::char_traits&lt;char&gt;]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:264: note:                 std::basic_ostream&lt;_CharT, _Traits&gt;&amp; std::basic_ostream&lt;_CharT, _Traits&gt;::operator&lt;&lt;(long unsigned int) [with _CharT = char, _Traits = std::char_traits&lt;char&gt;]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:102: note:                 std::basic_ostream&lt;_CharT, _Traits&gt;&amp; std::basic_ostream&lt;_CharT, _Traits&gt;::operator&lt;&lt;(bool) [with _CharT = char, _Traits = std::char_traits&lt;char&gt;]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:125: note:                 std::basic_ostream&lt;_CharT, _Traits&gt;&amp; std::basic_ostream&lt;_CharT, _Traits&gt;::operator&lt;&lt;(short int) [with _CharT = char, _Traits = std::char_traits&lt;char&gt;]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:157: note:                 std::basic_ostream&lt;_CharT, _Traits&gt;&amp; std::basic_ostream&lt;_CharT, _Traits&gt;::operator&lt;&lt;(short unsigned int) [with _CharT = char, _Traits = std::char_traits&lt;char&gt;]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:183: note:                 std::basic_ostream&lt;_CharT, _Traits&gt;&amp; std::basic_ostream&lt;_CharT, _Traits&gt;::operator&lt;&lt;(int) [with _CharT = char, _Traits = std::char_traits&lt;char&gt;]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:215: note:                 std::basic_ostream&lt;_CharT, _Traits&gt;&amp; std::basic_ostream&lt;_CharT, _Traits&gt;::operator&lt;&lt;(unsigned int) [with _CharT = char, _Traits = std::char_traits&lt;char&gt;]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:288: note:                 std::basic_ostream&lt;_CharT, _Traits&gt;&amp; std::basic_ostream&lt;_CharT, _Traits&gt;::operator&lt;&lt;(long long int) [with _CharT = char, _Traits = std::char_traits&lt;char&gt;]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:311: note:                 std::basic_ostream&lt;_CharT, _Traits&gt;&amp; std::basic_ostream&lt;_CharT, _Traits&gt;::operator&lt;&lt;(long long unsigned int) [with _CharT = char, _Traits = std::char_traits&lt;char&gt;]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:361: note:                 std::basic_ostream&lt;_CharT, _Traits&gt;&amp; std::basic_ostream&lt;_CharT, _Traits&gt;::operator&lt;&lt;(double) [with _CharT = char, _Traits = std::char_traits&lt;char&gt;]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:335: note:                 std::basic_ostream&lt;_CharT, _Traits&gt;&amp; std::basic_ostream&lt;_CharT, _Traits&gt;::operator&lt;&lt;(float) [with _CharT = char, _Traits = std::char_traits&lt;char&gt;]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:384: note:                 std::basic_ostream&lt;_CharT, _Traits&gt;&amp; std::basic_ostream&lt;_CharT, _Traits&gt;::operator&lt;&lt;(long double) [with _CharT = char, _Traits = std::char_traits&lt;char&gt;]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:407: note:                 std::basic_ostream&lt;_CharT, _Traits&gt;&amp; std::basic_ostream&lt;_CharT, _Traits&gt;::operator&lt;&lt;(const void*) [with _CharT = char, _Traits = std::char_traits&lt;char&gt;]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:430: note:                 std::basic_ostream&lt;_CharT, _Traits&gt;&amp; std::basic_ostream&lt;_CharT, _Traits&gt;::operator&lt;&lt;(std::basic_streambuf&lt;_CharT, _Traits&gt;*) [with _CharT = char, _Traits = std::char_traits&lt;char&gt;]
+context_file.cpp:273: error: no match for 'operator&lt;&lt;' in 'std::operator&lt;&lt; [with _Traits = std::char_traits&lt;char&gt;](((std::basic_ostream&lt;char, std::char_traits&lt;char&gt; &gt;&amp;)((std::basic_ostream&lt;char, std::char_traits&lt;char&gt; &gt;*)std::operator&lt;&lt; [with _Traits = std::char_traits&lt;char&gt;](((std::basic_ostream&lt;char, std::char_traits&lt;char&gt; &gt;&amp;)((std::basic_ostream&lt;char, std::char_traits&lt;char&gt; &gt;*)std::operator&lt;&lt; [with _CharT = char, _Traits = std::char_traits&lt;char&gt;, _Alloc = std::allocator&lt;char&gt;](((std::basic_ostream&lt;char, std::char_traits&lt;char&gt; &gt;&amp;)logstream), ((const std::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;&amp;)(&amp; btg::daemon::moduleName))))), ((const char*)&quot;: &quot;)))), ((const char*)&quot;dataPresentInSeedDir: found torrent file \'&quot;)) &lt;&lt; file_path'
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:67: note: candidates are: std::basic_ostream&lt;_CharT, _Traits&gt;&amp; std::basic_ostream&lt;_CharT, _Traits&gt;::operator&lt;&lt;(std::basic_ostream&lt;_CharT, _Traits&gt;&amp; (*)(std::basic_ostream&lt;_CharT, _Traits&gt;&amp;)) [with _CharT = char, _Traits = std::char_traits&lt;char&gt;]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:78: note:                 std::basic_ostream&lt;_CharT, _Traits&gt;&amp; std::basic_ostream&lt;_CharT, _Traits&gt;::operator&lt;&lt;(std::basic_ios&lt;_CharT, _Traits&gt;&amp; (*)(std::basic_ios&lt;_CharT, _Traits&gt;&amp;)) [with _CharT = char, _Traits = std::char_traits&lt;char&gt;]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:90: note:                 std::basic_ostream&lt;_CharT, _Traits&gt;&amp; std::basic_ostream&lt;_CharT, _Traits&gt;::operator&lt;&lt;(std::ios_base&amp; (*)(std::ios_base&amp;)) [with _CharT = char, _Traits = std::char_traits&lt;char&gt;]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:241: note:                 std::basic_ostream&lt;_CharT, _Traits&gt;&amp; std::basic_ostream&lt;_CharT, _Traits&gt;::operator&lt;&lt;(long int) [with _CharT = char, _Traits = std::char_traits&lt;char&gt;]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:264: note:                 std::basic_ostream&lt;_CharT, _Traits&gt;&amp; std::basic_ostream&lt;_CharT, _Traits&gt;::operator&lt;&lt;(long unsigned int) [with _CharT = char, _Traits = std::char_traits&lt;char&gt;]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:102: note:                 std::basic_ostream&lt;_CharT, _Traits&gt;&amp; std::basic_ostream&lt;_CharT, _Traits&gt;::operator&lt;&lt;(bool) [with _CharT = char, _Traits = std::char_traits&lt;char&gt;]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:125: note:                 std::basic_ostream&lt;_CharT, _Traits&gt;&amp; std::basic_ostream&lt;_CharT, _Traits&gt;::operator&lt;&lt;(short int) [with _CharT = char, _Traits = std::char_traits&lt;char&gt;]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:157: note:                 std::basic_ostream&lt;_CharT, _Traits&gt;&amp; std::basic_ostream&lt;_CharT, _Traits&gt;::operator&lt;&lt;(short unsigned int) [with _CharT = char, _Traits = std::char_traits&lt;char&gt;]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:183: note:                 std::basic_ostream&lt;_CharT, _Traits&gt;&amp; std::basic_ostream&lt;_CharT, _Traits&gt;::operator&lt;&lt;(int) [with _CharT = char, _Traits = std::char_traits&lt;char&gt;]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:215: note:                 std::basic_ostream&lt;_CharT, _Traits&gt;&amp; std::basic_ostream&lt;_CharT, _Traits&gt;::operator&lt;&lt;(unsigned int) [with _CharT = char, _Traits = std::char_traits&lt;char&gt;]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:288: note:                 std::basic_ostream&lt;_CharT, _Traits&gt;&amp; std::basic_ostream&lt;_CharT, _Traits&gt;::operator&lt;&lt;(long long int) [with _CharT = char, _Traits = std::char_traits&lt;char&gt;]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:311: note:                 std::basic_ostream&lt;_CharT, _Traits&gt;&amp; std::basic_ostream&lt;_CharT, _Traits&gt;::operator&lt;&lt;(long long unsigned int) [with _CharT = char, _Traits = std::char_traits&lt;char&gt;]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:361: note:                 std::basic_ostream&lt;_CharT, _Traits&gt;&amp; std::basic_ostream&lt;_CharT, _Traits&gt;::operator&lt;&lt;(double) [with _CharT = char, _Traits = std::char_traits&lt;char&gt;]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:335: note:                 std::basic_ostream&lt;_CharT, _Traits&gt;&amp; std::basic_ostream&lt;_CharT, _Traits&gt;::operator&lt;&lt;(float) [with _CharT = char, _Traits = std::char_traits&lt;char&gt;]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:384: note:                 std::basic_ostream&lt;_CharT, _Traits&gt;&amp; std::basic_ostream&lt;_CharT, _Traits&gt;::operator&lt;&lt;(long double) [with _CharT = char, _Traits = std::char_traits&lt;char&gt;]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:407: note:                 std::basic_ostream&lt;_CharT, _Traits&gt;&amp; std::basic_ostream&lt;_CharT, _Traits&gt;::operator&lt;&lt;(const void*) [with _CharT = char, _Traits = std::char_traits&lt;char&gt;]
+/usr/lib/gcc/i386-redhat-linux/4.1.2/../../../../include/c++/4.1.2/bits/ostream.tcc:430: note:                 std::basic_ostream&lt;_CharT, _Traits&gt;&amp; std::basic_ostream&lt;_CharT, _Traits&gt;::operator&lt;&lt;(std::basic_streambuf&lt;_CharT, _Traits&gt;*) [with _CharT = char, _Traits = std::char_traits&lt;char&gt;]
+/usr/include/libtorrent/intrusive_ptr_base.hpp: At global scope:
+/usr/include/libtorrent/intrusive_ptr_base.hpp: In instantiation of 'libtorrent::intrusive_ptr_base&lt;T&gt;&amp; libtorrent::intrusive_ptr_base&lt;T&gt;::operator=(const libtorrent::intrusive_ptr_base&lt;T&gt;&amp;) [with T = libtorrent::torrent_info]':
+/usr/include/libtorrent/torrent_info.hpp:108:   instantiated from here
+/usr/include/libtorrent/intrusive_ptr_base.hpp:49: warning: unused parameter 'rhs'
+make[3]: *** [libdaemon_la-context_file.lo] Error 1
+make[3]: Leaving directory `/builddir/build/BUILD/btg-1.0.0/daemon'
+make[2]: *** [all-recursive] Error 1
+make[2]: Leaving directory `/builddir/build/BUILD/btg-1.0.0/daemon'
+make[1]: *** [all-recursive] Error 1
+make[1]: Leaving directory `/builddir/build/BUILD/btg-1.0.0'
+make: *** [all] Error 2
+
+You can see the full buildlog here:
+<A HREF="http://jupiterrise.com/tmp/btg-1.0.0-rc1-rb_libtorrent_0.13-el5-build.log">http://jupiterrise.com/tmp/btg-1.0.0-rc1-rb_libtorrent_0.13-el5-build.log</A>
+
+The same build succeeds on fedora 10 which has boost 1.34.1 and
+rb_libtorrent 0.13.1.
+
+-tgc
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000136.html">[Btg-devel] request: automatic download
+</A></li>
+	<LI>Next message: <A HREF="000138.html">[Btg-devel] 1.0.0-rc1 fails to build on CentOS 5
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#137">[ date ]</a>
+              <a href="thread.html#137">[ thread ]</a>
+              <a href="subject.html#137">[ subject ]</a>
+              <a href="author.html#137">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/btg-devel">More information about the Btg-devel
+mailing list</a><br>
+</body></html>

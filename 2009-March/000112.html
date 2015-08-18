@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Btg-devel] btg-current cli client failing to build against boost 1.35 and libtorrent-rasterbar 1.3 on FreeBSD 7.1 and showing ncurses-related errors
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/btg-devel/2009-March/index.html" >
+   <LINK REL="made" HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20btg-current%20cli%20client%20failing%20to%20build%20against%0A%20boost%201.35%20and%20libtorrent-rasterbar%201.3%20on%20FreeBSD%207.1%20and%20showing%0A%20ncurses-related%20errors&In-Reply-To=%3C20090305205656.72a2b117%40netpc4.home.wojci.dk.home.wojci.dk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000111.html">
+   <LINK REL="Next"  HREF="000114.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Btg-devel] btg-current cli client failing to build against boost 1.35 and libtorrent-rasterbar 1.3 on FreeBSD 7.1 and showing ncurses-related errors</H1>
+    <B>Michael Wojciechowski</B> 
+    <A HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20btg-current%20cli%20client%20failing%20to%20build%20against%0A%20boost%201.35%20and%20libtorrent-rasterbar%201.3%20on%20FreeBSD%207.1%20and%20showing%0A%20ncurses-related%20errors&In-Reply-To=%3C20090305205656.72a2b117%40netpc4.home.wojci.dk.home.wojci.dk%3E"
+       TITLE="[Btg-devel] btg-current cli client failing to build against boost 1.35 and libtorrent-rasterbar 1.3 on FreeBSD 7.1 and showing ncurses-related errors">wojci at wojci.dk
+       </A><BR>
+    <I>Thu Mar  5 20:56:56 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000111.html">[Btg-devel] btg-current cli client failing to build against boost	1.35 and libtorrent-rasterbar 1.3 on FreeBSD 7.1 and showing	ncurses-related errors
+</A></li>
+        <LI>Next message: <A HREF="000114.html">[Btg-devel] btg-current cli client failing to build against boost	1.35 and libtorrent-rasterbar 1.3 on FreeBSD 7.1 and showing	ncurses-related errors
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#112">[ date ]</a>
+              <a href="thread.html#112">[ thread ]</a>
+              <a href="subject.html#112">[ subject ]</a>
+              <a href="author.html#112">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Thu, 5 Mar 2009 22:43:51 +0100 christophe taranotte
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">christophe.taranotte at gmail.com</A>&gt; wrote:
+
+&gt;<i> My configure arguments were:
+</I>&gt;<i> 
+</I>&gt;<i> --enable-btg-config
+</I>&gt;<i> --enable-www
+</I>&gt;<i> --enable-cli
+</I>&gt;<i> --enable-url
+</I>&gt;<i> --enable-session-saving
+</I>&gt;<i> --enable-command-list
+</I>&gt;<i> --enable-event-callback
+</I>&gt;<i> --with-ncurses
+</I>&gt;<i> 
+</I>&gt;<i> I successfully built btg-current with the cli flag disabled.
+</I>&gt;<i> I did no try to build with the gui and viewer flags enabled.
+</I>&gt;<i> The ncurses version in FreeBSD base is 5.6 (20080503). I also tried
+</I>&gt;<i> with 5.7 installed from ports to no avail.
+</I>&gt;<i> I saved the stderr and stdout output in the two files attached along
+</I>&gt;<i> with the config file.
+</I>
+&quot;
+btgncli-colors.o(.text+0x110): In function
+`btg::UI::cli::Colors::setDefaults()': /usr/include/c++/4.2/bits/stl_construct.h:81:
+undefined reference to `init_pair' btgncli-colors.o(.text+0x138): In
+function
+`btg::UI::cli::Colors::setDefaults()': /usr/include/c++/4.2/bits/stl_uninitialized.h:86:
+undefined reference to `init_pair'
+btgncli-colors.o(.text+0x15a):/usr/include/c++/4.2/bits/stl_uninitialized.h:86:
+undefined reference to `init_pair' btgncli-colors.o(.text+0x17c): In
+function
+`btg::UI::cli::Colors::setDefaults()': /usr/include/c++/4.2/bits/stl_construct.h:81:
+undefined reference to `init_pair' btgncli-colors.o(.text+0x1a8): In
+function
+`btg::UI::cli::Colors::setDefaults()': /usr/include/c++/4.2/bits/stl_vector.h:133:
+undefined reference to `init_pair'
+btgncli-colors.o(.text+0x1cd):/usr/include/c++/4.2/ext/new_allocator.h:89:
+more undefined references to `init_pair' follow
+btgncli-colors.o(.text+0x56a): In function
+`btg::UI::cli::Colors::init()': /usr/home/donkey/BTG_repository/btg-devel2/trunk/UI/cli/ncurses/colors.cpp:51:
+undefined reference to `has_colors'
+btgncli-colors.o(.text+0x581):/usr/home/donkey/BTG_repository/btg-devel2/trunk/UI/cli/ncurses/colors.cpp:56:
+undefined reference to `start_color'
+&quot;
+
+I don't see &quot;-lcurses&quot; on the cmd line used to link btgncli. This could
+be the problem .. or it could also be that init_pair() is not
+implemented. But that would mean that ncurses color support does not
+work on FreeBSD.
+
+Why do you specify &quot;--with-ncurses&quot; instead of
+&quot;--with-ncurses=/path/to/your/ncurses&quot;?
+
+&gt;<i> I have a last question: do I still need bash as all your scripts are
+</I>&gt;<i> shell sh scripts?
+</I>
+There was some problem with the default shell, it is mentioned in the
+howto. I think it was mainly in connection with running unittests.
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+&quot;When they ask how I died, I said, tell them: still angry.&quot; 
+(Altered Carbon by Richard Morgan)
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000111.html">[Btg-devel] btg-current cli client failing to build against boost	1.35 and libtorrent-rasterbar 1.3 on FreeBSD 7.1 and showing	ncurses-related errors
+</A></li>
+	<LI>Next message: <A HREF="000114.html">[Btg-devel] btg-current cli client failing to build against boost	1.35 and libtorrent-rasterbar 1.3 on FreeBSD 7.1 and showing	ncurses-related errors
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#112">[ date ]</a>
+              <a href="thread.html#112">[ thread ]</a>
+              <a href="subject.html#112">[ subject ]</a>
+              <a href="author.html#112">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/btg-devel">More information about the Btg-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,179 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Btg-devel] suggestion about using SASL for user authentication
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/btg-devel/2009-July/index.html" >
+   <LINK REL="made" HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20suggestion%20about%20using%20SASL%20for%20user%20authentication&In-Reply-To=%3C20090714160224.42a3f283%40desktopvm.lvknet%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000170.html">
+   <LINK REL="Next"  HREF="000172.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Btg-devel] suggestion about using SASL for user authentication</H1>
+    <B>Alexander Gordeev</B> 
+    <A HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20suggestion%20about%20using%20SASL%20for%20user%20authentication&In-Reply-To=%3C20090714160224.42a3f283%40desktopvm.lvknet%3E"
+       TITLE="[Btg-devel] suggestion about using SASL for user authentication">lasaine at lvk.cs.msu.su
+       </A><BR>
+    <I>Tue Jul 14 14:02:24 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000170.html">[Btg-devel] suggestion about using SASL for user authentication
+</A></li>
+        <LI>Next message: <A HREF="000172.html">[Btg-devel] suggestion about using SASL for user authentication
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#171">[ date ]</a>
+              <a href="thread.html#171">[ thread ]</a>
+              <a href="subject.html#171">[ subject ]</a>
+              <a href="author.html#171">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Michael,
+
+Sorry, I was away for a couple of days...
+
+On Sat, 11 Jul 2009 21:01:24 +0200
+Michael Wojciechowski &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">wojci at wojci.dk</A>&gt; wrote:
+
+&gt;<i> On Fri, 10 Jul 2009 17:51:22 +0400 Alexander Gordeev
+</I>&gt;<i> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">lasaine at lvk.cs.msu.su</A>&gt; wrote:
+</I>&gt;<i> 
+</I>&gt;<i> &gt; I'd like to talk a bit more about it. The current password file
+</I>&gt;<i> &gt; handles actually both authentication and authorization (and also the
+</I>&gt;<i> &gt; directories). Only the users that are mentioned there are allowed to
+</I>&gt;<i> &gt; create sessions. The current approach has a lot of problems IMO:
+</I>&gt;<i> &gt;   * custom authentication scheme with custom passwords for users
+</I>&gt;<i> &gt; which makes it harder to administer
+</I>&gt;<i> &gt;   * mixing both authentication and authorization is a problem
+</I>&gt;<i> &gt; because SASL can do advanced authentication but has no means for
+</I>&gt;<i> &gt;     authorization i.e. allowing/restricting known users
+</I>&gt;<i> &gt;   * also I think that directories should be per-session, not
+</I>&gt;<i> &gt; per-user but this is a bit off-topic
+</I>&gt;<i> 
+</I>&gt;<i> There is no real reason for why BTG uses a custom password file. If
+</I>&gt;<i> you want to use a better approach, just remember that some people,
+</I>&gt;<i> like me, us the daemon on a system with only one user, so using a more
+</I>&gt;<i> complicated approach could be overkill to setup.
+</I>
+Sure, it would be an overkill for simple setups, I see.
+
+&gt;<i> I don't know who a typical BTG user is. I suspect that most of the
+</I>&gt;<i> users just use the daemon by themselves and maybe a couple of friends.
+</I>
+Well, BTG can reach other &quot;markets&quot; too. :)
+
+&gt;<i> &gt; IMHO the current scheme should be deprecated as soon as SASL is
+</I>&gt;<i> &gt; adopted. Just because it mixes everything in one place. Of course,
+</I>&gt;<i> &gt; there could be work-arounds, like ignoring the password field in the
+</I>&gt;<i> &gt; password file. But I think this will only distract users.
+</I>&gt;<i> 
+</I>&gt;<i> &gt; SASL has already good means for handling plain password files. I
+</I>&gt;<i> &gt; mean the traditional passwd files :) It supports a lot of other
+</I>&gt;<i> &gt; sources of information about passwords including PAM.
+</I>&gt;<i> 
+</I>&gt;<i> I sure hope that you understand the difference between a BTG user and
+</I>&gt;<i> a system user. There is not a 1:1 mapping between them. Currently the
+</I>&gt;<i> daemon runs as one system user and a BTG client can login using hash
+</I>&gt;<i> of a password stored in the BTG passwd file, communicating with the
+</I>&gt;<i> btg daemon. Files are written by the daemon as the user it runs as. It
+</I>&gt;<i> does not matter which BTG user created the session that writes the
+</I>&gt;<i> files.
+</I>&gt;<i> 
+</I>&gt;<i> We have been planning to create a BTG 2.x branch for future
+</I>&gt;<i> development. It would make sense to upgrade the auth system the way
+</I>&gt;<i> you want it on this branch. 
+</I>&gt;<i> 
+</I>&gt;<i> I personally just need it to be easy to use BTG on a system where I am
+</I>&gt;<i> the only user on. You also mention embedded systems like routers and
+</I>&gt;<i> NAS boxen. It should be possible to use some kind of simple auth for
+</I>&gt;<i> these kind of systems.
+</I>
+Ok, I think the following scheme will address all issues:
+ * the source of authentication information will be either plain
+custom passwd file or PAM. Or other methods, like Kerberos. And this
+can be configurable.
+ * if btgdaemon is running as root and the users are authenticated as
+real system users, than it sets uid/gid of all the user files it is
+working on.
+ * when a client connects to daemon, it asks about the daemon's
+capabilities (this is requierd for SASL anyway). The &quot;simple&quot;
+authentication mecthod will be there by default (unless disabled in
+the daemon config). If SASL is compiled in, then it will add it's own
+mechanisms. Then the client can choose.
+ * the defaults in all config files will be matching the &quot;simple&quot; case
+
+&gt;<i> So, if you can make sure that adding users works in a similar way as
+</I>&gt;<i> with the current release (see btgpasswd), I would be happy.
+</I>
+This is great! Then I'll just change btgpasswd, keeping its user
+interface untouched.
+
+&gt;<i> &gt; Instead of preserving the current password file it would be better
+</I>&gt;<i> &gt; to split it into at least two files:
+</I>&gt;<i> &gt;   * users/passwords for authentication
+</I>&gt;<i> &gt;   * user restrictions + directories
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; If you don't want SASL as a dependency (on embedded systems likely)
+</I>&gt;<i> &gt; than authentication can be handled by the system (/etc/passwd,
+</I>&gt;<i> &gt; PAM, ...). So I really don't see any reason to keep the
+</I>&gt;<i> &gt; user/passwords file.
+</I>&gt;<i> 
+</I>&gt;<i> See the comment I wrote about BTG vs. system users.
+</I>
+Thanks for the clarification!
+
+&gt;<i> &gt; I didn't look at the code yet so I don't have questions at the
+</I>&gt;<i> &gt; moment. :)
+</I>&gt;<i> &gt; But I will be happy to get any kind of information about the design
+</I>&gt;<i> &gt; of the daemon, about where to look and how you expect me to do the
+</I>&gt;<i> &gt; integration.
+</I>&gt;<i> 
+</I>&gt;<i> You can start by looking at the doxygen comments (make doxygen, I
+</I>&gt;<i> think, should create a number of html files). Components are separated
+</I>&gt;<i> by namespaces. If you run the daemon with &quot;btgdaemon -v -n&quot;, it will
+</I>&gt;<i> write helpful comments about the components/interfaces it is
+</I>&gt;<i> initializing. You could start by looking at the interfaces first to
+</I>&gt;<i> get an overview. Finally, you can ask for help on IRC (#libtorrent,
+</I>&gt;<i> freenode).
+</I>
+Ok, thanks!
+Is there any documentation on the client-server protocol? BTW, is it
+XMLRPC-based for all transports? It seems to me (after looking at the
+code) that &quot;xmlrpc/sxmlrpc&quot; transport is actually &quot;http/https&quot;
+transport with XMLRPC-based protocol atop the transport layer.
+
+I will have to add at least the &quot;capability&quot; request if not present.
+
+-- 
+  Alexander
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000170.html">[Btg-devel] suggestion about using SASL for user authentication
+</A></li>
+	<LI>Next message: <A HREF="000172.html">[Btg-devel] suggestion about using SASL for user authentication
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#171">[ date ]</a>
+              <a href="thread.html#171">[ thread ]</a>
+              <a href="subject.html#171">[ subject ]</a>
+              <a href="author.html#171">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/btg-devel">More information about the Btg-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,144 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Btg-devel] suggestion about using SASL for user authentication
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/btg-devel/2009-July/index.html" >
+   <LINK REL="made" HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20suggestion%20about%20using%20SASL%20for%20user%20authentication&In-Reply-To=%3C20090711210124.27f2ab4c%40netpc5.home.wojci.dk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000169.html">
+   <LINK REL="Next"  HREF="000171.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Btg-devel] suggestion about using SASL for user authentication</H1>
+    <B>Michael Wojciechowski</B> 
+    <A HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20suggestion%20about%20using%20SASL%20for%20user%20authentication&In-Reply-To=%3C20090711210124.27f2ab4c%40netpc5.home.wojci.dk%3E"
+       TITLE="[Btg-devel] suggestion about using SASL for user authentication">wojci at wojci.dk
+       </A><BR>
+    <I>Sat Jul 11 21:01:24 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000169.html">[Btg-devel] suggestion about using SASL for user authentication
+</A></li>
+        <LI>Next message: <A HREF="000171.html">[Btg-devel] suggestion about using SASL for user authentication
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#170">[ date ]</a>
+              <a href="thread.html#170">[ thread ]</a>
+              <a href="subject.html#170">[ subject ]</a>
+              <a href="author.html#170">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Fri, 10 Jul 2009 17:51:22 +0400 Alexander Gordeev
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">lasaine at lvk.cs.msu.su</A>&gt; wrote:
+
+&gt;<i> I'd like to talk a bit more about it. The current password file
+</I>&gt;<i> handles actually both authentication and authorization (and also the
+</I>&gt;<i> directories). Only the users that are mentioned there are allowed to
+</I>&gt;<i> create sessions. The current approach has a lot of problems IMO:
+</I>&gt;<i>   * custom authentication scheme with custom passwords for users which
+</I>&gt;<i>     makes it harder to administer
+</I>&gt;<i>   * mixing both authentication and authorization is a problem because
+</I>&gt;<i>     SASL can do advanced authentication but has no means for
+</I>&gt;<i>     authorization i.e. allowing/restricting known users
+</I>&gt;<i>   * also I think that directories should be per-session, not per-user
+</I>&gt;<i>     but this is a bit off-topic
+</I>
+There is no real reason for why BTG uses a custom password file. If you
+want to use a better approach, just remember that some people, like me,
+us the daemon on a system with only one user, so using a more
+complicated approach could be overkill to setup.
+
+I don't know who a typical BTG user is. I suspect that most of the
+users just use the daemon by themselves and maybe a couple of friends.
+
+&gt;<i> IMHO the current scheme should be deprecated as soon as SASL is
+</I>&gt;<i> adopted. Just because it mixes everything in one place. Of course,
+</I>&gt;<i> there could be work-arounds, like ignoring the password field in the
+</I>&gt;<i> password file. But I think this will only distract users.
+</I>
+&gt;<i> SASL has already good means for handling plain password files. I mean
+</I>&gt;<i> the traditional passwd files :) It supports a lot of other sources of
+</I>&gt;<i> information about passwords including PAM.
+</I>
+I sure hope that you understand the difference between a BTG user and
+a system user. There is not a 1:1 mapping between them. Currently the
+daemon runs as one system user and a BTG client can login using hash of
+a password stored in the BTG passwd file, communicating with the btg
+daemon. Files are written by the daemon as the user it runs as. It
+does not matter which BTG user created the session that writes the
+files.
+
+We have been planning to create a BTG 2.x branch for future
+development. It would make sense to upgrade the auth system the way you
+want it on this branch. 
+
+I personally just need it to be easy to use BTG on a system where I am
+the only user on. You also mention embedded systems like routers and
+NAS boxen. It should be possible to use some kind of simple auth for
+these kind of systems.
+
+So, if you can make sure that adding users works in a similar way as
+with the current release (see btgpasswd), I would be happy.
+
+&gt;<i> Instead of preserving the current password file it would be better to
+</I>&gt;<i> split it into at least two files:
+</I>&gt;<i>   * users/passwords for authentication
+</I>&gt;<i>   * user restrictions + directories
+</I>&gt;<i> 
+</I>&gt;<i> If you don't want SASL as a dependency (on embedded systems likely)
+</I>&gt;<i> than authentication can be handled by the system (/etc/passwd,
+</I>&gt;<i> PAM, ...). So I really don't see any reason to keep the user/passwords
+</I>&gt;<i> file.
+</I>
+See the comment I wrote about BTG vs. system users.
+
+&gt;<i> I didn't look at the code yet so I don't have questions at the
+</I>&gt;<i> moment. :)
+</I>&gt;<i> But I will be happy to get any kind of information about the design of
+</I>&gt;<i> the daemon, about where to look and how you expect me to do the
+</I>&gt;<i> integration.
+</I>
+You can start by looking at the doxygen comments (make doxygen, I
+think, should create a number of html files). Components are separated
+by namespaces. If you run the daemon with &quot;btgdaemon -v -n&quot;, it will
+write helpful comments about the components/interfaces it is
+initializing. You could start by looking at the interfaces first to get
+an overview. Finally, you can ask for help on IRC (#libtorrent,
+freenode).
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000169.html">[Btg-devel] suggestion about using SASL for user authentication
+</A></li>
+	<LI>Next message: <A HREF="000171.html">[Btg-devel] suggestion about using SASL for user authentication
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#170">[ date ]</a>
+              <a href="thread.html#170">[ thread ]</a>
+              <a href="subject.html#170">[ subject ]</a>
+              <a href="author.html#170">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/btg-devel">More information about the Btg-devel
+mailing list</a><br>
+</body></html>

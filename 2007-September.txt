@@ -1,0 +1,54 @@
+From wojci at wojci.dk  Mon Sep 17 19:55:38 2007
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Mon, 17 Sep 2007 19:55:38 +0200
+Subject: [Btg-devel] BTG 0.9.6 released
+Message-ID: <20070917195538.568cb777@netpc3.home.wojci.dk>
+
+From: http://developer.berlios.de/project/shownotes.php?release_id=13428
+
+This release is mainly wwwui updates requested by users and bugfixes.
+Notice that libtorrent 0.12 and libtorrent SVN are the only versions
+supported. The session saving format changed once again, but jstrom
+added support for the old format.
+
+BTG version 0.9.6
+-----------------
+The following bugs were fixed:
+
+011971 Inaccuracy in command (Loading All Torrent Files from a Dir).
+011902 Memory leak in external/ini.
+011901 FBSD, memory leak when using boost/zlib.
+011782 FBSD, btgncli uses ~60% of cpu.
+011759 Update howto and configure script.
+011719 WWWUI does not respond (hardcoded port).
+011678 Add more XML-RPC unittests.
+011674 Update XML-RPC in external.
+011644 WebBTG not working with Internet Explorer.
+011575 / 010064 daemon should check "seed" dir for download files.
+011440 btgui, use a thread for updates.
+011237 wwwui, unable to handle "+" in passwords.
+011192 Document release procedure.
+011187 DHT, add command line argument to enable/disable.
+011186 Implement support for encryption.
+011185 Implement support for partial downloads.
+011184 Remove use of old libtorrent versions.
+011183 Session saving, use xmlrpc.
+011122 Update site/howto: Gentoo ebuild documentation.
+011097 btgpasswd, check for unique directories (request).
+011095 Libtorrent 0.12, FreeBSD, asio and no SO_NOSIGPIPE support.
+010506 Request: Clean all button (wwwui).
+010112 Request: Total time on torrent (wwwui).
+009299 Add support for global limit (wwwui).
+
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+It is by caffeine alone I set my mind in motion,
+It is by the beans of Java that thoughts acquire speed,
+The hands acquire shaking, the shaking becomes a warning,
+It is by caffeine alone I set my mind in motion.
+
+

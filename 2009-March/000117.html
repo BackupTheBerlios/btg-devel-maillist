@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Btg-devel] btg-current cli client failing to build against	boost 1.35 and libtorrent-rasterbar 1.3 on FreeBSD 7.1 and	showing ncurses-related errors
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/btg-devel/2009-March/index.html" >
+   <LINK REL="made" HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20btg-current%20cli%20client%20failing%20to%20build%20against%0A%09boost%201.35%20and%20libtorrent-rasterbar%201.3%20on%20FreeBSD%207.1%20and%0A%09showing%20ncurses-related%20errors&In-Reply-To=%3C205ad7060903071416g3cad879cv8737a8cae4f78b2d%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000116.html">
+   <LINK REL="Next"  HREF="000119.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Btg-devel] btg-current cli client failing to build against	boost 1.35 and libtorrent-rasterbar 1.3 on FreeBSD 7.1 and	showing ncurses-related errors</H1>
+    <B>christophe taranotte</B> 
+    <A HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20btg-current%20cli%20client%20failing%20to%20build%20against%0A%09boost%201.35%20and%20libtorrent-rasterbar%201.3%20on%20FreeBSD%207.1%20and%0A%09showing%20ncurses-related%20errors&In-Reply-To=%3C205ad7060903071416g3cad879cv8737a8cae4f78b2d%40mail.gmail.com%3E"
+       TITLE="[Btg-devel] btg-current cli client failing to build against	boost 1.35 and libtorrent-rasterbar 1.3 on FreeBSD 7.1 and	showing ncurses-related errors">christophe.taranotte at gmail.com
+       </A><BR>
+    <I>Sat Mar  7 23:16:55 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000116.html">[Btg-devel] btg-current cli client failing to build against boost 1.35 and libtorrent-rasterbar 1.3 on FreeBSD 7.1 and showing ncurses-related errors
+</A></li>
+        <LI>Next message: <A HREF="000119.html">[Btg-devel] Configure problems with btg 0.99, libtorrent-rasterbar-0.14.2, boost_1_38_0 during attempted building from  source on FreeBSD 7.1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#117">[ date ]</a>
+              <a href="thread.html#117">[ thread ]</a>
+              <a href="subject.html#117">[ subject ]</a>
+              <a href="author.html#117">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+Somebody, I suspect Roman, added the first line. I think that this
+&gt;<i> means that ncurses will be selected and not checked for. So I guess you
+</I>&gt;<i> should add &quot;-lncurses -L/path/to/ncurses/lib&quot; to your LDFLAGS before
+</I>&gt;<i> running configure and you will be fine.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>It seems to work with the following arguments (for btg-current, boost 1.35
+and libtorrent-rasterbar 1.13):
+
+./configure --enable-btg-config --enable-www --enable-cli --enable-url
+--enable-session-saving --enable-command-list --enable-event-callback
+--with-ncurses LIBTORRENT_LIBS=&quot;-L/usr/local/lib -ltorrent&quot;
+LIBTORRENT_CFLAGS=&quot;-DTORRENT_USE_OPENSSL -D_THREAD_SAFE -pthread
+-I/usr/local/include -I/usr/local/include/libtorrent&quot; LIBS=&quot;-lpthread
+-lncurses -L/lib&quot; --with-boost-iostreams=boost_iostreams
+--with-boost-filesystem=boost_filesystem
+--with-boost-date-time=boost_date_time --with-boost-thread=boost_thread
+--with-boost-program-options=boost_program_options --prefix=/usr/local/opt
+
+I suggest you update the FreeBSD notes in the BTG-CURRENT HOWTO by adding
+the --with-ncurses option and changing the LIBS variable from:
+
+...LIBS=-lpthread...
+
+to
+
+...LIBS=&quot;-lpthread -lncurses -L/lib&quot;...
+
+the &quot;-L/lib&quot; flag should not be necessary but who knows.
+
+Still pending is the config problem with libtorrent-rasterbar .14.2 (see my
+other post).
+
+Best regards,
+
+Christophe
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/btg-devel/attachments/20090307/03bcf507/attachment.html">https://lists.berlios.de/pipermail/btg-devel/attachments/20090307/03bcf507/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000116.html">[Btg-devel] btg-current cli client failing to build against boost 1.35 and libtorrent-rasterbar 1.3 on FreeBSD 7.1 and showing ncurses-related errors
+</A></li>
+	<LI>Next message: <A HREF="000119.html">[Btg-devel] Configure problems with btg 0.99, libtorrent-rasterbar-0.14.2, boost_1_38_0 during attempted building from  source on FreeBSD 7.1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#117">[ date ]</a>
+              <a href="thread.html#117">[ thread ]</a>
+              <a href="subject.html#117">[ subject ]</a>
+              <a href="author.html#117">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/btg-devel">More information about the Btg-devel
+mailing list</a><br>
+</body></html>

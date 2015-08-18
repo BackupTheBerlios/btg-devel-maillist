@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Btg-devel] 0.9.7 ebuild
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/btg-devel/2008-May/index.html" >
+   <LINK REL="made" HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%200.9.7%20ebuild&In-Reply-To=%3C20080503104123.521b6a99%40netpc3.home.wojci.dk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000016.html">
+   <LINK REL="Next"  HREF="000022.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Btg-devel] 0.9.7 ebuild</H1>
+    <B>Michael Wojciechowski</B> 
+    <A HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%200.9.7%20ebuild&In-Reply-To=%3C20080503104123.521b6a99%40netpc3.home.wojci.dk%3E"
+       TITLE="[Btg-devel] 0.9.7 ebuild">wojci at wojci.dk
+       </A><BR>
+    <I>Sat May  3 10:41:23 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000016.html">[Btg-devel] Error when reseeding a torrent
+</A></li>
+        <LI>Next message: <A HREF="000022.html">[Btg-devel] 0.9.7 ebuild
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17">[ date ]</a>
+              <a href="thread.html#17">[ thread ]</a>
+              <a href="subject.html#17">[ subject ]</a>
+              <a href="author.html#17">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wed, 30 Apr 2008 13:46:46 +0200 Mounir Lamouri
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">mounir.lamouri at gmail.com</A>&gt; wrote:
+
+&gt;<i> Actually, there already is a thread about this on Gentoo's bugzilla : 
+</I>&gt;<i> <A HREF="http://bugs.gentoo.org/show_bug.cgi?id=214491">http://bugs.gentoo.org/show_bug.cgi?id=214491</A>
+</I>&gt;<i> It looks like there are some problems. I should test that next days.
+</I>
+I could attempt to do something about some of the issues mentioned.
+
+From the bug:
+&gt;<i> a) Broken with as-needed (gonna attach a patch for it)
+</I>
+I have no idea what this is about, but if I knew, I would do something
+about it. :)
+
+&gt;<i> b) Needs the CyberLink Library
+</I>&gt;<i> (<A HREF="http://sourceforge.net/projects/clinkcc/">http://sourceforge.net/projects/clinkcc/</A>) for uPnP-support
+</I>
+This is not going to be used after lt 0.14 gets released. UPnP from
+libtorrent is going to be used. Right now this is broken (in SVN) and
+should not be used.
+
+&gt;<i> c) Comes bundled with PlotMM (plotmm.sf.net) which: a) needs a lot
+</I>&gt;<i> more
+</I>&gt;<i> than just the deps recorded in the ebuild
+</I>&gt;<i> d) this plotmm-library uses a deprecated API of libsigc++ which makes
+</I>&gt;<i>it
+</I>&gt;<i> break here
+</I>
+Debian, which I use for developing, has no plotmm package that I could
+find. 
+
+I could add detection to the configure script, I guess.
+
+I did not have any problems with plotmm and gtkmm 2.4.
+
+d) Comes bundled with xmlrpc-epi (<A HREF="http://xmlrpc-epi.sourceforge.net/">http://xmlrpc-epi.sourceforge.net/</A>)
+which in turns includes Yet Another Version Of Expat (tm) ;-)
+
+I was not able to find a package for it in debian, but debian is
+somewhat conservative. I guess that the configure script should try to
+detect if xmlrpc is installed system-wide before using the one in
+'external'.
+
+Mounir/Peter, would you be so kind and add some BTG bugs? That is if you
+want me to issues with Gentoo in BTG instead of maintaining patches in
+Gentoo..
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+&quot;When they ask how I died, I said, tell them: still angry.&quot; 
+(Altered Carbon by Richard Morgan)
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000016.html">[Btg-devel] Error when reseeding a torrent
+</A></li>
+	<LI>Next message: <A HREF="000022.html">[Btg-devel] 0.9.7 ebuild
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17">[ date ]</a>
+              <a href="thread.html#17">[ thread ]</a>
+              <a href="subject.html#17">[ subject ]</a>
+              <a href="author.html#17">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/btg-devel">More information about the Btg-devel
+mailing list</a><br>
+</body></html>

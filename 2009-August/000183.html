@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Btg-devel] Trouble with starting btg-1.0.0
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/btg-devel/2009-August/index.html" >
+   <LINK REL="made" HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20Trouble%20with%20starting%20btg-1.0.0&In-Reply-To=%3Ccb5ccd7b55e4f3e4862dd6cc67662c95.squirrel%40webmail.netimage.dk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000182.html">
+   <LINK REL="Next"  HREF="000185.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Btg-devel] Trouble with starting btg-1.0.0</H1>
+    <B>Michael Wojciechowski</B> 
+    <A HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20Trouble%20with%20starting%20btg-1.0.0&In-Reply-To=%3Ccb5ccd7b55e4f3e4862dd6cc67662c95.squirrel%40webmail.netimage.dk%3E"
+       TITLE="[Btg-devel] Trouble with starting btg-1.0.0">wojci at wojci.dk
+       </A><BR>
+    <I>Mon Aug 24 14:20:11 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000182.html">[Btg-devel] Trouble with starting btg-1.0.0
+</A></li>
+        <LI>Next message: <A HREF="000185.html">[Btg-devel] start new session error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#183">[ date ]</a>
+              <a href="thread.html#183">[ thread ]</a>
+              <a href="subject.html#183">[ subject ]</a>
+              <a href="author.html#183">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Ryan Holt wrote:
+
+&gt;<i> I'm getting this error after launching the btgdaemon and attempting to
+</I>&gt;<i> connect via btgcli:
+</I>&gt;<i>
+</I>&gt;<i>     <A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">ryan at brian</A> ~ $ btgcli
+</I>&gt;<i>     Username:
+</I>&gt;<i>     ryan
+</I>&gt;<i>     Password:
+</I>&gt;<i>
+</I>&gt;<i>     Unable to get password.
+</I>
+getpass() is being used in BTG. From the man page &quot;This function is
+obsolete.  Do not use it.&quot; We use it. :)
+
+So my guess is that it returns NULL on your distro/OS, because someone
+decided to remove the functionality. We will have to reimplement
+stdIn::getPassword(..) so it works on all the supported operating systems.
+
+What distro/OS are you using?
+
+Do you mind adding a bug about it using our bug tracker?
+
+-- 
+Best regards
+
+Michael Wojciechowski
+
+<A HREF="http://www.linkedin.com/in/wojci">http://www.linkedin.com/in/wojci</A>
+<A HREF="http://www.facebook.com/wojci">http://www.facebook.com/wojci</A>
+<A HREF="http://twitter.com/wojci">http://twitter.com/wojci</A>
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000182.html">[Btg-devel] Trouble with starting btg-1.0.0
+</A></li>
+	<LI>Next message: <A HREF="000185.html">[Btg-devel] start new session error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#183">[ date ]</a>
+              <a href="thread.html#183">[ thread ]</a>
+              <a href="subject.html#183">[ subject ]</a>
+              <a href="author.html#183">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/btg-devel">More information about the Btg-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Btg-devel] BTG 0.9.7 released
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/btg-devel/2008-March/index.html" >
+   <LINK REL="made" HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20BTG%200.9.7%20released&In-Reply-To=%3C20080315235129.4dfb50ff%40netpc3.home.wojci.dk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000004.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Btg-devel] BTG 0.9.7 released</H1>
+    <B>Michael Wojciechowski</B> 
+    <A HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20BTG%200.9.7%20released&In-Reply-To=%3C20080315235129.4dfb50ff%40netpc3.home.wojci.dk%3E"
+       TITLE="[Btg-devel] BTG 0.9.7 released">wojci at wojci.dk
+       </A><BR>
+    <I>Sat Mar 15 23:51:29 CET 2008</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000004.html">[Btg-devel] [PATCH] fix btg for gcc-4.3
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3">[ date ]</a>
+              <a href="thread.html#3">[ thread ]</a>
+              <a href="subject.html#3">[ subject ]</a>
+              <a href="author.html#3">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>From <A HREF="http://developer.berlios.de/project/shownotes.php?release_id=14349:">http://developer.berlios.de/project/shownotes.php?release_id=14349:</A>
+
+This release contains a large number of bugfixes and some new features
+which were requested by users.  Also, 0.9.7 is the first BTG release
+which has been built for and been tested on OpenWrt (See howto about
+details).
+
+Notice the selecting files and DHT support will only work if Rasterbar
+libtorrent 0.13rc1 or later is used.  Libtorrent 0.12 does not contain
+the required functionality.
+
+Changes:
+The following bugs were fixed:
+
+013359 Compilation error: numinput.h.
+013315 btgui, torrent remains after moving to another session.
+013306 btgui, executing operations on multiple torrents.
+013272 Add support for libtorrent 0.12.1.
+013267 btgcli, incorrect seed limit.
+013266 btgui, global limit setting.
+013265 btgui, limit settings dialog doesn't correctly display limits.
+013248 btgncli, add dialog used for entering numbers.
+013216 Session saving, add saving of global limits.
+013147 Handle octets set to 255 in Address/addressPort.
+013146 XML Pasing error (wwwui).
+013142 Restore file priorities after restart.
+013136 Change of peer id / useragent (feature req).
+013007 Show session settings.
+012997 Session saving, fix saving of dht/encryption settings.
+012975 Externalization, simple, exorcism.
+012970 Add moving torrents to another sessions.
+012952 Add switch to disable generating btg-config.
+012839 DHT + encryption support in wwwbtg.
+012814 Daemon segfaults when starting client with DHT (0.9.6).
+012784 Remove singleton object used for logging.
+012771 Add openwrt packages to SVN.
+012762 Embed svn version into release information.
+012761 Callback manager: execute calls from a thread.
+012685 btgdaemon/btgpassswd segfaulting upon start.
+012676 Fix boost iostreams detection.
+012616 Remove btgq and btgd.
+012598 Write man page for btgvs.
+012557 Make fails on FreeBSD 6.2.
+012545 Update SDL viewer to AGAR 1.3.1.
+012544 BTGWWW, add missing files in bcore/command.
+012535 btgncli: show peers/seeds in the list of torrents.
+012330 Add another version of contextStatusCommand.
+012329 Add &quot;stop autoupdating&quot; button in wwwbtg.
+012308 Clean up daemon/limitval.cpp.
+012301 Update doxygen.
+012241 Use pkglib_LTLIBRARIES instead of lib_LTLIBRARIES.
+012226 btgui, files showing as 100%.
+012208 Add logging using syslog to wwwui.
+012205 torrent files which contain same files but different tracker.
+012190 Fix &quot;warning: 'add_torrent' is deprecated&quot;.
+012125 Update SDL viewer, after refactoring of last files.
+012124 Add command line interface(s) unittest.
+012120 Update to libtorrent 0.13 aka SVN.
+012118 Add session naming.
+012108 btgui: buttons OK and Cancel are equivalent when logging-in.
+012106 Can't set files to download in btgui.
+012055 File checking fails on torrents that contain directories.
+012004 Show tracker for each context.
+011784 More users can't download same torrent at same time.
+011781 FBSD, btgncli does not show the status bar.
+011557 Peer_id sent to tracker (feature req).
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+&quot;When they ask how I died, I said, tell them: still angry.&quot; 
+(Altered Carbon by Richard Morgan)
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000004.html">[Btg-devel] [PATCH] fix btg for gcc-4.3
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3">[ date ]</a>
+              <a href="thread.html#3">[ thread ]</a>
+              <a href="subject.html#3">[ subject ]</a>
+              <a href="author.html#3">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/btg-devel">More information about the Btg-devel
+mailing list</a><br>
+</body></html>

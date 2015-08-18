@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Btg-devel] Fast resume data
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/btg-devel/2009-August/index.html" >
+   <LINK REL="made" HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20Fast%20resume%20data&In-Reply-To=%3C20090816235504.5630b1a8%40netpc5.home.wojci.dk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000177.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Btg-devel] Fast resume data</H1>
+    <B>Michael Wojciechowski</B> 
+    <A HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20Fast%20resume%20data&In-Reply-To=%3C20090816235504.5630b1a8%40netpc5.home.wojci.dk%3E"
+       TITLE="[Btg-devel] Fast resume data">wojci at wojci.dk
+       </A><BR>
+    <I>Sun Aug 16 23:55:04 CEST 2009</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000177.html">[Btg-devel] Fast resume data
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#176">[ date ]</a>
+              <a href="thread.html#176">[ thread ]</a>
+              <a href="subject.html#176">[ subject ]</a>
+              <a href="author.html#176">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Roman,
+
+To continue our conversation from IRC.
+
+21:03 &lt; wojci&gt; roma_: I am looking at the issue with saving fast
+resume. The only fix I see is moving the alert handling to its own
+thread. 21:03 &lt; wojci&gt; roma_: And using a semaphore to decide when the
+required alert has been generated.
+21:04 &lt; wojci&gt; roma_: I began looking at this, since you have done
+nothing to fix it.
+#libtorrent 21:11 &lt; roma_&gt; wojci: but actually this is done already
+21:12 &lt; roma_&gt; wojci: have you understood why resume data is rejected?
+21:14 &lt; roma_&gt; wojci: current approach _should_work or we have to stop
+the torrent before resume alert is received, which is
+inefficient
+
+I don't know why data is rejected - and I will not know, since the
+alert about resume not being written is not received by the alert
+handler in context_alert.cpp.
+
+I want for a context to wait to the fast data to be saved - this does
+not happen AFAIK.
+
+So I think that when the daemon is being shut down (only when using
+lt 0.14.x), it starts to write fast resume data, but does not wait for
+the write to complete before removing the context. This is probably the
+source of the problem that I experience -&gt; missing fast resume data. It
+probably works fine when fast resume data is written together with
+saved sessions.
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000177.html">[Btg-devel] Fast resume data
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#176">[ date ]</a>
+              <a href="thread.html#176">[ thread ]</a>
+              <a href="subject.html#176">[ subject ]</a>
+              <a href="author.html#176">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/btg-devel">More information about the Btg-devel
+mailing list</a><br>
+</body></html>

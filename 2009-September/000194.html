@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Btg-devel] 2.0.0 RC2
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/btg-devel/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%202.0.0%20RC2&In-Reply-To=%3C20090928191628.GA11679%40bafster.baflabs.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000196.html">
+   <LINK REL="Next"  HREF="000195.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Btg-devel] 2.0.0 RC2</H1>
+    <B>Bohdan Linda</B> 
+    <A HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%202.0.0%20RC2&In-Reply-To=%3C20090928191628.GA11679%40bafster.baflabs.org%3E"
+       TITLE="[Btg-devel] 2.0.0 RC2">bohdan.linda at seznam.cz
+       </A><BR>
+    <I>Mon Sep 28 21:16:28 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000196.html">[Btg-devel] btg + geoip
+</A></li>
+        <LI>Next message: <A HREF="000195.html">[Btg-devel] 2.0.0 RC2
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#194">[ date ]</a>
+              <a href="thread.html#194">[ thread ]</a>
+              <a href="subject.html#194">[ subject ]</a>
+              <a href="author.html#194">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello,
+
+just performed an upgrade to 2.0.0 RC2 to do some tests. Daemon seems to
+be running, but I cannot connect into it (tried both xml-rpc and tcpip
+transport). What can be the problem?
+
+[2009-Sep-28 21:12:30] config: '/home/download/.btg/client.ini'.
+Username:
+download
+Password:
+[2009-Sep-28 21:12:35] Snd: (g) Init connection.
+[2009-Sep-28 21:12:36] Rec: (g) Error.
+[2009-Sep-28 21:12:36] btg*cli: Internal error: start up helper not initialized.
+
+$ cat client.ini
+; Generated with btg-config.
+;
+[transport]
+default=tcpip
+;default=xml-rpc
+
+[network]
+daemon-address=127.0.0.1:16000
+
+$ cat daemon.ini
+; Generated with btg-config.
+;
+[transport]
+;default=xml-rpc
+default=tcpip
+
+[logging]
+type=file
+filename=/home/download/btg.log
+
+[auth]
+passwd-file=/home/download/btg-auth
+
+[network]
+listen-to=127.0.0.1:16000
+torrent-range=9000:9100
+
+[misc]
+#proxy=127.0.0.1:8118
+
+filter=level1
+filename = /home/download/btg-filter
+
+[limit]
+upload_rate_limit = 8000
+
+[savesessions]
+enable=true
+filename=/home/download/btg-session
+
+
+Thanks,
+
+-- 
+Bohdan Linda
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000196.html">[Btg-devel] btg + geoip
+</A></li>
+	<LI>Next message: <A HREF="000195.html">[Btg-devel] 2.0.0 RC2
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#194">[ date ]</a>
+              <a href="thread.html#194">[ thread ]</a>
+              <a href="subject.html#194">[ subject ]</a>
+              <a href="author.html#194">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/btg-devel">More information about the Btg-devel
+mailing list</a><br>
+</body></html>

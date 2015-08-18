@@ -1,0 +1,792 @@
+From wojci at wojci.dk  Sat Nov 22 22:01:31 2008
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Sat, 22 Nov 2008 22:01:31 +0100
+Subject: [Btg-devel] BTG 0.9.9 RC2
+Message-ID: <20081122220131.2c081bfb@netpc3.home.wojci.dk>
+
+I made another RC, which can be downloaded from
+http://prdownload.berlios.de/btg/btg-0.9.9-RC2.tar.gz /
+http://developer.berlios.de/project/shownotes.php?release_id=15453.
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+"When they ask how I died, I said, tell them: still angry." 
+(Altered Carbon by Richard Morgan)
+
+
+From fitzgerald at krudde.nl  Mon Nov 24 22:21:44 2008
+From: fitzgerald at krudde.nl (unknown-user@krudde.nl)
+Date: Mon, 24 Nov 2008 22:21:44 +0100
+Subject: [Btg-devel] btgweb problem (expat reports error code 2)
+Message-ID: <492B1AE8.2080604@krudde.nl>
+
+Hi,
+
+I have running btg 0.9.7. running on my Gentoo box succesfully.
+
+The btgdaemon and btgcli are working allright (downloading a torrent
+right now).
+
+But the btgweb does not work.
+
+I have started the btgdaemon in debug mode (-D).
+When the browser submits the login page the following error is visible
+in the debug output:
+
+expat reports error code 2
+        description: syntax error
+        line: 1
+        column: 0
+        byte index: 0
+        total bytes: 0
+
+        data beginning 0 before byte index: POST / HTTP/1.0
+Host: 127.0.0.1
+Content-Type: text/xml
+Use [2008-Nov-24 21:05:53] hdl: alive.
+
+Any clues/ideas what might be wrong or where to troubleshoot?
+
+Thanks for your help,
+regards,
+Fitzgerald.
+
+
+From fitzgerald at krudde.nl  Mon Nov 24 22:36:33 2008
+From: fitzgerald at krudde.nl (unknown-user@krudde.nl)
+Date: Mon, 24 Nov 2008 22:36:33 +0100
+Subject: [Btg-devel] btgweb problem (expat reports error code 2)
+In-Reply-To: <492B1AE8.2080604@krudde.nl>
+References: <492B1AE8.2080604@krudde.nl>
+Message-ID: <492B1E61.5040807@krudde.nl>
+
+To answer an apparent question: I have tried this with different
+browsers (FF, IE) on different platforms (Linux/Windows).
+
+> Hi,
+>
+> I have running btg 0.9.7. running on my Gentoo box succesfully.
+>
+> The btgdaemon and btgcli are working allright (downloading a torrent
+> right now).
+>
+> But the btgweb does not work.
+>
+> I have started the btgdaemon in debug mode (-D).
+> When the browser submits the login page the following error is visible
+> in the debug output:
+>
+> expat reports error code 2
+>         description: syntax error
+>         line: 1
+>         column: 0
+>         byte index: 0
+>         total bytes: 0
+>
+>         data beginning 0 before byte index: POST / HTTP/1.0
+> Host: 127.0.0.1
+> Content-Type: text/xml
+> Use [2008-Nov-24 21:05:53] hdl: alive.
+>
+> Any clues/ideas what might be wrong or where to troubleshoot?
+>
+> Thanks for your help,
+> regards,
+> Fitzgerald.
+>
+>   
+
+
+
+From wojci at wojci.dk  Tue Nov 25 10:26:10 2008
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Tue, 25 Nov 2008 10:26:10 +0100 (CET)
+Subject: [Btg-devel] btgweb problem (expat reports error code 2)
+In-Reply-To: <492B1AE8.2080604@krudde.nl>
+References: <492B1AE8.2080604@krudde.nl>
+Message-ID: <81c69f9a4f5143c63f3a8f3ef5f544ad.squirrel@webmail.netimage.dk>
+
+unknown-user at krudde.nl wrote:
+> I have running btg 0.9.7. running on my Gentoo box succesfully.
+> The btgdaemon and btgcli are working allright (downloading a torrent
+> right now).
+> But the btgweb does not work.
+
+Can you update to the most recent 0.9.9-RC2? Just to make sure that this
+is not something which has been fixed already.
+
+> I have started the btgdaemon in debug mode (-D).
+> When the browser submits the login page the following error is visible
+> in the debug output:
+>
+> expat reports error code 2
+>         description: syntax error
+>         line: 1
+>         column: 0
+>         byte index: 0
+>         total bytes: 0
+>
+>         data beginning 0 before byte index: POST / HTTP/1.0
+> Host: 127.0.0.1
+> Content-Type: text/xml
+> Use [2008-Nov-24 21:05:53] hdl: alive.
+>
+> Any clues/ideas what might be wrong or where to troubleshoot?
+
+I would use wireshark to capture the http traffic and look at what the
+wwwui is doing. The more recent versions of the wwwui can log to syslog.
+
+-- 
+
+Best regards
+
+Michael Wojciechowski
+
+"When they ask how I died, I said, tell them: still angry."
+(Altered Carbon by Richard Morgan)
+
+09F911029D74E35BD84156C5635688C0
+
+
+
+From fitzgerald at krudde.nl  Tue Nov 25 23:26:54 2008
+From: fitzgerald at krudde.nl (unknown-user@krudde.nl)
+Date: Tue, 25 Nov 2008 23:26:54 +0100
+Subject: [Btg-devel] btgweb problem (expat reports error code 2)
+In-Reply-To: <81c69f9a4f5143c63f3a8f3ef5f544ad.squirrel@webmail.netimage.dk>
+References: <492B1AE8.2080604@krudde.nl>
+	<81c69f9a4f5143c63f3a8f3ef5f544ad.squirrel@webmail.netimage.dk>
+Message-ID: <492C7BAE.70303@krudde.nl>
+
+Hi Michael,
+
+Well, it took me some effort to update to 0.9.9-RC2 (I am running on an
+AMD64):
+
+- first I got complaints during linking due to missing PIC-enabled
+libraries (I had to rebuild boost and rb_libtorrent with -fPIC)
+- then I had issues during linking with pthread stuff which I solved
+(after some Google-ing) with adding  -pthread to the LDFLAGS for the
+Makefile in
+daemon/auth and UI/cli/ncurses.
+
+Then I got a working btg but the web UI gave exactly the same problem as
+before :-(
+
+expat reports error code 2
+    description: syntax error
+    line: 1
+    column: 0
+    byte index: 0
+    total bytes: 0
+
+    data beginning 0 before byte index: POST / HTTP/1.0
+Host: 127.0.0.1
+Content-Type: text/xml
+
+Would you have any more ideas/suggestions?
+I have not installed wireshark (yet) to capture the exact http traffic
+but it definitely is not working for me somehow..
+
+thx,
+regards,
+Fitzgerald.
+
+Michael Wojciechowski wrote:
+> unknown-user at krudde.nl wrote:
+>   
+>> I have running btg 0.9.7. running on my Gentoo box succesfully.
+>> The btgdaemon and btgcli are working allright (downloading a torrent
+>> right now).
+>> But the btgweb does not work.
+>>     
+>
+> Can you update to the most recent 0.9.9-RC2? Just to make sure that this
+> is not something which has been fixed already.
+>
+>   
+>> I have started the btgdaemon in debug mode (-D).
+>> When the browser submits the login page the following error is visible
+>> in the debug output:
+>>
+>> expat reports error code 2
+>>         description: syntax error
+>>         line: 1
+>>         column: 0
+>>         byte index: 0
+>>         total bytes: 0
+>>
+>>         data beginning 0 before byte index: POST / HTTP/1.0
+>> Host: 127.0.0.1
+>> Content-Type: text/xml
+>> Use [2008-Nov-24 21:05:53] hdl: alive.
+>>
+>> Any clues/ideas what might be wrong or where to troubleshoot?
+>>     
+>
+> I would use wireshark to capture the http traffic and look at what the
+> wwwui is doing. The more recent versions of the wwwui can log to syslog.
+>
+>   
+
+
+
+From wojci at wojci.dk  Wed Nov 26 19:12:33 2008
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Wed, 26 Nov 2008 19:12:33 +0100
+Subject: [Btg-devel] btgweb problem (expat reports error code 2)
+In-Reply-To: <492C7BAE.70303@krudde.nl>
+References: <492B1AE8.2080604@krudde.nl>
+	<81c69f9a4f5143c63f3a8f3ef5f544ad.squirrel@webmail.netimage.dk>
+	<492C7BAE.70303@krudde.nl>
+Message-ID: <20081126191233.5d935880@netpc3.home.wojci.dk>
+
+On Tue, 25 Nov 2008 23:26:54 +0100 "unknown-user at krudde.nl"
+<fitzgerald at krudde.nl> wrote:
+
+> Well, it took me some effort to update to 0.9.9-RC2 (I am running on
+> an AMD64):
+
+AMD64 is one of the archs btg has been tested on, at least using
+FreeBSD.
+
+> - first I got complaints during linking due to missing PIC-enabled
+> libraries (I had to rebuild boost and rb_libtorrent with -fPIC)
+> - then I had issues during linking with pthread stuff which I solved
+> (after some Google-ing) with adding  -pthread to the LDFLAGS for the
+> Makefile in
+> daemon/auth and UI/cli/ncurses.
+
+Yes .. it sucks that you use gentoo. It has some issues.
+ 
+> Then I got a working btg but the web UI gave exactly the same problem
+> as before :-(
+
+What xml-rpc lib are you using? The built-in or the one provided by your
+distro?
+
+> expat reports error code 2
+>     description: syntax error
+>     line: 1
+>     column: 0
+>     byte index: 0
+>     total bytes: 0
+> 
+>     data beginning 0 before byte index: POST / HTTP/1.0
+> Host: 127.0.0.1
+> Content-Type: text/xml
+> 
+> Would you have any more ideas/suggestions?
+> I have not installed wireshark (yet) to capture the exact http traffic
+> but it definitely is not working for me somehow..
+
+Give me a wireshark dump of the traffic between the wwwui and the
+daemon. I will try to compare it to what I get here.
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+"When they ask how I died, I said, tell them: still angry." 
+(Altered Carbon by Richard Morgan)
+
+
+From fitzgerald at krudde.nl  Thu Nov 27 22:47:37 2008
+From: fitzgerald at krudde.nl (unknown-user@krudde.nl)
+Date: Thu, 27 Nov 2008 22:47:37 +0100
+Subject: [Btg-devel] btgweb problem (expat reports error code 2)
+In-Reply-To: <20081126191233.5d935880@netpc3.home.wojci.dk>
+References: <492B1AE8.2080604@krudde.nl>	<81c69f9a4f5143c63f3a8f3ef5f544ad.squirrel@webmail.netimage.dk>	<492C7BAE.70303@krudde.nl>
+	<20081126191233.5d935880@netpc3.home.wojci.dk>
+Message-ID: <492F1579.7050001@krudde.nl>
+
+Hi Michael,
+
+I am using the xml-rpc from btg.
+
+Below the wireshark (tshark) dump.
+I wonder if you see something peculiar.. :-)
+
+Regards,
+Fitzgerald.
+
+ # tshark -x -i lo -R "tcp.port == 16000"
+Running as user "root" and group "root". This could be dangerous.
+Capturing on lo
+190.684095    127.0.0.1 -> 127.0.0.1    TCP 41802 > 16000 [SYN] Seq=0
+Win=32792 Len=0 MSS=16396 TSV=461619879 TSER=0
+
+0000  00 00 00 00 00 00 00 00 00 00 00 00 08 00 45 00   ..............E.
+0010  00 38 a7 89 40 00 40 06 95 34 7f 00 00 01 7f 00   .8.. at .@..4......
+0020  00 01 a3 4a 3e 80 ff f3 65 2e 00 00 00 00 90 02   ...J>...e.......
+0030  80 18 81 84 00 00 02 04 40 0c 01 01 08 0a 1b 83   ........ at .......
+0040  c2 a7 00 00 00 00                                 ......
+
+190.684118    127.0.0.1 -> 127.0.0.1    TCP 16000 > 41802 [SYN, ACK]
+Seq=0 Ack=1 Win=32768 Len=0 MSS=16396 TSV=461619879 TSER=461619879
+
+0000  00 00 00 00 00 00 00 00 00 00 00 00 08 00 45 00   ..............E.
+0010  00 38 00 00 40 00 40 06 3c be 7f 00 00 01 7f 00   .8.. at .@.<.......
+0020  00 01 3e 80 a3 4a 00 29 40 25 ff f3 65 2f 90 12   ..>..J.)@%..e/..
+0030  80 00 63 12 00 00 02 04 40 0c 01 01 08 0a 1b 83   ..c..... at .......
+0040  c2 a7 1b 83 c2 a7                                 ......
+
+190.684133    127.0.0.1 -> 127.0.0.1    TCP 41802 > 16000 [ACK] Seq=1
+Ack=1 Win=32792 Len=0 TSV=461619879 TSER=461619879
+
+0000  00 00 00 00 00 00 00 00 00 00 00 00 08 00 45 00   ..............E.
+0010  00 34 a7 8a 40 00 40 06 95 37 7f 00 00 01 7f 00   .4.. at .@..7......
+0020  00 01 a3 4a 3e 80 ff f3 65 2f 00 29 40 26 80 10   ...J>...e/.)@&..
+0030  80 18 b5 0f 00 00 01 01 08 0a 1b 83 c2 a7 1b 83   ................
+0040  c2 a7                                             ..
+
+190.684310    127.0.0.1 -> 127.0.0.1    TCP 41802 > 16000 [PSH, ACK]
+Seq=1 Ack=1 Win=32792 [TCP CHECKSUM INCORRECT] Len=394 TSV=461619879 TSER=46
+1619879
+
+0000  00 00 00 00 00 00 00 00 00 00 00 00 08 00 45 00   ..............E.
+0010  01 be a7 8b 40 00 40 06 93 ac 7f 00 00 01 7f 00   .... at .@.........
+0020  00 01 a3 4a 3e 80 ff f3 65 2f 00 29 40 26 80 18   ...J>...e/.)@&..
+0030  80 18 ff b2 00 00 01 01 08 0a 1b 83 c2 a7 1b 83   ................
+0040  c2 a7 50 4f 53 54 20 2f 20 48 54 54 50 2f 31 2e   ..POST / HTTP/1.
+0050  30 0d 0a 48 6f 73 74 3a 20 31 32 37 2e 30 2e 30   0..Host: 127.0.0
+0060  2e 31 0d 0a 43 6f 6e 74 65 6e 74 2d 54 79 70 65   .1..Content-Type
+0070  3a 20 74 65 78 74 2f 78 6d 6c 0d 0a 55 73 65 72   : text/xml..User
+0080  2d 41 67 65 6e 74 3a 20 42 54 47 20 58 4d 4c 52   -Agent: BTG XMLR
+0090  50 43 20 50 48 50 20 43 6c 69 65 6e 74 2f 54 68   PC PHP Client/Th
+00a0  65 20 49 6e 63 75 74 69 6f 20 58 4d 4c 2d 52 50   e Incutio XML-RP
+00b0  43 20 50 48 50 20 4c 69 62 72 61 72 79 0d 0a 41   C PHP Library..A
+00c0  63 63 65 70 74 2d 45 6e 63 6f 64 69 6e 67 3a 20   ccept-Encoding:
+00d0  67 7a 69 70 3b 71 3d 31 2c 20 69 64 65 6e 74 69   gzip;q=1, identi
+00e0  74 79 3b 31 3d 30 2e 35 0d 0a 43 6f 6e 74 65 6e   ty;1=0.5..Conten
+00f0  74 2d 45 6e 63 6f 64 69 6e 67 3a 20 67 7a 69 70   t-Encoding: gzip
+0100  0d 0a 43 6f 6e 74 65 6e 74 2d 4c 65 6e 67 74 68   ..Content-Length
+0110  3a 20 31 37 39 0d 0a 0d 0a 1f 8b 08 00 00 00 00   : 179...........
+0120  00 02 ff 8d 90 4d 0e 82 30 10 85 f7 9c 82 70 00   .....M..0.....p.
+0130  da 12 f9 69 32 96 85 7b ef d0 9f 01 9b b4 c5 94   ...i2..{........
+0140  4a 3c be 1a d0 10 17 c6 d5 9b 99 7c ef e5 65 a0   J<.........|..e.
+0150  bf 7b 97 2f 18 67 3b 85 63 c1 4a 5a e4 bd c8 c0   .{./.g;.c.JZ....
+0160  63 ba 4c e6 24 9d fb 2c 67 e9 51 8c 18 30 4a 57   c.L.$..,g.Q..0JW
+0170  da 60 93 9e 42 40 9d 9e 46 20 3b 24 83 ab 8c d2   .`..B at ..F ;$....
+0180  cf 62 55 01 8b 74 37 14 60 43 12 0c c8 4b 80 6c   .bU..t7.`C...K.l
+0190  37 b2 22 d9 17 3a a7 68 c3 28 54 1a 81 6c f3 9f   7."..:.h.(T..l..
+01a0  96 b6 1e 38 33 9c 36 d8 0d d4 b4 58 ab 4a e2 41   ...83.6....X.J.A
+01b0  69 aa 0c 57 bc 66 9d 1e 1a 5a 31 f6 23 97 bc eb   i..W.f...Z1.#...
+01c0  93 dd 13 1e 8a 88 5e d8 28 01 00 00               ......^.(...
+
+190.684327    127.0.0.1 -> 127.0.0.1    TCP 16000 > 41802 [ACK] Seq=1
+Ack=395 Win=33768 Len=0 TSV=461619879 TSER=461619879
+
+0000  00 00 00 00 00 00 00 00 00 00 00 00 08 00 45 00   ..............E.
+0010  00 34 82 81 40 00 40 06 ba 40 7f 00 00 01 7f 00   .4.. at .@.. at ......
+0020  00 01 3e 80 a3 4a 00 29 40 26 ff f3 66 b9 80 10   ..>..J.)@&..f...
+0030  83 e8 af b5 00 00 01 01 08 0a 1b 83 c2 a7 1b 83   ................
+0040  c2 a7                                             ..
+
+^C5 packets captured
+
+
+Michael Wojciechowski wrote:
+> On Tue, 25 Nov 2008 23:26:54 +0100 "unknown-user at krudde.nl"
+> <fitzgerald at krudde.nl> wrote:
+>
+>   
+>> Well, it took me some effort to update to 0.9.9-RC2 (I am running on
+>> an AMD64):
+>>     
+>
+> AMD64 is one of the archs btg has been tested on, at least using
+> FreeBSD.
+>
+>   
+>> - first I got complaints during linking due to missing PIC-enabled
+>> libraries (I had to rebuild boost and rb_libtorrent with -fPIC)
+>> - then I had issues during linking with pthread stuff which I solved
+>> (after some Google-ing) with adding  -pthread to the LDFLAGS for the
+>> Makefile in
+>> daemon/auth and UI/cli/ncurses.
+>>     
+>
+> Yes .. it sucks that you use gentoo. It has some issues.
+>  
+>   
+>> Then I got a working btg but the web UI gave exactly the same problem
+>> as before :-(
+>>     
+>
+> What xml-rpc lib are you using? The built-in or the one provided by your
+> distro?
+>
+>   
+>> expat reports error code 2
+>>     description: syntax error
+>>     line: 1
+>>     column: 0
+>>     byte index: 0
+>>     total bytes: 0
+>>
+>>     data beginning 0 before byte index: POST / HTTP/1.0
+>> Host: 127.0.0.1
+>> Content-Type: text/xml
+>>
+>> Would you have any more ideas/suggestions?
+>> I have not installed wireshark (yet) to capture the exact http traffic
+>> but it definitely is not working for me somehow..
+>>     
+>
+> Give me a wireshark dump of the traffic between the wwwui and the
+> daemon. I will try to compare it to what I get here.
+>
+>   
+
+
+
+From wojci at wojci.dk  Fri Nov 28 19:10:20 2008
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Fri, 28 Nov 2008 19:10:20 +0100
+Subject: [Btg-devel] btgweb problem (expat reports error code 2)
+In-Reply-To: <492F1579.7050001@krudde.nl>
+References: <492B1AE8.2080604@krudde.nl>
+	<81c69f9a4f5143c63f3a8f3ef5f544ad.squirrel@webmail.netimage.dk>
+	<492C7BAE.70303@krudde.nl>
+	<20081126191233.5d935880@netpc3.home.wojci.dk>
+	<492F1579.7050001@krudde.nl>
+Message-ID: <20081128191020.1001c201@netpc3.home.wojci.dk>
+
+On Thu, 27 Nov 2008 22:47:37 +0100 "unknown-user at krudde.nl"
+<fitzgerald at krudde.nl> wrote:
+
+> Hi Michael,
+> 
+> I am using the xml-rpc from btg.
+
+Ok, I guess.
+
+> Below the wireshark (tshark) dump.
+> I wonder if you see something peculiar.. :-)
+
+No, it seems fine to me. Looks like the wireshark capture I made of my
+session. Could there be any issues with unescaped text because you
+decided to have some special characters in your username or password?
+
+The www ui was written by a swede and it had issues like this before.
+The other clients are working, right?
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+"When they ask how I died, I said, tell them: still angry." 
+(Altered Carbon by Richard Morgan)
+
+
+From fitzgerald at krudde.nl  Fri Nov 28 19:29:36 2008
+From: fitzgerald at krudde.nl (unknown-user@krudde.nl)
+Date: Fri, 28 Nov 2008 19:29:36 +0100
+Subject: [Btg-devel] btgweb problem (expat reports error code 2)
+In-Reply-To: <20081128191020.1001c201@netpc3.home.wojci.dk>
+References: <492B1AE8.2080604@krudde.nl>	<81c69f9a4f5143c63f3a8f3ef5f544ad.squirrel@webmail.netimage.dk>	<492C7BAE.70303@krudde.nl>	<20081126191233.5d935880@netpc3.home.wojci.dk>	<492F1579.7050001@krudde.nl>
+	<20081128191020.1001c201@netpc3.home.wojci.dk>
+Message-ID: <49303890.2090005@krudde.nl>
+
+My userid is 'btg' and my password is 'btg', nothing special.
+Why do you think it has special characters?
+
+btgcli is working flawlessly, it is a btgweb only issue...
+
+Is there an easy way to turn off the gzip encoding between the php
+script and the btg daemon?
+Maybe that reveals something?!?
+
+regards,
+Fitzgerald.
+
+Michael Wojciechowski wrote:
+> On Thu, 27 Nov 2008 22:47:37 +0100 "unknown-user at krudde.nl"
+> <fitzgerald at krudde.nl> wrote:
+>
+>   
+>> Hi Michael,
+>>
+>> I am using the xml-rpc from btg.
+>>     
+>
+> Ok, I guess.
+>
+>   
+>> Below the wireshark (tshark) dump.
+>> I wonder if you see something peculiar.. :-)
+>>     
+>
+> No, it seems fine to me. Looks like the wireshark capture I made of my
+> session. Could there be any issues with unescaped text because you
+> decided to have some special characters in your username or password?
+>
+> The www ui was written by a swede and it had issues like this before.
+> The other clients are working, right?
+>
+>   
+
+
+
+From wojci at wojci.dk  Fri Nov 28 20:26:33 2008
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Fri, 28 Nov 2008 20:26:33 +0100
+Subject: [Btg-devel] btgweb problem (expat reports error code 2)
+In-Reply-To: <49303890.2090005@krudde.nl>
+References: <492B1AE8.2080604@krudde.nl>
+	<81c69f9a4f5143c63f3a8f3ef5f544ad.squirrel@webmail.netimage.dk>
+	<492C7BAE.70303@krudde.nl>
+	<20081126191233.5d935880@netpc3.home.wojci.dk>
+	<492F1579.7050001@krudde.nl>
+	<20081128191020.1001c201@netpc3.home.wojci.dk>
+	<49303890.2090005@krudde.nl>
+Message-ID: <20081128202633.0b5d8e1f@netpc3.home.wojci.dk>
+
+On Fri, 28 Nov 2008 19:29:36 +0100 "unknown-user at krudde.nl"
+<fitzgerald at krudde.nl> wrote:
+
+> My userid is 'btg' and my password is 'btg', nothing special.
+> Why do you think it has special characters?
+
+I had to ask, as it has been an issue in the past.
+
+> Is there an easy way to turn off the gzip encoding between the php
+> script and the btg daemon?
+> Maybe that reveals something?!?
+
+Yes, I added a switch to config.php to revision 511 in SVN. Try setting
+it to false and looking at the capture again.
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+"When they ask how I died, I said, tell them: still angry." 
+(Altered Carbon by Richard Morgan)
+
+
+From fitzgerald at krudde.nl  Sat Nov 29 18:12:40 2008
+From: fitzgerald at krudde.nl (unknown-user@krudde.nl)
+Date: Sat, 29 Nov 2008 18:12:40 +0100
+Subject: [Btg-devel] btgweb problem (expat reports error code 2)
+In-Reply-To: <20081128202633.0b5d8e1f@netpc3.home.wojci.dk>
+References: <492B1AE8.2080604@krudde.nl>	<81c69f9a4f5143c63f3a8f3ef5f544ad.squirrel@webmail.netimage.dk>	<492C7BAE.70303@krudde.nl>	<20081126191233.5d935880@netpc3.home.wojci.dk>	<492F1579.7050001@krudde.nl>	<20081128191020.1001c201@netpc3.home.wojci.dk>	<49303890.2090005@krudde.nl>
+	<20081128202633.0b5d8e1f@netpc3.home.wojci.dk>
+Message-ID: <49317808.9090300@krudde.nl>
+
+I have disabled gzip and the wireshark dump shows the following.
+I do not see anything special, looks OK to me.
+
+Do you see something odd in the request?
+
+thx, regards,
+Fitzgerald.
+
+0040  8a 07 50 4f 53 54 20 2f 20 48 54 54 50 2f 31 2e   ..POST / HTTP/1.
+0050  30 0d 0a 48 6f 73 74 3a 20 31 32 37 2e 30 2e 30   0..Host: 127.0.0
+0060  2e 31 0d 0a 43 6f 6e 74 65 6e 74 2d 54 79 70 65   .1..Content-Type
+0070  3a 20 74 65 78 74 2f 78 6d 6c 0d 0a 55 73 65 72   : text/xml..User
+0080  2d 41 67 65 6e 74 3a 20 42 54 47 20 58 4d 4c 52   -Agent: BTG XMLR
+0090  50 43 20 50 48 50 20 43 6c 69 65 6e 74 2f 54 68   PC PHP Client/Th
+00a0  65 20 49 6e 63 75 74 69 6f 20 58 4d 4c 2d 52 50   e Incutio XML-RP
+00b0  43 20 50 48 50 20 4c 69 62 72 61 72 79 0d 0a 43   C PHP Library..C
+00c0  6f 6e 74 65 6e 74 2d 4c 65 6e 67 74 68 3a 20 32   ontent-Length: 2
+00d0  39 36 0d 0a 0d 0a 3c 3f 78 6d 6c 20 76 65 72 73   96....<?xml vers
+00e0  69 6f 6e 3d 22 31 2e 30 22 20 3f 3e 0a 3c 6d 65   ion="1.0" ?>.<me
+00f0  74 68 6f 64 43 61 6c 6c 3e 0a 3c 6d 65 74 68 6f   thodCall>.<metho
+0100  64 4e 61 6d 65 3e 67 65 6e 65 72 61 6c 2e 69 6e   dName>general.in
+0110  69 74 63 6f 6e 6e 65 63 74 69 6f 6e 3c 2f 6d 65   itconnection</me
+0120  74 68 6f 64 4e 61 6d 65 3e 0a 3c 70 61 72 61 6d   thodName>.<param
+0130  73 3e 3c 70 61 72 61 6d 3e 3c 76 61 6c 75 65 3e   s><param><value>
+0140  3c 69 6e 74 3e 31 3c 2f 69 6e 74 3e 3c 2f 76 61   <int>1</int></va
+0150  6c 75 65 3e 3c 2f 70 61 72 61 6d 3e 0a 3c 70 61   lue></param>.<pa
+0160  72 61 6d 3e 3c 76 61 6c 75 65 3e 3c 73 74 72 69   ram><value><stri
+0170  6e 67 3e 62 74 67 3c 2f 73 74 72 69 6e 67 3e 3c   ng>btg</string><
+0180  2f 76 61 6c 75 65 3e 3c 2f 70 61 72 61 6d 3e 0a   /value></param>.
+0190  3c 70 61 72 61 6d 3e 3c 76 61 6c 75 65 3e 3c 73   <param><value><s
+01a0  74 72 69 6e 67 3e 37 35 66 39 31 64 39 30 36 65   tring>75f91d906e
+01b0  38 66 30 64 37 65 35 62 32 61 65 34 62 63 30 62   8f0d7e5b2ae4bc0b
+01c0  64 39 62 39 35 31 38 63 66 36 30 32 31 31 3c 2f   d9b9518cf60211</
+01d0  73 74 72 69 6e 67 3e 3c 2f 76 61 6c 75 65 3e 3c   string></value><
+01e0  2f 70 61 72 61 6d 3e 0a 3c 2f 70 61 72 61 6d 73   /param>.</params
+01f0  3e 3c 2f 6d 65 74 68 6f 64 43 61 6c 6c 3e         ></methodCall>
+
+
+Michael Wojciechowski wrote:
+> On Fri, 28 Nov 2008 19:29:36 +0100 "unknown-user at krudde.nl"
+> <fitzgerald at krudde.nl> wrote:
+>
+>   
+>> My userid is 'btg' and my password is 'btg', nothing special.
+>> Why do you think it has special characters?
+>>     
+>
+> I had to ask, as it has been an issue in the past.
+>
+>   
+>> Is there an easy way to turn off the gzip encoding between the php
+>> script and the btg daemon?
+>> Maybe that reveals something?!?
+>>     
+>
+> Yes, I added a switch to config.php to revision 511 in SVN. Try setting
+> it to false and looking at the capture again.
+>
+>   
+
+
+
+From wojci at wojci.dk  Sat Nov 29 20:48:43 2008
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Sat, 29 Nov 2008 20:48:43 +0100
+Subject: [Btg-devel] btgweb problem (expat reports error code 2)
+In-Reply-To: <49317808.9090300@krudde.nl>
+References: <492B1AE8.2080604@krudde.nl>
+	<81c69f9a4f5143c63f3a8f3ef5f544ad.squirrel@webmail.netimage.dk>
+	<492C7BAE.70303@krudde.nl>
+	<20081126191233.5d935880@netpc3.home.wojci.dk>
+	<492F1579.7050001@krudde.nl>
+	<20081128191020.1001c201@netpc3.home.wojci.dk>
+	<49303890.2090005@krudde.nl>
+	<20081128202633.0b5d8e1f@netpc3.home.wojci.dk>
+	<49317808.9090300@krudde.nl>
+Message-ID: <20081129204843.4f1022f2@netpc3.home.wojci.dk>
+
+On Sat, 29 Nov 2008 18:12:40 +0100 "unknown-user at krudde.nl"
+<fitzgerald at krudde.nl> wrote:
+
+> I have disabled gzip and the wireshark dump shows the following.
+> I do not see anything special, looks OK to me.
+ 
+Have you seen this:
+https://lists.berlios.de/pipermail/btg-devel/2008-September/000061.html
+
+Are you using apache or some other web server? This guy had issues with
+lighttpd - using apache solved his problem, if I remember correctly.
+
+--
+Best regards
+
+Michael Wojciechowski  
+
+"When they ask how I died, I said, tell them: still angry." 
+(Altered Carbon by Richard Morgan)
+
+
+From fitzgerald at krudde.nl  Sat Nov 29 23:14:19 2008
+From: fitzgerald at krudde.nl (unknown-user@krudde.nl)
+Date: Sat, 29 Nov 2008 23:14:19 +0100
+Subject: [Btg-devel] btgweb problem (expat reports error code 2)
+In-Reply-To: <20081129204843.4f1022f2@netpc3.home.wojci.dk>
+References: <492B1AE8.2080604@krudde.nl>	<81c69f9a4f5143c63f3a8f3ef5f544ad.squirrel@webmail.netimage.dk>	<492C7BAE.70303@krudde.nl>	<20081126191233.5d935880@netpc3.home.wojci.dk>	<492F1579.7050001@krudde.nl>	<20081128191020.1001c201@netpc3.home.wojci.dk>	<49303890.2090005@krudde.nl>	<20081128202633.0b5d8e1f@netpc3.home.wojci.dk>	<49317808.9090300@krudde.nl>
+	<20081129204843.4f1022f2@netpc3.home.wojci.dk>
+Message-ID: <4931BEBB.1070809@krudde.nl>
+
+I saw that post, but there was no root-cause or solution followed up.
+
+The problem looks (at least)  similar..
+
+I am using Apache (2.2.9).
+When the php script is communicating with the btg daemon I would expect
+the http server (Apache ) does not have much impact on that communication.
+
+I will drop that guy (Diego) a mail.
+
+I am trying to figure out where the errorcode 2 comes from.
+
+I have found in *external/xmlrpc-epi/src/xml_element.c*:
+
+      /* parse the XML */
+      if(XML_Parse(parser, in_buf, len, 1) == 0) {
+         enum XML_Error err_code = XML_GetErrorCode(parser);
+         int line_num = XML_GetCurrentLineNumber(parser);
+         int col_num = XML_GetCurrentColumnNumber(parser);
+         long byte_idx = XML_GetCurrentByteIndex(parser);
+         int byte_total = XML_GetCurrentByteCount(parser);
+         const XML_LChar * error_str = XML_ErrorString(err_code);
+         if(byte_idx >= 0) {
+             snprintf(buf,
+                      sizeof(buf),
+                      "\n\tdata beginning %ld before byte index: %s\n",
+                      byte_idx > 10  ? 10 : byte_idx,
+                      in_buf + (byte_idx > 10 ? byte_idx - 10 : byte_idx));
+         }
+
+*         fprintf(stderr, "expat reports error code %i\n"*
+                "\tdescription: %s\n"
+                "\tline: %i\n"
+                "\tcolumn: %i\n"
+                "\tbyte index: %ld\n"
+                "\ttotal bytes: %i\n%s ",
+                err_code, error_str, line_num,
+                col_num, byte_idx, byte_total, buf);
+
+so I tried to dig into the source of XML_GetErrorCode but except the
+header declaration in *external/xmlrpc-epi/expat/xmlparse/xmlparse.h*
+
+/* If XML_Parse or XML_ParseBuffer have returned 0, then XML_GetErrorCode
+returns information about the error. */
+
+enum XML_Error XMLPARSEAPI XML_GetErrorCode(XML_Parser parser);
+
+I could not find the source...
+
+As this returns an error from the XML_Error enum I tried to find the
+error there but except the declaration of the enum in
+external/xmlrpc-epi/expat/xmlparse/xmlparse.h
+I could not find anything.
+I guess because the errorcode is 2 and the description mentions syntax
+error, the error is: XML_ERROR_SYNTAX
+
+It seems I am a bit stuck here.
+
+Looking back, taking into account that the error states byte index : 0
+and total bytes: 0 I have the feeling the connection is closed directly
+and the php script does not send any data or that or that the btgdaemon
+somehow is not receiving the data.
+Hmm, the wireshark dump shows that the data is sent so somehow the
+btgdaemon does not accept it (may be because the php script closes the
+the outputchannel...?!?).
+
+But that is nothing more than my gut feeling right now..
+
+regards,
+Fitzgerald.
+
+Michael Wojciechowski wrote:
+> On Sat, 29 Nov 2008 18:12:40 +0100 "unknown-user at krudde.nl"
+> <fitzgerald at krudde.nl> wrote:
+>
+>   
+>> I have disabled gzip and the wireshark dump shows the following.
+>> I do not see anything special, looks OK to me.
+>>     
+>  
+> Have you seen this:
+> https://lists.berlios.de/pipermail/btg-devel/2008-September/000061.html
+>
+> Are you using apache or some other web server? This guy had issues with
+> lighttpd - using apache solved his problem, if I remember correctly.
+>
+> --
+> Best regards
+>
+> Michael Wojciechowski  
+>
+> "When they ask how I died, I said, tell them: still angry." 
+> (Altered Carbon by Richard Morgan)
+> _______________________________________________
+> Btg-devel mailing list
+> Btg-devel at lists.berlios.de
+> https://lists.berlios.de/mailman/listinfo/btg-devel
+>   
+
+
+

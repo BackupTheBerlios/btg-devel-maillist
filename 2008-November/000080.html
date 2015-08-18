@@ -1,0 +1,158 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Btg-devel] btgweb problem (expat reports error code 2)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/btg-devel/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20btgweb%20problem%20%28expat%20reports%20error%20code%202%29&In-Reply-To=%3C4931BEBB.1070809%40krudde.nl%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000079.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Btg-devel] btgweb problem (expat reports error code 2)</H1>
+    <B>unknown-user@krudde.nl</B> 
+    <A HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20btgweb%20problem%20%28expat%20reports%20error%20code%202%29&In-Reply-To=%3C4931BEBB.1070809%40krudde.nl%3E"
+       TITLE="[Btg-devel] btgweb problem (expat reports error code 2)">fitzgerald at krudde.nl
+       </A><BR>
+    <I>Sat Nov 29 23:14:19 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000079.html">[Btg-devel] btgweb problem (expat reports error code 2)
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#80">[ date ]</a>
+              <a href="thread.html#80">[ thread ]</a>
+              <a href="subject.html#80">[ subject ]</a>
+              <a href="author.html#80">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I saw that post, but there was no root-cause or solution followed up.
+
+The problem looks (at least)  similar..
+
+I am using Apache (2.2.9).
+When the php script is communicating with the btg daemon I would expect
+the http server (Apache ) does not have much impact on that communication.
+
+I will drop that guy (Diego) a mail.
+
+I am trying to figure out where the errorcode 2 comes from.
+
+I have found in *external/xmlrpc-epi/src/xml_element.c*:
+
+      /* parse the XML */
+      if(XML_Parse(parser, in_buf, len, 1) == 0) {
+         enum XML_Error err_code = XML_GetErrorCode(parser);
+         int line_num = XML_GetCurrentLineNumber(parser);
+         int col_num = XML_GetCurrentColumnNumber(parser);
+         long byte_idx = XML_GetCurrentByteIndex(parser);
+         int byte_total = XML_GetCurrentByteCount(parser);
+         const XML_LChar * error_str = XML_ErrorString(err_code);
+         if(byte_idx &gt;= 0) {
+             snprintf(buf,
+                      sizeof(buf),
+                      &quot;\n\tdata beginning %ld before byte index: %s\n&quot;,
+                      byte_idx &gt; 10  ? 10 : byte_idx,
+                      in_buf + (byte_idx &gt; 10 ? byte_idx - 10 : byte_idx));
+         }
+
+*         fprintf(stderr, &quot;expat reports error code %i\n&quot;*
+                &quot;\tdescription: %s\n&quot;
+                &quot;\tline: %i\n&quot;
+                &quot;\tcolumn: %i\n&quot;
+                &quot;\tbyte index: %ld\n&quot;
+                &quot;\ttotal bytes: %i\n%s &quot;,
+                err_code, error_str, line_num,
+                col_num, byte_idx, byte_total, buf);
+
+so I tried to dig into the source of XML_GetErrorCode but except the
+header declaration in *external/xmlrpc-epi/expat/xmlparse/xmlparse.h*
+
+/* If XML_Parse or XML_ParseBuffer have returned 0, then XML_GetErrorCode
+returns information about the error. */
+
+enum XML_Error XMLPARSEAPI XML_GetErrorCode(XML_Parser parser);
+
+I could not find the source...
+
+As this returns an error from the XML_Error enum I tried to find the
+error there but except the declaration of the enum in
+external/xmlrpc-epi/expat/xmlparse/xmlparse.h
+I could not find anything.
+I guess because the errorcode is 2 and the description mentions syntax
+error, the error is: XML_ERROR_SYNTAX
+
+It seems I am a bit stuck here.
+
+Looking back, taking into account that the error states byte index : 0
+and total bytes: 0 I have the feeling the connection is closed directly
+and the php script does not send any data or that or that the btgdaemon
+somehow is not receiving the data.
+Hmm, the wireshark dump shows that the data is sent so somehow the
+btgdaemon does not accept it (may be because the php script closes the
+the outputchannel...?!?).
+
+But that is nothing more than my gut feeling right now..
+
+regards,
+Fitzgerald.
+
+Michael Wojciechowski wrote:
+&gt;<i> On Sat, 29 Nov 2008 18:12:40 +0100 &quot;<A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">unknown-user at krudde.nl</A>&quot;
+</I>&gt;<i> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">fitzgerald at krudde.nl</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;<i>   
+</I>&gt;&gt;<i> I have disabled gzip and the wireshark dump shows the following.
+</I>&gt;&gt;<i> I do not see anything special, looks OK to me.
+</I>&gt;&gt;<i>     
+</I>&gt;<i>  
+</I>&gt;<i> Have you seen this:
+</I>&gt;<i> <A HREF="https://lists.berlios.de/pipermail/btg-devel/2008-September/000061.html">https://lists.berlios.de/pipermail/btg-devel/2008-September/000061.html</A>
+</I>&gt;<i>
+</I>&gt;<i> Are you using apache or some other web server? This guy had issues with
+</I>&gt;<i> lighttpd - using apache solved his problem, if I remember correctly.
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Best regards
+</I>&gt;<i>
+</I>&gt;<i> Michael Wojciechowski  
+</I>&gt;<i>
+</I>&gt;<i> &quot;When they ask how I died, I said, tell them: still angry.&quot; 
+</I>&gt;<i> (Altered Carbon by Richard Morgan)
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Btg-devel mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">Btg-devel at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">https://lists.berlios.de/mailman/listinfo/btg-devel</A>
+</I>&gt;<i>   
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000079.html">[Btg-devel] btgweb problem (expat reports error code 2)
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#80">[ date ]</a>
+              <a href="thread.html#80">[ thread ]</a>
+              <a href="subject.html#80">[ subject ]</a>
+              <a href="author.html#80">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/btg-devel">More information about the Btg-devel
+mailing list</a><br>
+</body></html>

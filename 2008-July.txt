@@ -1,0 +1,147 @@
+From wojci at wojci.dk  Sat Jul  5 23:18:18 2008
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Sat, 5 Jul 2008 23:18:18 +0200
+Subject: [Btg-devel] BTG 0.9.8 RC3 released
+Message-ID: <20080705231818.426f6e2b@netpc3.home.wojci.dk>
+
+See release notes and change log:
+http://developer.berlios.de/project/shownotes.php?release_id=14856.
+
+I expect this to become the 0.9.8 release in a week or so.
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+"When they ask how I died, I said, tell them: still angry." 
+(Altered Carbon by Richard Morgan)
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: not available
+Type: application/pgp-signature
+Size: 189 bytes
+Desc: not available
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20080705/d2646f2f/attachment.pgp>
+
+From wojci at wojci.dk  Wed Jul  9 21:21:40 2008
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Wed, 9 Jul 2008 21:21:40 +0200
+Subject: [Btg-devel] BTG 0.9.8 released
+Message-ID: <20080709212140.67a1fb27@netpc3.home.wojci.dk>
+
+See 
+http://developer.berlios.de/project/shownotes.php?release_id=14876 for
+details.
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+"When they ask how I died, I said, tell them: still angry." 
+(Altered Carbon by Richard Morgan)
+
+
+From stefan.bauer at cs.tu-chemnitz.de  Fri Jul 18 22:50:16 2008
+From: stefan.bauer at cs.tu-chemnitz.de (Stefan Bauer)
+Date: Fri, 18 Jul 2008 22:50:16 +0200
+Subject: [Btg-devel] Debian Package "btg-daemon" has missing dependency
+	(libcurl-gnutls.so.4)
+Message-ID: <200807182250.17244.stefan.bauer@cs.tu-chemnitz.de>
+
+Hi,
+
+
+the Debian Package btg-daemon-0.9.8 from your repository is missing a 
+dependecy to libcurl3-gnutls-7.18.2-5, which provides the necessary object 
+libcurl-gnutls.so.4.
+
+Error message:
+$>/etc/init.d/btg-daemon start  
+Starting BTG ...
+/usr/bin/btgdaemon: error while loading shared libraries: libcurl-gnutls.so.4: 
+cannot open shared object file: No such file or directory
+
+Manually installing libcurl3-gnutls/testing solves the problem.
+
+
+Regards,
+Stefan
+
+
+From stefan.bauer at cs.tu-chemnitz.de  Fri Jul 18 23:57:47 2008
+From: stefan.bauer at cs.tu-chemnitz.de (Stefan Bauer)
+Date: Fri, 18 Jul 2008 23:57:47 +0200
+Subject: [Btg-devel] Debian Package "btg-ncli" has missing dependency
+	(libtorrent-0.13.so)
+Message-ID: <200807182357.48092.stefan.bauer@cs.tu-chemnitz.de>
+
+Hi,
+
+
+the Debian Package btg-ncli-0.9.8 from your repository is missing a 
+dependency to libtorrent-rasterbar-0.13, which provides the necessary object 
+libtorrent-0.13.so.
+
+Error message:
+$>btgncli 
+btgncli: error while loading shared libraries: libtorrent-0.13.so: cannot open 
+shared object file: No such file or directory
+
+Manually installing libtorrent-rasterbar solves the problem.
+
+Please note that this system only runs the client, so no btg-daemon is 
+installed. The server running the daemon is a different machine in the 
+network.
+
+
+Regards,
+Stefan
+
+
+From btg at romanr.info  Thu Jul 31 12:40:24 2008
+From: btg at romanr.info (Roman Rybalko)
+Date: Thu, 31 Jul 2008 14:40:24 +0400
+Subject: [Btg-devel] Debian Package "btg-ncli" has missing dependency
+	(libtorrent-0.13.so)
+In-Reply-To: <200807182357.48092.stefan.bauer@cs.tu-chemnitz.de>
+References: <200807182357.48092.stefan.bauer@cs.tu-chemnitz.de>
+Message-ID: <48919698.1080907@romanr.info>
+
+Hi, Michael,
+Why our *cli is linked against libtorrent?
+Have you fixed this already?
+
+roma at firewall:~$ ldd `which btgncli` | grep torrent
+        libtorrent-0.13.so => /usr/lib/libtorrent-0.13.so (0xb773f000)
+roma at firewall:~$ btgncli -V
+Parsing command line arguments failed: unknown option -V
+BTG client (version 0.9.8) options:
+...
+
+
+Stefan Bauer wrote:
+> the Debian Package btg-ncli-0.9.8 from your repository is missing a 
+> dependency to libtorrent-rasterbar-0.13, which provides the necessary object 
+> libtorrent-0.13.so.
+>
+> Error message:
+> $>btgncli 
+> btgncli: error while loading shared libraries: libtorrent-0.13.so: cannot open 
+> shared object file: No such file or directory
+>
+> Manually installing libtorrent-rasterbar solves the problem.
+>
+> Please note that this system only runs the client, so no btg-daemon is 
+> installed. The server running the daemon is a different machine in the 
+> network.
+>   
+
+
+-- 
+WBR,
+Roman Rybalko
+
+
+

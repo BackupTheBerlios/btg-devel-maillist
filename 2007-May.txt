@@ -1,0 +1,26 @@
+From raoulb at bluewin.ch  Thu May 10 15:41:16 2007
+From: raoulb at bluewin.ch (Raoul)
+Date: Thu, 10 May 2007 15:41:16 +0200
+Subject: [Btg-devel] btg Debian packages
+Message-ID: <464320FC.8010107@bluewin.ch>
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+Hi,
+
+I have a question about the current state of the Debian packages of btg.
+As a Debian user, I would like to help here.
+
+
+- -- Raoul
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFGQyD6DCEZ31JHjU8RCrjJAKCzAyjpJRc7zj5/9uqT9qw9WQlSNACgo935
+u0lmtNwOFke6CDPhBN3ALlg=
+=K2bT
+-----END PGP SIGNATURE-----
+
+
+

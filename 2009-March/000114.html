@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Btg-devel] btg-current cli client failing to build against boost	1.35 and libtorrent-rasterbar 1.3 on FreeBSD 7.1 and showing	ncurses-related errors
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/btg-devel/2009-March/index.html" >
+   <LINK REL="made" HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20btg-current%20cli%20client%20failing%20to%20build%20against%20boost%0A%091.35%20and%20libtorrent-rasterbar%201.3%20on%20FreeBSD%207.1%20and%20showing%0A%09ncurses-related%20errors&In-Reply-To=%3C205ad7060903052359o57e07853yb28a896fe53d5a90%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000112.html">
+   <LINK REL="Next"  HREF="000115.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Btg-devel] btg-current cli client failing to build against boost	1.35 and libtorrent-rasterbar 1.3 on FreeBSD 7.1 and showing	ncurses-related errors</H1>
+    <B>christophe taranotte</B> 
+    <A HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20btg-current%20cli%20client%20failing%20to%20build%20against%20boost%0A%091.35%20and%20libtorrent-rasterbar%201.3%20on%20FreeBSD%207.1%20and%20showing%0A%09ncurses-related%20errors&In-Reply-To=%3C205ad7060903052359o57e07853yb28a896fe53d5a90%40mail.gmail.com%3E"
+       TITLE="[Btg-devel] btg-current cli client failing to build against boost	1.35 and libtorrent-rasterbar 1.3 on FreeBSD 7.1 and showing	ncurses-related errors">christophe.taranotte at gmail.com
+       </A><BR>
+    <I>Fri Mar  6 08:59:51 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000112.html">[Btg-devel] btg-current cli client failing to build against boost 1.35 and libtorrent-rasterbar 1.3 on FreeBSD 7.1 and showing ncurses-related errors
+</A></li>
+        <LI>Next message: <A HREF="000115.html">[Btg-devel] btg-current cli client failing to build against	boost 1.35 and libtorrent-rasterbar 1.3 on FreeBSD 7.1 and	showing ncurses-related errors
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#114">[ date ]</a>
+              <a href="thread.html#114">[ thread ]</a>
+              <a href="subject.html#114">[ subject ]</a>
+              <a href="author.html#114">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Thu, Mar 5, 2009 at 8:56 PM, Michael Wojciechowski &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">wojci at wojci.dk</A>&gt;wrote:
+
+&gt;<i>
+</I>&gt;<i> I don't see &quot;-lcurses&quot; on the cmd line used to link btgncli. This could
+</I>&gt;<i> be the problem
+</I>
+
+Maybe.
+
+Curses has been replaced by ncurses in the FreeBSD base (FreeBSD base
+distribution if you will) since 5.4 I think.
+
+On my server, ncurses 5.6 is in /lib and 5.7 (installed from ports) in
+/usr/local/lib.
+
+
+&gt;<i> .. or it could also be that init_pair() is not
+</I>&gt;<i> implemented. But that would mean that ncurses color support does not
+</I>&gt;<i> work on FreeBSD.
+</I>
+
+According to the FreeBSD ncurses man
+page&lt;<A HREF="http://www.freebsd.org/cgi/man.cgi?query=ncurses&amp;apropos=0&amp;sektion=0&amp;manpath=FreeBSD+7.1-RELEASE&amp;format=html">http://www.freebsd.org/cgi/man.cgi?query=ncurses&amp;apropos=0&amp;sektion=0&amp;manpath=FreeBSD+7.1-RELEASE&amp;format=html</A>&gt;,
+init_pair() and init_color are implemented.
+
+&gt;<i>
+</I>&gt;<i> Why do you specify &quot;--with-ncurses&quot; instead of
+</I>&gt;<i> &quot;--with-ncurses=/path/to/your/ncurses&quot;?
+</I>&gt;<i>
+</I>
+Because in ./configure -h, I read &quot; --with-ncurses          Force the use of
+ncurses over curses&quot;.
+
+I got the same errors without the &quot;--with-ncurses&quot; option anyway.
+
+
+
+&gt;<i> &gt; I have a last question: do I still need bash as all your scripts are
+</I>&gt;<i> &gt; shell sh scripts?
+</I>&gt;<i>
+</I>&gt;<i> There was some problem with the default shell, it is mentioned in the
+</I>&gt;<i> howto. I think it was mainly in connection with running unittests.
+</I>&gt;<i>
+</I>
+Good to know.
+
+Best regards,
+
+Christophe
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/btg-devel/attachments/20090306/1c624561/attachment.html">https://lists.berlios.de/pipermail/btg-devel/attachments/20090306/1c624561/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000112.html">[Btg-devel] btg-current cli client failing to build against boost 1.35 and libtorrent-rasterbar 1.3 on FreeBSD 7.1 and showing ncurses-related errors
+</A></li>
+	<LI>Next message: <A HREF="000115.html">[Btg-devel] btg-current cli client failing to build against	boost 1.35 and libtorrent-rasterbar 1.3 on FreeBSD 7.1 and	showing ncurses-related errors
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#114">[ date ]</a>
+              <a href="thread.html#114">[ thread ]</a>
+              <a href="subject.html#114">[ subject ]</a>
+              <a href="author.html#114">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/btg-devel">More information about the Btg-devel
+mailing list</a><br>
+</body></html>

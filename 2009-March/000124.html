@@ -1,0 +1,148 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Btg-devel] Configure problems with btg 0.99,	libtorrent-rasterbar-0.14.2,	boost_1_38_0 during attempted building from 	source on FreeBSD 7.1
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/btg-devel/2009-March/index.html" >
+   <LINK REL="made" HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20Configure%20problems%20with%20btg%200.99%2C%0A%09libtorrent-rasterbar-0.14.2%2C%0A%09boost_1_38_0%20during%20attempted%20building%20from%20%09source%20on%20FreeBSD%207.1&In-Reply-To=%3C205ad7060903151046i2e706333ya419d615ed99b22b%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000123.html">
+   <LINK REL="Next"  HREF="000125.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Btg-devel] Configure problems with btg 0.99,	libtorrent-rasterbar-0.14.2,	boost_1_38_0 during attempted building from 	source on FreeBSD 7.1</H1>
+    <B>christophe taranotte</B> 
+    <A HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20Configure%20problems%20with%20btg%200.99%2C%0A%09libtorrent-rasterbar-0.14.2%2C%0A%09boost_1_38_0%20during%20attempted%20building%20from%20%09source%20on%20FreeBSD%207.1&In-Reply-To=%3C205ad7060903151046i2e706333ya419d615ed99b22b%40mail.gmail.com%3E"
+       TITLE="[Btg-devel] Configure problems with btg 0.99,	libtorrent-rasterbar-0.14.2,	boost_1_38_0 during attempted building from 	source on FreeBSD 7.1">christophe.taranotte at gmail.com
+       </A><BR>
+    <I>Sun Mar 15 18:46:01 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000123.html">[Btg-devel] Configure problems with btg 0.99, libtorrent-rasterbar-0.14.2, boost_1_38_0 during attempted building from  source on FreeBSD 7.1
+</A></li>
+        <LI>Next message: <A HREF="000125.html">[Btg-devel] Configure problems with btg 0.99,	libtorrent-rasterbar-0.14.2,	boost_1_38_0 during attempted building from 	source on FreeBSD 7.1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#124">[ date ]</a>
+              <a href="thread.html#124">[ thread ]</a>
+              <a href="subject.html#124">[ subject ]</a>
+              <a href="author.html#124">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Good Evening,
+
+I don't know why BOOST_VERSION is read by socket.hpp but any way, I hacked
+and now the build stops at:
+
+.../...
+Making all in auth
+/bin/sh ../../libtool --tag=CXX    --mode=link ccache g++
+-I/pack/include/boost-1_38 -DNDEBUG -I/usr/local/include
+-I/usr/local/include  -DBTG_DEBUG=0 -DBTG_OPTION_SAVESESSIONS=1
+-DBTG_OPTION_EVENTCALLBACK=1  -DBTG_OPTION_UPNP=0
+-DBTG_OPTION_USECYBERLINK=0   -DBTG_REV=&quot;SVN rev. 559&quot;
+-DBTG_INTERNAL_XMLRPC=&quot;1&quot;  -I/pack/include/boost-1_38  -L/pack/lib
+-L/usr/local/lib -L/pack/lib -o btgpasswd btgpasswd-arg.o
+btgpasswd-btgpasswd.o btgpasswd-dconfig.o ../../bcore/libbtgcore.la
+libauth.la  ../../external/ini/libini.la  -lboost_date_time-gcc42-mt
+-lboost_program_options-gcc42-mt -lboost_system-gcc42-mt
+-lboost_iostreams-gcc42-mt -lboost_filesystem-gcc42-mt -lexecinfo
+ccache g++ -I/pack/include/boost-1_38 -DNDEBUG -I/usr/local/include
+-I/usr/local/include -DBTG_DEBUG=0 -DBTG_OPTION_SAVESESSIONS=1
+-DBTG_OPTION_EVENTCALLBACK=1 -DBTG_OPTION_UPNP=0 -DBTG_OPTION_USECYBERLINK=0
+&quot;-DBTG_REV=SVN rev. 559&quot; -DBTG_INTERNAL_XMLRPC=1 -I/pack/include/boost-1_38
+-o .libs/btgpasswd btgpasswd-arg.o btgpasswd-btgpasswd.o
+btgpasswd-dconfig.o  -L/pack/lib -L/usr/local/lib
+../../bcore/.libs/libbtgcore.so /usr/local/lib/libgnutls.so -lz
+/usr/local/lib/libgcrypt.so /usr/local/lib/libgpg-error.so
+/usr/local/lib/libintl.so -lboost_thread-gcc42-mt /usr/local/lib/libiconv.so
+-pthread ./.libs/libauth.a ../../external/ini/.libs/libini.a
+-lboost_date_time-gcc42-mt -lboost_program_options-gcc42-mt
+-lboost_system-gcc42-mt -lboost_iostreams-gcc42-mt
+-lboost_filesystem-gcc42-mt -lexecinfo  -Wl,--rpath -Wl,/pack/lib/btg
+-Wl,--rpath -Wl,/usr/local/lib
+*** Error code 1
+
+and stderr is as follows:
+
+btgpasswd-arg.o(.gnu.linkonce.t._ZN5boost15program_options25basic_command_line_parserIcE12extra_parserENS_9function1ISt4pairISsSsERKSsSaINS_13function_baseEEEE+0x27):
+In function
+`boost::program_options::basic_command_line_parser&lt;char&gt;::extra_parser(boost::function1&lt;std::pair&lt;std::string,
+std::string&gt;, std::string const&amp;, std::allocator&lt;boost::function_base&gt; &gt;)':
+:<i> undefined reference to
+</I>`boost::program_options::detail::cmdline::set_additional_parser(boost::function1&lt;std::pair&lt;std::string,
+std::string&gt;, std::string const&amp;, std::allocator&lt;boost::function_base&gt; &gt;)'
+../../bcore/.libs/libbtgcore.so: undefined reference to
+`boost::filesystem::detail::status_api(std::string const&amp;, int&amp;)'
+../../bcore/.libs/libbtgcore.so: undefined reference to
+`boost::xtime_get(boost::xtime*, int)'
+
+Any idea?
+
+Best regards,
+
+Christophe
+
+
+On Fri, Mar 13, 2009 at 10:35 PM, Michael Wojciechowski &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">wojci at wojci.dk</A>&gt;wrote:
+
+&gt;<i> On Wed, 11 Mar 2009 23:54:29 +0100 christophe taranotte
+</I>&gt;<i> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">christophe.taranotte at gmail.com</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;<i> &gt; There is a canonical libtorrent-rasterbar.pc in prefix/lib/pkgconfig
+</I>&gt;<i>
+</I>&gt;<i> I think that I ran &quot;make install&quot; in libtorrent, which does not copy all
+</I>&gt;<i> the files instead of running &quot;make &amp;&amp; make install&quot; which does. :/
+</I>&gt;<i>
+</I>&gt;<i> &gt; I also tried to set the cflags to libtorrent-rasterbar instead
+</I>&gt;<i> &gt; of  libtorrent in in setup.sh (CXXFLAGS_pkgconfig) and likewise but I
+</I>&gt;<i> &gt; got the same errors in the ipfilter module.
+</I>&gt;<i>
+</I>&gt;<i> I changed the setup.sh script to use &quot;libtorrent-rasterbar&quot; instead of
+</I>&gt;<i> &quot;libtorrent&quot;.
+</I>&gt;<i>
+</I>&gt;<i> Take a look at my config.log: <A HREF="http://pastebin.ca/1359864.Maybe">http://pastebin.ca/1359864.Maybe</A> there
+</I>&gt;<i> is something which is different from your setup.
+</I>&gt;<i>
+</I>&gt;<i> I don't think that there is more I can do for you.
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Best regards
+</I>&gt;<i>
+</I>&gt;<i> Michael Wojciechowski
+</I>&gt;<i>
+</I>&gt;<i> &quot;When they ask how I died, I said, tell them: still angry.&quot;
+</I>&gt;<i> (Altered Carbon by Richard Morgan)
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/btg-devel/attachments/20090315/9c397246/attachment.html">https://lists.berlios.de/pipermail/btg-devel/attachments/20090315/9c397246/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000123.html">[Btg-devel] Configure problems with btg 0.99, libtorrent-rasterbar-0.14.2, boost_1_38_0 during attempted building from  source on FreeBSD 7.1
+</A></li>
+	<LI>Next message: <A HREF="000125.html">[Btg-devel] Configure problems with btg 0.99,	libtorrent-rasterbar-0.14.2,	boost_1_38_0 during attempted building from 	source on FreeBSD 7.1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#124">[ date ]</a>
+              <a href="thread.html#124">[ thread ]</a>
+              <a href="subject.html#124">[ subject ]</a>
+              <a href="author.html#124">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/btg-devel">More information about the Btg-devel
+mailing list</a><br>
+</body></html>

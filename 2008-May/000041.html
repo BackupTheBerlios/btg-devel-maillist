@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Btg-devel] Compilation Error
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/btg-devel/2008-May/index.html" >
+   <LINK REL="made" HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20Compilation%20Error&In-Reply-To=%3C7f1f15320805221136r4fc45efcmc4f9e0ec03b89d44%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000040.html">
+   <LINK REL="Next"  HREF="000043.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Btg-devel] Compilation Error</H1>
+    <B>Gramoz Brace</B> 
+    <A HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20Compilation%20Error&In-Reply-To=%3C7f1f15320805221136r4fc45efcmc4f9e0ec03b89d44%40mail.gmail.com%3E"
+       TITLE="[Btg-devel] Compilation Error">gramozbrace at googlemail.com
+       </A><BR>
+    <I>Thu May 22 20:36:14 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000040.html">[Btg-devel] autogen.sh
+</A></li>
+        <LI>Next message: <A HREF="000043.html">[Btg-devel] Compilation Error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#41">[ date ]</a>
+              <a href="thread.html#41">[ thread ]</a>
+              <a href="subject.html#41">[ subject ]</a>
+              <a href="author.html#41">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+Ran into this error when i compiled with these options
+
+./configure --enable-btg-config --enable-gui --enable-viewer
+--enable-cli --enable-www --enable-debug --enable-unittest
+--enable-session-saving --enable-event-callback --enable-command-list
+
+---
+
+g++ -DHAVE_CONFIG_H -I. -I../.. -pthread -I/usr/include
+-I/usr/include/gtkmm-2.4 -I/usr/lib/gtkmm-2.4/include
+-I/usr/include/glibmm-2.4 -I/usr/lib/glibmm-2.4/include
+-I/usr/include/gdkmm-2.4 -I/usr/lib/gdkmm-2.4/include
+-I/usr/include/pangomm-1.4 -I/usr/include/atkmm-1.6
+-I/usr/include/gtk-2.0 -I/usr/include/sigc++-2.0
+-I/usr/lib/sigc++-2.0/include -I/usr/include/glib-2.0
+-I/usr/lib/glib-2.0/include -I/usr/lib/gtk-2.0/include
+-I/usr/include/cairomm-1.0 -I/usr/include/pango-1.0
+-I/usr/include/cairo -I/usr/include/atk-1.0 -I../../external -g -O2
+-MT libplotmm_la-errorcurve.lo -MD -MP -MF
+.deps/libplotmm_la-errorcurve.Tpo -c errorcurve.cc  -fPIC -DPIC -o
+.libs/libplotmm_la-errorcurve.o
+In file included from ../../external/plotmm/errorcurve.h:13,
+                 from errorcurve.cc:15:
+../../external/plotmm/curve.h:143: error: 'SigC' has not been declared
+../../external/plotmm/curve.h:143: error: ISO C++ forbids declaration
+of 'Signal0' with no type
+../../external/plotmm/curve.h:143: error: expected ';' before '&lt;' token
+make[3]: *** [libplotmm_la-errorcurve.lo] Error 1
+make[3]: Leaving directory `/home/moz/btg/external/plotmm'
+make[2]: *** [all-recursive] Error 1
+make[2]: Leaving directory `/home/moz/btg/external'
+make[1]: *** [all-recursive] Error 1
+make[1]: Leaving directory `/home/moz/btg'
+make: *** [all] Error 2
+
+Using fedora with gcc 4.3.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000040.html">[Btg-devel] autogen.sh
+</A></li>
+	<LI>Next message: <A HREF="000043.html">[Btg-devel] Compilation Error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#41">[ date ]</a>
+              <a href="thread.html#41">[ thread ]</a>
+              <a href="subject.html#41">[ subject ]</a>
+              <a href="author.html#41">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/btg-devel">More information about the Btg-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Btg-devel] Configure problems with btg 0.99, libtorrent-rasterbar-0.14.2, boost_1_38_0 during attempted building from  source on FreeBSD 7.1
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/btg-devel/2009-March/index.html" >
+   <LINK REL="made" HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20Configure%20problems%20with%20btg%200.99%2C%0A%20libtorrent-rasterbar-0.14.2%2C%0A%20boost_1_38_0%20during%20attempted%20building%20from%20%20source%20on%20FreeBSD%207.1&In-Reply-To=%3C20090311180444.5369d2fb%40netpc4.home.wojci.dk.home.wojci.dk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000120.html">
+   <LINK REL="Next"  HREF="000122.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Btg-devel] Configure problems with btg 0.99, libtorrent-rasterbar-0.14.2, boost_1_38_0 during attempted building from  source on FreeBSD 7.1</H1>
+    <B>Michael Wojciechowski</B> 
+    <A HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20Configure%20problems%20with%20btg%200.99%2C%0A%20libtorrent-rasterbar-0.14.2%2C%0A%20boost_1_38_0%20during%20attempted%20building%20from%20%20source%20on%20FreeBSD%207.1&In-Reply-To=%3C20090311180444.5369d2fb%40netpc4.home.wojci.dk.home.wojci.dk%3E"
+       TITLE="[Btg-devel] Configure problems with btg 0.99, libtorrent-rasterbar-0.14.2, boost_1_38_0 during attempted building from  source on FreeBSD 7.1">wojci at wojci.dk
+       </A><BR>
+    <I>Wed Mar 11 18:04:44 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000120.html">[Btg-devel] Configure problems with btg 0.99,	libtorrent-rasterbar-0.14.2,	boost_1_38_0 during attempted building from 	source on FreeBSD 7.1
+</A></li>
+        <LI>Next message: <A HREF="000122.html">[Btg-devel] Fwd:  Configure problems with btg 0.99,	libtorrent-rasterbar-0.14.2,	boost_1_38_0 during attempted building from 	source on FreeBSD 7.1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#121">[ date ]</a>
+              <a href="thread.html#121">[ thread ]</a>
+              <a href="subject.html#121">[ subject ]</a>
+              <a href="author.html#121">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Tue, 10 Mar 2009 00:53:09 +0100 christophe taranotte
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">christophe.taranotte at gmail.com</A>&gt; wrote:
+
+&gt;<i> I ran a modified setup.sh successfully. However, I cannot completely
+</I>&gt;<i> make and get now quite a few compile errors. I am attaching
+</I>&gt;<i> config.log as well as the stderr and stdout output.
+</I>
+I added <A HREF="http://code.rasterbar.com/libtorrent/ticket/489,">http://code.rasterbar.com/libtorrent/ticket/489,</A> which is a
+libtorrent issue, not something in BTG. After running
+&quot;make install&quot; for libtorrent, there was no &quot;lib/pkgconfig&quot; directory
+present. This is why you get the errors you get - the setup script
+assumes that pkg-config can find a .pc file for libtorrent.
+
+&gt;<i> Finally, I am getting my enabled options enabled at the end of
+</I>&gt;<i> configure.
+</I>
+Good, that was the point of the changes I made.
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+&quot;When they ask how I died, I said, tell them: still angry.&quot; 
+(Altered Carbon by Richard Morgan)
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000120.html">[Btg-devel] Configure problems with btg 0.99,	libtorrent-rasterbar-0.14.2,	boost_1_38_0 during attempted building from 	source on FreeBSD 7.1
+</A></li>
+	<LI>Next message: <A HREF="000122.html">[Btg-devel] Fwd:  Configure problems with btg 0.99,	libtorrent-rasterbar-0.14.2,	boost_1_38_0 during attempted building from 	source on FreeBSD 7.1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#121">[ date ]</a>
+              <a href="thread.html#121">[ thread ]</a>
+              <a href="subject.html#121">[ subject ]</a>
+              <a href="author.html#121">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/btg-devel">More information about the Btg-devel
+mailing list</a><br>
+</body></html>

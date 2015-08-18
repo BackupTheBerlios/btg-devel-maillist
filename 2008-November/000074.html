@@ -1,0 +1,200 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Btg-devel] btgweb problem (expat reports error code 2)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/btg-devel/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20btgweb%20problem%20%28expat%20reports%20error%20code%202%29&In-Reply-To=%3C492F1579.7050001%40krudde.nl%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000073.html">
+   <LINK REL="Next"  HREF="000075.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Btg-devel] btgweb problem (expat reports error code 2)</H1>
+    <B>unknown-user@krudde.nl</B> 
+    <A HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20btgweb%20problem%20%28expat%20reports%20error%20code%202%29&In-Reply-To=%3C492F1579.7050001%40krudde.nl%3E"
+       TITLE="[Btg-devel] btgweb problem (expat reports error code 2)">fitzgerald at krudde.nl
+       </A><BR>
+    <I>Thu Nov 27 22:47:37 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000073.html">[Btg-devel] btgweb problem (expat reports error code 2)
+</A></li>
+        <LI>Next message: <A HREF="000075.html">[Btg-devel] btgweb problem (expat reports error code 2)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#74">[ date ]</a>
+              <a href="thread.html#74">[ thread ]</a>
+              <a href="subject.html#74">[ subject ]</a>
+              <a href="author.html#74">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Michael,
+
+I am using the xml-rpc from btg.
+
+Below the wireshark (tshark) dump.
+I wonder if you see something peculiar.. :-)
+
+Regards,
+Fitzgerald.
+
+ # tshark -x -i lo -R &quot;tcp.port == 16000&quot;
+Running as user &quot;root&quot; and group &quot;root&quot;. This could be dangerous.
+Capturing on lo
+190.684095    127.0.0.1 -&gt; 127.0.0.1    TCP 41802 &gt; 16000 [SYN] Seq=0
+Win=32792 Len=0 MSS=16396 TSV=461619879 TSER=0
+
+0000  00 00 00 00 00 00 00 00 00 00 00 00 08 00 45 00   ..............E.
+0010  00 38 a7 89 40 00 40 06 95 34 7f 00 00 01 7f 00   <A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">.8.. at .</A>@..4......
+0020  00 01 a3 4a 3e 80 ff f3 65 2e 00 00 00 00 90 02   ...J&gt;...e.......
+0030  80 18 81 84 00 00 02 04 40 0c 01 01 08 0a 1b 83   <A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">........ at .......</A>
+0040  c2 a7 00 00 00 00                                 ......
+
+190.684118    127.0.0.1 -&gt; 127.0.0.1    TCP 16000 &gt; 41802 [SYN, ACK]
+Seq=0 Ack=1 Win=32768 Len=0 MSS=16396 TSV=461619879 TSER=461619879
+
+0000  00 00 00 00 00 00 00 00 00 00 00 00 08 00 45 00   ..............E.
+0010  00 38 00 00 40 00 40 06 3c be 7f 00 00 01 7f 00   <A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">.8.. at .</A>@.&lt;.......
+0020  00 01 3e 80 a3 4a 00 29 40 25 ff f3 65 2f 90 12   ..&gt;..J.)@%..e/..
+0030  80 00 63 12 00 00 02 04 40 0c 01 01 08 0a 1b 83   <A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">..c..... at .......</A>
+0040  c2 a7 1b 83 c2 a7                                 ......
+
+190.684133    127.0.0.1 -&gt; 127.0.0.1    TCP 41802 &gt; 16000 [ACK] Seq=1
+Ack=1 Win=32792 Len=0 TSV=461619879 TSER=461619879
+
+0000  00 00 00 00 00 00 00 00 00 00 00 00 08 00 45 00   ..............E.
+0010  00 34 a7 8a 40 00 40 06 95 37 7f 00 00 01 7f 00   <A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">.4.. at .</A>@..7......
+0020  00 01 a3 4a 3e 80 ff f3 65 2f 00 29 40 26 80 10   ...J&gt;...e/.)@&amp;..
+0030  80 18 b5 0f 00 00 01 01 08 0a 1b 83 c2 a7 1b 83   ................
+0040  c2 a7                                             ..
+
+190.684310    127.0.0.1 -&gt; 127.0.0.1    TCP 41802 &gt; 16000 [PSH, ACK]
+Seq=1 Ack=1 Win=32792 [TCP CHECKSUM INCORRECT] Len=394 TSV=461619879 TSER=46
+1619879
+
+0000  00 00 00 00 00 00 00 00 00 00 00 00 08 00 45 00   ..............E.
+0010  01 be a7 8b 40 00 40 06 93 ac 7f 00 00 01 7f 00   <A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">.... at .</A>@.........
+0020  00 01 a3 4a 3e 80 ff f3 65 2f 00 29 40 26 80 18   ...J&gt;...e/.)@&amp;..
+0030  80 18 ff b2 00 00 01 01 08 0a 1b 83 c2 a7 1b 83   ................
+0040  c2 a7 50 4f 53 54 20 2f 20 48 54 54 50 2f 31 2e   ..POST / HTTP/1.
+0050  30 0d 0a 48 6f 73 74 3a 20 31 32 37 2e 30 2e 30   0..Host: 127.0.0
+0060  2e 31 0d 0a 43 6f 6e 74 65 6e 74 2d 54 79 70 65   .1..Content-Type
+0070  3a 20 74 65 78 74 2f 78 6d 6c 0d 0a 55 73 65 72   : text/xml..User
+0080  2d 41 67 65 6e 74 3a 20 42 54 47 20 58 4d 4c 52   -Agent: BTG XMLR
+0090  50 43 20 50 48 50 20 43 6c 69 65 6e 74 2f 54 68   PC PHP Client/Th
+00a0  65 20 49 6e 63 75 74 69 6f 20 58 4d 4c 2d 52 50   e Incutio XML-RP
+00b0  43 20 50 48 50 20 4c 69 62 72 61 72 79 0d 0a 41   C PHP Library..A
+00c0  63 63 65 70 74 2d 45 6e 63 6f 64 69 6e 67 3a 20   ccept-Encoding:
+00d0  67 7a 69 70 3b 71 3d 31 2c 20 69 64 65 6e 74 69   gzip;q=1, identi
+00e0  74 79 3b 31 3d 30 2e 35 0d 0a 43 6f 6e 74 65 6e   ty;1=0.5..Conten
+00f0  74 2d 45 6e 63 6f 64 69 6e 67 3a 20 67 7a 69 70   t-Encoding: gzip
+0100  0d 0a 43 6f 6e 74 65 6e 74 2d 4c 65 6e 67 74 68   ..Content-Length
+0110  3a 20 31 37 39 0d 0a 0d 0a 1f 8b 08 00 00 00 00   : 179...........
+0120  00 02 ff 8d 90 4d 0e 82 30 10 85 f7 9c 82 70 00   .....M..0.....p.
+0130  da 12 f9 69 32 96 85 7b ef d0 9f 01 9b b4 c5 94   ...i2..{........
+0140  4a 3c be 1a d0 10 17 c6 d5 9b 99 7c ef e5 65 a0   J&lt;.........|..e.
+0150  bf 7b 97 2f 18 67 3b 85 63 c1 4a 5a e4 bd c8 c0   .{./.g;.c.JZ....
+0160  63 ba 4c e6 24 9d fb 2c 67 e9 51 8c 18 30 4a 57   c.L.$..,g.Q..0JW
+0170  da 60 93 9e 42 40 9d 9e 46 20 3b 24 83 ab 8c d2   .`<A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">..B at ..F</A> ;$....
+0180  cf 62 55 01 8b 74 37 14 60 43 12 0c c8 4b 80 6c   .bU..t7.`C...K.l
+0190  37 b2 22 d9 17 3a a7 68 c3 28 54 1a 81 6c f3 9f   7.&quot;..:.h.(T..l..
+01a0  96 b6 1e 38 33 9c 36 d8 0d d4 b4 58 ab 4a e2 41   ...83.6....X.J.A
+01b0  69 aa 0c 57 bc 66 9d 1e 1a 5a 31 f6 23 97 bc eb   i..W.f...Z1.#...
+01c0  93 dd 13 1e 8a 88 5e d8 28 01 00 00               ......^.(...
+
+190.684327    127.0.0.1 -&gt; 127.0.0.1    TCP 16000 &gt; 41802 [ACK] Seq=1
+Ack=395 Win=33768 Len=0 TSV=461619879 TSER=461619879
+
+0000  00 00 00 00 00 00 00 00 00 00 00 00 08 00 45 00   ..............E.
+0010  00 34 82 81 40 00 40 06 ba 40 7f 00 00 01 7f 00   <A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">.4.. at .</A>@<A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">.. at ......</A>
+0020  00 01 3e 80 a3 4a 00 29 40 26 ff f3 66 b9 80 10   ..&gt;..J.)@&amp;..f...
+0030  83 e8 af b5 00 00 01 01 08 0a 1b 83 c2 a7 1b 83   ................
+0040  c2 a7                                             ..
+
+^C5 packets captured
+
+
+Michael Wojciechowski wrote:
+&gt;<i> On Tue, 25 Nov 2008 23:26:54 +0100 &quot;<A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">unknown-user at krudde.nl</A>&quot;
+</I>&gt;<i> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">fitzgerald at krudde.nl</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;<i>   
+</I>&gt;&gt;<i> Well, it took me some effort to update to 0.9.9-RC2 (I am running on
+</I>&gt;&gt;<i> an AMD64):
+</I>&gt;&gt;<i>     
+</I>&gt;<i>
+</I>&gt;<i> AMD64 is one of the archs btg has been tested on, at least using
+</I>&gt;<i> FreeBSD.
+</I>&gt;<i>
+</I>&gt;<i>   
+</I>&gt;&gt;<i> - first I got complaints during linking due to missing PIC-enabled
+</I>&gt;&gt;<i> libraries (I had to rebuild boost and rb_libtorrent with -fPIC)
+</I>&gt;&gt;<i> - then I had issues during linking with pthread stuff which I solved
+</I>&gt;&gt;<i> (after some Google-ing) with adding  -pthread to the LDFLAGS for the
+</I>&gt;&gt;<i> Makefile in
+</I>&gt;&gt;<i> daemon/auth and UI/cli/ncurses.
+</I>&gt;&gt;<i>     
+</I>&gt;<i>
+</I>&gt;<i> Yes .. it sucks that you use gentoo. It has some issues.
+</I>&gt;<i>  
+</I>&gt;<i>   
+</I>&gt;&gt;<i> Then I got a working btg but the web UI gave exactly the same problem
+</I>&gt;&gt;<i> as before :-(
+</I>&gt;&gt;<i>     
+</I>&gt;<i>
+</I>&gt;<i> What xml-rpc lib are you using? The built-in or the one provided by your
+</I>&gt;<i> distro?
+</I>&gt;<i>
+</I>&gt;<i>   
+</I>&gt;&gt;<i> expat reports error code 2
+</I>&gt;&gt;<i>     description: syntax error
+</I>&gt;&gt;<i>     line: 1
+</I>&gt;&gt;<i>     column: 0
+</I>&gt;&gt;<i>     byte index: 0
+</I>&gt;&gt;<i>     total bytes: 0
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     data beginning 0 before byte index: POST / HTTP/1.0
+</I>&gt;&gt;<i> Host: 127.0.0.1
+</I>&gt;&gt;<i> Content-Type: text/xml
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Would you have any more ideas/suggestions?
+</I>&gt;&gt;<i> I have not installed wireshark (yet) to capture the exact http traffic
+</I>&gt;&gt;<i> but it definitely is not working for me somehow..
+</I>&gt;&gt;<i>     
+</I>&gt;<i>
+</I>&gt;<i> Give me a wireshark dump of the traffic between the wwwui and the
+</I>&gt;<i> daemon. I will try to compare it to what I get here.
+</I>&gt;<i>
+</I>&gt;<i>   
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000073.html">[Btg-devel] btgweb problem (expat reports error code 2)
+</A></li>
+	<LI>Next message: <A HREF="000075.html">[Btg-devel] btgweb problem (expat reports error code 2)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#74">[ date ]</a>
+              <a href="thread.html#74">[ thread ]</a>
+              <a href="subject.html#74">[ subject ]</a>
+              <a href="author.html#74">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/btg-devel">More information about the Btg-devel
+mailing list</a><br>
+</body></html>

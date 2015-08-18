@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Btg-devel] link problems again..
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/btg-devel/2008-August/index.html" >
+   <LINK REL="made" HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20link%20problems%20again..&In-Reply-To=%3C7a95af970808020100j743404c3n789c346a361a7fcf%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000056.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Btg-devel] link problems again..</H1>
+    <B>Daniel Svensson</B> 
+    <A HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20link%20problems%20again..&In-Reply-To=%3C7a95af970808020100j743404c3n789c346a361a7fcf%40mail.gmail.com%3E"
+       TITLE="[Btg-devel] link problems again..">daaniel at gmail.com
+       </A><BR>
+    <I>Sat Aug  2 10:00:46 CEST 2008</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000056.html">[Btg-devel] link problems again..
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#55">[ date ]</a>
+              <a href="thread.html#55">[ thread ]</a>
+              <a href="subject.html#55">[ subject ]</a>
+              <a href="author.html#55">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>updated to latest svn (haven't done it for a while) and again I get the same
+error as before
+
+checking if BTG can link with the provided/found libraries... no
+
+I'm using boost 1.35.0-r1
+
+this is what config.log generates:
+
+configure:29948: checking if BTG can link with the provided/found libraries
+configure:30020: g++ -o conftest -g -O2 -I/usr/include/libtorrent
+-I/usr/include -I/usr/include  -pthread  -I/usr/include
+            -lboost_system-mt-s -lboost_iostreams-mt-s
+-lboost_filesystem-mt-s -lboost_date_time-mt-s
+            -lboost_thread-mt-s -lboost_program_options-mt-s
+            -ltorrent   -L/usr/lib -lgnutls -L/usr/lib -ltasn1 -lgcrypt
+-lgpg-error  &gt;&amp;5
+/usr/lib/libtorrent.so: undefined reference to `boost::mutex::~mutex()'
+/usr/lib/libtorrent.so: undefined reference to
+`boost::mutex::do_unlock(boost::mutex::cv_state&amp;)'
+/usr/lib/libtorrent.so: undefined reference to
+`boost::recursive_mutex::do_lock(boost::recursive_mutex::cv_state&amp;)'
+/usr/lib/libtorrent.so: undefined reference to
+`boost::detail::condition_impl::notify_all()'
+/usr/lib/libtorrent.so: undefined reference to
+`boost::thread::thread(boost::function0&lt;void,
+std::allocator&lt;boost::function_
+/usr/lib/libtorrent.so: undefined reference to
+`boost::detail::condition_impl::~condition_impl()'
+/usr/lib/libtorrent.so: undefined reference to
+`boost::detail::condition_impl::do_timed_wait(boost::xtime const&amp;,
+pthread_mu
+/usr/lib/libtorrent.so: undefined reference to
+`boost::detail::condition_impl::notify_one()'
+/usr/lib/libtorrent.so: undefined reference to
+`boost::recursive_mutex::do_lock()'
+/usr/lib/libtorrent.so: undefined reference to
+`boost::recursive_mutex::do_unlock(boost::recursive_mutex::cv_state&amp;)'
+/usr/lib/libtorrent.so: undefined reference to `boost::mutex::do_unlock()'
+/usr/lib/libtorrent.so: undefined reference to `boost::mutex::do_lock()'
+/usr/lib/libtorrent.so: undefined reference to
+`boost::detail::condition_impl::condition_impl()'
+/usr/lib/libtorrent.so: undefined reference to
+`boost::recursive_mutex::recursive_mutex()'
+/usr/lib/libtorrent.so: undefined reference to
+`boost::filesystem::detail::status_api(std::basic_string&lt;char,
+std::char_trai
+/usr/lib/libtorrent.so: undefined reference to
+`boost::detail::condition_impl::do_wait(pthread_mutex_t*)'
+/usr/lib/libtorrent.so: undefined reference to
+`boost::mutex::do_lock(boost::mutex::cv_state&amp;)'
+/usr/lib/libtorrent.so: undefined reference to
+`boost::thread::sleep(boost::xtime const&amp;)'
+/usr/lib/libtorrent.so: undefined reference to
+`boost::recursive_mutex::~recursive_mutex()'
+/usr/lib/libtorrent.so: undefined reference to
+`boost::recursive_mutex::do_unlock()'
+/usr/lib/libtorrent.so: undefined reference to `boost::mutex::mutex()'
+collect2: ld returned 1 exit status
+configure:30027: $? = 1
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/btg-devel/attachments/20080802/a9d8604c/attachment.html">https://lists.berlios.de/pipermail/btg-devel/attachments/20080802/a9d8604c/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000056.html">[Btg-devel] link problems again..
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#55">[ date ]</a>
+              <a href="thread.html#55">[ thread ]</a>
+              <a href="subject.html#55">[ subject ]</a>
+              <a href="author.html#55">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/btg-devel">More information about the Btg-devel
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Btg-devel] 2.0.0 RC2
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/btg-devel/2009-October/index.html" >
+   <LINK REL="made" HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%202.0.0%20RC2&In-Reply-To=%3C20091005204105.485f0917%40netpc5.home.wojci.dk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000201.html">
+   <LINK REL="Next"  HREF="000203.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Btg-devel] 2.0.0 RC2</H1>
+    <B>Michael Wojciechowski</B> 
+    <A HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%202.0.0%20RC2&In-Reply-To=%3C20091005204105.485f0917%40netpc5.home.wojci.dk%3E"
+       TITLE="[Btg-devel] 2.0.0 RC2">wojci at wojci.dk
+       </A><BR>
+    <I>Mon Oct  5 20:41:05 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000201.html">[Btg-devel] 2.0.0 RC2
+</A></li>
+        <LI>Next message: <A HREF="000203.html">[Btg-devel] 2.0.0 RC2
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#202">[ date ]</a>
+              <a href="thread.html#202">[ thread ]</a>
+              <a href="subject.html#202">[ subject ]</a>
+              <a href="author.html#202">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mon, 5 Oct 2009 13:15:59 +0200 Bohdan Linda &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">bohdan.linda at seznam.cz</A>&gt;
+wrote:
+
+&gt;<i> I have tried to enter a non-existing username and the behaviour seems
+</I>&gt;<i> is the same. This leads me to the question, if btg-auth is properly
+</I>&gt;<i> recognized by the btgdaemon. Can I somehow verify this??
+</I>&gt;<i>
+</I>&gt;<i> I am happy to do any tests/recompilations etc, just what I need from
+</I>&gt;<i> you is pointing in some direction. BTG is just worth that. So summ up
+</I>&gt;<i> the questions:
+</I>&gt;<i> 
+</I>&gt;<i> 1. what happens with your installation when you enter non-existing
+</I>&gt;<i> user. Are you asked for pwd or are you aborted with &quot; btg*cli:
+</I>&gt;<i> Internal error: start up helper not initialized.&quot;
+</I>&gt;<i> 
+</I>&gt;<i> 2. am I able to verify which users are properly loaded by btgdaemon?
+</I>
+I added verbose logging of this.
+
+&gt;<i> 3. what are the explicit causes for message &quot;Sending error to client
+</I>&gt;<i> (0): 'Failed to authorize user.'.&quot;
+</I>
+I spent some time debugging this issue. I was able to reproduce it - I
+was not using clients from trunk myself. :(
+
+I suggest that you do a &quot;svn update&quot; of your trunk and rebuild it. I
+think that I have fixed your problem.
+ 
+The version of the software you are using now does not prompt for a
+password. The call to getline returns 1, and an empty string, I think.
+
+Please let me know, if you still have issues with trunk after my last
+update. Please see
+<A HREF="http://developer.berlios.de/bugs/?func=detailbug&amp;bug_id=16196&amp;group_id=3293">http://developer.berlios.de/bugs/?func=detailbug&amp;bug_id=16196&amp;group_id=3293</A>
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+<A HREF="http://www.linkedin.com/in/wojci">http://www.linkedin.com/in/wojci</A>
+<A HREF="http://www.facebook.com/wojci">http://www.facebook.com/wojci</A>
+<A HREF="http://twitter.com/wojci">http://twitter.com/wojci</A>
+
+&quot;You must be the change you want to see in the world.&quot;, Mahatma Gandhi
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000201.html">[Btg-devel] 2.0.0 RC2
+</A></li>
+	<LI>Next message: <A HREF="000203.html">[Btg-devel] 2.0.0 RC2
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#202">[ date ]</a>
+              <a href="thread.html#202">[ thread ]</a>
+              <a href="subject.html#202">[ subject ]</a>
+              <a href="author.html#202">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/btg-devel">More information about the Btg-devel
+mailing list</a><br>
+</body></html>

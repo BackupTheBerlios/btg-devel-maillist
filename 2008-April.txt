@@ -1,0 +1,209 @@
+From wojci at wojci.dk  Tue Apr 15 23:20:06 2008
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Tue, 15 Apr 2008 23:20:06 +0200
+Subject: [Btg-devel] BTG 0.9.8-rc1 released
+Message-ID: <20080415232006.37569832@netpc3.home.wojci.dk>
+
+See release notes and change log:
+
+http://developer.berlios.de/project/shownotes.php?release_id=14498
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+"When they ask how I died, I said, tell them: still angry." 
+(Altered Carbon by Richard Morgan)
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: not available
+Type: application/pgp-signature
+Size: 189 bytes
+Desc: not available
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20080415/4a11430c/attachment.pgp>
+
+From gavin at lewandowski.org.uk  Sun Apr 27 22:17:37 2008
+From: gavin at lewandowski.org.uk (Gavin Lewandowski)
+Date: Sun, 27 Apr 2008 21:17:37 +0100
+Subject: [Btg-devel] BTG Installation under Ubuntu 8.04
+Message-ID: <4814DF61.7000703@lewandowski.org.uk>
+
+Hi,
+
+I've used the information (once translated) at 
+http://wiki.ubuntuusers.de/BTG to install BTG on my new Ubuntu 8.04 
+server and have hit a problem when trying to run btgpasswd
+
+  btgpasswd --create -a -t "/mnt/sdb/torrents" -w "/mnt/sdb/work" -d 
+"/mnt/sdb/finished" -s "/mnt/sdb/seeding" -p -u gavinlew
+
+btgpasswd: error while loading shared libraries: libtorrent-0.13.so: 
+cannot open shared object file: No such file or directory
+
+I have searched google and cannot find any references to this - no 
+failures were reported when the package was being built and I cannot 
+progress any further.
+
+Any hints / tips would be welcome.
+
+Kind Regards,
+
+Gavin
+
+
+From romanr at romanr.info  Mon Apr 28 06:49:07 2008
+From: romanr at romanr.info (Roman Rybalko)
+Date: Mon, 28 Apr 2008 08:49:07 +0400
+Subject: [Btg-devel] BTG Installation under Ubuntu 8.04
+In-Reply-To: <4814DF61.7000703@lewandowski.org.uk>
+References: <4814DF61.7000703@lewandowski.org.uk>
+Message-ID: <48155743.1080607@romanr.info>
+
+Gavin Lewandowski ?????:
+> Hi,
+>
+> I've used the information (once translated) at 
+> http://wiki.ubuntuusers.de/BTG to install BTG on my new Ubuntu 8.04 
+> server and have hit a problem when trying to run btgpasswd
+>
+>   btgpasswd --create -a -t "/mnt/sdb/torrents" -w "/mnt/sdb/work" -d 
+> "/mnt/sdb/finished" -s "/mnt/sdb/seeding" -p -u gavinlew
+>
+> btgpasswd: error while loading shared libraries: libtorrent-0.13.so: 
+> cannot open shared object file: No such file or directory
+>
+> I have searched google and cannot find any references to this - no 
+> failures were reported when the package was being built and I cannot 
+> progress any further.
+>
+> Any hints / tips would be welcome.
+>
+> Kind Regards,
+>
+> Gavin
+> _______________________________________________
+> Btg-devel mailing list
+> Btg-devel at lists.berlios.de
+> https://lists.berlios.de/mailman/listinfo/btg-devel
+>   
+You can try to use this repositories: http://btg.berlios.de/packages.html
+At least, libtorrent-0.13 is here:
+ftp://ftp.berlios.de/pub/btg/debian/dists/other/stable/binary-i386
+
+-- 
+WBR,
+
+Roman Rybalko
+
+
+
+From wojci at wojci.dk  Mon Apr 28 09:40:08 2008
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Mon, 28 Apr 2008 09:40:08 +0200 (CEST)
+Subject: [Btg-devel] BTG Installation under Ubuntu 8.04
+In-Reply-To: <4814DF61.7000703@lewandowski.org.uk>
+References: <4814DF61.7000703@lewandowski.org.uk>
+Message-ID: <55668.87.54.11.90.1209368408.squirrel@webmail.netimage.dk>
+
+Gavin Lewandowski wrote:
+
+> btgpasswd: error while loading shared libraries: libtorrent-0.13.so:
+> cannot open shared object file: No such file or directory
+
+http://btg.berlios.de/faq.html#error-while-loading-shared-libraries
+
+While the FAQ entry is very short, it means that you need to tell you
+system where to find the libtorrent library. The man page mentioned should
+give you a few clues.
+
+Or you can use Roman's packages - using packages should take care of any
+problems with finding libs at runtime.
+
+-- 
+
+Best regards
+
+Michael Wojciechowski
+
+"When they ask how I died, I said, tell them: still angry."
+(Altered Carbon by Richard Morgan)
+
+09F911029D74E35BD84156C5635688C0
+
+
+
+From gavin at lewandowski.org.uk  Mon Apr 28 16:46:04 2008
+From: gavin at lewandowski.org.uk (Gavin Lewandowski)
+Date: Mon, 28 Apr 2008 15:46:04 +0100
+Subject: [Btg-devel] BTG Installation under Ubuntu 8.04
+Message-ID: <1209393964.4562.4.camel@gavinlew-newark-desktop>
+
+Hi Roman,Michael,
+
+Many thanks I have resolved this and BTG is working successfully on my
+system.
+
+Kind Regards,
+
+Gavin
+
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: signature.asc
+Type: application/pgp-signature
+Size: 189 bytes
+Desc: This is a digitally signed message part
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20080428/00137894/attachment.pgp>
+
+From peter at peerweb.nl  Wed Apr 30 11:37:30 2008
+From: peter at peerweb.nl (Peter Koeleman)
+Date: Wed, 30 Apr 2008 11:37:30 +0200
+Subject: [Btg-devel] 0.9.7 ebuild
+Message-ID: <200804301137.30488.peter@peerweb.nl>
+
+Hello BTG users and developers,
+
+It seems btg in Gentoo portage is dependent on libtorrent 0.12. Since 0.13 is 
+available with the unstable (~x86 ~amd64) keywords, perhaps an ebuild for 
+0.9.7 ~amd64 could be merged into the official portage tree. As far as I 
+could tell there are no new configuration options. By copying the 0.9.6 
+ebuild and adjusting the download location I was able to emerge btg with 
+rb_libtorrent 0.13 without problems.
+
+Peter
+
+
+From mounir.lamouri at gmail.com  Wed Apr 30 13:46:46 2008
+From: mounir.lamouri at gmail.com (Mounir Lamouri)
+Date: Wed, 30 Apr 2008 13:46:46 +0200
+Subject: [Btg-devel] 0.9.7 ebuild
+In-Reply-To: <200804301137.30488.peter@peerweb.nl>
+References: <200804301137.30488.peter@peerweb.nl>
+Message-ID: <48185C26.7030708@gmail.com>
+
+Actually, there already is a thread about this on Gentoo's bugzilla : 
+http://bugs.gentoo.org/show_bug.cgi?id=214491
+It looks like there are some problems. I should test that next days.
+
+Mounir
+
+Peter Koeleman a ?crit :
+> Hello BTG users and developers,
+>
+> It seems btg in Gentoo portage is dependent on libtorrent 0.12. Since 0.13 is 
+> available with the unstable (~x86 ~amd64) keywords, perhaps an ebuild for 
+> 0.9.7 ~amd64 could be merged into the official portage tree. As far as I 
+> could tell there are no new configuration options. By copying the 0.9.6 
+> ebuild and adjusting the download location I was able to emerge btg with 
+> rb_libtorrent 0.13 without problems.
+>
+> Peter
+> _______________________________________________
+> Btg-devel mailing list
+> Btg-devel at lists.berlios.de
+> https://lists.berlios.de/mailman/listinfo/btg-devel
+>   
+
+
+

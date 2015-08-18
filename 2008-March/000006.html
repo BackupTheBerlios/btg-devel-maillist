@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Btg-devel] complation error (SVN)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/btg-devel/2008-March/index.html" >
+   <LINK REL="made" HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20complation%20error%20%28SVN%29&In-Reply-To=%3C93b769e50803280423y56d76136ya02f009b0610c33f%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000005.html">
+   <LINK REL="Next"  HREF="000007.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Btg-devel] complation error (SVN)</H1>
+    <B>Bart Nagel</B> 
+    <A HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20complation%20error%20%28SVN%29&In-Reply-To=%3C93b769e50803280423y56d76136ya02f009b0610c33f%40mail.gmail.com%3E"
+       TITLE="[Btg-devel] complation error (SVN)">bart at bnagel.net
+       </A><BR>
+    <I>Fri Mar 28 12:23:10 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000005.html">[Btg-devel] [PATCH] fix btg for gcc-4.3
+</A></li>
+        <LI>Next message: <A HREF="000007.html">[Btg-devel] complation error (SVN)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6">[ date ]</a>
+              <a href="thread.html#6">[ thread ]</a>
+              <a href="subject.html#6">[ subject ]</a>
+              <a href="author.html#6">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>i'm running Debian lenny/sid, and compiled and installed
+libtorrent-0.12.1 from source.
+
+my BTG configure command exited with no errors, and was as following:
+
+./configure --enable-btg-config --enable-cli --enable-www
+--enable-session-saving --enable-event-callback --enable-command-list
+
+make exits after a while with the following:
+
+./.libs/libdaemon.a(libdaemon_la-daemonhandler.o): In function `~daemonHandler':
+/home/tremby/apps/btg/daemon/daemonhandler.cpp:1304: undefined
+reference to `btg::daemon::http::httpManager::~httpManager()'
+/home/tremby/apps/btg/daemon/daemonhandler.cpp:1304: undefined
+reference to `btg::daemon::http::httpManager::~httpManager()'
+/home/tremby/apps/btg/daemon/daemonhandler.cpp:1304: undefined
+reference to `btg::daemon::http::httpManager::~httpManager()'
+/home/tremby/apps/btg/daemon/daemonhandler.cpp:1304: undefined
+reference to `btg::daemon::http::httpManager::~httpManager()'
+./.libs/libdaemon.a(libdaemon_la-daemonhandler.o): In function
+`btg::daemon::daemonHandler::checkTimeout()':
+/home/tremby/apps/btg/daemon/daemonhandler.cpp:1205: undefined
+reference to `btg::daemon::daemonHandler::handleUrlDownloads()'
+./.libs/libdaemon.a(libdaemon_la-daemonhandler.o): In function `daemonHandler':
+/home/tremby/apps/btg/daemon/daemonhandler.cpp:107: undefined
+reference to `btg::daemon::http::httpManager::httpManager(boost::shared_ptr&lt;btg::core::logger::logWrapper&gt;)'
+/home/tremby/apps/btg/daemon/daemonhandler.cpp:136: undefined
+reference to `btg::daemon::http::httpManager::~httpManager()'
+/home/tremby/apps/btg/daemon/daemonhandler.cpp:107: undefined
+reference to `btg::daemon::http::httpManager::httpManager(boost::shared_ptr&lt;btg::core::logger::logWrapper&gt;)'
+/home/tremby/apps/btg/daemon/daemonhandler.cpp:136: undefined
+reference to `btg::daemon::http::httpManager::~httpManager()'
+collect2: ld returned 1 exit status
+make[3]: *** [btgdaemon] Error 1
+make[3]: Leaving directory `/home/tremby/apps/btg/daemon'
+make[2]: *** [all-recursive] Error 1
+make[2]: Leaving directory `/home/tremby/apps/btg/daemon'
+make[1]: *** [all-recursive] Error 1
+make[1]: Leaving directory `/home/tremby/apps/btg'
+make: *** [all] Error 2
+
+any idea what's wrong?
+
+let me know if you need more information.
+
+thanks
+--bart nagel
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000005.html">[Btg-devel] [PATCH] fix btg for gcc-4.3
+</A></li>
+	<LI>Next message: <A HREF="000007.html">[Btg-devel] complation error (SVN)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6">[ date ]</a>
+              <a href="thread.html#6">[ thread ]</a>
+              <a href="subject.html#6">[ subject ]</a>
+              <a href="author.html#6">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/btg-devel">More information about the Btg-devel
+mailing list</a><br>
+</body></html>

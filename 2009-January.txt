@@ -1,0 +1,345 @@
+From daniel at kofta.se  Wed Jan  7 23:52:18 2009
+From: daniel at kofta.se (Daniel Svensson)
+Date: Wed, 7 Jan 2009 23:52:18 +0100
+Subject: [Btg-devel] another compiling problem
+Message-ID: <7a95af970901071452n53cb9c5qb4957f88a03d0a18@mail.gmail.com>
+
+latest trunk on gentoo with
+
+dev-libs/boost-1.35.0-r2
+net-libs/rb_libtorrent-0.14.1
+
+gives me
+
+make[3]: Entering directory `/home/daniel/src/temp/trunk/daemon/auth'
+/bin/sh ../../libtool --tag=CXX   --mode=link g++ -g -O2 -DNDEBUG
+-I/usr/include -I/usr/include -DBTG_DEBUG=0 -DBTG_OPTION_SAVESESSIONS=1
+-DBTG_OPTION_EVENTCALLBACK=0 -DBTG_OPTION_UPNP=0 -DBTG_OPTION_USECYBERLINK=0
+-DBTG_REV="SVN rev. 515" -DBTG_INTERNAL_XMLRPC="1" -g -O2  -L/usr/lib -o
+btgpasswd btgpasswd-arg.o btgpasswd-btgpasswd.o btgpasswd-dconfig.o
+../../bcore/libbtgcore.la libauth.la
+../../external/ini/libini.la-lboost_date_time-mt-s
+-lboost_program_options-mt-s -lboost_system-mt-s
+-lboost_iostreams-mt-s -lboost_filesystem-mt-s
+libtool: link: g++ -g -O2 -DNDEBUG -I/usr/include -I/usr/include
+-DBTG_DEBUG=0 -DBTG_OPTION_SAVESESSIONS=1 -DBTG_OPTION_EVENTCALLBACK=0
+-DBTG_OPTION_UPNP=0 -DBTG_OPTION_USECYBERLINK=0 "-DBTG_REV=SVN rev. 515"
+-DBTG_INTERNAL_XMLRPC=1 -g -O2 -o .libs/btgpasswd btgpasswd-arg.o
+btgpasswd-btgpasswd.o btgpasswd-dconfig.o  -L/usr/lib
+../../bcore/.libs/libbtgcore.so -L/usr/i686-pc-linux-gnu/bin
+-L/usr/i686-pc-linux-gnu/lib
+-L/usr/lib/gcc/i686-pc-linux-gnu/../../../i686-pc-linux-gnu/lib
+/usr/lib/libgnutls.so /usr/lib/libtasn1.so /usr/lib/libgcrypt.so
+/usr/lib/libgpg-error.so -lboost_thread-mt-s ./.libs/libauth.a
+../../external/ini/.libs/libini.a
+/usr/lib/gcc/i686-pc-linux-gnu/3.4.6/libstdc++.so -lm -lgcc_s -lc
+-lboost_date_time-mt-s -lboost_program_options-mt-s -lboost_system-mt-s
+-lboost_iostreams-mt-s -lboost_filesystem-mt-s -pthread -Wl,-rpath
+-Wl,/usr/local/lib/btg
+../../bcore/.libs/libbtgcore.so: undefined reference to `inflateReset'
+../../bcore/.libs/libbtgcore.so: undefined reference to `inflateEnd'
+../../bcore/.libs/libbtgcore.so: undefined reference to `deflate'
+../../bcore/.libs/libbtgcore.so: undefined reference to `inflateInit2_'
+../../bcore/.libs/libbtgcore.so: undefined reference to `inflate'
+../../bcore/.libs/libbtgcore.so: undefined reference to `crc32'
+../../bcore/.libs/libbtgcore.so: undefined reference to `deflateEnd'
+../../bcore/.libs/libbtgcore.so: undefined reference to `deflateReset'
+../../bcore/.libs/libbtgcore.so: undefined reference to `deflateInit2_'
+collect2: ld returned 1 exit status
+
+any ideas? :/
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20090107/7d0f82b2/attachment.html>
+
+From wojci at wojci.dk  Thu Jan  8 22:25:42 2009
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Thu, 8 Jan 2009 22:25:42 +0100
+Subject: [Btg-devel] another compiling problem
+In-Reply-To: <7a95af970901071452n53cb9c5qb4957f88a03d0a18@mail.gmail.com>
+References: <7a95af970901071452n53cb9c5qb4957f88a03d0a18@mail.gmail.com>
+Message-ID: <20090108222542.375cfea6@netpc4.home.wojci.dk.home.wojci.dk>
+
+On Wed, 7 Jan 2009 23:52:18 +0100 "Daniel Svensson" <daniel at kofta.se>
+wrote:
+
+> any ideas? :/
+
+The boost iostreams lib uses bzip2. On other distros, it is linked in
+such way, that there are no missing symbols at this point.
+
+So I would suggest setting LDFLAGS before running the configure script.
+Adding "-lbz2" should do the trick, I think.
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+"When they ask how I died, I said, tell them: still angry." 
+(Altered Carbon by Richard Morgan)
+
+
+From wojci at wojci.dk  Sun Jan 11 22:17:35 2009
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Sun, 11 Jan 2009 22:17:35 +0100
+Subject: [Btg-devel] BTG 0.9.9 released
+Message-ID: <20090111221735.6d93f3a0@netpc4.home.wojci.dk.home.wojci.dk>
+
+Hi
+
+I released BTG 0.9.9. See
+http://developer.berlios.de/project/shownotes.php?release_id=15680 for
+changenote and list of bugfixes.
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+
+
+From james.m.pearson at gmail.com  Mon Jan 19 02:09:32 2009
+From: james.m.pearson at gmail.com (James Pearson)
+Date: Sun, 18 Jan 2009 17:09:32 -0800
+Subject: [Btg-devel] not detecting ncurses wide-character support
+Message-ID: <7dbb3da80901181709x1f1dc0f9h2b68856bc22d7710@mail.gmail.com>
+
+I've just adopted the Arch Linux btg package (
+http://aur.archlinux.org/packages.php?ID=8212 and which can maybe go on the
+packages page?), and I've having trouble getting the --enable-cli option to
+get through the configure script.  It stops after saying that I don't have
+ncurses built with wide-character support, but one of the devs assured me
+that it is.  Where do I go from here?
+
+-- 
+James Pearson
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20090118/82626eea/attachment.html>
+
+From wojci at wojci.dk  Wed Jan 21 00:26:01 2009
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Wed, 21 Jan 2009 00:26:01 +0100
+Subject: [Btg-devel] not detecting ncurses wide-character support
+In-Reply-To: <7dbb3da80901181709x1f1dc0f9h2b68856bc22d7710@mail.gmail.com>
+References: <7dbb3da80901181709x1f1dc0f9h2b68856bc22d7710@mail.gmail.com>
+Message-ID: <20090121002601.19d58211@netpc4.home.wojci.dk.home.wojci.dk>
+
+On Sun, 18 Jan 2009 17:09:32 -0800 "James Pearson"
+<james.m.pearson at gmail.com> wrote:
+
+> I've just adopted the Arch Linux btg package (
+> http://aur.archlinux.org/packages.php?ID=8212 and which can maybe go
+> on the packages page?),
+
+Please add a bug about it.
+
+>  and I've having trouble getting the
+> --enable-cli option to get through the configure script.  It stops
+> after saying that I don't have ncurses built with wide-character
+> support, but one of the devs assured me that it is.  Where do I go
+> from here?
+
+What the configure script is trying to determine is if the ncurses
+lib(/usr/lib/libcurses.so I think) contains wide character support. If
+it does, the ncurses functions will not work as expected. This is not a
+problem on most distros, just Slackware and Arch Linux. Some people
+would say that those two distros are doing it wrong. :)
+
+On debian there are two packages, one with wcs and one without it.
+
+BTG will not work with wcs ncurses and this is the reason for why
+configure checks for it.
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+"When they ask how I died, I said, tell them: still angry." 
+(Altered Carbon by Richard Morgan)
+
+
+From rik.dunphy at gmail.com  Wed Jan 21 22:12:26 2009
+From: rik.dunphy at gmail.com (Rik Dunphy)
+Date: Wed, 21 Jan 2009 21:12:26 +0000
+Subject: [Btg-devel] BTG Hangs when seeding
+Message-ID: <f6cf04ef0901211312g20f16437oc9d4659b88a82a2f@mail.gmail.com>
+
+Kernel: 2.6.27
+Boost:1.35.0-r2
+Libtorrent: 0.14.1
+BTG: 0.9.9
+
+Am running this on Sabayon Linux 4.0-r1
+
+Trying to seed a torrent but btg  but in checking the file it gets to
+about 40% then consumes all the CPU cycles for ~5mins before dying
+without any errors.
+
+torrent is located here:
+http://www.sabayonlinux.org/sabayon/torrents/Sabayon%20Linux%204%20x86%20Lite%20MCE.torrent
+
+I think it's something to do with filesize since am ok with something
+small like Damn Small Linux.
+
+I'd give trying to figure out where it's going wrong a go - but don't
+even know where to start in the code.
+Any ideas?
+
+My BTG log file is:
+rik at apollo /universe/staging/btg $ cat btg.log
+[2009-Jan-21 20:44:46] Not changing user/group.
+[2009-Jan-21 20:44:46] pmr: using ports 10000:10100.
+[2009-Jan-21 20:44:46] pmr: available ports: 101.
+[2009-Jan-21 20:44:46] lim: setting limits, upload = 40000,  download
+= 600000,  max upload = 4,  max connections = 100.
+[2009-Jan-21 20:44:46] hdl: Loading sessions from stream.
+[2009-Jan-21 20:44:46] sess: Upload limit: 40000.
+[2009-Jan-21 20:44:46] sess: Download limit: 600000.
+[2009-Jan-21 20:44:46] sess: Max uploads: 4.
+[2009-Jan-21 20:44:46] sess: Max connections: 100.
+[2009-Jan-21 20:44:46] lim: setting limits, upload = 40000,  download
+= 600000,  max upload = 4,  max connections = 100.
+[2009-Jan-21 20:44:46] pmr: got port: 10000.
+[2009-Jan-21 20:44:46] ctn: Allocation mode: sparse.
+[2009-Jan-21 20:44:46] btgdaemon version 0.9.9, TRUNK.
+[2009-Jan-21 20:44:46] Using rasterbar libtorrent version 0.14.
+[2009-Jan-21 20:44:46] There can be only one libtorrent. Accept no substitutes.
+[2009-Jan-21 20:44:46] Ready to accept clients.
+[2009-Jan-21 20:44:57] hdl: Checking limits and alerts.
+[2009-Jan-21 20:45:08] hdl: Checking limits and alerts.
+[2009-Jan-21 20:45:13] hdl: client (0): (g) Init connection failed.
+[2009-Jan-21 20:45:13] hdl: Client (0): Rejecting connection from user 'rik'.
+[2009-Jan-21 20:45:13] hdl: Sending error to client (0): 'Failed to
+authorize user.'.
+[2009-Jan-21 20:45:13] hdl: daemon (0): (g) Error (caused by (g) Init
+connection).
+[2009-Jan-21 20:45:16] hdl: Updating limits.
+[2009-Jan-21 20:45:18] hdl: Checking limits and alerts.
+[2009-Jan-21 20:45:21] hdl: client (0): (g) Init connection failed.
+[2009-Jan-21 20:45:21] hdl: Client (0): Rejecting connection from user 'rik'.
+[2009-Jan-21 20:45:21] hdl: Sending error to client (0): 'Failed to
+authorize user.'.
+[2009-Jan-21 20:45:21] hdl: daemon (0): (g) Error (caused by (g) Init
+connection).
+[2009-Jan-21 20:45:29] hdl: Checking limits and alerts.
+[2009-Jan-21 20:45:40] hdl: Checking limits and alerts.
+[2009-Jan-21 20:45:42] hdl: client (0): (g) Init connection.
+[2009-Jan-21 20:45:42] hdl: daemon (0): (g) Ack.
+[2009-Jan-21 20:45:43] hdl: client (0): (g) Init connection.
+[2009-Jan-21 20:45:43] hdl: daemon (0): (g) Ack.
+[2009-Jan-21 20:45:43] hdl: client (0): (s) List.
+[2009-Jan-21 20:45:43] hdl: daemon (0): (s) List response.
+[2009-Jan-21 20:45:44] hdl: client (0): (g) Init connection.
+[2009-Jan-21 20:45:44] hdl: daemon (0): (g) Ack.
+[2009-Jan-21 20:45:44] hdl: client (0): (s) Attach.
+[2009-Jan-21 20:45:44] hdl: daemon (0): (g) Ack.
+[2009-Jan-21 20:45:44] hdl: client (0): (s) Detach.
+[2009-Jan-21 20:45:44] hdl: daemon (0): (g) Ack.
+[2009-Jan-21 20:45:44] hdl: client (0): (g) Init connection.
+[2009-Jan-21 20:45:44] hdl: daemon (0): (g) Ack.
+[2009-Jan-21 20:45:44] hdl: client (0): (s) Attach.
+[2009-Jan-21 20:45:44] hdl: daemon (0): (g) Ack.
+[2009-Jan-21 20:45:44] hdl: client (0): (g) List request.
+[2009-Jan-21 20:45:44] evt: daemon (0): (g) Error (caused by (g) List request).
+[2009-Jan-21 20:45:44] hdl: client (0): (s) Detach.
+[2009-Jan-21 20:45:44] hdl: daemon (0): (g) Ack.
+[2009-Jan-21 20:45:45] hdl: client (0): (g) Init connection.
+[2009-Jan-21 20:45:45] hdl: daemon (0): (g) Ack.
+[2009-Jan-21 20:45:45] hdl: client (0): (s) Attach.
+[2009-Jan-21 20:45:45] hdl: daemon (0): (g) Ack.
+[2009-Jan-21 20:45:45] hdl: client (0): (s) Session name.
+[2009-Jan-21 20:45:45] hdl: daemon (0): (s) Session name response.
+[2009-Jan-21 20:45:45] hdl: client (0): (s) Detach.
+[2009-Jan-21 20:45:45] hdl: daemon (0): (g) Ack.
+[2009-Jan-21 20:45:47] hdl: Periodically saving sessions.
+[2009-Jan-21 20:45:47] sess: Upload limit: 40000.
+[2009-Jan-21 20:45:47] sess: Download limit: 600000.
+[2009-Jan-21 20:45:47] sess: Max uploads: 4.
+[2009-Jan-21 20:45:47] sess: Max connections: 100.
+[2009-Jan-21 20:45:48] hdl: Updating limits.
+[2009-Jan-21 20:45:49] hdl: Updating seed counters.
+[2009-Jan-21 20:45:49] hdl: client (0): (g) Init connection.
+[2009-Jan-21 20:45:49] hdl: daemon (0): (g) Ack.
+[2009-Jan-21 20:45:49] hdl: client (0): (s) Attach.
+[2009-Jan-21 20:45:49] hdl: daemon (0): (g) Ack.
+[2009-Jan-21 20:45:49] hdl: client (0): (c) Status, multiple.
+[2009-Jan-21 20:45:49] evt: daemon (0): (g) Error (caused by (c)
+Status, multiple).
+[2009-Jan-21 20:45:49] hdl: client (0): (s) Detach.
+[2009-Jan-21 20:45:49] hdl: daemon (0): (g) Ack.
+[2009-Jan-21 20:45:50] hdl: client (0): (g) Init connection.
+[2009-Jan-21 20:45:50] hdl: daemon (0): (g) Ack.
+[2009-Jan-21 20:45:50] hdl: Checking limits and alerts.
+[2009-Jan-21 20:45:50] hdl: client (0): (s) Attach.
+[2009-Jan-21 20:45:50] hdl: daemon (0): (g) Ack.
+[2009-Jan-21 20:45:50] hdl: client (0): (g) List request.
+[2009-Jan-21 20:45:50] evt: daemon (0): (g) Error (caused by (g) List request).
+[2009-Jan-21 20:45:50] hdl: client (0): (s) Detach.
+[2009-Jan-21 20:45:50] hdl: daemon (0): (g) Ack.
+[2009-Jan-21 20:45:51] hdl: client (0): (g) Init connection.
+[2009-Jan-21 20:45:51] hdl: daemon (0): (g) Ack.
+[2009-Jan-21 20:45:51] hdl: client (0): (s) Attach.
+[2009-Jan-21 20:45:51] hdl: daemon (0): (g) Ack.
+[2009-Jan-21 20:45:51] hdl: client (0): (c) Status, multiple.
+[2009-Jan-21 20:45:51] evt: daemon (0): (g) Error (caused by (c)
+Status, multiple).
+[2009-Jan-21 20:45:51] hdl: client (0): (s) Detach.
+[2009-Jan-21 20:45:51] hdl: daemon (0): (g) Ack.
+[2009-Jan-21 20:45:52] hdl: client (0): (g) Init connection.
+[2009-Jan-21 20:45:52] hdl: daemon (0): (g) Ack.
+[2009-Jan-21 20:45:52] hdl: client (0): (s) Attach.
+[2009-Jan-21 20:45:52] hdl: daemon (0): (g) Ack.
+[2009-Jan-21 20:45:52] hdl: client (0): (g) List request.
+[2009-Jan-21 20:45:52] evt: daemon (0): (g) Error (caused by (g) List request).
+[2009-Jan-21 20:45:52] hdl: client (0): (s) Detach.
+[2009-Jan-21 20:45:52] hdl: daemon (0): (g) Ack.
+[2009-Jan-21 20:45:53] hdl: client (0): (g) Init connection.
+[2009-Jan-21 20:45:53] hdl: daemon (0): (g) Ack.
+[2009-Jan-21 20:45:53] hdl: client (0): (s) List.
+[2009-Jan-21 20:45:53] hdl: daemon (0): (s) List response.
+[2009-Jan-21 20:46:01] hdl: Checking limits and alerts.
+[2009-Jan-21 20:46:07] hdl: client (0): (g) Init connection.
+[2009-Jan-21 20:46:07] hdl: daemon (0): (g) Ack.
+[2009-Jan-21 20:46:07] hdl: client (0): (s) List.
+[2009-Jan-21 20:46:07] hdl: daemon (0): (s) List response.
+[2009-Jan-21 20:46:08] hdl: client (0): (s) Attach.
+[2009-Jan-21 20:46:08] hdl: daemon (0): (g) Ack.
+[2009-Jan-21 20:46:08] hdl: client (0): (s) Info.
+[2009-Jan-21 20:46:08] hdl: daemon (0): (s) Info response.
+[2009-Jan-21 20:46:08] hdl: client (0): (s) Version.
+[2009-Jan-21 20:46:08] hdl: daemon (0): (s) Version response.
+[2009-Jan-21 20:46:08] hdl: client (0): (c) Status.
+[2009-Jan-21 20:46:08] evt: daemon (0): (g) Error (caused by (c) Status).
+[2009-Jan-21 20:46:11] hdl: client (0): (c) Status.
+[2009-Jan-21 20:46:11] evt: daemon (0): (g) Error (caused by (c) Status).
+[2009-Jan-21 20:46:12] hdl: Checking limits and alerts.
+[2009-Jan-21 20:46:12] hdlf: client (0): (c) Create context from file.
+[2009-Jan-21 20:46:12] hdl: daemon (0): (c) Create context from file response.
+[2009-Jan-21 20:46:12] hdlf: Checking file downloads (1).
+[2009-Jan-21 20:46:12] hdlf: client (0): (c) Create context from file,
+part of file.
+[2009-Jan-21 20:46:12] hdl: daemon (0): (g) Ack.
+[2009-Jan-21 20:46:12] hdl: client (0): (g) Status of operation.
+[2009-Jan-21 20:46:12] hdlf: client (0): (g) Status of operation.
+[2009-Jan-21 20:46:12] hdl: daemon (0): (g) Status of operation response.
+[2009-Jan-21 20:46:13] hdl: client (0): (c) Status.
+[2009-Jan-21 20:46:13] evt: daemon (0): (c) Status all response.
+[2009-Jan-21 20:46:16] hdl: client (0): (c) Status.
+[2009-Jan-21 20:46:16] evt: daemon (0): (c) Status all response.
+[2009-Jan-21 20:46:17] hdl: client (0): (c) Get used trackers.
+[2009-Jan-21 20:46:17] evt: daemon (0): (c) Get used trackers response.
+[2009-Jan-21 20:46:18] hdlf: Checking file downloads (1).
+[2009-Jan-21 20:46:19] hdl: Updating limits.
+[2009-Jan-21 20:46:19] hdl: client (0): (c) Status.
+[2009-Jan-21 20:46:19] evt: daemon (0): (c) Status all response.
+[2009-Jan-21 20:46:22] hdl: client (0): (c) Status.
+[2009-Jan-21 20:46:22] evt: daemon (0): (c) Status all response.
+[2009-Jan-21 20:46:23] hdl: Checking limits and alerts.
+[2009-Jan-21 20:46:25] hdl: client (0): (c) Status.
+[2009-Jan-21 20:46:25] evt: daemon (0): (c) Status all response.
+[2009-Jan-21 20:46:25] hdlf: Checking file downloads (1).
+
+

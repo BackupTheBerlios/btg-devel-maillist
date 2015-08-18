@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Btg-devel] btg and XML-RPC - API for WIN / MAC / UNIX clients
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/btg-devel/2009-November/index.html" >
+   <LINK REL="made" HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20btg%20and%20XML-RPC%20-%20API%20for%20WIN%20/%20MAC%20/%20UNIX%20clients&In-Reply-To=%3C4AF0A975.3020607%40web.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000209.html">
+   <LINK REL="Next"  HREF="000211.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Btg-devel] btg and XML-RPC - API for WIN / MAC / UNIX clients</H1>
+    <B>J&#246;rg Bernau</B> 
+    <A HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20btg%20and%20XML-RPC%20-%20API%20for%20WIN%20/%20MAC%20/%20UNIX%20clients&In-Reply-To=%3C4AF0A975.3020607%40web.de%3E"
+       TITLE="[Btg-devel] btg and XML-RPC - API for WIN / MAC / UNIX clients">Joerg.Bernau at web.de
+       </A><BR>
+    <I>Tue Nov  3 23:06:45 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000209.html">[Btg-devel] btg and XML-RPC - API for WIN / MAC / UNIX clients
+</A></li>
+        <LI>Next message: <A HREF="000211.html">[Btg-devel] btg and XML-RPC - API for WIN / MAC / UNIX clients
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#210">[ date ]</a>
+              <a href="thread.html#210">[ thread ]</a>
+              <a href="subject.html#210">[ subject ]</a>
+              <a href="author.html#210">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello to all:
+
+I am using qxmlrpc (<A HREF="http://code.google.com/p/qxmlrpc/">http://code.google.com/p/qxmlrpc/</A>) as processing 
+library. As far as I figgured out, is there no http authentification, 
+but the xml-rpc call &quot; general.initconnection&quot; is used instead. When 
+doing this there is no result returned.
+
+here is my code:
+
+
+client = new xmlrpc::Client(this);
+
+client-&gt;setHost(m_options-&gt;serverHostAddress(), 
+m_options-&gt;serverHostPort());
+
+client-&gt;setUserAgent(&quot;BtgQtUi&quot;);
+
+client-&gt;request(&quot;general.initconnection&quot;, 1, m_options-&gt;authUserName(), 
+m_options-&gt;authUserPassword());
+
+
+The m_options struct ist filled correctly but the result is an empty 
+string. The daemon.ini is attached.
+
+Joerg Bernau
+
+
+Am 03.11.2009 20:26, schrieb James Pearson:
+&gt;<i> On Mon, Nov 2, 2009 at 3:46 PM, Michael Wojciechowski &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">wojci at wojci.dk</A> 
+</I>&gt;<i> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">wojci at wojci.dk</A>&gt;&gt; wrote:
+</I>&gt;<i>
+</I>&gt;<i>     On Sun, 01 Nov 2009 00:55:10 +0100 J&#246;rg Bernau
+</I>&gt;<i>     &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">Joerg.Bernau at web.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">Joerg.Bernau at web.de</A>&gt;&gt;
+</I>&gt;<i>     wrote:
+</I>&gt;<i>
+</I>&gt;<i>     &gt; I'd like to make a client based on the Qt4 framework. I did not
+</I>&gt;<i>     found
+</I>&gt;<i>     &gt; any XML-RPC API documentated. Please be so kind to help me.
+</I>&gt;<i>
+</I>&gt;<i>     I think that:
+</I>&gt;<i>
+</I>&gt;<i>     <A HREF="http://btg.berlios.de/howto_devel.html#list-of-commands">http://btg.berlios.de/howto_devel.html#list-of-commands</A>
+</I>&gt;<i>
+</I>&gt;<i>     contains the information you need to implement your client.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> FYI, the styling on that page (or rather, the page linked to from 
+</I>&gt;<i> there) is a bit odd - for instance, the name of a command (if I'm 
+</I>&gt;<i> reading it correctly) is an h2, while &quot;parameters&quot; is an h1, which is 
+</I>&gt;<i> a bit visually confusing.  The table of contents is also utterly 
+</I>&gt;<i> useless, and the first method (init) is missing the heading tags 
+</I>&gt;<i> around it (which exacerbates the first-mentioned problem).
+</I>&gt;<i>
+</I>&gt;<i> -- 
+</I>&gt;<i> James Pearson
+</I>&gt;<i> --
+</I>&gt;<i> The best way to predict the future is to invent it.
+</I>&gt;<i>  - Alan Kay
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/btg-devel/attachments/20091103/f78a6966/attachment.html">https://lists.berlios.de/pipermail/btg-devel/attachments/20091103/f78a6966/attachment.html</A>&gt;
+-------------- next part --------------
+An embedded and charset-unspecified text was scrubbed...
+Name: daemon.ini
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/btg-devel/attachments/20091103/f78a6966/attachment.ksh">https://lists.berlios.de/pipermail/btg-devel/attachments/20091103/f78a6966/attachment.ksh</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000209.html">[Btg-devel] btg and XML-RPC - API for WIN / MAC / UNIX clients
+</A></li>
+	<LI>Next message: <A HREF="000211.html">[Btg-devel] btg and XML-RPC - API for WIN / MAC / UNIX clients
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#210">[ date ]</a>
+              <a href="thread.html#210">[ thread ]</a>
+              <a href="subject.html#210">[ subject ]</a>
+              <a href="author.html#210">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/btg-devel">More information about the Btg-devel
+mailing list</a><br>
+</body></html>

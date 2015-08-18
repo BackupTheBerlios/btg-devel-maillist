@@ -1,0 +1,152 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Btg-devel] External xmlrpc-epi includes have moved?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/btg-devel/2009-April/index.html" >
+   <LINK REL="made" HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20External%20xmlrpc-epi%20includes%20have%20moved%3F&In-Reply-To=%3C20090428053225.GA18275%40ares.tgcnet%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000151.html">
+   <LINK REL="Next"  HREF="000157.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Btg-devel] External xmlrpc-epi includes have moved?</H1>
+    <B>Tom G. Christensen</B> 
+    <A HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20External%20xmlrpc-epi%20includes%20have%20moved%3F&In-Reply-To=%3C20090428053225.GA18275%40ares.tgcnet%3E"
+       TITLE="[Btg-devel] External xmlrpc-epi includes have moved?">tgc at jupiterrise.com
+       </A><BR>
+    <I>Tue Apr 28 07:32:25 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000151.html">[Btg-devel] Btg-devel Digest, Vol 16, Issue 11
+</A></li>
+        <LI>Next message: <A HREF="000157.html">[Btg-devel] External xmlrpc-epi includes have moved?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#156">[ date ]</a>
+              <a href="thread.html#156">[ thread ]</a>
+              <a href="subject.html#156">[ subject ]</a>
+              <a href="author.html#156">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+[your reply did not reach my inbox so this mail was constructed by
+using the archive]
+
+On Mon, 27 Apr 2009 16:59:58 +0200, Michael Wojciechowski wrote:
+&gt;<i>I cannot use this patch - I am not able to merge it to trunk. Would you
+</I>&gt;<i>mind making one against trunk and not against the RC?
+</I>
+The patch applies cleanly to trunk but perhaps it was garbled on it's
+way through the mailsystem.
+
+I'm attaching it instead.
+
+-tgc
+-------------- next part --------------
+diff -up btg-1.0.0/daemon/Makefile.am.xmlrpc_cflags btg-1.0.0/daemon/Makefile.am
+--- btg-1.0.0/daemon/Makefile.am.xmlrpc_cflags	2009-03-05 17:40:05.000000000 +0100
++++ btg-1.0.0/daemon/Makefile.am	2009-04-26 13:54:43.000000000 +0200
+@@ -52,7 +52,7 @@ libdaemon_la_SOURCES = dconfig.cpp darg.
+                        context_alert.cpp context_file.cpp context_session.cpp context.cpp \
+                        eventhandler.cpp connectionextrastate.cpp $(SSSOURCES) $(CALLBACKSOURCES)
+ 
+-libdaemon_la_CFLAGS   = @CFLAGS@ @DEBUG_CFLAGS@ -DBTG_DEBUG=@BTG_DEBUG@ \
++libdaemon_la_CFLAGS   = @CFLAGS@ @XMLRPC_CFLAGS@ @DEBUG_CFLAGS@ -DBTG_DEBUG=@BTG_DEBUG@ \
+ -DBTG_OPTION_SAVESESSIONS=@BTG_OPTION_SAVESESSIONS@ \
+ -DBTG_OPTION_EVENTCALLBACK=@BTG_OPTION_EVENTCALLBACK@ \
+ -DBTG_OPTION_UPNP=@BTG_OPTION_UPNP@ \
+@@ -61,7 +61,7 @@ libdaemon_la_CFLAGS   = @CFLAGS@ @DEBUG_
+ -DBTG_REV=&quot;@BTG_REV@&quot; $(URL_DEFINES) \
+ -DBTG_INTERNAL_XMLRPC=&quot;@BTG_INTERNAL_XMLRPC@&quot;
+ 
+-libdaemon_la_CXXFLAGS = @CXXFLAGS@ @DEBUG_CXXFLAGS@ -DBTG_DEBUG=@BTG_DEBUG@ \
++libdaemon_la_CXXFLAGS = @CXXFLAGS@ @XMLRPC_CFLAGS@ @DEBUG_CXXFLAGS@ -DBTG_DEBUG=@BTG_DEBUG@ \
+ -DBTG_OPTION_SAVESESSIONS=@BTG_OPTION_SAVESESSIONS@ \
+ -DBTG_OPTION_EVENTCALLBACK=@BTG_OPTION_EVENTCALLBACK@ \
+ -DBTG_OPTION_UPNP=@BTG_OPTION_UPNP@ \
+@@ -97,7 +97,7 @@ btgdaemon_LDADD   = $(top_builddir)/bcor
+ 
+ #btgdaemon_LDFLAGS  = -all-static
+ 
+-btgdaemon_CFLAGS   = @CFLAGS@   @DEBUG_CFLAGS@ @LIBGNUTLS_CFLAGS@ \
++btgdaemon_CFLAGS   = @CFLAGS@ @XMLRPC_CFLAGS@ @DEBUG_CFLAGS@ @LIBGNUTLS_CFLAGS@ \
+ -DBTG_DEBUG=@BTG_DEBUG@ -DBTG_OPTION_SAVESESSIONS=@BTG_OPTION_SAVESESSIONS@ \
+ -DBTG_OPTION_EVENTCALLBACK=@BTG_OPTION_EVENTCALLBACK@ \
+ -DBTG_OPTION_UPNP=@BTG_OPTION_UPNP@ \
+@@ -105,7 +105,7 @@ btgdaemon_CFLAGS   = @CFLAGS@   @DEBUG_C
+ -DBTG_OPTION_USECYBERLINK=@BTG_OPTION_USECYBERLINK@ @CYBERLINK_CFLAGS@ $(URL_DEFINES) \
+ -DBTG_INTERNAL_XMLRPC=&quot;@BTG_INTERNAL_XMLRPC@&quot;
+ 
+-btgdaemon_CXXFLAGS = @CXXFLAGS@ @DEBUG_CXXFLAGS@ @LIBGNUTLS_CFLAGS@ \
++btgdaemon_CXXFLAGS = @CXXFLAGS@ @XMLRPC_CFLAGS@ @DEBUG_CXXFLAGS@ @LIBGNUTLS_CFLAGS@ \
+ -DBTG_DEBUG=@BTG_DEBUG@ -DBTG_OPTION_SAVESESSIONS=@BTG_OPTION_SAVESESSIONS@ \
+ -DBTG_OPTION_EVENTCALLBACK=@BTG_OPTION_EVENTCALLBACK@ \
+ -DBTG_OPTION_UPNP=@BTG_OPTION_UPNP@ \
+diff -up btg-1.0.0/UI/gui/Makefile.am.xmlrpc_cflags btg-1.0.0/UI/gui/Makefile.am
+--- btg-1.0.0/UI/gui/Makefile.am.xmlrpc_cflags	2008-06-14 15:26:40.000000000 +0200
++++ btg-1.0.0/UI/gui/Makefile.am	2009-04-26 13:55:06.000000000 +0200
+@@ -35,13 +35,13 @@ if BUILDINTERNALPLOTMM
+ btgui_LDADD  += $(top_builddir)/external/plotmm/libplotmm.la
+ endif
+ 
+-btgui_LDFLAGS  = @LIBS@ @GTKMM_LIBS@ @BOOST_SYSTEM_LIB@ @BOOST_DATE_TIME_LIB@ @BOOST_IOSTREAMS_LIB@ @BOOST_FILESYSTEM_LIB@ @LIBGNUTLS_LIBS@ @BOOST_PROGRAM_OPTIONS_LIB@ @BOOST_THREAD_LIB@
+-btgui_CXXFLAGS = @CXXFLAGS@ @GTKMM_CFLAGS@ @LIBGNUTLS_CFLAGS@ @PLOTMM_LDFLAGS@ @PLOTMM_CXXFLAGS@ \
++btgui_LDFLAGS  = @LIBS@ @GTKMM_LIBS@ @BOOST_SYSTEM_LIB@ @BOOST_DATE_TIME_LIB@ @BOOST_IOSTREAMS_LIB@ @BOOST_FILESYSTEM_LIB@ @LIBGNUTLS_LIBS@ @BOOST_PROGRAM_OPTIONS_LIB@ @BOOST_THREAD_LIB@ @PLOTMM_LDFLAGS@
++btgui_CXXFLAGS = @CXXFLAGS@ @XMLRPC_CFLAGS@ @GTKMM_CFLAGS@ @LIBGNUTLS_CFLAGS@ @PLOTMM_CXXFLAGS@ \
+ -DBTG_DEBUG=@BTG_DEBUG@ \
+ -DBTG_REV=&quot;@BTG_REV@&quot; \
+ -DBTG_INTERNAL_XMLRPC=&quot;@BTG_INTERNAL_XMLRPC@&quot;
+ 
+-btgui_CFLAGS   = @CFLAGS@ @LIBGNUTLS_CFLAGS@ \
++btgui_CFLAGS   = @CFLAGS@ @XMLRPC_CFLAGS@ @LIBGNUTLS_CFLAGS@ \
+ -DBTG_DEBUG=@BTG_DEBUG@ \
+ -DBTG_REV=&quot;@BTG_REV@&quot; \
+ -DBTG_INTERNAL_XMLRPC=&quot;@BTG_INTERNAL_XMLRPC@&quot;
+diff -up btg-1.0.0/UI/gui/viewer/sdl/Makefile.am.xmlrpc_cflags btg-1.0.0/UI/gui/viewer/sdl/Makefile.am
+--- btg-1.0.0/UI/gui/viewer/sdl/Makefile.am.xmlrpc_cflags	2009-01-15 20:42:29.000000000 +0100
++++ btg-1.0.0/UI/gui/viewer/sdl/Makefile.am	2009-04-26 13:54:43.000000000 +0200
+@@ -11,12 +11,12 @@ btgvs_LDADD   = $(top_builddir)/bcore/li
+ 
+ btgvs_LDFLAGS = @LIBS@ @AGAR_LIBS@ @BOOST_SYSTEM_LIB@ @BOOST_DATE_TIME_LIB@ @BOOST_IOSTREAMS_LIB@ @BOOST_FILESYSTEM_LIB@ @LIBGNUTLS_LIBS@ @BOOST_PROGRAM_OPTIONS_LIB@ @BOOST_THREAD_LIB@ @LIRC_CLIENT_LIB@
+ 
+-btgvs_CXXFLAGS = @CXXFLAGS@ @LIBGNUTLS_CFLAGS@ @AGAR_CFLAGS@ \
++btgvs_CXXFLAGS = @CXXFLAGS@ @XMLRPC_CFLAGS@ @LIBGNUTLS_CFLAGS@ @AGAR_CFLAGS@ \
+ -DBTG_DEBUG=@BTG_DEBUG@ \
+ -DBTG_REV=&quot;@BTG_REV@&quot; \
+ -DBTG_INTERNAL_XMLRPC=&quot;@BTG_INTERNAL_XMLRPC@&quot;
+ 
+-btgvs_CFLAGS   = @CFLAGS@ @LIBGNUTLS_CFLAGS@ @AGAR_CFLAGS@ \
++btgvs_CFLAGS   = @CFLAGS@ @XMLRPC_CFLAGS@ @LIBGNUTLS_CFLAGS@ @AGAR_CFLAGS@ \
+ -DBTG_DEBUG=@BTG_DEBUG@ \
+ -DBTG_REV=&quot;@BTG_REV@&quot; \
+ -DBTG_INTERNAL_XMLRPC=&quot;@BTG_INTERNAL_XMLRPC@&quot;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000151.html">[Btg-devel] Btg-devel Digest, Vol 16, Issue 11
+</A></li>
+	<LI>Next message: <A HREF="000157.html">[Btg-devel] External xmlrpc-epi includes have moved?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#156">[ date ]</a>
+              <a href="thread.html#156">[ thread ]</a>
+              <a href="subject.html#156">[ subject ]</a>
+              <a href="author.html#156">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/btg-devel">More information about the Btg-devel
+mailing list</a><br>
+</body></html>

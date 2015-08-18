@@ -1,0 +1,277 @@
+From wojci at wojci.dk  Sat Mar 15 23:51:29 2008
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Sat, 15 Mar 2008 23:51:29 +0100
+Subject: [Btg-devel] BTG 0.9.7 released
+Message-ID: <20080315235129.4dfb50ff@netpc3.home.wojci.dk>
+
+From http://developer.berlios.de/project/shownotes.php?release_id=14349:
+
+This release contains a large number of bugfixes and some new features
+which were requested by users.  Also, 0.9.7 is the first BTG release
+which has been built for and been tested on OpenWrt (See howto about
+details).
+
+Notice the selecting files and DHT support will only work if Rasterbar
+libtorrent 0.13rc1 or later is used.  Libtorrent 0.12 does not contain
+the required functionality.
+
+Changes:
+The following bugs were fixed:
+
+013359 Compilation error: numinput.h.
+013315 btgui, torrent remains after moving to another session.
+013306 btgui, executing operations on multiple torrents.
+013272 Add support for libtorrent 0.12.1.
+013267 btgcli, incorrect seed limit.
+013266 btgui, global limit setting.
+013265 btgui, limit settings dialog doesn't correctly display limits.
+013248 btgncli, add dialog used for entering numbers.
+013216 Session saving, add saving of global limits.
+013147 Handle octets set to 255 in Address/addressPort.
+013146 XML Pasing error (wwwui).
+013142 Restore file priorities after restart.
+013136 Change of peer id / useragent (feature req).
+013007 Show session settings.
+012997 Session saving, fix saving of dht/encryption settings.
+012975 Externalization, simple, exorcism.
+012970 Add moving torrents to another sessions.
+012952 Add switch to disable generating btg-config.
+012839 DHT + encryption support in wwwbtg.
+012814 Daemon segfaults when starting client with DHT (0.9.6).
+012784 Remove singleton object used for logging.
+012771 Add openwrt packages to SVN.
+012762 Embed svn version into release information.
+012761 Callback manager: execute calls from a thread.
+012685 btgdaemon/btgpassswd segfaulting upon start.
+012676 Fix boost iostreams detection.
+012616 Remove btgq and btgd.
+012598 Write man page for btgvs.
+012557 Make fails on FreeBSD 6.2.
+012545 Update SDL viewer to AGAR 1.3.1.
+012544 BTGWWW, add missing files in bcore/command.
+012535 btgncli: show peers/seeds in the list of torrents.
+012330 Add another version of contextStatusCommand.
+012329 Add "stop autoupdating" button in wwwbtg.
+012308 Clean up daemon/limitval.cpp.
+012301 Update doxygen.
+012241 Use pkglib_LTLIBRARIES instead of lib_LTLIBRARIES.
+012226 btgui, files showing as 100%.
+012208 Add logging using syslog to wwwui.
+012205 torrent files which contain same files but different tracker.
+012190 Fix "warning: 'add_torrent' is deprecated".
+012125 Update SDL viewer, after refactoring of last files.
+012124 Add command line interface(s) unittest.
+012120 Update to libtorrent 0.13 aka SVN.
+012118 Add session naming.
+012108 btgui: buttons OK and Cancel are equivalent when logging-in.
+012106 Can't set files to download in btgui.
+012055 File checking fails on torrents that contain directories.
+012004 Show tracker for each context.
+011784 More users can't download same torrent at same time.
+011781 FBSD, btgncli does not show the status bar.
+011557 Peer_id sent to tracker (feature req).
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+"When they ask how I died, I said, tell them: still angry." 
+(Altered Carbon by Richard Morgan)
+
+
+From vmiklos at frugalware.org  Tue Mar 18 11:20:55 2008
+From: vmiklos at frugalware.org (Miklos Vajna)
+Date: Tue, 18 Mar 2008 11:20:55 +0100
+Subject: [Btg-devel] [PATCH] fix btg for gcc-4.3
+Message-ID: <20080318102055.GS2414@genesis.frugalware.org>
+
+hi,
+
+i'm attaching a patch, i needed it to compile btg-4.3 with gcc-4.3.
+
+thanks for btg!
+-------------- next part --------------
+--- ./bcore/auth/hash.cpp.orig	2008-03-17 16:16:47.000000000 +0100
++++ ./bcore/auth/hash.cpp	2008-03-17 16:17:11.000000000 +0100
+@@ -23,6 +23,7 @@
+ #include "hash.h"
+ 
+ #include <sstream>
++#include <cstring>
+ #include <iomanip>
+ 
+ #include <bcore/helpermacro.h>
+--- ./bcore/os/socket.h.orig	2008-03-17 16:19:29.000000000 +0100
++++ ./bcore/os/socket.h	2008-03-17 16:19:37.000000000 +0100
+@@ -35,6 +35,7 @@
+ #include <string>
+ #include <map>
+ #include <vector>
++#include <cstring>
+ 
+ extern "C"
+ {
+--- ./bcore/os/stdin.h.orig	2008-03-17 16:20:53.000000000 +0100
++++ ./bcore/os/stdin.h	2008-03-17 16:21:01.000000000 +0100
+@@ -24,6 +24,7 @@
+ #define BTG_STDIN_H
+ 
+ #include <string>
++#include <cstring>
+ 
+ namespace btg
+ {
+--- ./external/ini/cdatafile.cpp.orig	2008-03-17 15:53:07.000000000 +0100
++++ ./external/ini/cdatafile.cpp	2008-03-17 16:31:07.000000000 +0100
+@@ -37,6 +37,9 @@
+ 
+ #include <vector>
+ #include <string>
++#include <cstring>
++#include <cstdlib>
++#include <climits>
+ #include <ctype.h>
+ #include <stdio.h>
+ #include <stdarg.h>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: not available
+Type: application/pgp-signature
+Size: 189 bytes
+Desc: not available
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20080318/147e45d3/attachment.pgp>
+
+From wojci at wojci.dk  Thu Mar 20 02:19:03 2008
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Thu, 20 Mar 2008 02:19:03 +0100
+Subject: [Btg-devel] [PATCH] fix btg for gcc-4.3
+In-Reply-To: <20080318102055.GS2414@genesis.frugalware.org>
+References: <20080318102055.GS2414@genesis.frugalware.org>
+Message-ID: <20080320021903.258ce1f3@netpc3.home.wojci.dk>
+
+On Tue, 18 Mar 2008 11:20:55 +0100 Miklos Vajna <vmiklos at frugalware.org>
+wrote:
+
+> i'm attaching a patch, i needed it to compile btg-4.3 with gcc-4.3.
+
+Thanks, I merged it in SVN, r219. 
+
+See
+http://developer.berlios.de/bugs/?func=detailbug&bug_id=13399&group_id=3293.
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+"When they ask how I died, I said, tell them: still angry." 
+(Altered Carbon by Richard Morgan)
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: not available
+Type: application/pgp-signature
+Size: 189 bytes
+Desc: not available
+URL: <https://lists.berlios.de/pipermail/btg-devel/attachments/20080320/a82cb011/attachment.pgp>
+
+From bart at bnagel.net  Fri Mar 28 12:23:10 2008
+From: bart at bnagel.net (Bart Nagel)
+Date: Fri, 28 Mar 2008 11:23:10 +0000
+Subject: [Btg-devel] complation error (SVN)
+Message-ID: <93b769e50803280423y56d76136ya02f009b0610c33f@mail.gmail.com>
+
+i'm running Debian lenny/sid, and compiled and installed
+libtorrent-0.12.1 from source.
+
+my BTG configure command exited with no errors, and was as following:
+
+./configure --enable-btg-config --enable-cli --enable-www
+--enable-session-saving --enable-event-callback --enable-command-list
+
+make exits after a while with the following:
+
+./.libs/libdaemon.a(libdaemon_la-daemonhandler.o): In function `~daemonHandler':
+/home/tremby/apps/btg/daemon/daemonhandler.cpp:1304: undefined
+reference to `btg::daemon::http::httpManager::~httpManager()'
+/home/tremby/apps/btg/daemon/daemonhandler.cpp:1304: undefined
+reference to `btg::daemon::http::httpManager::~httpManager()'
+/home/tremby/apps/btg/daemon/daemonhandler.cpp:1304: undefined
+reference to `btg::daemon::http::httpManager::~httpManager()'
+/home/tremby/apps/btg/daemon/daemonhandler.cpp:1304: undefined
+reference to `btg::daemon::http::httpManager::~httpManager()'
+./.libs/libdaemon.a(libdaemon_la-daemonhandler.o): In function
+`btg::daemon::daemonHandler::checkTimeout()':
+/home/tremby/apps/btg/daemon/daemonhandler.cpp:1205: undefined
+reference to `btg::daemon::daemonHandler::handleUrlDownloads()'
+./.libs/libdaemon.a(libdaemon_la-daemonhandler.o): In function `daemonHandler':
+/home/tremby/apps/btg/daemon/daemonhandler.cpp:107: undefined
+reference to `btg::daemon::http::httpManager::httpManager(boost::shared_ptr<btg::core::logger::logWrapper>)'
+/home/tremby/apps/btg/daemon/daemonhandler.cpp:136: undefined
+reference to `btg::daemon::http::httpManager::~httpManager()'
+/home/tremby/apps/btg/daemon/daemonhandler.cpp:107: undefined
+reference to `btg::daemon::http::httpManager::httpManager(boost::shared_ptr<btg::core::logger::logWrapper>)'
+/home/tremby/apps/btg/daemon/daemonhandler.cpp:136: undefined
+reference to `btg::daemon::http::httpManager::~httpManager()'
+collect2: ld returned 1 exit status
+make[3]: *** [btgdaemon] Error 1
+make[3]: Leaving directory `/home/tremby/apps/btg/daemon'
+make[2]: *** [all-recursive] Error 1
+make[2]: Leaving directory `/home/tremby/apps/btg/daemon'
+make[1]: *** [all-recursive] Error 1
+make[1]: Leaving directory `/home/tremby/apps/btg'
+make: *** [all] Error 2
+
+any idea what's wrong?
+
+let me know if you need more information.
+
+thanks
+--bart nagel
+
+
+From wojci at wojci.dk  Fri Mar 28 14:28:44 2008
+From: wojci at wojci.dk (Michael Wojciechowski)
+Date: Fri, 28 Mar 2008 14:28:44 +0100 (CET)
+Subject: [Btg-devel] complation error (SVN)
+In-Reply-To: <93b769e50803280423y56d76136ya02f009b0610c33f@mail.gmail.com>
+References: <93b769e50803280423y56d76136ya02f009b0610c33f@mail.gmail.com>
+Message-ID: <14461.87.54.11.90.1206710924.squirrel@webmail.netimage.dk>
+
+Bart Nagel wrote:
+
+> make exits after a while with the following:
+>
+> ./.libs/libdaemon.a(libdaemon_la-daemonhandler.o): In function
+> `~daemonHandler':
+
+Earlier today on #libtorrent ..
+
+07:51:44 < romanr> wojci: failure without --enable-url
+11:05:30 < wojci_> romanr_: I fixed the build. r253.
+11:05:52 < wojci_> romanr_: .. or I assume that I did.
+11:05:55 < romanr_> wojci_: yeah, good
+11:07:05 < romanr_> wojci_: a class inheritance -related hack needed
+there, afai understand
+11:10:56 < wojci_> romanr_: Where?
+11:11:24 < romanr_> wojci_: in daemonhandler
+11:11:48 < romanr_> wojci_: but I can make a mistake
+11:11:53 < wojci_> romanr_: No, just some defines.
+11:12:19 < romanr_> wojci_: anyway, if you launched without --enable-curl
+- all definitely fixed
+
+So you should update your SVN and try again.
+
+-- 
+
+Best regards
+
+Michael Wojciechowski
+
+"When they ask how I died, I said, tell them: still angry."
+(Altered Carbon by Richard Morgan)
+
+09F911029D74E35BD84156C5635688C0
+
+
+

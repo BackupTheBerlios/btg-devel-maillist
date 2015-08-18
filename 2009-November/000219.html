@@ -1,0 +1,176 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Btg-devel] btg and XML-RPC - API for WIN / MAC / UNIX clients
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/btg-devel/2009-November/index.html" >
+   <LINK REL="made" HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20btg%20and%20XML-RPC%20-%20API%20for%20WIN%20/%20MAC%20/%20UNIX%20clients&In-Reply-To=%3C4AF1EA8B.1030708%40web.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000224.html">
+   <LINK REL="Next"  HREF="000225.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Btg-devel] btg and XML-RPC - API for WIN / MAC / UNIX clients</H1>
+    <B>J&#246;rg Bernau</B> 
+    <A HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20btg%20and%20XML-RPC%20-%20API%20for%20WIN%20/%20MAC%20/%20UNIX%20clients&In-Reply-To=%3C4AF1EA8B.1030708%40web.de%3E"
+       TITLE="[Btg-devel] btg and XML-RPC - API for WIN / MAC / UNIX clients">Joerg.Bernau at web.de
+       </A><BR>
+    <I>Wed Nov  4 21:56:43 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000224.html">[Btg-devel] btg and XML-RPC - API for WIN / MAC / UNIX clients
+</A></li>
+        <LI>Next message: <A HREF="000225.html">[Btg-devel] The meanings of list responses
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#219">[ date ]</a>
+              <a href="thread.html#219">[ thread ]</a>
+              <a href="subject.html#219">[ subject ]</a>
+              <a href="author.html#219">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Am 04.11.2009 20:44, schrieb Michael Wojciechowski:
+
+here is my complete log:
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">root at server</A>:~# btgdaemon btgdaemon -v -D -n -c 
+/usr/local/etc/btg/daemon.ini
+[2009-Nov-04 21:36:17] Verbose logging enabled.
+[2009-Nov-04 21:36:17] config: '/usr/local/etc/btg/daemon.ini'.
+[2009-Nov-04 21:36:17] dem: config read from 
+'/usr/local/etc/btg/daemon.ini'.
+[2009-Nov-04 21:36:17] Sending status using file names.
+[2009-Nov-04 21:36:17] Using session file from config: 
+'/usr/local/etc/btg/daemon.saved'.
+[2009-Nov-04 21:36:17] aut: Adding user 'eugenia'.
+[2009-Nov-04 21:36:17] aut: Adding user 'joerg'.
+[2009-Nov-04 21:36:17] Transport, XML-RPC, created and initialized.
+[2009-Nov-04 21:36:17] Changed user/group to torrent/torrent.
+[2009-Nov-04 21:36:17] Not detaching from TTY.
+[2009-Nov-04 21:36:17] pmr: using ports 10024:10125.
+[2009-Nov-04 21:36:17] pmr: available ports: 102.
+[2009-Nov-04 21:36:17] hdlthr: started.
+.
+[2009-Nov-04 21:36:17] hdl: Loading sessions from stream.
+[2009-Nov-04 21:36:17] sess: Upload limit: 16000.
+[2009-Nov-04 21:36:17] sess: Download limit: 100000.
+[2009-Nov-04 21:36:17] sess: Max uploads: 10.
+[2009-Nov-04 21:36:17] sess: Max connections: 10.
+[2009-Nov-04 21:36:17] lim: setting limits, upload = 16000,  download = 
+100000,  max upload = 10,  max connections = 10.
+[2009-Nov-04 21:36:17] btgdaemon version 2.0.0, TRUNK.
+[2009-Nov-04 21:36:17] Using rasterbar libtorrent version 0.14.
+[2009-Nov-04 21:36:17] There can be only one libtorrent. Accept no 
+substitutes.
+[2009-Nov-04 21:36:17] Ready to accept clients.
+[2009-Nov-04 21:36:19] alertthr: Checking alerts.
+[2009-Nov-04 21:36:21] alertthr: Checking alerts.
+[2009-Nov-04 21:36:23] alertthr: Checking alerts.
+[2009-Nov-04 21:36:25] alertthr: Checking alerts.
+[2009-Nov-04 21:36:27] alertthr: Checking alerts.
+[2009-Nov-04 21:36:28] hdlthr: Checking limits.
+[2009-Nov-04 21:36:29] alertthr: Checking alerts.
+[2009-Nov-04 21:36:31] alertthr: Checking alerts.
+[2009-Nov-04 21:36:33] alertthr: Checking alerts.
+[2009-Nov-04 21:36:35] alertthr: Checking alerts.
+[2009-Nov-04 21:36:37] alertthr: Checking alerts.
+[2009-Nov-04 21:36:39] alertthr: Checking alerts.
+[2009-Nov-04 21:36:39] hdlthr: Checking limits.
+[2009-Nov-04 21:36:41] alertthr: Checking alerts.
+[2009-Nov-04 21:36:43] alertthr: Checking alerts.
+[2009-Nov-04 21:36:45] alertthr: Checking alerts.
+[2009-Nov-04 21:36:47] alertthr: Checking alerts.
+[2009-Nov-04 21:36:48] hdlthr: Updating limits.
+[2009-Nov-04 21:36:49] alertthr: Checking alerts.
+[2009-Nov-04 21:36:50] hdlthr: Checking limits.
+[2009-Nov-04 21:36:51] alertthr: Checking alerts.
+[2009-Nov-04 21:36:53] alertthr: Checking alerts.
+[2009-Nov-04 21:36:55] alertthr: Checking alerts.
+[2009-Nov-04 21:36:57] alertthr: Checking alerts.
+[2009-Nov-04 21:36:59] alertthr: Checking alerts.
+[2009-Nov-04 21:37:01] alertthr: Checking alerts.
+[2009-Nov-04 21:37:01] hdlthr: Checking limits.
+[2009-Nov-04 21:37:03] alertthr: Checking alerts.
+[2009-Nov-04 21:37:05] alertthr: Checking alerts.
+[2009-Nov-04 21:37:07] alertthr: Checking alerts.
+^C[2009-Nov-04 21:37:09] hdl: Saving sessions.
+[2009-Nov-04 21:37:09] sess: Upload limit: 16000.
+[2009-Nov-04 21:37:09] sess: Download limit: 100000.
+[2009-Nov-04 21:37:09] sess: Max uploads: 10.
+[2009-Nov-04 21:37:09] sess: Max connections: 10.
+[2009-Nov-04 21:37:09] Finished execution.
+<A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">root at server</A>:~#
+
+Whireshark says there was a connection that ist closed by the daemon. 
+What ist going on there?
+Maybe you try it yourself with a short test-program ??
+
+Joerg
+&gt;<i> On Wed, 04 Nov 2009 20:30:20 +0100 J&#246;rg Bernau&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">Joerg.Bernau at web.de</A>&gt;
+</I>&gt;<i> wrote:
+</I>&gt;<i>
+</I>&gt;<i>    
+</I>&gt;&gt;<i> Am 04.11.2009 18:41, schrieb Michael Wojciechowski:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> here are my options:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ./configure --enable-upnp --enable-daemon --enable-gui --enable-upnp
+</I>&gt;&gt;<i> --enable-url --enable-command-list --enable-session-saving
+</I>&gt;&gt;<i> --enable-event-callback --enable-debug
+</I>&gt;&gt;<i>      
+</I>&gt;<i> I was referring to &quot;--enable-debug&quot;, which should make it possible to
+</I>&gt;<i> use the &quot;-D&quot; argument for btgdaemon.
+</I>&gt;<i>
+</I>&gt;<i> I get this:
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">wojci at netpc5</A>:~$ btgdaemon --help
+</I>&gt;<i> BTG daemon (version 2.0.0, SVN rev. 642) options:
+</I>&gt;<i>    -h [ --help ]             Produce help message.
+</I>&gt;<i>    -D [ --debug ]            Write extensive debug info.
+</I>&gt;<i>    -v [ --verbose ]          Write verbose messages about what the
+</I>&gt;<i> application is doing.
+</I>&gt;<i>    --syntax                  List the syntax of the configuration file
+</I>&gt;<i> used. -c [ --config ] arg       Configuration file.
+</I>&gt;<i>    -n [ --nodetach ]         Do not detach from TTY.
+</I>&gt;<i>    -s [ --session-file ] arg File with saved sessions.
+</I>&gt;<i>    -N [ --no-reload ]        Do not reload saved sessions.
+</I>&gt;<i>    -p [ --pid-file ] arg     PID-file.
+</I>&gt;<i>
+</I>&gt;<i> Compile time options enabled:
+</I>&gt;<i> debug
+</I>&gt;<i>
+</I>&gt;<i> If you cannot use &quot;-D&quot;, then its because your compile time configuration
+</I>&gt;<i> is different from mine. You should fix that first.
+</I>&gt;<i>
+</I>&gt;<i>    
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000224.html">[Btg-devel] btg and XML-RPC - API for WIN / MAC / UNIX clients
+</A></li>
+	<LI>Next message: <A HREF="000225.html">[Btg-devel] The meanings of list responses
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#219">[ date ]</a>
+              <a href="thread.html#219">[ thread ]</a>
+              <a href="subject.html#219">[ subject ]</a>
+              <a href="author.html#219">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/btg-devel">More information about the Btg-devel
+mailing list</a><br>
+</body></html>

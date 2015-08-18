@@ -1,0 +1,161 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Btg-devel] suggestion about using SASL for user authentication
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/btg-devel/2009-July/index.html" >
+   <LINK REL="made" HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20suggestion%20about%20using%20SASL%20for%20user%20authentication&In-Reply-To=%3C20090710175122.177e988d%40desktopvm.lvknet%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000168.html">
+   <LINK REL="Next"  HREF="000170.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Btg-devel] suggestion about using SASL for user authentication</H1>
+    <B>Alexander Gordeev</B> 
+    <A HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20suggestion%20about%20using%20SASL%20for%20user%20authentication&In-Reply-To=%3C20090710175122.177e988d%40desktopvm.lvknet%3E"
+       TITLE="[Btg-devel] suggestion about using SASL for user authentication">lasaine at lvk.cs.msu.su
+       </A><BR>
+    <I>Fri Jul 10 15:51:22 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000168.html">[Btg-devel] suggestion about using SASL for user authentication
+</A></li>
+        <LI>Next message: <A HREF="000170.html">[Btg-devel] suggestion about using SASL for user authentication
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#169">[ date ]</a>
+              <a href="thread.html#169">[ thread ]</a>
+              <a href="subject.html#169">[ subject ]</a>
+              <a href="author.html#169">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Michael,
+
+Thanks for the quick answer!
+
+On Thu, 9 Jul 2009 15:33:03 +0200 (CEST)
+&quot;Michael Wojciechowski&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">wojci at wojci.dk</A>&gt; wrote:
+
+&gt;<i> &gt; The first is about using Cyrus SASL (<A HREF="http://asg.web.cmu.edu/sasl/">http://asg.web.cmu.edu/sasl/</A>)
+</I>&gt;<i> &gt; to authenticate users.
+</I>&gt;<i> &gt; Cyrus SASL is specifically designed as a glue layer for adding
+</I>&gt;<i> &gt; authentication support to connection-based protocols. It supports a
+</I>&gt;<i> &gt; lot of authentication methods. So IMHO it fits great between BTG
+</I>&gt;<i> &gt; daemon and clients and surely allows more flexibility than plain
+</I>&gt;<i> &gt; passwd-like file.
+</I>&gt;<i> &gt; I'm going to use BTG in a multiuser network on a standalone server
+</I>&gt;<i> &gt; (well, virtual server in fact :) ). Clients are authorized using
+</I>&gt;<i> &gt; Kerberos+LDAP. So if BTG starts using SASL then it'll integrate
+</I>&gt;<i> &gt; seamlessly. So this is my motivation.
+</I>&gt;<i> 
+</I>&gt;<i> Adding SASL support sounds like a good idea.
+</I>
+Good!
+
+&gt;<i> &gt; Do you want to see it in the main development branch?
+</I>&gt;<i> 
+</I>&gt;<i> I would not mind including it, if you do the implementation. A few
+</I>&gt;<i> points:
+</I>&gt;<i> 
+</I>&gt;<i> - Add a bug about this.
+</I>&gt;<i> - Use SVN trunk.
+</I>&gt;<i> - Make sure that the SASL lib used is detected by the configure
+</I>&gt;<i> script.
+</I>&gt;<i> - Send a patch that we can review.
+</I>
+Sure.
+
+&gt;<i> - Make sure that using SASL can be disabled at compile time, as with
+</I>&gt;<i> most other features in BTG.
+</I>&gt;<i> - A plain password file has to work as well, if you configure it at
+</I>&gt;<i> compile time. For backwards compatibility. Making changes to the auth
+</I>&gt;<i> interface used might be required.
+</I>
+I'd like to talk a bit more about it. The current password file handles
+actually both authentication and authorization (and also the
+directories). Only the users that are mentioned there are allowed to
+create sessions. The current approach has a lot of problems IMO:
+  * custom authentication scheme with custom passwords for users which
+    makes it harder to administer
+  * mixing both authentication and authorization is a problem because
+    SASL can do advanced authentication but has no means for
+    authorization i.e. allowing/restricting known users
+  * also I think that directories should be per-session, not per-user
+    but this is a bit off-topic
+
+IMHO the current scheme should be deprecated as soon as SASL is
+adopted. Just because it mixes everything in one place. Of course,
+there could be work-arounds, like ignoring the password field in the
+password file. But I think this will only distract users.
+
+SASL has already good means for handling plain password files. I mean
+the traditional passwd files :) It supports a lot of other sources of
+information about passwords including PAM.
+
+Instead of preserving the current password file it would be better to
+split it into at least two files:
+  * users/passwords for authentication
+  * user restrictions + directories
+
+If you don't want SASL as a dependency (on embedded systems likely)
+than authentication can be handled by the system (/etc/passwd,
+PAM, ...). So I really don't see any reason to keep the user/passwords
+file.
+
+SASL will allow even more advanced authentication if installed.
+
+BTW, on user restrictions. I'd really like to introduce
+per-group restrictions along with per-user which you have now. For
+example:
+
+allowed_users = joe, bob, ...
+allowed_groups = btg, staff, ...
+
+But this is not related to SASL. This is what I'd like to do after
+adopting SASL. :) And per-session directories too maybe.
+
+&gt;<i> &gt; Well, I'll try to implement it myself unless somebody is already
+</I>&gt;<i> &gt; working on this.
+</I>&gt;<i> 
+</I>&gt;<i> I have not heard about anyone working on this. SASL support is not
+</I>&gt;<i> something that I need myself, but I can help you if you have questions
+</I>&gt;<i> about the parts of BTG that you need to modify.
+</I>
+I didn't look at the code yet so I don't have questions at the
+moment. :)
+But I will be happy to get any kind of information about the design of
+the daemon, about where to look and how you expect me to do the
+integration.
+
+-- 
+  Alexander
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000168.html">[Btg-devel] suggestion about using SASL for user authentication
+</A></li>
+	<LI>Next message: <A HREF="000170.html">[Btg-devel] suggestion about using SASL for user authentication
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#169">[ date ]</a>
+              <a href="thread.html#169">[ thread ]</a>
+              <a href="subject.html#169">[ subject ]</a>
+              <a href="author.html#169">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/btg-devel">More information about the Btg-devel
+mailing list</a><br>
+</body></html>

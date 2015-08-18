@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Btg-devel] bug in filemgr.cpp
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/btg-devel/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20bug%20in%20filemgr.cpp&In-Reply-To=%3C1dec56c50905172313u5e08750eq4d8452f292159cb%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000162.html">
+   <LINK REL="Next"  HREF="000164.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Btg-devel] bug in filemgr.cpp</H1>
+    <B>David Wilhelm</B> 
+    <A HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20bug%20in%20filemgr.cpp&In-Reply-To=%3C1dec56c50905172313u5e08750eq4d8452f292159cb%40mail.gmail.com%3E"
+       TITLE="[Btg-devel] bug in filemgr.cpp">thefeshy at gmail.com
+       </A><BR>
+    <I>Mon May 18 08:13:57 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000162.html">[Btg-devel] BTG 1.0 RC 2 released
+</A></li>
+        <LI>Next message: <A HREF="000164.html">[Btg-devel] bug in filemgr.cpp
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#163">[ date ]</a>
+              <a href="thread.html#163">[ thread ]</a>
+              <a href="subject.html#163">[ subject ]</a>
+              <a href="author.html#163">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>While trying to compile and run btgdaemon under Ubuntu, I found a bug
+in filemgr.cpp, at line 278.&#160; Here's a snippet:
+
+
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; for (iter = files.begin();
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; iter != files.end();
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; iter++)
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; {
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; if (!iter-&gt;second.valid)
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; {
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; filetrack-&gt;remove(iter-&gt;second.dir, iter-&gt;second.filename);
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; files.erase(iter);
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; }
+             }
+
+The code &quot;files.erase(iter);&quot; invalidates the iterator iter, however
+the for loop will still increment this invalid iterator on its next
+pass.  That caused the program to crash after adding a torrent via the
+gui.  Replacing that snippet with the following code seems to have
+gotten things running for me:
+
+         while(iter != files.end())
+            {
+               tmp = iter++;
+               if (!tmp-&gt;second.valid)
+               {
+                   filetrack-&gt;remove(tmp-&gt;second.dir, tmp-&gt;second.filename);
+		   files.erase(tmp);
+               }
+            }
+
+I haven't been able to compile the unit tests to see if it passes with
+that change (or without!) but I was able to get a few torrent files
+started.
+
+~Dave W.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000162.html">[Btg-devel] BTG 1.0 RC 2 released
+</A></li>
+	<LI>Next message: <A HREF="000164.html">[Btg-devel] bug in filemgr.cpp
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#163">[ date ]</a>
+              <a href="thread.html#163">[ thread ]</a>
+              <a href="subject.html#163">[ subject ]</a>
+              <a href="author.html#163">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/btg-devel">More information about the Btg-devel
+mailing list</a><br>
+</body></html>

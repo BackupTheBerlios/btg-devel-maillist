@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Btg-devel] start new session error
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/btg-devel/2009-August/index.html" >
+   <LINK REL="made" HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20start%20new%20session%20error&In-Reply-To=%3C20090829095745.3dc92e9b%40netpc5.home.wojci.dk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000187.html">
+   <LINK REL="Next"  HREF="000189.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Btg-devel] start new session error</H1>
+    <B>Michael Wojciechowski</B> 
+    <A HREF="mailto:btg-devel%40lists.berlios.de?Subject=Re%3A%20%5BBtg-devel%5D%20start%20new%20session%20error&In-Reply-To=%3C20090829095745.3dc92e9b%40netpc5.home.wojci.dk%3E"
+       TITLE="[Btg-devel] start new session error">wojci at wojci.dk
+       </A><BR>
+    <I>Sat Aug 29 09:57:45 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000187.html">[Btg-devel] start new session error
+</A></li>
+        <LI>Next message: <A HREF="000189.html">[Btg-devel] start new session error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#188">[ date ]</a>
+              <a href="thread.html#188">[ thread ]</a>
+              <a href="subject.html#188">[ subject ]</a>
+              <a href="author.html#188">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sat, 29 Aug 2009 09:34:59 +0200 ciccio &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/btg-devel">aspcicc at jumpy.it</A>&gt; wrote:
+
+&gt;<i> If you forward your message to the mailing list, then 
+</I>&gt;<i> someone'll probably come along who could help better than I.
+</I>
+You have to be a member of the mailing list to send to it. 
+
+&gt;<i>     Hello, and thanks for your help. i have double checked all
+</I>&gt;<i>     possibility i have also deleted old dir and let btgpasswd create
+</I>&gt;<i> new for me.. the command is:
+</I>&gt;<i> 
+</I>&gt;<i>     btgpasswd --create -a -u sercik -d
+</I>&gt;<i>     /mnt/disco/p2p/btg/torrent/sercik/dest -w
+</I>&gt;<i>     /mnt/disco/p2p/btg/torrent/sercik/work -s
+</I>&gt;<i>     /mnt/disco/p2p/btg/torrent/sercik/seed -t
+</I>&gt;<i>     /mnt/disco/p2p/btg/torrent/sercik/temp
+</I>&gt;<i> 
+</I>&gt;<i>     That path exists and the owner of directory btg and other
+</I>&gt;<i>     subdirectory is always sercik:casa_ioecri  and i start btgdaemon
+</I>&gt;<i>     with user sercik with the following command: su -c
+</I>&gt;<i>     &quot;/usr/local/bin/btgdaemon&quot; sercik &amp;
+</I>&gt;<i>     I don't know what to do, please help me!!
+</I>
+Try running (from bash):
+btgdaemon -v -n
+
+this will make the daemon not detach from your terminal and print
+messages to stdout about what it is doing. An error message
+will most likely be printed to stdout, when you attempt to create a
+session.
+
+-- 
+Best regards
+
+Michael Wojciechowski  
+
+<A HREF="http://www.linkedin.com/in/wojci">http://www.linkedin.com/in/wojci</A>
+<A HREF="http://www.facebook.com/wojci">http://www.facebook.com/wojci</A>
+<A HREF="http://twitter.com/wojci">http://twitter.com/wojci</A>
+
+&quot;A person who does not share is not only selfish, but bitter and
+alone.&quot;, Paulo Coelho.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000187.html">[Btg-devel] start new session error
+</A></li>
+	<LI>Next message: <A HREF="000189.html">[Btg-devel] start new session error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#188">[ date ]</a>
+              <a href="thread.html#188">[ thread ]</a>
+              <a href="subject.html#188">[ subject ]</a>
+              <a href="author.html#188">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/btg-devel">More information about the Btg-devel
+mailing list</a><br>
+</body></html>
